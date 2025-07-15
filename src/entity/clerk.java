@@ -10,6 +10,7 @@ public class clerk extends Player {
     }
 
     /**
+     * Hello.
      * @param basePrice
      * @return
      */

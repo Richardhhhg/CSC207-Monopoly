@@ -37,7 +37,7 @@ public class colledgeStudent extends Player {
     }
 
     /**
-     * College Student has to pay his school tuition every turn
+     * College Student has to pay his school tuition every turn.
      */
     @Override
     public void applyTurnEffects() {

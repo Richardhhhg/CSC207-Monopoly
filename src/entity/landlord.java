@@ -41,7 +41,7 @@ public class landlord extends Player {
     }
 
     /**
-     * Landlord has no TurnEffects
+     * Landlord has no TurnEffects.
      */
     @Override
     public void applyTurnEffects() {

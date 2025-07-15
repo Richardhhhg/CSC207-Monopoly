@@ -1,5 +1,5 @@
 /*
-TODO: IMPLEMENT THIS
+TODO: IMPLEMENT THIS.
  */
 package use_case;
 import entity.Property;
