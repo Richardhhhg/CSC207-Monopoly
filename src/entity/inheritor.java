@@ -50,7 +50,7 @@ public class inheritor extends Player {
     }
 
     /**
-     *
+     * Inheritor has no TurnEffects
      */
     @Override
     public void applyTurnEffects() {

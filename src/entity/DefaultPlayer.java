@@ -43,6 +43,6 @@ public class DefaultPlayer extends Player {
 
     @Override
     public void applyTurnEffects() {
-        System.out.println("nope, normie");
+        System.out.println("nope, normie.");
     }
 }

@@ -36,7 +36,7 @@ public class clerk extends Player {
     }
 
     /**
-     *
+     * Clerk recieves his salary every turn
      */
     @Override
     public void applyTurnEffects() {

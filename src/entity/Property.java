@@ -49,11 +49,11 @@ public class Property extends Tile {
         // TODO: IMPLEMENT THIS
         if (!owned) {
             // Logic for purchasing the property
-            // e.g., deducting money from the player and marking the property as owned
+            // e.g., deducting money from the player and marking the property as owned.
             player.buyProperty(this);
         } else {
             // Logic for paying rent to the owner
-            // e.g., deducting rent from the current player and giving it to the owner
+            // e.g., deducting rent from the current player and giving it to the owner.
             float finalRent = owner.adjustRent(this.rent);  // landlord can charge more
             player.deductMoney(finalRent);
             owner.addMoney(finalRent);
