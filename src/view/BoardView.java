@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -46,7 +45,7 @@ public class BoardView extends JPanel {
         setupUI();
         // assume you have dice1.png … dice6.png under /images on your classpath
         for (int i = 1; i <= 6; i++) {
-            diceIcons[i] = new ImageIcon(getClass().getResource("/images/dice" + i + ".png"));
+            diceIcons[i] = new ImageIcon(getClass().getResource("images/dice" + i + ".png"));
         }
 // start both dice showing “1”
         die1Label.setIcon(diceIcons[1]);
