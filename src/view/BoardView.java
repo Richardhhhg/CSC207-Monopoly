@@ -22,8 +22,7 @@ public class BoardView extends JPanel {
 
     public BoardView() {
         initializeGame();
-        setBackground(Color.WHITE);
-        setPreferredSize(new java.awt.Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         setupUI();
     }
 
@@ -34,14 +33,14 @@ public class BoardView extends JPanel {
     private void initializeGame() {
         // Initialize properties
         properties = new ArrayList<>();
-        String[] propertyNames = {
+        String[] propertyNames = { // TODO: Read this from json file later
                 "GO", "Mediterranean Ave", "Baltic Ave", "Reading Railroad",
                 "Oriental Ave", "Vermont Ave", "Connecticut Ave", "St. James Place",
                 "Tennessee Ave", "New York Ave", "Kentucky Ave", "Indiana Ave",
                 "Illinois Ave", "Atlantic Ave", "Ventnor Ave", "Marvin Gardens",
                 "Pacific Ave", "North Carolina Ave", "Pennsylvania Ave", "Boardwalk"
         };
-
+        // TODO: This is also to be read from a json file
         int[] prices = {0, 60, 60, 200, 100, 100, 120, 140, 140, 160, 180, 180, 200, 220, 220, 280, 300, 300, 320, 400};
 
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -60,8 +59,8 @@ public class BoardView extends JPanel {
                 drawBoard(g);
             }
         };
-        boardPanel.setPreferredSize(new Dimension(600, 600));
-        boardPanel.setBackground(Color.WHITE);
+        boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
+        boardPanel.setBackground(Color.lightGray);
 
         add(boardPanel, BorderLayout.CENTER);
     }
@@ -75,37 +74,51 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int boardSize = 500;
-        int tileSize = boardSize / 6;
+        int tilesPerSide = (this.properties.size()-4) / 4 + 2;
+
+        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
         int startX = 50;
         int startY = 50;
 
         // Draw properties around the board
+        // TODO: Clean up this code, it's literally all chatgpt code
         for (int i = 0; i < BOARD_SIZE; i++) {
             Point pos = getTilePosition(i, startX, startY, tileSize);
             Property prop = properties.get(i);
 
             // Draw property tile
-            if (prop.getOwner() != null) {
-                g2d.setColor(Color.WHITE);
-            } else {
-                g2d.setColor(Color.LIGHT_GRAY);
-            }
+            g2d.setColor(Color.WHITE);
 
             g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
             g2d.setColor(Color.BLACK);
             g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
 
             // Draw property name
-            g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+            g2d.setFont(new Font("Arial", Font.BOLD, 16));
             FontMetrics fm = g2d.getFontMetrics();
             String name = prop.getName();
-            if (name.length() > 8) {
-                name = name.substring(0, 8) + "...";
+            int maxWidth = tileSize - 8; // Padding for text
+            if (fm.stringWidth(name) > maxWidth) {
+                // Split name into two lines at the nearest space
+                int splitIndex = name.lastIndexOf(' ', name.length() / 2);
+                if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
+                    splitIndex = name.indexOf(' ', name.length() / 2);
+                    if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
+                        splitIndex = name.length() / 2;
+                    }
+                }
+                String line1 = name.substring(0, splitIndex).trim();
+                String line2 = name.substring(splitIndex).trim();
+                int textX = pos.x + (tileSize - Math.max(fm.stringWidth(line1), fm.stringWidth(line2))) / 2;
+                int textY1 = pos.y + tileSize / 2 - 8;
+                int textY2 = pos.y + tileSize / 2 + 10;
+                g2d.drawString(line1, textX, textY1);
+                g2d.drawString(line2, textX, textY2);
+            } else {
+                int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
+                int textY = pos.y + tileSize / 2 + fm.getAscent() / 2 - 4;
+                g2d.drawString(name, textX, textY);
             }
-            int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
-            int textY = pos.y + tileSize / 2;
-            g2d.drawString(name, textX, textY);
 
             // Draw price
             if (prop.getPrice() > 0) {
