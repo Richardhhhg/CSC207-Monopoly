@@ -6,6 +6,9 @@ import Constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
 /**
  * BoardView is a JPanel that represents the view of the game board.
@@ -17,6 +20,17 @@ public class BoardView extends JPanel {
     private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
     private static final int PLACEHOLDER_RENT = 50; // TODO: Replace with actual rent values Later
+
+    // ——— Dice UI & state ———
+    private final JButton rollDiceButton = new JButton("Roll Dice");
+    private final JLabel  die1Label      = new JLabel("Die 1: 1", SwingConstants.CENTER);
+    private final JLabel  die2Label      = new JLabel("Die 2: 1", SwingConstants.CENTER);
+    private final JLabel  resultLabel    = new JLabel("Sum: 2", SwingConstants.CENTER);
+
+    private final Random rand = new Random();
+    private Timer         diceTimer;
+    private int           frameCount;
+    private int           finalD1, finalD2;
 
     private ArrayList<Property> properties;
 
@@ -64,6 +78,21 @@ public class BoardView extends JPanel {
         boardPanel.setBackground(Color.WHITE);
 
         add(boardPanel, BorderLayout.CENTER);
+        // ——— Roll-Dice side-panel ———
+        JPanel side = new JPanel();
+        side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
+        side.add(rollDiceButton);
+        side.add(Box.createVerticalStrut(10));
+        side.add(die1Label);
+        side.add(Box.createVerticalStrut(5));
+        side.add(die2Label);
+        side.add(Box.createVerticalStrut(10));
+        side.add(resultLabel);
+        add(side, BorderLayout.EAST);
+
+// wire the button
+        rollDiceButton.addActionListener(e -> startDiceAnimation());
+
     }
 
     /**
@@ -115,6 +144,35 @@ public class BoardView extends JPanel {
                 g2d.drawString(price, priceX, priceY);
             }
         }
+    }
+
+    /** Animate 10 frames of random dice then settle on a final roll. */
+    private void startDiceAnimation() {
+        rollDiceButton.setEnabled(false);
+        frameCount = 0;
+
+        diceTimer = new Timer(100, null);
+        diceTimer.addActionListener(evt -> {
+            if (frameCount < 10) {
+                int r1 = rand.nextInt(6) + 1;
+                int r2 = rand.nextInt(6) + 1;
+                die1Label.setText("Die 1: " + r1);
+                die2Label.setText("Die 2: " + r2);
+                frameCount++;
+            } else {
+                diceTimer.stop();
+                finalD1 = rand.nextInt(6) + 1;
+                finalD2 = rand.nextInt(6) + 1;
+                die1Label.setText("Die 1: " + finalD1);
+                die2Label.setText("Die 2: " + finalD2);
+                int sum = finalD1 + finalD2;
+                resultLabel.setText("Sum: " + sum);
+                // TODO: if you want to move a token, invoke your controller or
+                // call state.moveCurrentPlayer(sum) here.
+                rollDiceButton.setEnabled(true);
+            }
+        });
+        diceTimer.start();
     }
 
     private Point getTilePosition(int position, int startX, int startY, int tileSize) {
