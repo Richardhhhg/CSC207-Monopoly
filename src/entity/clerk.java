@@ -3,8 +3,9 @@ package entity;
 import use_case.Player;
 
 public class clerk extends Player {
+    private static final int CLERK_INIT_MONEY = 1200;
     public clerk(String name, int initialMoney) {
-        super(name, 1200);
+        super(name, CLERK_INIT_MONEY);
         this.loadPortrait("Resources/clerk.jpg");
     }
 

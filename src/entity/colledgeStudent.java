@@ -3,8 +3,9 @@ package entity;
 import use_case.Player;
 
 public class colledgeStudent extends Player {
+    private static final int STUDENT_INIT_MONEY = 1000;
     public colledgeStudent(String name, int initialMoney) {
-        super(name, 1000);
+        super(name, STUDENT_INIT_MONEY);
         this.loadPortrait("Resources/Computer-nerd.jpg");
     }
 

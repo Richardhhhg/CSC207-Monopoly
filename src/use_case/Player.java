@@ -82,8 +82,16 @@ public abstract class Player {
         money -= amount;
         if (money <= 0) {
             this.bankrupt = true;
+            bankrupcyReckoning();
             money = 0;
         }
+    }
+
+    public void bankrupcyReckoning(){
+        for (Property property : this.properties) {
+            property.setOwned(false, null);
+        }
+        this.properties.clear();
     }
 
     public void buyProperty(Property property) {

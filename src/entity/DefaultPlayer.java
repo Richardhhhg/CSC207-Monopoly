@@ -3,10 +3,11 @@ package entity;
 import use_case.Player;
 
 public class DefaultPlayer extends Player {
+    private static final int DEFAULT_INIT_MONEY = 1200;
     private String name;
 
     public DefaultPlayer(String name, int initialMoney) {
-        super(name, initialMoney);
+        super(name, DEFAULT_INIT_MONEY);
         this.loadPortrait("Resources/default portrait.png");
     }
 

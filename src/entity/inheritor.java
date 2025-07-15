@@ -11,8 +11,9 @@ import java.io.InputStream;
  * Starts with $1000.
  */
 public class inheritor extends Player {
+    private static final int INHERITOR_INIT_MONEY = 1800;
     public inheritor(String name) {
-        super(name, 1800);
+        super(name, INHERITOR_INIT_MONEY);
         this.loadPortrait("Resources/inheritor.jpg");
     }
 

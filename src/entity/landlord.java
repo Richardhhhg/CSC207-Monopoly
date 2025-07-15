@@ -7,8 +7,9 @@ import use_case.Player;
  * Landlords gain extra rent and can sell properties for more money.
  */
 public class landlord extends Player {
+    private static final int LANDLORD_INIT_MONEY = 800;
     public landlord(String name) {
-        super(name, 800);
+        super(name, LANDLORD_INIT_MONEY);
         this.loadPortrait("Resources/landlord.webp");
     }
 
