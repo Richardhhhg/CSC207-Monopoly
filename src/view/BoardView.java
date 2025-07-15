@@ -12,10 +12,7 @@ import java.util.ArrayList;
  * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
  */
 public class BoardView extends JPanel {
-    private static final int BOARD_SIZE = 20;
-    private static final int PLAYER_COUNT = 4;
-    private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
-    private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
+    private int tileCount;
     private static final int PLACEHOLDER_RENT = 50; // TODO: Replace with actual rent values Later
 
     private ArrayList<Property> properties;
@@ -42,8 +39,9 @@ public class BoardView extends JPanel {
         };
         // TODO: This is also to be read from a json file
         int[] prices = {0, 60, 60, 200, 100, 100, 120, 140, 140, 160, 180, 180, 200, 220, 220, 280, 300, 300, 320, 400};
+        this.tileCount = propertyNames.length;
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < this.tileCount; i++) {
             properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
     }
@@ -82,7 +80,7 @@ public class BoardView extends JPanel {
 
         // Draw properties around the board
         // TODO: Clean up this code, it's literally all chatgpt code
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < tileCount; i++) {
             Point pos = getTilePosition(i, startX, startY, tileSize);
             Property prop = properties.get(i);
 
@@ -131,20 +129,22 @@ public class BoardView extends JPanel {
     }
 
     private Point getTilePosition(int position, int startX, int startY, int tileSize) {
-        int boardSize = 5 * tileSize;
+        // TODO: This is very messy, clean it up
+        int tilesPerSide = this.tileCount / 4; // Number of tiles on each side of the board - 1
+        int cool_number = tilesPerSide * tileSize;
 
-        if (position >= 0 && position <= 5) {
+        if (position >= 0 && position <= tilesPerSide) {
             // Bottom row (left to right)
-            return new Point(startX + position * tileSize, startY + boardSize);
-        } else if (position >= 6 && position <= 10) {
+            return new Point(startX + position * tileSize, startY + cool_number);
+        } else if (position >= (tilesPerSide + 1) && position <= (tilesPerSide * 2)) {
             // Right column (bottom to top)
-            return new Point(startX + boardSize, startY + boardSize - (position - 5) * tileSize);
-        } else if (position >= 11 && position <= 15) {
+            return new Point(startX + cool_number, startY + cool_number - (position - tilesPerSide) * tileSize);
+        } else if (position >= (tilesPerSide*2 + 1) && position <= (tilesPerSide * 3)) {
             // Top row (right to left)
-            return new Point(startX + boardSize - (position - 10) * tileSize, startY);
+            return new Point(startX + cool_number - (position - (tilesPerSide*2)) * tileSize, startY);
         } else {
             // Left column (top to bottom)
-            return new Point(startX, startY + (position - 15) * tileSize);
+            return new Point(startX, startY + (position - (tilesPerSide*3)) * tileSize);
         }
     }
 
