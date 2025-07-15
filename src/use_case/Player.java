@@ -107,5 +107,5 @@ public abstract class Player {
     public abstract float adjustStockBuyPrice(float basePrice);
     public abstract float adjustStockSellPrice(float basePrice);
     public abstract float adjustRent(float baseRent);
-    public abstract void applyTurnEffects(); // salary, tuition, etc.e.g., salary, tuition, etc.
+    public abstract void applyTurnEffects(); // salary, tuition...depends on the character
 }
