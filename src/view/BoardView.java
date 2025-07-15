@@ -6,6 +6,10 @@ import Constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.util.Random;
+import javax.swing.ImageIcon;
 
 /**
  * BoardView is a JPanel that represents the view of the game board.
@@ -18,13 +22,36 @@ public class BoardView extends JPanel {
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
     private static final int PLACEHOLDER_RENT = 50; // TODO: Replace with actual rent values Later
 
+    // ——— Dice UI & state ———
+    private final JButton rollDiceButton = new JButton("Roll Dice");
+    // ——— Dice icons ———
+    private final ImageIcon[] diceIcons = new ImageIcon[7];
+    private final JLabel die1Label        = new JLabel();
+    private final JLabel die2Label        = new JLabel();
+    private final JLabel resultLabel      = new JLabel("Sum: 2", SwingConstants.CENTER);
+
+    private final Random rand = new Random();
+    private Timer         diceTimer;
+    private int           frameCount;
+    private int           finalD1, finalD2;
+
     private ArrayList<Property> properties;
+
+    private int lastDiceSum;
 
     public BoardView() {
         initializeGame();
         setBackground(Color.WHITE);
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
         setupUI();
+        // assume you have dice1.png … dice6.png under /images on your classpath
+        for (int i = 1; i <= 6; i++) {
+            diceIcons[i] = new ImageIcon(getClass().getResource("/images/dice" + i + ".png"));
+        }
+// start both dice showing “1”
+        die1Label.setIcon(diceIcons[1]);
+        die2Label.setIcon(diceIcons[1]);
+
     }
 
     /**
@@ -64,6 +91,21 @@ public class BoardView extends JPanel {
         boardPanel.setBackground(Color.WHITE);
 
         add(boardPanel, BorderLayout.CENTER);
+        // ——— Roll-Dice side-panel ———
+        JPanel side = new JPanel();
+        side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
+        side.add(rollDiceButton);
+        side.add(Box.createVerticalStrut(10));
+        side.add(die1Label);
+        side.add(Box.createVerticalStrut(5));
+        side.add(die2Label);
+        side.add(Box.createVerticalStrut(10));
+        side.add(resultLabel);
+        add(side, BorderLayout.EAST);
+
+// wire the button
+        rollDiceButton.addActionListener(e -> startDiceAnimation());
+
     }
 
     /**
@@ -115,6 +157,38 @@ public class BoardView extends JPanel {
                 g2d.drawString(price, priceX, priceY);
             }
         }
+    }
+
+    /** Animate 10 frames of random dice then settle on a final roll. */
+    private void startDiceAnimation() {
+        rollDiceButton.setEnabled(false);
+        frameCount = 0;
+
+        diceTimer = new Timer(100, null);
+        diceTimer.addActionListener(evt -> {
+            if (frameCount < 10) {
+                int r1 = rand.nextInt(6) + 1;
+                int r2 = rand.nextInt(6) + 1;
+                die1Label.setIcon(diceIcons[r1]);
+                die2Label.setIcon(diceIcons[r2]);
+                frameCount++;
+            } else {
+                diceTimer.stop();
+                finalD1 = rand.nextInt(6) + 1;
+                finalD2 = rand.nextInt(6) + 1;
+                die1Label.setIcon(diceIcons[finalD1]);
+                die2Label.setIcon(diceIcons[finalD2]);
+                int sum = finalD1 + finalD2;
+                resultLabel.setText("Sum: " + sum);
+                lastDiceSum = sum;
+                rollDiceButton.setEnabled(true);
+            }
+        });
+        diceTimer.start();
+    }
+
+    public int getLastDiceSum() {
+        return lastDiceSum;
     }
 
     private Point getTilePosition(int position, int startX, int startY, int tileSize) {
