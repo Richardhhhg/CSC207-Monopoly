@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -46,7 +45,9 @@ public class BoardView extends JPanel {
         setupUI();
         // assume you have dice1.png … dice6.png under /images on your classpath
         for (int i = 1; i <= 6; i++) {
-            diceIcons[i] = new ImageIcon(getClass().getResource("/images/dice" + i + ".png"));
+            diceIcons[i] = new ImageIcon(getClass().getResource("images/dice" + i + ".png"));
+            finalD1 = finalD2 = 1;
+            lastDiceSum = 2;
         }
 // start both dice showing “1”
         die1Label.setIcon(diceIcons[1]);
@@ -91,16 +92,10 @@ public class BoardView extends JPanel {
         boardPanel.setBackground(Color.WHITE);
 
         add(boardPanel, BorderLayout.CENTER);
-        // ——— Roll-Dice side-panel ———
+        // ——— Roll-Dice side-panel (button only) ———
         JPanel side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
         side.add(rollDiceButton);
-        side.add(Box.createVerticalStrut(10));
-        side.add(die1Label);
-        side.add(Box.createVerticalStrut(5));
-        side.add(die2Label);
-        side.add(Box.createVerticalStrut(10));
-        side.add(resultLabel);
         add(side, BorderLayout.EAST);
 
 // wire the button
@@ -157,9 +152,36 @@ public class BoardView extends JPanel {
                 g2d.drawString(price, priceX, priceY);
             }
         }
+
+// centre of the 500×500 island
+        int centerX = startX + boardSize/2;
+        int centerY = startY + boardSize/2;
+
+// make each dice twice a tile wide (≈166px), so two side-by-side fit under 500px
+        int diceSize = tileSize;
+        int gap      = 10;
+
+// compute their top-left corners
+        int x1 = centerX - diceSize - gap/2;
+        int x2 = centerX + gap/2;
+        int y  = centerY - diceSize/2;
+
+// draw them
+        g2d.drawImage(diceIcons[finalD1].getImage(), x1, y, diceSize, diceSize, null);
+        g2d.drawImage(diceIcons[finalD2].getImage(), x2, y, diceSize, diceSize, null);
+
+        // ——— draw the sum underneath ———
+        String sumText = "Sum: " + lastDiceSum;
+        Font oldFont = g2d.getFont();
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+        FontMetrics fm = g2d.getFontMetrics();
+        int textX = centerX - fm.stringWidth(sumText)/2;
+        int textY = y + diceSize + fm.getAscent() + 5;
+        g2d.drawString(sumText, textX, textY);
+        g2d.setFont(oldFont);
     }
 
-    /** Animate 10 frames of random dice then settle on a final roll. */
+    /** Animate 10 frames of random dice then settle on a final roll in the centre. */
     private void startDiceAnimation() {
         rollDiceButton.setEnabled(false);
         frameCount = 0;
@@ -167,25 +189,30 @@ public class BoardView extends JPanel {
         diceTimer = new Timer(100, null);
         diceTimer.addActionListener(evt -> {
             if (frameCount < 10) {
-                int r1 = rand.nextInt(6) + 1;
-                int r2 = rand.nextInt(6) + 1;
-                die1Label.setIcon(diceIcons[r1]);
-                die2Label.setIcon(diceIcons[r2]);
-                frameCount++;
-            } else {
-                diceTimer.stop();
+                // pick two random faces
                 finalD1 = rand.nextInt(6) + 1;
                 finalD2 = rand.nextInt(6) + 1;
-                die1Label.setIcon(diceIcons[finalD1]);
-                die2Label.setIcon(diceIcons[finalD2]);
-                int sum = finalD1 + finalD2;
-                resultLabel.setText("Sum: " + sum);
-                lastDiceSum = sum;
+                frameCount++;
+
+                // redraw the board (which also draws dice in drawBoard)
+                repaint();
+            } else {
+                diceTimer.stop();
+
+                // final roll
+                finalD1 = rand.nextInt(6) + 1;
+                finalD2 = rand.nextInt(6) + 1;
+                lastDiceSum = finalD1 + finalD2;
+
+                // one last redraw for the final faces
+                repaint();
+
                 rollDiceButton.setEnabled(true);
             }
         });
         diceTimer.start();
     }
+
 
     public int getLastDiceSum() {
         return lastDiceSum;
