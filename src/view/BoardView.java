@@ -2,6 +2,8 @@ package view;
 
 import entity.Property;
 import Constants.Constants;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +37,8 @@ public class BoardView extends JPanel {
     private int           finalD1, finalD2;
 
     private ArrayList<Property> properties;
+    private List<Player> players;
+    private int currentPlayerIndex = 0;
 
     private int lastDiceSum;
 
@@ -74,6 +78,11 @@ public class BoardView extends JPanel {
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
+        }
+
+        players = new ArrayList<>();
+        for (int i = 0; i < PLAYER_COUNT; i++) {
+            players.add(new Player(PLAYER_NAMES[i], PLAYER_COLORS[i], 1500));
         }
     }
 
@@ -179,6 +188,17 @@ public class BoardView extends JPanel {
         int textY = y + diceSize + fm.getAscent() + 5;
         g2d.drawString(sumText, textX, textY);
         g2d.setFont(oldFont);
+
+        for (Player player : players) {
+            Point pos = getTilePosition(player.getPosition(), startX, startY, tileSize);
+            g2d.setColor(player.getColor());
+            int playerSize = 15;
+            int offsetX = (players.indexOf(player) % 2) * 20;
+            int offsetY = (players.indexOf(player) / 2) * 20;
+            g2d.fillOval(pos.x + offsetX + 5, pos.y + offsetY + 5, playerSize, playerSize);
+            g2d.setColor(Color.BLACK);
+            g2d.drawOval(pos.x + offsetX + 5, pos.y + offsetY + 5, playerSize, playerSize);
+        }
     }
 
     /** Animate 10 frames of random dice then settle on a final roll in the centre. */
@@ -203,6 +223,12 @@ public class BoardView extends JPanel {
                 finalD1 = rand.nextInt(6) + 1;
                 finalD2 = rand.nextInt(6) + 1;
                 lastDiceSum = finalD1 + finalD2;
+
+                Player currentPlayer = players.get(currentPlayerIndex);
+                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % BOARD_SIZE;
+                currentPlayer.setPosition(newPosition);
+                currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
+                repaint();
 
                 // one last redraw for the final faces
                 repaint();
@@ -250,4 +276,26 @@ public class BoardView extends JPanel {
             frame.setVisible(true);
         });
     }
+}
+
+class Player {
+private String name;
+private Color color;
+private int money;
+private int position;
+
+public Player(String name, Color color, int money) {
+    this.name = name;
+    this.color = color;
+    this.money = money;
+    this.position = 0;
+}
+
+// Getters and setters
+public String getName() { return name; }
+public Color getColor() { return color; }
+public int getMoney() { return money; }
+public void setMoney(int money) { this.money = money; }
+public int getPosition() { return position; }
+public void setPosition(int position) { this.position = position; }
 }
