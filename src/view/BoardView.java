@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 /**
  * BoardView is a JPanel that represents the view of the game board.
@@ -23,9 +24,11 @@ public class BoardView extends JPanel {
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
-    private final JLabel  die1Label      = new JLabel("Die 1: 1", SwingConstants.CENTER);
-    private final JLabel  die2Label      = new JLabel("Die 2: 1", SwingConstants.CENTER);
-    private final JLabel  resultLabel    = new JLabel("Sum: 2", SwingConstants.CENTER);
+    // ——— Dice icons ———
+    private final ImageIcon[] diceIcons = new ImageIcon[7];
+    private final JLabel die1Label        = new JLabel();
+    private final JLabel die2Label        = new JLabel();
+    private final JLabel resultLabel      = new JLabel("Sum: 2", SwingConstants.CENTER);
 
     private final Random rand = new Random();
     private Timer         diceTimer;
@@ -34,11 +37,21 @@ public class BoardView extends JPanel {
 
     private ArrayList<Property> properties;
 
+    private int lastDiceSum;
+
     public BoardView() {
         initializeGame();
         setBackground(Color.WHITE);
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
         setupUI();
+        // assume you have dice1.png … dice6.png under /images on your classpath
+        for (int i = 1; i <= 6; i++) {
+            diceIcons[i] = new ImageIcon(getClass().getResource("/images/dice" + i + ".png"));
+        }
+// start both dice showing “1”
+        die1Label.setIcon(diceIcons[1]);
+        die2Label.setIcon(diceIcons[1]);
+
     }
 
     /**
@@ -156,23 +169,26 @@ public class BoardView extends JPanel {
             if (frameCount < 10) {
                 int r1 = rand.nextInt(6) + 1;
                 int r2 = rand.nextInt(6) + 1;
-                die1Label.setText("Die 1: " + r1);
-                die2Label.setText("Die 2: " + r2);
+                die1Label.setIcon(diceIcons[r1]);
+                die2Label.setIcon(diceIcons[r2]);
                 frameCount++;
             } else {
                 diceTimer.stop();
                 finalD1 = rand.nextInt(6) + 1;
                 finalD2 = rand.nextInt(6) + 1;
-                die1Label.setText("Die 1: " + finalD1);
-                die2Label.setText("Die 2: " + finalD2);
+                die1Label.setIcon(diceIcons[finalD1]);
+                die2Label.setIcon(diceIcons[finalD2]);
                 int sum = finalD1 + finalD2;
                 resultLabel.setText("Sum: " + sum);
-                // TODO: if you want to move a token, invoke your controller or
-                // call state.moveCurrentPlayer(sum) here.
+                lastDiceSum = sum;
                 rollDiceButton.setEnabled(true);
             }
         });
         diceTimer.start();
+    }
+
+    public int getLastDiceSum() {
+        return lastDiceSum;
     }
 
     private Point getTilePosition(int position, int startX, int startY, int tileSize) {
