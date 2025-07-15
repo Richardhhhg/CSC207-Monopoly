@@ -7,23 +7,23 @@ import use_case.Player;
 TODO: CLEAN THIS UP
  */
 public class Property extends Tile {
-    private int price;
-    private int rent;
+    private float price;
+    private float rent;
     private boolean owned;
     private Player owner;
 
-    public Property(String name, int price, int rent) {
+    public Property(String name, float price, float rent) {
         super(name);
         this.price = price;
         this.rent = rent;
         this.owned = false;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public int getRent() {
+    public float getRent() {
         return rent;
     }
 
@@ -50,9 +50,14 @@ public class Property extends Tile {
         if (!owned) {
             // Logic for purchasing the property
             // e.g., deducting money from the player and marking the property as owned
+            player.buyProperty(this);
         } else {
             // Logic for paying rent to the owner
             // e.g., deducting rent from the current player and giving it to the owner
+            float finalRent = owner.adjustRent(this.rent);  // landlord can charge more
+            player.deductMoney(finalRent);
+            owner.addMoney(finalRent);
+            System.out.println(player.getName() + " pays $" + finalRent + " rent to " + owner.getName());
         }
     }
 }
