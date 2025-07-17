@@ -242,18 +242,29 @@ public class BoardView extends JPanel {
                 lastDiceSum = finalD1 + finalD2;
 
                 Player currentPlayer = players.get(currentPlayerIndex);
-                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % tileCount;
-                currentPlayer.setPosition(newPosition);
-                currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
-                repaint();
-
-                // one last redraw for the final faces
-                repaint();
-
-                rollDiceButton.setEnabled(true);
+                animatePlayerMovement(currentPlayer, lastDiceSum);
             }
         });
         diceTimer.start();
+    }
+
+    private void animatePlayerMovement(Player player, int steps) {
+        Timer moveTimer = new Timer(300, null); // delay should be a constant, we can tweak what feels "right"
+        final int[] movesLeft = {steps};
+
+        moveTimer.addActionListener(e -> {
+            if (movesLeft[0] > 0) {
+                int newPosition = (player.getPosition() + 1) % tileCount;
+                player.setPosition(newPosition);
+                movesLeft[0]--;
+                repaint();
+            } else {
+                ((Timer) e.getSource()).stop();
+                currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
+                rollDiceButton.setEnabled(true);
+            }
+        });
+        moveTimer.start();
     }
 
 
