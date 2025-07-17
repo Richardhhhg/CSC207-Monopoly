@@ -17,11 +17,12 @@ import javax.swing.ImageIcon;
  * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
  */
 public class BoardView extends JPanel {
-    private static final int BOARD_SIZE = 20;
+    // Board Setup Variables
+    private int tileCount;
+    private static final int PLACEHOLDER_RENT = 50; // TODO: Replace with actual rent values Later
     private static final int PLAYER_COUNT = 4;
     private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
-    private static final int PLACEHOLDER_RENT = 50; // TODO: Replace with actual rent values Later
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -44,8 +45,8 @@ public class BoardView extends JPanel {
 
     public BoardView() {
         initializeGame();
-        setBackground(Color.WHITE);
-        setPreferredSize(new java.awt.Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
+                        Constants.BOARD_PANEL_HEIGHT));
         setupUI();
         // assume you have dice1.png … dice6.png under /images on your classpath
         for (int i = 1; i <= 6; i++) {
@@ -66,6 +67,7 @@ public class BoardView extends JPanel {
     private void initializeGame() {
         // Initialize properties
         properties = new ArrayList<>();
+        // TODO: READ THIS FROM JSON FILE LATER
         String[] propertyNames = {
                 "GO", "Mediterranean Ave", "Baltic Ave", "Reading Railroad",
                 "Oriental Ave", "Vermont Ave", "Connecticut Ave", "St. James Place",
@@ -74,9 +76,11 @@ public class BoardView extends JPanel {
                 "Pacific Ave", "North Carolina Ave", "Pennsylvania Ave", "Boardwalk"
         };
 
+        // TOOD: THIS SHOULD ALSO BE READ FROM JSON
         int[] prices = {0, 60, 60, 200, 100, 100, 120, 140, 140, 160, 180, 180, 200, 220, 220, 280, 300, 300, 320, 400};
+        this.tileCount = propertyNames.length;
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < tileCount; i++) {
             properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
@@ -97,8 +101,9 @@ public class BoardView extends JPanel {
                 drawBoard(g);
             }
         };
-        boardPanel.setPreferredSize(new Dimension(600, 600));
-        boardPanel.setBackground(Color.WHITE);
+        boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH,
+                Constants.BOARD_PANEL_HEIGHT));
+        boardPanel.setBackground(Color.LIGHT_GRAY);
 
         add(boardPanel, BorderLayout.CENTER);
         // ——— Roll-Dice side-panel (button only) ———
@@ -107,7 +112,7 @@ public class BoardView extends JPanel {
         side.add(rollDiceButton);
         add(side, BorderLayout.EAST);
 
-// wire the button
+        // wire the button
         rollDiceButton.addActionListener(e -> startDiceAnimation());
 
     }
@@ -121,50 +126,63 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int boardSize = 500;
-        int tileSize = boardSize / 6;
         int startX = 50;
         int startY = 50;
+        int tilesPerSide = (this.properties.size()-4) / 4 + 2;
+        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
 
         // Draw properties around the board
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < tileCount; i++) {
             Point pos = getTilePosition(i, startX, startY, tileSize);
             Property prop = properties.get(i);
 
             // Draw property tile
-            if (prop.getOwner() != null) {
-                g2d.setColor(Color.WHITE);
-            } else {
-                g2d.setColor(Color.LIGHT_GRAY);
-            }
+            g2d.setColor(Color.WHITE);
 
             g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
             g2d.setColor(Color.BLACK);
             g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
 
             // Draw property name
-            g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+            g2d.setFont(new Font("Arial", Font.BOLD, 16));
             FontMetrics fm = g2d.getFontMetrics();
             String name = prop.getName();
-            if (name.length() > 8) {
-                name = name.substring(0, 8) + "...";
-            }
-            int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
-            int textY = pos.y + tileSize / 2;
-            g2d.drawString(name, textX, textY);
+            int maxWidth = tileSize - 8; // Padding for text
+            if (fm.stringWidth(name) > maxWidth) {
+                // Split name into two lines at the nearest space
+                int splitIndex = name.lastIndexOf(' ', name.length() / 2);
+                if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
+                    splitIndex = name.indexOf(' ', name.length() / 2);
+                    if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
+                        splitIndex = name.length() / 2;
+                    }
+                }
+                String line1 = name.substring(0, splitIndex).trim();
+                String line2 = name.substring(splitIndex).trim();
+                int textX = pos.x + (tileSize - Math.max(fm.stringWidth(line1), fm.stringWidth(line2))) / 2;
+                int textY1 = pos.y + tileSize / 2 - 8;
+                int textY2 = pos.y + tileSize / 2 + 10;
+                g2d.drawString(line1, textX, textY1);
+                g2d.drawString(line2, textX, textY2);
+            } else {
+                int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
+                int textY = pos.y + tileSize / 2 + fm.getAscent() / 2 - 4;
+                g2d.drawString(name, textX, textY);
 
-            // Draw price
-            if (prop.getPrice() > 0) {
-                String price = "$" + prop.getPrice();
-                int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
-                int priceY = pos.y + tileSize - 5;
-                g2d.drawString(price, priceX, priceY);
+                // Draw price
+                if (prop.getPrice() > 0) {
+                    String price = "$" + prop.getPrice();
+                    int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
+                    int priceY = pos.y + tileSize - 5;
+                    g2d.drawString(price, priceX, priceY);
+                }
             }
         }
 
+        // TODO: MAKE SEPARATE METHOD FOR DRAWING DICE, preferably with a separate class
 // centre of the 500×500 island
-        int centerX = startX + boardSize/2;
-        int centerY = startY + boardSize/2;
+        int centerX = startX + Constants.BOARD_SIZE/2;
+        int centerY = startY + Constants.BOARD_SIZE/2;
 
 // make each dice twice a tile wide (≈166px), so two side-by-side fit under 500px
         int diceSize = tileSize;
@@ -225,7 +243,7 @@ public class BoardView extends JPanel {
                 lastDiceSum = finalD1 + finalD2;
 
                 Player currentPlayer = players.get(currentPlayerIndex);
-                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % BOARD_SIZE;
+                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % Constants.BOARD_SIZE;
                 currentPlayer.setPosition(newPosition);
                 currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
                 repaint();
@@ -245,20 +263,22 @@ public class BoardView extends JPanel {
     }
 
     private Point getTilePosition(int position, int startX, int startY, int tileSize) {
-        int boardSize = 5 * tileSize;
+         // TODO: This is very messy, clean it up
+        int tilesPerSide = this.tileCount / 4; // Number of tiles on each side of the board - 1
+        int cool_number = tilesPerSide * tileSize;
 
-        if (position >= 0 && position <= 5) {
+        if (position >= 0 && position <= tilesPerSide) {
             // Bottom row (left to right)
-            return new Point(startX + position * tileSize, startY + boardSize);
-        } else if (position >= 6 && position <= 10) {
+            return new Point(startX + position * tileSize, startY + cool_number);
+        } else if (position >= (tilesPerSide+1) && position <= tilesPerSide*2) {
             // Right column (bottom to top)
-            return new Point(startX + boardSize, startY + boardSize - (position - 5) * tileSize);
-        } else if (position >= 11 && position <= 15) {
+            return new Point(startX + cool_number, startY + cool_number - (position - tilesPerSide) * tileSize);
+        } else if (position >= (tilesPerSide*2 + 1) && position <= tilesPerSide*3) {
             // Top row (right to left)
-            return new Point(startX + boardSize - (position - 10) * tileSize, startY);
+            return new Point(startX + cool_number - (position - tilesPerSide*2) * tileSize, startY);
         } else {
             // Left column (top to bottom)
-            return new Point(startX, startY + (position - 15) * tileSize);
+            return new Point(startX, startY + (position - tilesPerSide*3) * tileSize);
         }
     }
 

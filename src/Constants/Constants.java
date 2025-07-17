@@ -10,6 +10,7 @@ public class Constants {
     public static final int GAME_HEIGHT = 1080;
 
     // Board JPanel Related Constants.Constants
-    public static final int BOARD_WIDTH = 780;
-    public static final int BOARD_HEIGHT = 780;
+    public static final int BOARD_SIZE = 780;
+    public static final int BOARD_PANEL_WIDTH = 900;
+    public static final int BOARD_PANEL_HEIGHT = 900;
 }
