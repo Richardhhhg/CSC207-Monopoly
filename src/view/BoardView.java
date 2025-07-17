@@ -243,7 +243,7 @@ public class BoardView extends JPanel {
                 lastDiceSum = finalD1 + finalD2;
 
                 Player currentPlayer = players.get(currentPlayerIndex);
-                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % Constants.BOARD_SIZE;
+                int newPosition = (currentPlayer.getPosition() + lastDiceSum) % tileCount;
                 currentPlayer.setPosition(newPosition);
                 currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
                 repaint();
