@@ -168,14 +168,13 @@ public class BoardView extends JPanel {
                 int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
                 int textY = pos.y + tileSize / 2 + fm.getAscent() / 2 - 4;
                 g2d.drawString(name, textX, textY);
-
-                // Draw price
-                if (prop.getPrice() > 0) {
-                    String price = "$" + prop.getPrice();
-                    int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
-                    int priceY = pos.y + tileSize - 5;
-                    g2d.drawString(price, priceX, priceY);
-                }
+            }
+            // Draw price
+            if (prop.getPrice() > 0) {
+                String price = "$" + prop.getPrice();
+                int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
+                int priceY = pos.y + tileSize - 5;
+                g2d.drawString(price, priceX, priceY);
             }
         }
 
