@@ -1,0 +1,22 @@
+{
+  "NVDA": {
+    "mean_daily_return_pct": 0.2389,
+    "std_dev_daily_return_pct": 3.8395
+  },
+  "SPY": {
+    "mean_daily_return_pct": 0.0496,
+    "std_dev_daily_return_pct": 1.583
+  },
+  "TSLA": {
+    "mean_daily_return_pct": -0.0917,
+    "std_dev_daily_return_pct": 4.7739
+  },
+  "MCD": {
+    "mean_daily_return_pct": 0.0586,
+    "std_dev_daily_return_pct": 1.3198
+  },
+  "COST": {
+    "mean_daily_return_pct": 0.0175,
+    "std_dev_daily_return_pct": 1.5965
+  }
+}
