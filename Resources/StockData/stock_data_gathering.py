@@ -5,7 +5,7 @@ import numpy as np
 with open("StockData/stock_names.json", "r") as f:
     tickers = json.load(f)
 
-stock_stats = {}
+stock_stats = []
 
 for ticker in tickers:
     stock = yf.Ticker(ticker)
@@ -20,10 +20,11 @@ for ticker in tickers:
     mean_return = np.mean(returns)
     std_dev = np.std(returns)
 
-    stock_stats[ticker] = {
-        "mean_daily_return_pct": round(mean_return, 4),
-        "std_dev_daily_return_pct": round(std_dev, 4)
-    }
+    stock_stats.append({
+        "symbol": ticker,
+        "mean": round(mean_return, 4),
+        "stddev": round(std_dev, 4)})
+
 
 with open("StockData/stock_data.json", "w") as f:
     json.dump(stock_stats, f, indent=2)
