@@ -1,0 +1,223 @@
+package main.entity;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+public class StockInformationRetriever {
+    private static final String ALPHA_VANTAGE_BASE_URL = "https://www.alphavantage.co/query";
+    private final String apiKey;
+    private final HttpClient httpClient;
+    private final Gson gson;
+
+    public StockInformationRetriever(String apiKey) {
+        this.apiKey = apiKey;
+        this.httpClient = HttpClient.newHttpClient();
+        this.gson = new Gson();
+    }
+
+    /**
+     * Loads ticker symbols from the JSON file
+     */
+    public List<String> loadTickerSymbols(String jsonFilePath) throws IOException {
+        Type listType = new TypeToken<List<String>>(){}.getType();
+        return gson.fromJson(new FileReader(jsonFilePath), listType);
+    }
+
+    /**
+     * Retrieves stock information for a single ticker
+     */
+    public StockInfo getStockInfo(String ticker) throws IOException, InterruptedException {
+        // Get current quote
+        double currentPrice = getCurrentPrice(ticker);
+
+        // Get historical data for the past 5 years
+        Map<String, Double> historicalPrices = getHistoricalPrices(ticker);
+
+        // Calculate statistics
+        List<Double> dailyReturns = calculateDailyReturns(historicalPrices);
+        double meanDailyReturn = calculateMean(dailyReturns) * 100; // Convert to percentage
+        double stdDev = calculateStandardDeviation(dailyReturns) * 100; // Convert to percentage
+
+        return new StockInfo(ticker, currentPrice, meanDailyReturn, stdDev);
+    }
+
+    /**
+     * Gets current stock price using GLOBAL_QUOTE function
+     */
+    private double getCurrentPrice(String ticker) throws IOException, InterruptedException {
+        String url = String.format("%s?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
+                ALPHA_VANTAGE_BASE_URL, ticker, apiKey);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        JsonObject root = JsonParser.parseString(response.body()).getAsJsonObject();
+
+        JsonObject globalQuote = root.getAsJsonObject("Global Quote");
+        if (globalQuote == null) {
+            throw new RuntimeException("Failed to get current price for " + ticker);
+        }
+
+        return globalQuote.get("05. price").getAsDouble();
+    }
+
+    /**
+     * Gets historical daily prices for the past 5 years
+     */
+    private Map<String, Double> getHistoricalPrices(String ticker) throws IOException, InterruptedException {
+        String url = String.format("%s?function=TIME_SERIES_DAILY&symbol=%s&outputsize=full&apikey=%s",
+                ALPHA_VANTAGE_BASE_URL, ticker, apiKey);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        JsonObject root = JsonParser.parseString(response.body()).getAsJsonObject();
+
+        JsonObject timeSeries = root.getAsJsonObject("Time Series (Daily)");
+        if (timeSeries == null) {
+            throw new RuntimeException("Failed to get historical data for " + ticker);
+        }
+
+        Map<String, Double> prices = new TreeMap<>();
+        LocalDate fiveYearsAgo = LocalDate.now().minusYears(5);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (Map.Entry<String, com.google.gson.JsonElement> entry : timeSeries.entrySet()) {
+            String dateStr = entry.getKey();
+            LocalDate date = LocalDate.parse(dateStr, formatter);
+
+            if (date.isAfter(fiveYearsAgo) || date.isEqual(fiveYearsAgo)) {
+                JsonObject dailyData = entry.getValue().getAsJsonObject();
+                double closePrice = dailyData.get("4. close").getAsDouble();
+                prices.put(dateStr, closePrice);
+            }
+        }
+
+        return prices;
+    }
+
+    /**
+     * Calculates daily returns from historical prices
+     */
+    private List<Double> calculateDailyReturns(Map<String, Double> prices) {
+        List<String> sortedDates = new ArrayList<>(prices.keySet());
+        Collections.sort(sortedDates);
+
+        List<Double> returns = new ArrayList<>();
+
+        for (int i = 1; i < sortedDates.size(); i++) {
+            double previousPrice = prices.get(sortedDates.get(i - 1));
+            double currentPrice = prices.get(sortedDates.get(i));
+            double dailyReturn = (currentPrice - previousPrice) / previousPrice;
+            returns.add(dailyReturn);
+        }
+
+        return returns;
+    }
+
+    /**
+     * Calculates mean of a list of values
+     */
+    private double calculateMean(List<Double> values) {
+        return values.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+    /**
+     * Calculates standard deviation of a list of values
+     */
+    private double calculateStandardDeviation(List<Double> values) {
+        double mean = calculateMean(values);
+        double variance = values.stream()
+                .mapToDouble(value -> Math.pow(value - mean, 2))
+                .average()
+                .orElse(0.0);
+        return Math.sqrt(variance);
+    }
+
+    /**
+     * Processes all tickers from the JSON file
+     */
+    public List<StockInfo> getAllStockInfo(String jsonFilePath) throws IOException, InterruptedException {
+        List<String> tickers = loadTickerSymbols(jsonFilePath);
+        List<StockInfo> stockInfos = new ArrayList<>();
+
+        for (String ticker : tickers) {
+            try {
+                StockInfo info = getStockInfo(ticker);
+                stockInfos.add(info);
+                System.out.println("Retrieved data for: " + ticker);
+
+//                Thread.sleep(12000);
+
+            } catch (Exception e) {
+                System.err.println("Failed to retrieve data for " + ticker + ": " + e.getMessage());
+            }
+        }
+
+        return stockInfos;
+    }
+
+    /**
+     * Data class to hold stock information
+     * TODO: Refactor this into separate file in data access
+     */
+    public static class StockInfo {
+        private final String ticker;
+        private final double currentPrice;
+        private final double meanDailyReturnPct;
+        private final double standardDeviationPct;
+
+        public StockInfo(String ticker, double currentPrice, double meanDailyReturnPct, double standardDeviationPct) {
+            this.ticker = ticker;
+            this.currentPrice = currentPrice;
+            this.meanDailyReturnPct = meanDailyReturnPct;
+            this.standardDeviationPct = standardDeviationPct;
+        }
+
+        // Getters
+        public String getTicker() { return ticker; }
+        public double getCurrentPrice() { return currentPrice; }
+        public double getMeanDailyReturnPct() { return meanDailyReturnPct; }
+        public double getStandardDeviationPct() { return standardDeviationPct; }
+
+        @Override
+        public String toString() {
+            return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",
+                    ticker, currentPrice, meanDailyReturnPct, standardDeviationPct);
+        }
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        try {
+            StockInformationRetriever retriever = new StockInformationRetriever("5ETSDNB7Z6CD1T3M");
+
+            // Get all stock information from JSON file
+            List<StockInfo> stockInfos = retriever.getAllStockInfo("src/main/Resources/StockData/stock_names.json");
+
+            // Print results
+            for (StockInfo info : stockInfos) {
+                System.out.println(info);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
