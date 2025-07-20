@@ -16,6 +16,7 @@ public class StockView extends JPanel {
         // TODO: Clean up magic numbers
         setPreferredSize(new Dimension(600, 400));
         setLayout(new GridLayout(1, 5, 5, 5));
+        setBorder(BorderFactory.createLineBorder(Color.black));
 
         tickerLabel = new JLabel("Ticker: " + ticker);
         priceLabel = new JLabel("Price: $" + String.format("%.2f", price));
