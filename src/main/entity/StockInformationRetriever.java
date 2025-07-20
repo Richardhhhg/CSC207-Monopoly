@@ -167,6 +167,7 @@ public class StockInformationRetriever {
                 System.out.println("Retrieved data for: " + ticker);
 
                 // Note: The API has rate limit of 5 requests per minute
+                // And 25 requests per day
                  Thread.sleep(12000);
 
             } catch (Exception e) {
