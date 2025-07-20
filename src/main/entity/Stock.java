@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 // TODO: This code is largely AI written, review and refactor as necessary
 public class Stock {
     private final String symbol;
-    private BigDecimal currentPrice;
+    private double currentPrice;
 
     // Distribution parameters
     private double mean;
@@ -18,23 +18,25 @@ public class Stock {
         this.mean = mean;
         this.stddev = stddev;
         // TODO: Make this call the api to get real time price when initializing stock
-        this.currentPrice = BigDecimal.valueOf(mean).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal currentPrice = BigDecimal.valueOf(mean).setScale(2, RoundingMode.HALF_UP);
+        this.currentPrice = currentPrice.doubleValue();
     }
 
     public void updatePrice() {
         NormalDistribution pct_change_dist = new NormalDistribution(mean, stddev);
         double percent_change = pct_change_dist.sample();
 
-        double newPrice = currentPrice.doubleValue() * (1 + percent_change);
+        double newPrice = currentPrice * (1 + percent_change);
 
-        this.currentPrice = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal newPriceRounded = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
+        this.currentPrice = newPriceRounded.doubleValue();
     }
 
-    public BigDecimal getCurrentPrice() {
+    public Double getCurrentPrice() {
         return currentPrice;
     }
 
-    public String getSymbol() {
+    public String getTicker() {
         return symbol;
     }
 }

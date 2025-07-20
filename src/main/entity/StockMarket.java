@@ -21,4 +21,8 @@ public class StockMarket {
             this.stocks = List.of(); // Fallback to an empty list on error
         }
     }
+
+    public List<Stock> getStocks() {
+        return stocks;
+    }
 }

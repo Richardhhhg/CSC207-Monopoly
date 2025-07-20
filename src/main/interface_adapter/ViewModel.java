@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
  *
  * @param <T> The type of the model that this ViewModel is associated with
  */
+//TODO: I have no idea what the fuck this is supposed to do or how to implement it
 public class ViewModel<T> {
     private final String viewName;
 
@@ -30,7 +31,6 @@ public class ViewModel<T> {
     public void setState(T state) {
         this.state = state;
     }
-
 
     public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         this.support.firePropertyChange(propertyName, oldValue, newValue);
