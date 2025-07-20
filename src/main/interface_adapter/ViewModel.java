@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
  *
  * @param <T> The type of the model that this ViewModel is associated with
  */
-//TODO: I have no idea what the fuck this is supposed to do or how to implement it
+//TODO: I have no idea what this is supposed to do or how to implement it
 public class ViewModel<T> {
     private final String viewName;
 

@@ -16,6 +16,7 @@ public class Constants {
 
     // Stock Market and Stock Related
     public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
+    public static final String STOCK_DATA_FILE = "src/main/Resources/StockData/stock_data.json";
     public static final int STOCK_MARKET_WIDTH = 1600;
     public static final int STOCK_MARKET_HEIGHT = 1200;
     public static final int STARTER_PCT_CHANGE = 0;
@@ -30,9 +31,9 @@ public class Constants {
     public static final int STOCK_VIEW_PADDING_V = 5;
 
     // API Constants
-    public static final String STOCK_API_KEY = "5ETSDNB7Z6CD1T3M"; // Probably shouldn't have api key public lmao
     public static final String STOCK_API_URL = "https://www.alphavantage.co/query";
     public static final int YEARS_OF_DATA = 5;
+    public static final int API_RATE_LIMIT_DELAY_MS = 12000;
 
     // Math
     public static final double PERCENTAGE_MULTIPLIER = 100.0;

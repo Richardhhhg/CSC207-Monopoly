@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import main.Constants.Config;
 import main.Constants.Constants;
 import main.data_access.StockMarket.StockInformationRetrieverDataOutputObject;
 
@@ -59,7 +60,7 @@ public class StockInformationRetriever {
      */
     private double getCurrentPrice(String ticker) throws IOException, InterruptedException {
         String url = String.format("%s?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
-                Constants.STOCK_API_URL, ticker, Constants.STOCK_API_KEY);
+                Constants.STOCK_API_URL, ticker, Config.getApiKey());
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -81,7 +82,7 @@ public class StockInformationRetriever {
      */
     private Map<String, Double> getHistoricalPrices(String ticker) throws IOException, InterruptedException {
         String url = String.format("%s?function=TIME_SERIES_DAILY&symbol=%s&outputsize=full&apikey=%s",
-                Constants.STOCK_API_URL, ticker, Constants.STOCK_API_KEY);
+                Constants.STOCK_API_URL, ticker, Config.getApiKey());
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -167,7 +168,7 @@ public class StockInformationRetriever {
 
                 // Note: The API has rate limit of 5 requests per minute
                 // And 25 requests per day
-                 Thread.sleep(12000);
+                 Thread.sleep(Constants.API_RATE_LIMIT_DELAY_MS);
 
             } catch (Exception e) {
                 System.err.println("Failed to retrieve data for " + ticker + ": " + e.getMessage());

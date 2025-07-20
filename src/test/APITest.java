@@ -1,5 +1,6 @@
 package test;
 
+import main.Constants.Config;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -9,7 +10,7 @@ public class APITest {
     public static void main(String[] args) {
         String symbol = "AAPL"; // Example stock symbol
         String interval = "1min"; // Example interval
-        String apiKey = "5ETSDNB7Z6CD1T3M";
+        String apiKey = Config.getApiKey();
         String url = String.format(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=%s&apikey=%s",
                 symbol, interval, apiKey);

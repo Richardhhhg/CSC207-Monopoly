@@ -2,9 +2,9 @@ package main.entity;
 
 import main.use_case.Player;
 
-public class colledgeStudent extends Player {
+public class collegeStudent extends Player {
     private static final int STUDENT_INIT_MONEY = 1000;
-    public colledgeStudent(String name, int initialMoney) {
+    public collegeStudent(String name, int initialMoney) {
         super(name, STUDENT_INIT_MONEY);
         this.loadPortrait("Resources/Computer-nerd.jpg");
     }
