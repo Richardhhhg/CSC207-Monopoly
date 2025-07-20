@@ -1,9 +1,11 @@
 package main.entity;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import main.Constants.Constants;
 import main.data_access.StockMarket.StockInformationRetrieverDataOutputObject;
 
 import java.io.FileReader;
@@ -18,13 +20,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StockInformationRetriever {
-    private static final String ALPHA_VANTAGE_BASE_URL = "https://www.alphavantage.co/query";
-    private final String apiKey;
     private final HttpClient httpClient;
     private final Gson gson;
 
     public StockInformationRetriever(String apiKey) {
-        this.apiKey = apiKey;
         this.httpClient = HttpClient.newHttpClient();
         this.gson = new Gson();
     }
@@ -49,8 +48,8 @@ public class StockInformationRetriever {
 
         // Calculate statistics
         List<Double> dailyReturns = calculateDailyReturns(historicalPrices);
-        double meanDailyReturn = calculateMean(dailyReturns) * 100; // Convert to percentage
-        double stdDev = calculateStandardDeviation(dailyReturns) * 100; // Convert to percentage
+        double meanDailyReturn = calculateMean(dailyReturns) * Constants.PERCENTAGE_MULTIPLIER;
+        double stdDev = calculateStandardDeviation(dailyReturns) * Constants.PERCENTAGE_MULTIPLIER;
 
         return new StockInformationRetrieverDataOutputObject(ticker, currentPrice, meanDailyReturn, stdDev);
     }
@@ -60,7 +59,7 @@ public class StockInformationRetriever {
      */
     private double getCurrentPrice(String ticker) throws IOException, InterruptedException {
         String url = String.format("%s?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
-                ALPHA_VANTAGE_BASE_URL, ticker, apiKey);
+                Constants.STOCK_API_URL, ticker, Constants.STOCK_API_KEY);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -82,7 +81,7 @@ public class StockInformationRetriever {
      */
     private Map<String, Double> getHistoricalPrices(String ticker) throws IOException, InterruptedException {
         String url = String.format("%s?function=TIME_SERIES_DAILY&symbol=%s&outputsize=full&apikey=%s",
-                ALPHA_VANTAGE_BASE_URL, ticker, apiKey);
+                Constants.STOCK_API_URL, ticker, Constants.STOCK_API_KEY);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -97,10 +96,10 @@ public class StockInformationRetriever {
         }
 
         Map<String, Double> prices = new TreeMap<>();
-        LocalDate fiveYearsAgo = LocalDate.now().minusYears(5);
+        LocalDate fiveYearsAgo = LocalDate.now().minusYears(Constants.YEARS_OF_DATA);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        for (Map.Entry<String, com.google.gson.JsonElement> entry : timeSeries.entrySet()) {
+        for (Map.Entry<String, JsonElement> entry : timeSeries.entrySet()) {
             String dateStr = entry.getKey();
             LocalDate date = LocalDate.parse(dateStr, formatter);
 

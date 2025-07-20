@@ -1,5 +1,6 @@
 package main.view;
 
+import main.Constants.Constants;
 import main.entity.Stock;
 import main.entity.StockMarket;
 import main.interface_adapter.StockMarket.StockMarketViewModel;
@@ -14,10 +15,10 @@ import java.util.List;
 public class StockMarketView extends JPanel {
 
     public StockMarketView(List<Stock> stocks) {
-        // TODO: Clean up magic numbers
         // TODO: Clean up code in general
         // TODO: Make this prettier
-        setPreferredSize(new Dimension(800, 600));
+        // TODO: Make this view update with changes in ViewModel
+        setPreferredSize(new Dimension(Constants.STOCK_MARKET_WIDTH, Constants.STOCK_MARKET_HEIGHT));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder("Stock Market"));
 
@@ -25,11 +26,11 @@ public class StockMarketView extends JPanel {
             StockView stockview = new StockView(
                 stock.getTicker(),
                 stock.getCurrentPrice(),
-                0,
-                0
+                Constants.STARTER_PCT_CHANGE,
+                Constants.STARTER_QUANTITY
             );
             add(stockview);
-            add(Box.createVerticalStrut(10));
+            add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
         }
     }
 

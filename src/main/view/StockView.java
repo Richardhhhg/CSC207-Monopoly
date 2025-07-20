@@ -1,21 +1,22 @@
 package main.view;
 
+import main.Constants.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class StockView extends JPanel {
-    private JLabel tickerLabel;
-    private JLabel priceLabel;
-    private JLabel percentChangeLabel;
-    private JLabel quantityOwnedLabel;
-    private JTextField quantityInput;
-    private JButton buyButton;
-    private JButton sellButton;
+    private final JLabel tickerLabel;
+    private final JLabel priceLabel;
+    private final JLabel percentChangeLabel;
+    private final JLabel quantityOwnedLabel;
+    private final JTextField quantityInput;
+    private final JButton buyButton;
+    private final JButton sellButton;
 
     public StockView(String ticker, double price, double percentChange, int quantityOwned) {
-        // TODO: Clean up magic numbers
-        setPreferredSize(new Dimension(600, 400));
-        setLayout(new GridLayout(1, 5, 5, 5));
+        setPreferredSize(new Dimension(Constants.STOCK_WIDTH, Constants.STOCK_HEIGHT));
+        setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS, Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         tickerLabel = new JLabel("Ticker: " + ticker);
@@ -54,6 +55,7 @@ public class StockView extends JPanel {
         quantityOwnedLabel.setText("Owned: " + quantityOwned);
     }
 
+    // Testing Usage
     public static void main(String[] args) {
         JFrame frame = new JFrame("Stock View Example");
         StockView stockView = new StockView("AAPL", 150.00, 1.5, 10);

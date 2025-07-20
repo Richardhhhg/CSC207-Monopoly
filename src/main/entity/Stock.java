@@ -1,5 +1,6 @@
 package main.entity;
 
+import main.Constants.Constants;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,8 +11,8 @@ public class Stock {
     private double currentPrice;
 
     // Distribution parameters
-    private double mean;
-    private double stddev;
+    private final double mean;
+    private final double stddev;
 
     public Stock(String symbol, double currentPrice, double mean, double stddev) {
         this.symbol = symbol;
@@ -24,7 +25,7 @@ public class Stock {
         NormalDistribution pct_change_dist = new NormalDistribution(mean, stddev);
         double percent_change = pct_change_dist.sample();
 
-        double newPrice = currentPrice * (1 + percent_change);
+        double newPrice = currentPrice * (1 + percent_change / Constants.PERCENTAGE_MULTIPLIER);
 
         BigDecimal newPriceRounded = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
         this.currentPrice = newPriceRounded.doubleValue();
@@ -36,6 +37,14 @@ public class Stock {
 
     public String getTicker() {
         return symbol;
+    }
+
+    public double getMean() {
+        return mean;
+    }
+
+    public double getStddev() {
+        return stddev;
     }
 
     @Override

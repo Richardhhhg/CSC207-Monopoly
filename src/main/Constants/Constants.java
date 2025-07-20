@@ -13,4 +13,27 @@ public class Constants {
     public static final int BOARD_SIZE = 780;
     public static final int BOARD_PANEL_WIDTH = 900;
     public static final int BOARD_PANEL_HEIGHT = 900;
+
+    // Stock Market and Stock Related
+    public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
+    public static final int STOCK_MARKET_WIDTH = 1600;
+    public static final int STOCK_MARKET_HEIGHT = 1200;
+    public static final int STARTER_PCT_CHANGE = 0;
+    public static final int STARTER_QUANTITY = 0;
+    public static final int STOCK_MKT_PADDING = 10;
+
+    public static final int STOCK_WIDTH = 1600;
+    public static final int STOCK_HEIGHT = 200;
+    public static final int STOCK_VIEW_ROWS = 1;
+    public static final int STOCK_VIEW_COLUMNS = 5;
+    public static final int STOCK_VIEW_PADDING_H = 5;
+    public static final int STOCK_VIEW_PADDING_V = 5;
+
+    // API Constants
+    public static final String STOCK_API_KEY = "5ETSDNB7Z6CD1T3M"; // Probably shouldn't have api key public lmao
+    public static final String STOCK_API_URL = "https://www.alphavantage.co/query";
+    public static final int YEARS_OF_DATA = 5;
+
+    // Math
+    public static final double PERCENTAGE_MULTIPLIER = 100.0;
 }

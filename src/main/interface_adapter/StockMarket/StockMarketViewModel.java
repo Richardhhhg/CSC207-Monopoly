@@ -1,5 +1,6 @@
 package main.interface_adapter.StockMarket;
 
+import main.Constants.Constants;
 import main.entity.Stock;
 
 import java.util.List;
@@ -15,10 +16,10 @@ public class StockMarketViewModel {
     private final List<Stock> stocks;
 
     public StockMarketViewModel() {
-        StockInformationRetriever stockInfoRetriever = new StockInformationRetriever("5ETSDNB7Z6CD1T3M");
+        StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Constants.STOCK_API_KEY);
         try {
             // Load ticker symbols from JSON file
-            this.stocks = stockInfoRetriever.createStocks("src/main/Resources/StockData/stock_names.json");
+            this.stocks = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize StockMarketViewModel", e);
         }
