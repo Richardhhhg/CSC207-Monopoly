@@ -13,13 +13,11 @@ public class Stock {
     private double mean;
     private double stddev;
 
-    public Stock(String symbol, double mean, double stddev) {
+    public Stock(String symbol, double currentPrice, double mean, double stddev) {
         this.symbol = symbol;
         this.mean = mean;
         this.stddev = stddev;
-        // TODO: Make this call the api to get real time price when initializing stock
-        BigDecimal currentPrice = BigDecimal.valueOf(mean).setScale(2, RoundingMode.HALF_UP);
-        this.currentPrice = currentPrice.doubleValue();
+        this.currentPrice = currentPrice;
     }
 
     public void updatePrice() {
@@ -38,5 +36,11 @@ public class Stock {
 
     public String getTicker() {
         return symbol;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",
+                symbol, currentPrice, mean, stddev);
     }
 }

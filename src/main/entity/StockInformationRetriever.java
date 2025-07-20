@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import main.data_access.StockMarket.StockInformationRetrieverDataOutputObject;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -38,7 +40,7 @@ public class StockInformationRetriever {
     /**
      * Retrieves stock information for a single ticker
      */
-    public StockInfo getStockInfo(String ticker) throws IOException, InterruptedException {
+    public StockInformationRetrieverDataOutputObject getStockInfo(String ticker) throws IOException, InterruptedException {
         // Get current quote
         double currentPrice = getCurrentPrice(ticker);
 
@@ -50,7 +52,7 @@ public class StockInformationRetriever {
         double meanDailyReturn = calculateMean(dailyReturns) * 100; // Convert to percentage
         double stdDev = calculateStandardDeviation(dailyReturns) * 100; // Convert to percentage
 
-        return new StockInfo(ticker, currentPrice, meanDailyReturn, stdDev);
+        return new StockInformationRetrieverDataOutputObject(ticker, currentPrice, meanDailyReturn, stdDev);
     }
 
     /**
@@ -153,17 +155,19 @@ public class StockInformationRetriever {
     /**
      * Processes all tickers from the JSON file
      */
-    public List<StockInfo> getAllStockInfo(String jsonFilePath) throws IOException, InterruptedException {
+    public List<Stock> createStocks(String jsonFilePath) throws IOException, InterruptedException {
         List<String> tickers = loadTickerSymbols(jsonFilePath);
-        List<StockInfo> stockInfos = new ArrayList<>();
+        List<Stock> stockInfos = new ArrayList<>();
 
         for (String ticker : tickers) {
             try {
-                StockInfo info = getStockInfo(ticker);
-                stockInfos.add(info);
+                StockInformationRetrieverDataOutputObject info = getStockInfo(ticker);
+                Stock stock = new Stock(info.getTicker(), info.getCurrentPrice(), info.getMeanDailyReturnPct(), info.getStandardDeviationPct());
+                stockInfos.add(stock);
                 System.out.println("Retrieved data for: " + ticker);
 
-//                Thread.sleep(12000);
+                // Note: The API has rate limit of 5 requests per minute
+                 Thread.sleep(12000);
 
             } catch (Exception e) {
                 System.err.println("Failed to retrieve data for " + ticker + ": " + e.getMessage());
@@ -173,47 +177,17 @@ public class StockInformationRetriever {
         return stockInfos;
     }
 
-    /**
-     * Data class to hold stock information
-     * TODO: Refactor this into separate file in data access
-     */
-    public static class StockInfo {
-        private final String ticker;
-        private final double currentPrice;
-        private final double meanDailyReturnPct;
-        private final double standardDeviationPct;
-
-        public StockInfo(String ticker, double currentPrice, double meanDailyReturnPct, double standardDeviationPct) {
-            this.ticker = ticker;
-            this.currentPrice = currentPrice;
-            this.meanDailyReturnPct = meanDailyReturnPct;
-            this.standardDeviationPct = standardDeviationPct;
-        }
-
-        // Getters
-        public String getTicker() { return ticker; }
-        public double getCurrentPrice() { return currentPrice; }
-        public double getMeanDailyReturnPct() { return meanDailyReturnPct; }
-        public double getStandardDeviationPct() { return standardDeviationPct; }
-
-        @Override
-        public String toString() {
-            return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",
-                    ticker, currentPrice, meanDailyReturnPct, standardDeviationPct);
-        }
-    }
-
     // Example usage
     public static void main(String[] args) {
         try {
             StockInformationRetriever retriever = new StockInformationRetriever("5ETSDNB7Z6CD1T3M");
 
             // Get all stock information from JSON file
-            List<StockInfo> stockInfos = retriever.getAllStockInfo("src/main/Resources/StockData/stock_names.json");
+            List<Stock> stockInfos = retriever.createStocks("src/main/Resources/StockData/stock_names.json");
 
             // Print results
-            for (StockInfo info : stockInfos) {
-                System.out.println(info);
+            for (Stock stock: stockInfos) {
+                System.out.println(stock);
             }
 
         } catch (Exception e) {
