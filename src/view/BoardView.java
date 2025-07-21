@@ -2,6 +2,8 @@ package view;
 
 import entity.Property;
 import Constants.Constants;
+import util.MusicPlayer;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -106,14 +108,40 @@ public class BoardView extends JPanel {
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
         add(boardPanel, BorderLayout.CENTER);
-        // ——— Roll-Dice side-panel (button only) ———
+        // ——— Roll-Dice & Music side-panel ———
         JPanel side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
+
+        // 1) Roll Dice button
         side.add(rollDiceButton);
+        rollDiceButton.addActionListener(e -> startDiceAnimation());
+
+        // 2) Pause/Play Music button
+        JButton toggleMusicButton = new JButton("Pause Music");
+        toggleMusicButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        toggleMusicButton.addActionListener(e -> {
+            MusicPlayer.togglePause();
+            // update button text
+            toggleMusicButton.setText(
+                    MusicPlayer.isPaused() ? "Resume Music" : "Pause Music"
+            );
+        });
+        side.add(Box.createVerticalStrut(10)); // optional spacing
+        side.add(toggleMusicButton);
+
+        // 3) Quit Game button
+        JButton quitButton = new JButton("Quit Game");
+        quitButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        quitButton.addActionListener(e -> {
+            // cleanly exit the whole application
+            System.exit(0);
+        });
+        side.add(Box.createVerticalStrut(10)); // a bit of spacing
+        side.add(quitButton);
+
+        // finally add the side panel to the frame
         add(side, BorderLayout.EAST);
 
-        // wire the button
-        rollDiceButton.addActionListener(e -> startDiceAnimation());
 
     }
 
