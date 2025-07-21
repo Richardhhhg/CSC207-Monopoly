@@ -169,13 +169,14 @@ public class StockInformationRetriever {
 
                 // Note: The API has rate limit of 5 requests per minute
                 // And 25 requests per day
-                 Thread.sleep(Constants.API_RATE_LIMIT_DELAY_MS);
+                rateLimiter.schedule(() -> {}, Constants.API_RATE_LIMIT_DELAY_MS, TimeUnit.MILLISECONDS);
 
             } catch (Exception e) {
                 System.err.println("Failed to retrieve data for " + ticker + ": " + e.getMessage());
             }
         }
 
+        rateLimiter.shutdown();
         return stockInfos;
     }
 
