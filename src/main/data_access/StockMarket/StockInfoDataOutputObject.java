@@ -31,7 +31,7 @@ public class StockInfoDataOutputObject {
 
     /**
      * Returns a string representation of the stock information.
-     * This is for rebugging purposes mainly
+     * This is for debugging purposes mainly
      *
      * @return A string containing the ticker, current price, mean daily return percentage, and standard deviation percentage.
      */
