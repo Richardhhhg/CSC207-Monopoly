@@ -21,9 +21,9 @@ real life stocks and real data from stocks.
   - The prices of stocks when the game starts will be based on real world stock data
 
 # Contributions
-| Name         | Github      | Responsibility                               |
-|--------------|-------------|----------------------------------------------|
-| Jimmy Wu     | dtygnj123   |                                              |
-| Nathan Yoon  | Nate-Yoon   |                                              |
-| Richard Hong | Richardhhhg | Implemented the Stock Market and Designed UI |
-| David Zhao   | JimmyWooHoo |                                              |
+| Name         | Github      |
+|--------------|-------------|
+| Jimmy Wu     | dtygnj123   |
+| Nathan Yoon  | Nate-Yoon   |
+| Richard Hong | Richardhhhg | 
+| David Zhao   | JimmyWooHoo |
