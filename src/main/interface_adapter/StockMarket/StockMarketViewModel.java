@@ -1,5 +1,6 @@
 package main.interface_adapter.StockMarket;
 
+import main.Constants.Config;
 import main.Constants.Constants;
 import main.entity.Stock;
 
@@ -16,7 +17,7 @@ public class StockMarketViewModel {
     private final List<Stock> stocks;
 
     public StockMarketViewModel() {
-        StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Constants.STOCK_API_KEY);
+        StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Config.getApiKey());
         try {
             // Load ticker symbols from JSON file
             this.stocks = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
