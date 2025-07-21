@@ -43,15 +43,15 @@ public class StockView extends JPanel {
     public JButton getSellButton() { return sellButton; }
 
     public void setPrice(double price) {
-        priceLabel.setText("Price: $" + String.format("%.2f", price));
+        priceLabel.setText("$" + String.format("%.2f", price));
     }
 
     public void setPercentChange(double percentChange) {
-        percentChangeLabel.setText("Change: " + String.format("%.2f", percentChange) + "%");
+        percentChangeLabel.setText(String.format("%.2f", percentChange) + "%");
     }
 
     public void setQuantityOwned(int quantityOwned) {
-        quantityOwnedLabel.setText("Owned: " + quantityOwned);
+        quantityOwnedLabel.setText(String.valueOf(quantityOwned));
     }
 
     /**
