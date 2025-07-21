@@ -2,6 +2,7 @@ package main.interface_adapter.StockMarket;
 
 import main.Constants.Config;
 import main.Constants.Constants;
+import main.data_access.StockMarket.StockMarketInputDataObject;
 import main.entity.Stock;
 
 import java.util.List;
@@ -14,19 +15,19 @@ import main.entity.StockInformationRetriever;
  * StockMarketView
  */
 public class StockMarketViewModel {
-    private final List<Stock> stocks;
+    private StockMarketInputDataObject stockMarketInputDataObject;
 
     public StockMarketViewModel() {
         StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Config.getApiKey());
         try {
-            this.stocks = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
+            this.stockMarketInputDataObject = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize StockMarketViewModel", e);
         }
     }
 
     public List<Stock> getStocks() {
-        return stocks;
+        return stockMarketInputDataObject.getStocks();
     }
 
 }

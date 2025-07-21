@@ -1,29 +1,30 @@
 package main.entity;
 
 import main.Constants.Constants;
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-// TODO: This code is largely AI written, review and refactor as necessary
 public class Stock {
     private final String symbol;
     private double currentPrice;
 
     // Distribution parameters
-    private final double mean;
-    private final double stddev;
+    private final double meanDailyReturnPct;
+    private final double standardDeviationPct;
+    private final NormalDistribution pctChangeDistribution;
 
-    public Stock(String symbol, double currentPrice, double mean, double stddev) {
-        this.symbol = symbol;
-        this.mean = mean;
-        this.stddev = stddev;
-        this.currentPrice = currentPrice;
+    public Stock(StockInfoDataOutputObject stockInfoData) {
+        this.symbol = stockInfoData.getTicker();
+        this.meanDailyReturnPct = stockInfoData.getMeanDailyReturnPct();
+        this.standardDeviationPct = stockInfoData.getStandardDeviationPct();
+        this.currentPrice = stockInfoData.getCurrentPrice();
+        this.pctChangeDistribution = new NormalDistribution(meanDailyReturnPct, standardDeviationPct);
     }
 
     public void updatePrice() {
-        NormalDistribution pct_change_dist = new NormalDistribution(mean, stddev);
-        double percent_change = pct_change_dist.sample();
+        double percent_change = pctChangeDistribution.sample();
 
         double newPrice = currentPrice * (1 + percent_change / Constants.PERCENTAGE_MULTIPLIER);
 
@@ -39,17 +40,10 @@ public class Stock {
         return symbol;
     }
 
-    public double getMean() {
-        return mean;
-    }
-
-    public double getStddev() {
-        return stddev;
-    }
-
+    // For debugging
     @Override
     public String toString() {
         return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",
-                symbol, currentPrice, mean, stddev);
+                symbol, currentPrice, meanDailyReturnPct, standardDeviationPct);
     }
 }

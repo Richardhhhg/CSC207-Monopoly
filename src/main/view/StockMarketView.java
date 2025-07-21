@@ -1,6 +1,7 @@
 package main.view;
 
 import main.Constants.Constants;
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Stock;
 
 import javax.swing.*;
@@ -60,7 +61,8 @@ public class StockMarketView extends JFrame {
     public static void main(String[] args) {
         List<Stock> stocks = new java.util.ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            stocks.add(new Stock("TEST_" + i, 100, 0.01, 0.1));
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
+            stocks.add(new Stock(info));
         }
         StockMarketView marketView = new StockMarketView(stocks);
         marketView.setVisible(true);

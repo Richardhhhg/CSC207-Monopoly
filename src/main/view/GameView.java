@@ -1,5 +1,6 @@
 package main.view;
 
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Stock;
 
 import javax.swing.*;
@@ -25,7 +26,8 @@ public class GameView extends JFrame{
         // TODO: There should be a way to intiial the stock market elsewhere and display it here.
         List<Stock> stocks = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            stocks.add(new Stock("TEST_" + i, 100, 0.01, 0.1));
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
+            stocks.add(new Stock(info));
         }
         this.boardView = new BoardView();
         this.stockMarketView = new StockMarketView(stocks);

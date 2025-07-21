@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import main.Constants.Config;
 import main.Constants.Constants;
-import main.data_access.StockMarket.StockInformationRetrieverDataOutputObject;
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class StockInformationRetriever {
     /**
      * Retrieves stock information for a single ticker
      */
-    public StockInformationRetrieverDataOutputObject getStockInfo(String ticker) throws IOException, InterruptedException {
+    public StockInfoDataOutputObject getStockInfo(String ticker) throws IOException, InterruptedException {
         // Get current quote
         double currentPrice = getCurrentPrice(ticker);
 
@@ -52,7 +52,7 @@ public class StockInformationRetriever {
         double meanDailyReturn = calculateMean(dailyReturns) * Constants.PERCENTAGE_MULTIPLIER;
         double stdDev = calculateStandardDeviation(dailyReturns) * Constants.PERCENTAGE_MULTIPLIER;
 
-        return new StockInformationRetrieverDataOutputObject(ticker, currentPrice, meanDailyReturn, stdDev);
+        return new StockInfoDataOutputObject(ticker, currentPrice, meanDailyReturn, stdDev);
     }
 
     /**
@@ -161,8 +161,8 @@ public class StockInformationRetriever {
 
         for (String ticker : tickers) {
             try {
-                StockInformationRetrieverDataOutputObject info = getStockInfo(ticker);
-                Stock stock = new Stock(info.getTicker(), info.getCurrentPrice(), info.getMeanDailyReturnPct(), info.getStandardDeviationPct());
+                StockInfoDataOutputObject info = getStockInfo(ticker);
+                Stock stock = new Stock(info);
                 stockInfos.add(stock);
                 System.out.println("Retrieved data for: " + ticker);
 
