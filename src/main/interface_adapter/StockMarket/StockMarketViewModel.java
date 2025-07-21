@@ -19,7 +19,6 @@ public class StockMarketViewModel {
     public StockMarketViewModel() {
         StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Config.getApiKey());
         try {
-            // Load ticker symbols from JSON file
             this.stocks = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize StockMarketViewModel", e);
