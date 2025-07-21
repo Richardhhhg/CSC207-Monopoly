@@ -14,6 +14,7 @@ public class StockView extends JPanel {
     private final JButton buyButton;
     private final JButton sellButton;
 
+    // TODO: Change this to take in a StockPresenter object instead of individual parameters
     public StockView(String ticker, double price, double percentChange, int quantityOwned) {
         setPreferredSize(new Dimension(Constants.STOCK_WIDTH, Constants.STOCK_HEIGHT));
         setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS, Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
@@ -37,12 +38,10 @@ public class StockView extends JPanel {
         add(quantityInput);
     }
 
-    // Getters for input and buttons for event handling
     public JTextField getQuantityInput() { return quantityInput; }
     public JButton getBuyButton() { return buyButton; }
     public JButton getSellButton() { return sellButton; }
 
-    // Methods to update displayed values
     public void setPrice(double price) {
         priceLabel.setText("Price: $" + String.format("%.2f", price));
     }
@@ -55,7 +54,9 @@ public class StockView extends JPanel {
         quantityOwnedLabel.setText("Owned: " + quantityOwned);
     }
 
-    // Testing Usage
+    /**
+     * Main method for testing the StockView component.
+     */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Stock View Example");
         StockView stockView = new StockView("AAPL", 150.00, 1.5, 10);

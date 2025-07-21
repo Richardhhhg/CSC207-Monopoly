@@ -2,6 +2,8 @@ package main.view;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Stock;
+import main.entity.StockMarket;
+import main.interface_adapter.StockMarket.StockMarketViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class GameView extends JFrame{
     private BoardView boardView;
     private StockMarketView stockMarketView;
 
+    // TODO: There is a ton of coupling here, fix it
     public GameView() {
         super("Stock Market Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,19 +33,32 @@ public class GameView extends JFrame{
             stocks.add(new Stock(info));
         }
         this.boardView = new BoardView();
-        this.stockMarketView = new StockMarketView(stocks);
+
+        // TODO: This implementation is temporary until we get actual game entity.
+        // TODO: This will later use stockMarketViewModel to get stocks rather than passing in stocks directly.
+        this.stockMarketView = new StockMarketView(stocks);;
         stockMarketView.setAlwaysOnTop(true);
     }
 
+    /**
+     * Adds the board view to the game view.
+     */
     public void addBoard() {
         this.add(boardView, BorderLayout.CENTER);
         setVisible(true);
     }
 
+    /**
+     * Displays the stock market JFrame
+     */
     public void showStockMarket() {
         stockMarketView.setVisible(true);
     }
 
+    /**
+     * Main method to run the game view.
+     * This is just for testing purposes.
+     */
     public static void main(String[] args) {
         GameView game = new GameView();
         game.addBoard();

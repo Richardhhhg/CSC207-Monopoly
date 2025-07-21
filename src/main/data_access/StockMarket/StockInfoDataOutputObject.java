@@ -13,7 +13,6 @@ public class StockInfoDataOutputObject {
         this.standardDeviationPct = standardDeviationPct;
     }
 
-    // Getters
     public String getTicker() {
         return ticker;
     }
@@ -30,7 +29,12 @@ public class StockInfoDataOutputObject {
         return standardDeviationPct;
     }
 
-    // This is for debugging purposes
+    /**
+     * Returns a string representation of the stock information.
+     * This is for rebugging purposes mainly
+     *
+     * @return A string containing the ticker, current price, mean daily return percentage, and standard deviation percentage.
+     */
     @Override
     public String toString() {
         return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",

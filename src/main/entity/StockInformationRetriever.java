@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+// TODO: Refactor this into many smaller use cases
 public class StockInformationRetriever {
     private final HttpClient httpClient;
     private final Gson gson;
@@ -181,10 +182,10 @@ public class StockInformationRetriever {
     // Example usage
     public static void main(String[] args) {
         try {
-            StockInformationRetriever retriever = new StockInformationRetriever("5ETSDNB7Z6CD1T3M");
+            StockInformationRetriever retriever = new StockInformationRetriever(Config.getApiKey());
 
             // Get all stock information from JSON file
-            List<Stock> stockInfos = retriever.createStocks("src/main/Resources/StockData/stock_names.json");
+            List<Stock> stockInfos = retriever.createStocks(Constants.STOCK_NAME_FILE);
 
             // Print results
             for (Stock stock: stockInfos) {

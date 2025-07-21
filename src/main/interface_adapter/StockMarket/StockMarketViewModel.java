@@ -7,6 +7,7 @@ import main.entity.Stock;
 
 import java.util.List;
 import main.entity.StockInformationRetriever;
+import main.entity.StockMarket;
 
 /**
  * Viewmodel for StockMarket
@@ -15,19 +16,14 @@ import main.entity.StockInformationRetriever;
  * StockMarketView
  */
 public class StockMarketViewModel {
-    private StockMarketInputDataObject stockMarketInputDataObject;
+    private StockMarket stockMarket;
 
-    public StockMarketViewModel() {
-        StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Config.getApiKey());
-        try {
-            this.stockMarketInputDataObject = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize StockMarketViewModel", e);
-        }
+    public StockMarketViewModel(StockMarket stockMarket) {
+        this.stockMarket = stockMarket;
     }
 
     public List<Stock> getStocks() {
-        return stockMarketInputDataObject.getStocks();
+        return stockMarket.getStocks();
     }
 
 }
