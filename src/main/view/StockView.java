@@ -19,10 +19,10 @@ public class StockView extends JPanel {
         setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS, Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
-        tickerLabel = new JLabel("Ticker: " + ticker);
-        priceLabel = new JLabel("Price: $" + String.format("%.2f", price));
-        percentChangeLabel = new JLabel("Change: " + String.format("%.2f", percentChange) + "%");
-        quantityOwnedLabel = new JLabel("Owned: " + quantityOwned);
+        tickerLabel = new JLabel(ticker);
+        priceLabel = new JLabel("$" + String.format("%.2f", price));
+        percentChangeLabel = new JLabel( String.format("%.2f", percentChange) + "%");
+        quantityOwnedLabel = new JLabel(String.valueOf(quantityOwned));
 
         quantityInput = new JTextField(5);
         buyButton = new JButton("Buy");

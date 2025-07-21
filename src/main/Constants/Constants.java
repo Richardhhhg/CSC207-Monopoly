@@ -17,8 +17,8 @@ public class Constants {
     // Stock Market and Stock Related
     public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
     public static final String STOCK_DATA_FILE = "src/main/Resources/StockData/stock_data.json";
-    public static final int STOCK_MARKET_WIDTH = 1600;
-    public static final int STOCK_MARKET_HEIGHT = 1200;
+    public static final int STOCK_MARKET_WIDTH = 800;
+    public static final int STOCK_MARKET_HEIGHT = 400;
     public static final int STARTER_PCT_CHANGE = 0;
     public static final int STARTER_QUANTITY = 0;
     public static final int STOCK_MKT_PADDING = 10;
