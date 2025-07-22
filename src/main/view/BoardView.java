@@ -275,12 +275,19 @@ public class BoardView extends JPanel {
                 lastDiceSum = finalD1 + finalD2;
 
                 Player currentPlayer = players.get(currentPlayerIndex);
-                animatePlayerMovement(currentPlayer, lastDiceSum);
-                currentPlayer.addMoveCount(lastDiceSum);
-                if (currentPlayer.getMoveCount() >= tileCount) {
+
+                int oldPosition = currentPlayer.getPosition() % tileCount;
+                System.out.println("default start at  : " + oldPosition);
+                int steps = lastDiceSum;
+
+                if (oldPosition + steps >= tileCount) {
                     currentPlayer.addMoney(FINISH_LINE_BONUS);
-                    currentPlayer.resetMoveCount();
+                    System.out.println("default got : " + FINISH_LINE_BONUS +" dollars");
                 }
+                animatePlayerMovement(currentPlayer, lastDiceSum);
+                System.out.println("default moves  : " + lastDiceSum);
+                System.out.println("default is now in  : " + currentPlayer.getPosition());
+
             }
         });
         diceTimer.start();
