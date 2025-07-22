@@ -211,9 +211,8 @@ public class BoardView extends JPanel {
         g2d.drawImage(diceIcons[finalD1].getImage(), x1, y, diceSize, diceSize, null);
         g2d.drawImage(diceIcons[finalD2].getImage(), x2, y, diceSize, diceSize, null);
 
-        // draw the current player's portrait over the first die
         if (currentPortrait != null) {
-            int portraitSize = diceSize - 10; // a bit smaller than the die
+            int portraitSize = diceSize;
             int portraitX = x1 + 80;
             int portraitY = y - 150;
             String labelText = "Current Player:";
@@ -273,7 +272,8 @@ public class BoardView extends JPanel {
                 finalD2 = rand.nextInt(6) + 1;
                 lastDiceSum = finalD1 + finalD2;
 
-                animatePlayerMovement(players.get(currentPlayerIndex), lastDiceSum);
+                Player currentPlayer = players.get(currentPlayerIndex);
+                animatePlayerMovement(currentPlayer, lastDiceSum);
             }
         });
         diceTimer.start();
