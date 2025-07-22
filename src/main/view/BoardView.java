@@ -276,9 +276,7 @@ public class BoardView extends JPanel {
 
                 Player currentPlayer = players.get(currentPlayerIndex);
 
-                int oldPosition = currentPlayer.getPosition() % tileCount;
-
-                if (oldPosition + lastDiceSum >= tileCount) {
+                if (currentPlayer.getPosition() + lastDiceSum >= tileCount) {
                     currentPlayer.addMoney(FINISH_LINE_BONUS);
                 }
                 animatePlayerMovement(currentPlayer, lastDiceSum);
