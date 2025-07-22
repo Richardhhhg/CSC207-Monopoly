@@ -2,15 +2,17 @@ package main.entity;
 
 import main.use_case.Player;
 
+import java.awt.*;
+
 /**
  * A Player subclass representing a Landlord.
  * Landlords gain extra rent and can sell properties for more money.
  */
 public class landlord extends Player {
     private static final int LANDLORD_INIT_MONEY = 800;
-    public landlord(String name) {
-        super(name, LANDLORD_INIT_MONEY);
-        this.loadPortrait("Resources/landlord.webp");
+    public landlord(String name, Color color) {
+        super(name, LANDLORD_INIT_MONEY, color);
+        this.loadPortrait("main/Resources/landlord.png");
     }
 
     /**
@@ -45,6 +47,6 @@ public class landlord extends Player {
      */
     @Override
     public void applyTurnEffects() {
-
+        System.out.println("Gimme the Rent!");
     }
 }

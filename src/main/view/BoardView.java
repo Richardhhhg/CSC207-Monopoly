@@ -1,6 +1,7 @@
 package main.view;
 
-import main.entity.Property;
+import main.entity.*;
+import main.use_case.Player;
 import main.Constants.Constants;
 import java.util.List;
 import java.util.ArrayList;
@@ -25,11 +26,15 @@ public class BoardView extends JPanel {
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
+    private final JButton endTurnButton = new JButton("End Turn");
     // ——— Dice icons ———
     private final ImageIcon[] diceIcons = new ImageIcon[7];
     private final JLabel die1Label        = new JLabel();
     private final JLabel die2Label        = new JLabel();
     private final JLabel resultLabel      = new JLabel("Sum: 2", SwingConstants.CENTER);
+
+    // ——— Portrait icons ———
+    private Image currentPortrait;
 
     private final Random rand = new Random();
     private Timer         diceTimer;
@@ -46,6 +51,7 @@ public class BoardView extends JPanel {
         initializeGame();
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                         Constants.BOARD_PANEL_HEIGHT));
+        currentPortrait = players.get(currentPlayerIndex).getPortrait();
         setupUI();
         // assume you have dice1.png … dice6.png under /images on your classpath
         for (int i = 1; i <= 6; i++) {
@@ -84,9 +90,17 @@ public class BoardView extends JPanel {
         }
 
         players = new ArrayList<>();
-        for (int i = 0; i < PLAYER_COUNT; i++) {
-            players.add(new Player(PLAYER_NAMES[i], PLAYER_COLORS[i], 1500));
-        }
+        //for (int i = 0; i < PLAYER_COUNT; i++) {
+           // players.add(new landlord(PLAYER_NAMES[i], PLAYER_COLORS[i]));
+        //}
+        DefaultPlayer defaultPlayer = new DefaultPlayer(PLAYER_NAMES[0], PLAYER_COLORS[0]);
+        clerk clerk = new clerk(PLAYER_NAMES[1], PLAYER_COLORS[1]);
+        collegeStudent collegeStudent = new collegeStudent(PLAYER_NAMES[2], PLAYER_COLORS[2]);
+        landlord landlord = new landlord(PLAYER_NAMES[3], PLAYER_COLORS[3]);
+        players.add(defaultPlayer);
+        players.add(clerk);
+        players.add(collegeStudent);
+        players.add(landlord);
     }
 
     private void setupUI() {
@@ -109,10 +123,12 @@ public class BoardView extends JPanel {
         JPanel side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
         side.add(rollDiceButton);
+        side.add(endTurnButton);
         add(side, BorderLayout.EAST);
 
         // wire the button
         rollDiceButton.addActionListener(e -> startDiceAnimation());
+        endTurnButton.addActionListener(e -> handleEndTurn());
 
     }
 
@@ -195,6 +211,22 @@ public class BoardView extends JPanel {
         g2d.drawImage(diceIcons[finalD1].getImage(), x1, y, diceSize, diceSize, null);
         g2d.drawImage(diceIcons[finalD2].getImage(), x2, y, diceSize, diceSize, null);
 
+        if (currentPortrait != null) {
+            int portraitSize = diceSize;
+            int portraitX = x1 + 80;
+            int portraitY = y - 150;
+            String labelText = "Current Player:";
+            Font oldFont = g2d.getFont();
+            g2d.setFont(new Font("Arial", Font.BOLD, 14));
+            FontMetrics fm = g2d.getFontMetrics();
+            int labelX = portraitX + (portraitSize - fm.stringWidth(labelText)) / 2;
+            int labelY = portraitY - 10;
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(labelText, labelX, labelY);
+
+            g2d.drawImage(currentPortrait, portraitX, portraitY, portraitSize, portraitSize, null);
+        }
+
         // ——— draw the sum underneath ———
         String sumText = "Sum: " + lastDiceSum;
         Font oldFont = g2d.getFont();
@@ -259,12 +291,36 @@ public class BoardView extends JPanel {
                 repaint();
             } else {
                 ((Timer) e.getSource()).stop();
-                currentPlayerIndex = (currentPlayerIndex + 1) % PLAYER_COUNT;
-                rollDiceButton.setEnabled(true);
             }
         });
         moveTimer.start();
     }
+
+    private void handleEndTurn() {
+        int startIndex = currentPlayerIndex;
+        boolean foundNext = false;
+        players.get(currentPlayerIndex).applyTurnEffects();
+
+        for (int i = 1; i <= players.size(); i++) {
+            int nextIndex = (startIndex + i) % players.size();
+            if (!players.get(nextIndex).isBankrupt()) {
+                currentPlayerIndex = nextIndex;
+                foundNext = true;
+                break;
+            }
+        }
+
+        if (!foundNext) {
+            JOptionPane.showMessageDialog(this, "Game Over: All players are bankrupt.");
+            rollDiceButton.setEnabled(false);
+            return;
+        }
+
+        rollDiceButton.setEnabled(true);
+        currentPortrait = players.get(currentPlayerIndex).getPortrait();
+        repaint();
+    }
+
 
 
     public int getLastDiceSum() {
@@ -305,26 +361,4 @@ public class BoardView extends JPanel {
             frame.setVisible(true);
         });
     }
-}
-
-class Player {
-private String name;
-private Color color;
-private int money;
-private int position;
-
-public Player(String name, Color color, int money) {
-    this.name = name;
-    this.color = color;
-    this.money = money;
-    this.position = 0;
-}
-
-// Getters and setters
-public String getName() { return name; }
-public Color getColor() { return color; }
-public int getMoney() { return money; }
-public void setMoney(int money) { this.money = money; }
-public int getPosition() { return position; }
-public void setPosition(int position) { this.position = position; }
 }

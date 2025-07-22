@@ -19,11 +19,15 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 
 // TODO: Refactor this into many smaller use cases
 public class StockInformationRetriever {
     private final HttpClient httpClient;
     private final Gson gson;
+    private final java.util.concurrent.ScheduledExecutorService rateLimiter = java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
+
 
     public StockInformationRetriever(String apiKey) {
         this.httpClient = HttpClient.newHttpClient();

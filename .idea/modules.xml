@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CSC207-Monopoly.iml" filepath="$PROJECT_DIR$/.idea/CSC207-Monopoly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monopoly-java-csc207.iml" filepath="$PROJECT_DIR$/monopoly-java-csc207.iml" />
     </modules>
   </component>
 </project>
