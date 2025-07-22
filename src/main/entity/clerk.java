@@ -2,11 +2,13 @@ package main.entity;
 
 import main.use_case.Player;
 
+import java.awt.*;
+
 public class clerk extends Player {
     private static final int CLERK_INIT_MONEY = 1200;
-    public clerk(String name, int initialMoney) {
-        super(name, CLERK_INIT_MONEY);
-        this.loadPortrait("Resources/clerk.jpg");
+    public clerk(String name, Color color) {
+        super(name, CLERK_INIT_MONEY, color);
+        this.loadPortrait("main/Resources/clerk.jpg");
     }
 
     /**
@@ -43,5 +45,6 @@ public class clerk extends Player {
     @Override
     public void applyTurnEffects() {
         this.addMoney(500);
+        System.out.println("Just another day");
     }
 }

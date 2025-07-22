@@ -19,13 +19,16 @@ public abstract class Player {
     protected List<Property> properties;
     //protected List<Stock> stocks;
     protected Image portrait;
+    private Color color;
 
-    public Player(String name, int initialMoney) {
+    public Player(String name, int initialMoney, Color color) {
         this.name = name;
         this.money = initialMoney;
         this.position = 0;
         this.bankrupt = false;
         this.properties = new ArrayList<>();
+        this.color = color;
+        this.portrait = null;
         //this.stocks = new ArrayList<>();
     }
 
@@ -70,7 +73,7 @@ public abstract class Player {
         }
     }
 
-    public void moveTo(int newPosition) {
+    public void setPosition(int newPosition) {
         this.position = newPosition;
     }
 
@@ -110,6 +113,14 @@ public abstract class Player {
             this.properties.remove(property);
             property.setOwned(false, null);
         }
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public abstract float adjustStockBuyPrice(float basePrice);

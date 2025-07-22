@@ -2,6 +2,8 @@ package main.entity;
 
 import main.use_case.Player;
 
+import java.awt.*;
+
 /**
  * A special type of Player called "Inheritor".
  * This character pays more for stocks but may later get passive bonuses.
@@ -9,9 +11,9 @@ import main.use_case.Player;
  */
 public class inheritor extends Player {
     private static final int INHERITOR_INIT_MONEY = 1800;
-    public inheritor(String name) {
-        super(name, INHERITOR_INIT_MONEY);
-        this.loadPortrait("Resources/inheritor.jpg");
+    public inheritor(String name, int initialMoney, Color color) {
+        super(name, INHERITOR_INIT_MONEY, color);
+        this.loadPortrait("main/Resources/inheritor.jpg");
     }
 
     /**

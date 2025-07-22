@@ -2,11 +2,13 @@ package main.entity;
 
 import main.use_case.Player;
 
+import java.awt.*;
+
 public class collegeStudent extends Player {
     private static final int STUDENT_INIT_MONEY = 1000;
-    public collegeStudent(String name, int initialMoney) {
-        super(name, STUDENT_INIT_MONEY);
-        this.loadPortrait("Resources/Computer-nerd.jpg");
+    public collegeStudent(String name, Color color) {
+        super(name, STUDENT_INIT_MONEY,color);
+        this.loadPortrait("main/Resources/Computer-nerd.jpg");
     }
 
     /**
@@ -42,5 +44,6 @@ public class collegeStudent extends Player {
     @Override
     public void applyTurnEffects() {
         this.deductMoney(100);
+        System.out.println("ah man, the tuition goes up again!");
     }
 }
