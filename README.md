@@ -23,7 +23,7 @@ real life stocks and real data from stocks.
 # Contributions
 | Name         | Github      |
 |--------------|-------------|
-| Jimmy Wu     | dtygnj123   |
+| David Zhao   | dtygnj123   |
 | Nathan Yoon  | Nate-Yoon   |
 | Richard Hong | Richardhhhg | 
-| David Zhao   | JimmyWooHoo |
+| Jimmy Wu     | JimmyWooHoo |
