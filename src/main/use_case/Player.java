@@ -20,6 +20,7 @@ public abstract class Player {
     //protected List<Stock> stocks;
     protected Image portrait;
     private Color color;
+    private int moveCount;
 
     public Player(String name, int initialMoney, Color color) {
         this.name = name;
@@ -29,6 +30,7 @@ public abstract class Player {
         this.properties = new ArrayList<>();
         this.color = color;
         this.portrait = null;
+        this.moveCount = 0;
         //this.stocks = new ArrayList<>();
     }
 
@@ -121,6 +123,19 @@ public abstract class Player {
 
     public Color getColor() {
         return color;
+    }
+
+
+    public void addMoveCount(int moveCount) {
+        this.moveCount += moveCount;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void resetMoveCount() {
+        this.moveCount = 0;
     }
 
     public abstract float adjustStockBuyPrice(float basePrice);

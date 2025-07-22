@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class inheritor extends Player {
     private static final int INHERITOR_INIT_MONEY = 1800;
-    public inheritor(String name, int initialMoney, Color color) {
+    public inheritor(String name, Color color) {
         super(name, INHERITOR_INIT_MONEY, color);
         this.loadPortrait("main/Resources/inheritor.jpg");
     }

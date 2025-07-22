@@ -36,4 +36,7 @@ public class Constants {
 
     // Math
     public static final double PERCENTAGE_MULTIPLIER = 100.0;
+
+    // Bonus Money
+    public static final float FINISH_LINE_BONUS = 200.0F;
 }
