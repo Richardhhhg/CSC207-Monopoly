@@ -277,15 +277,11 @@ public class BoardView extends JPanel {
                 Player currentPlayer = players.get(currentPlayerIndex);
 
                 int oldPosition = currentPlayer.getPosition() % tileCount;
-                System.out.println("default start at  : " + oldPosition);
 
                 if (oldPosition + lastDiceSum >= tileCount) {
                     currentPlayer.addMoney(FINISH_LINE_BONUS);
-                    System.out.println("default got : " + FINISH_LINE_BONUS +" dollars");
                 }
                 animatePlayerMovement(currentPlayer, lastDiceSum);
-                System.out.println("default moves  : " + lastDiceSum);
-                System.out.println("default is now in  : " + (currentPlayer.getPosition() + lastDiceSum));
 
             }
         });
