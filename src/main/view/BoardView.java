@@ -12,6 +12,8 @@ import javax.swing.Timer;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+import static main.Constants.Constants.FINISH_LINE_BONUS;
+
 /**
  * BoardView is a JPanel that represents the main.view of the game board.
  * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
@@ -273,7 +275,12 @@ public class BoardView extends JPanel {
                 lastDiceSum = finalD1 + finalD2;
 
                 Player currentPlayer = players.get(currentPlayerIndex);
+
+                if (currentPlayer.getPosition() + lastDiceSum >= tileCount) {
+                    currentPlayer.addMoney(FINISH_LINE_BONUS);
+                }
                 animatePlayerMovement(currentPlayer, lastDiceSum);
+
             }
         });
         diceTimer.start();
