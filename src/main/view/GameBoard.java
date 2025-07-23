@@ -3,6 +3,7 @@ package main.view;
 import main.entity.*;
 import main.entity.tiles.Property;
 import main.use_case.Player;
+import main.use_case.PlayerManager;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,8 +21,7 @@ public class GameBoard {
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
 
     private ArrayList<Property> properties;
-    private List<Player> players;
-    private int currentPlayerIndex = 0;
+    private PlayerManager playerManager;
     private int tileCount;
 
     public GameBoard() {
@@ -49,53 +49,33 @@ public class GameBoard {
             properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
-        players = new ArrayList<>();
+        ArrayList<Player> playerList = new ArrayList<>();
         DefaultPlayer defaultPlayer = new DefaultPlayer(PLAYER_NAMES[0], PLAYER_COLORS[0]);
         clerk clerk = new clerk(PLAYER_NAMES[1], PLAYER_COLORS[1]);
         collegeStudent collegeStudent = new collegeStudent(PLAYER_NAMES[2], PLAYER_COLORS[2]);
         landlord landlord = new landlord(PLAYER_NAMES[3], PLAYER_COLORS[3]);
-        players.add(defaultPlayer);
-        players.add(clerk);
-        players.add(collegeStudent);
-        players.add(landlord);
+        playerList.add(defaultPlayer);
+        playerList.add(clerk);
+        playerList.add(collegeStudent);
+        playerList.add(landlord);
+
+        playerManager = new PlayerManager(playerList);
     }
 
     public void moveCurrentPlayer(int steps) {
-        Player currentPlayer = getCurrentPlayer();
-        if (currentPlayer.getPosition() + steps >= tileCount) {
-            currentPlayer.addMoney(FINISH_LINE_BONUS);
-        }
-        // Note: Actual position update happens in animation
+        playerManager.moveCurrentPlayer(steps, tileCount);
     }
 
     public void nextPlayer() {
-        int startIndex = currentPlayerIndex;
-        boolean foundNext = false;
-
-        players.get(currentPlayerIndex).applyTurnEffects();
-
-        for (int i = 1; i <= players.size(); i++) {
-            int nextIndex = (startIndex + i) % players.size();
-            if (!players.get(nextIndex).isBankrupt()) {
-                currentPlayerIndex = nextIndex;
-                foundNext = true;
-                break;
-            }
-        }
-
-        if (!foundNext) {
-            // All players are bankrupt - game over
-            currentPlayerIndex = -1;
-        }
+        playerManager.advanceTurn();
     }
 
     public boolean isGameOver() {
-        return currentPlayerIndex == -1;
+        return playerManager.isGameOver();
     }
 
     public Player getCurrentPlayer() {
-        if (currentPlayerIndex == -1) return null;
-        return players.get(currentPlayerIndex);
+        return playerManager.getCurrentPlayer();
     }
 
     public Point getTilePosition(int position, int startX, int startY, int tileSize) {
@@ -123,7 +103,7 @@ public class GameBoard {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return playerManager.getPlayers();
     }
 
     public int getTileCount() {
@@ -131,6 +111,6 @@ public class GameBoard {
     }
 
     public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
+        return playerManager.getCurrentPlayerIndex();
     }
 }
