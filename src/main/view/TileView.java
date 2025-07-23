@@ -6,49 +6,48 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Visual representation of a single board tile.
- * Renders name, price and highlights owner.
+ * Visual component for a single board tile.
+ * Shows tile name, price and owner name.
  */
-
-//This was CHATGPT's idea to make a tile view for the board.
 public class TileView extends JPanel {
-    private final Property model;
     private final JLabel nameLabel;
     private final JLabel priceLabel;
+    private final JLabel ownerLabel;
 
     /**
-     * @param model the Property entity backing this tile
+     * @param model the Property entity to render
      */
     public TileView(Property model) {
-        this.model = model;
-        setLayout(new BorderLayout());
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        // always use a neutral background here
-        setBackground(Color.LIGHT_GRAY);
+        this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.setBackground(Color.LIGHT_GRAY);
 
         nameLabel = new JLabel(model.getName(), SwingConstants.CENTER);
         nameLabel.setFont(nameLabel.getFont().deriveFont(10f));
-        add(nameLabel, BorderLayout.CENTER);
+        this.add(nameLabel, BorderLayout.NORTH);
 
         priceLabel = new JLabel(
                 model.getPrice() > 0 ? "$" + model.getPrice() : "",
                 SwingConstants.CENTER
         );
         priceLabel.setFont(priceLabel.getFont().deriveFont(9f));
-        add(priceLabel, BorderLayout.SOUTH);
+        this.add(priceLabel, BorderLayout.CENTER);
+
+        ownerLabel = new JLabel("", SwingConstants.CENTER);
+        ownerLabel.setFont(ownerLabel.getFont().deriveFont(8f));
+        this.add(ownerLabel, BorderLayout.SOUTH);
     }
 
     /**
-     * Visually marks or clears ownership by changing the border.
+     * Display or clear the owner’s name.
      *
-     * @param ownerColor the player color, or null to clear
+     * @param ownerName the player’s name, or null/empty to clear
      */
-    public void setOwnerColor(Color ownerColor) {
-        if (ownerColor != null) {
-            setBorder(BorderFactory.createLineBorder(ownerColor, 3));
-        } else {
-            setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        }
+    public void setOwnerName(String ownerName) {
+        ownerLabel.setText((ownerName != null && !ownerName.isBlank())
+                ? ownerName
+                : ""
+        );
         repaint();
     }
 }

@@ -356,17 +356,6 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Call this when a tile’s owner changes.
-     *
-     * @param index      tile index
-     * @param ownerColor new owner color or null
-     */
-    public void updateTileOwner(int index, Color ownerColor) {
-        tileViews.get(index).setOwnerColor(ownerColor);
-    }
-
-
-    /**
      * For Testing the Board View on it's own
      * @param args
      */
