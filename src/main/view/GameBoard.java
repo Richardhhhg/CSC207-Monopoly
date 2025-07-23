@@ -11,11 +11,12 @@ import java.awt.*;
 import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 /**
- * GameBoard manages the game state and logic, separate from UI concerns.
+ * GameBoard manages the game state and logic, including end game conditions.
  */
 public class GameBoard {
     private static final int PLACEHOLDER_RENT = 50;
     private static final int PLAYER_COUNT = 4;
+    private static final int MAX_TURNS_PER_PLAYER = 20;
     private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
 
@@ -24,7 +25,15 @@ public class GameBoard {
     private int currentPlayerIndex = 0;
     private int tileCount;
 
+    // End game related fields
+    private int totalTurns = 0;
+    private int maxTotalTurns;
+    private boolean gameEnded = false;
+    private Player winner = null;
+    private String winCondition = "";
+
     public GameBoard() {
+        this.maxTotalTurns = MAX_TURNS_PER_PLAYER * PLAYER_COUNT; // 80 turns total
         initializeGame();
     }
 
@@ -49,6 +58,7 @@ public class GameBoard {
             properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
+        // Initialize players
         players = new ArrayList<>();
         DefaultPlayer defaultPlayer = new DefaultPlayer(PLAYER_NAMES[0], PLAYER_COLORS[0]);
         clerk clerk = new clerk(PLAYER_NAMES[1], PLAYER_COLORS[1]);
@@ -62,18 +72,35 @@ public class GameBoard {
 
     public void moveCurrentPlayer(int steps) {
         Player currentPlayer = getCurrentPlayer();
-        if (currentPlayer.getPosition() + steps >= tileCount) {
+        if (currentPlayer != null && currentPlayer.getPosition() + steps >= tileCount) {
             currentPlayer.addMoney(FINISH_LINE_BONUS);
         }
         // Note: Actual position update happens in animation
     }
 
-    public void nextPlayer() {
+    /**
+     * Advances to the next player and checks for end game conditions.
+     * @return true if the game has ended, false if it continues
+     */
+    public boolean nextPlayer() {
         int startIndex = currentPlayerIndex;
+
+        // Apply turn effects for current player before switching
+        if (currentPlayerIndex >= 0 && currentPlayerIndex < players.size()) {
+            players.get(currentPlayerIndex).applyTurnEffects();
+        }
+
+        // Increment turn counter
+        totalTurns++;
+
+        // Check for end conditions after the turn
+        if (checkEndConditions()) {
+            showEndScreen();
+            return true; // Game ended
+        }
+
+        // Find next non-bankrupt player
         boolean foundNext = false;
-
-        players.get(currentPlayerIndex).applyTurnEffects();
-
         for (int i = 1; i <= players.size(); i++) {
             int nextIndex = (startIndex + i) % players.size();
             if (!players.get(nextIndex).isBankrupt()) {
@@ -84,17 +111,82 @@ public class GameBoard {
         }
 
         if (!foundNext) {
-            // All players are bankrupt - game over
+            // All players are bankrupt - this should be caught by end conditions
             currentPlayerIndex = -1;
+            if (!gameEnded) {
+                checkEndConditions();
+                showEndScreen();
+            }
+            return true; // Game ended
         }
+
+        return false; // Game continues
+    }
+
+    /**
+     * Checks if the game should end based on current conditions.
+     * @return true if game should end, false otherwise
+     */
+    private boolean checkEndConditions() {
+        if (gameEnded) {
+            return true;
+        }
+
+        // Count non-bankrupt players
+        List<Player> activePlayers = players.stream()
+                .filter(player -> !player.isBankrupt())
+                .toList();
+
+        // End condition 1: Only one player left
+        if (activePlayers.size() <= 1) {
+            gameEnded = true;
+            if (activePlayers.size() == 1) {
+                winner = activePlayers.get(0);
+                winCondition = "Last Player Standing";
+            } else {
+                // All players bankrupt - shouldn't happen but handle gracefully
+                winner = findWealthiestPlayer(players);
+                winCondition = "All Players Bankrupt - Highest Cash Wins";
+            }
+            return true;
+        }
+
+        // End condition 2: Maximum turns reached
+        if (totalTurns >= maxTotalTurns) {
+            gameEnded = true;
+            winner = findWealthiestPlayer(activePlayers);
+            winCondition = "20 Turns Completed - Highest Cash Wins";
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Finds the player with the highest cash amount.
+     */
+    private Player findWealthiestPlayer(List<Player> playerList) {
+        return playerList.stream()
+                .max((p1, p2) -> Float.compare(p1.getMoney(), p2.getMoney()))
+                .orElse(null);
+    }
+
+    /**
+     * Shows the end screen with game results.
+     */
+    private void showEndScreen() {
+        if (!gameEnded) {
+            return;
+        }
+        new EndScreen(players, winner, winCondition, totalTurns, maxTotalTurns);
     }
 
     public boolean isGameOver() {
-        return currentPlayerIndex == -1;
+        return gameEnded || currentPlayerIndex == -1;
     }
 
     public Player getCurrentPlayer() {
-        if (currentPlayerIndex == -1) return null;
+        if (currentPlayerIndex == -1 || currentPlayerIndex >= players.size()) return null;
         return players.get(currentPlayerIndex);
     }
 
@@ -117,7 +209,7 @@ public class GameBoard {
         }
     }
 
-    // Getters
+    // Getters for basic game state
     public List<Property> getProperties() {
         return properties;
     }
@@ -132,5 +224,42 @@ public class GameBoard {
 
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
+    }
+
+    // Getters for end game information
+    public int getTotalTurns() {
+        return totalTurns;
+    }
+
+    public int getMaxTotalTurns() {
+        return maxTotalTurns;
+    }
+
+    public int getRemainingTurns() {
+        return Math.max(0, maxTotalTurns - totalTurns);
+    }
+
+    public boolean isGameEnded() {
+        return gameEnded;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public String getWinCondition() {
+        return winCondition;
+    }
+
+    public int getCurrentRound() {
+        return (totalTurns / players.size()) + (totalTurns % players.size() > 0 ? 1 : 0);
+    }
+
+    public String getGameStatus() {
+        if (isGameOver()) {
+            return "Game Over";
+        }
+        return String.format("Round %d/20 - Turn %d/%d",
+                getCurrentRound(), totalTurns, maxTotalTurns);
     }
 }

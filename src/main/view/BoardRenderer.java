@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * BoardRenderer handles all drawing/rendering logic for the board.
+ * Updated to include turn counter and game status display.
  */
 public class BoardRenderer {
 
@@ -29,6 +30,9 @@ public class BoardRenderer {
         // Draw current player portrait
         drawPlayerPortrait(g2d, gameBoard.getCurrentPlayer(), startX, startY, tileSize);
 
+        // Draw game status in center
+        drawGameStatus(g2d, gameBoard, startX, startY, tileSize);
+
         // Draw players
         drawPlayers(g2d, gameBoard.getPlayers(), gameBoard, startX, startY, tileSize);
     }
@@ -42,10 +46,20 @@ public class BoardRenderer {
             // Draw property tile
             g2d.setColor(Color.WHITE);
             g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
-            g2d.setColor(Color.BLACK);
-            g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
+
+            // Color the tile border if owned
+            if (prop.isOwned()) {
+                g2d.setStroke(new BasicStroke(3));
+                g2d.setColor(prop.getOwner().getColor());
+                g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
+                g2d.setStroke(new BasicStroke(1));
+            } else {
+                g2d.setColor(Color.BLACK);
+                g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
+            }
 
             // Draw property name
+            g2d.setColor(Color.BLACK);
             g2d.setFont(new Font("Arial", Font.BOLD, 16));
             FontMetrics fm = g2d.getFontMetrics();
             String name = prop.getName();
@@ -75,7 +89,7 @@ public class BoardRenderer {
 
             // Draw price
             if (prop.getPrice() > 0) {
-                String price = "$" + prop.getPrice();
+                String price = "$" + (int)prop.getPrice();
                 int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
                 int priceY = pos.y + tileSize - 5;
                 g2d.drawString(price, priceX, priceY);
@@ -92,10 +106,10 @@ public class BoardRenderer {
         int diceSize = tileSize;
         int gap = 10;
 
-        // Compute dice positions
+        // Compute dice positions (moved up to make room for game status)
         int x1 = centerX - diceSize - gap/2;
         int x2 = centerX + gap/2;
-        int y = centerY - diceSize/2;
+        int y = centerY - diceSize/2 - 40;
 
         // Draw dice
         g2d.drawImage(diceController.getDiceIcon(diceController.getFinalD1()).getImage(),
@@ -110,7 +124,37 @@ public class BoardRenderer {
         FontMetrics fm = g2d.getFontMetrics();
         int textX = centerX - fm.stringWidth(sumText)/2;
         int textY = y + diceSize + fm.getAscent() + 5;
+        g2d.setColor(Color.BLACK);
         g2d.drawString(sumText, textX, textY);
+        g2d.setFont(oldFont);
+    }
+
+    private void drawGameStatus(Graphics2D g2d, GameBoard gameBoard,
+                                int startX, int startY, int tileSize) {
+        int centerX = startX + Constants.BOARD_SIZE/2;
+        int centerY = startY + Constants.BOARD_SIZE/2;
+
+        // Draw game status below dice
+        String statusText = gameBoard.getGameStatus();
+        Font oldFont = g2d.getFont();
+        g2d.setFont(new Font("Arial", Font.BOLD, 14));
+        FontMetrics fm = g2d.getFontMetrics();
+        int textX = centerX - fm.stringWidth(statusText)/2;
+        int textY = centerY + 50;
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.drawString(statusText, textX, textY);
+
+        // Draw remaining turns
+        if (!gameBoard.isGameOver()) {
+            String remainingText = "Remaining Turns: " + gameBoard.getRemainingTurns();
+            g2d.setFont(new Font("Arial", Font.PLAIN, 12));
+            fm = g2d.getFontMetrics();
+            textX = centerX - fm.stringWidth(remainingText)/2;
+            textY += 20;
+            g2d.setColor(Color.GRAY);
+            g2d.drawString(remainingText, textX, textY);
+        }
+
         g2d.setFont(oldFont);
     }
 
@@ -123,7 +167,7 @@ public class BoardRenderer {
         int diceSize = tileSize;
         int gap = 10;
         int x1 = centerX - diceSize - gap/2;
-        int y = centerY - diceSize/2;
+        int y = centerY - diceSize/2 - 40;
 
         int portraitSize = diceSize;
         int portraitX = x1 + 80;
@@ -138,13 +182,31 @@ public class BoardRenderer {
         g2d.setColor(Color.BLACK);
         g2d.drawString(labelText, labelX, labelY);
 
+        // Draw portrait with colored border
+        g2d.setStroke(new BasicStroke(3));
+        g2d.setColor(currentPlayer.getColor());
+        g2d.drawRect(portraitX - 2, portraitY - 2, portraitSize + 4, portraitSize + 4);
+        g2d.setStroke(new BasicStroke(1));
+
         g2d.drawImage(currentPlayer.getPortrait(), portraitX, portraitY, portraitSize, portraitSize, null);
+
+        // Draw player name and money
+        String playerInfo = currentPlayer.getName() + " - $" + String.format("%.0f", currentPlayer.getMoney());
+        g2d.setFont(new Font("Arial", Font.BOLD, 12));
+        fm = g2d.getFontMetrics();
+        int infoX = portraitX + (portraitSize - fm.stringWidth(playerInfo)) / 2;
+        int infoY = portraitY + portraitSize + 15;
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(playerInfo, infoX, infoY);
+
         g2d.setFont(oldFont);
     }
 
     private void drawPlayers(Graphics2D g2d, List<Player> players, GameBoard gameBoard,
                              int startX, int startY, int tileSize) {
         for (Player player : players) {
+            if (player.isBankrupt()) continue; // Don't draw bankrupt players
+
             Point pos = gameBoard.getTilePosition(player.getPosition(), startX, startY, tileSize);
             g2d.setColor(player.getColor());
             int playerSize = 15;
