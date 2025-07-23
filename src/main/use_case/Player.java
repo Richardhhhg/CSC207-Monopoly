@@ -95,6 +95,7 @@ public abstract class Player {
             property.setOwned(false, null);
         }
         this.properties.clear();
+        System.out.println("bankrupcyReckoning old man!");
     }
 
     public void buyProperty(Property property) {
