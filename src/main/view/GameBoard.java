@@ -1,8 +1,9 @@
 package main.view;
 
 import main.entity.*;
+import main.entity.tiles.Property;
 import main.use_case.Player;
-import main.Constants.Constants;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
@@ -117,7 +118,7 @@ public class GameBoard {
     }
 
     // Getters
-    public ArrayList<Property> getProperties() {
+    public List<Property> getProperties() {
         return properties;
     }
 

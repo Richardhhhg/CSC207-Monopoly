@@ -1,6 +1,6 @@
 package main.view;
 
-import main.entity.Property;
+import main.entity.tiles.Property;
 import main.use_case.Player;
 import main.Constants.Constants;
 import java.awt.*;
