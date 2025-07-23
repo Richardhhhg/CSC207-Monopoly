@@ -1,7 +1,7 @@
 package main.view;
 
 import main.entity.*;
-import main.entity.tiles.Property;
+import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 import main.Constants.Constants;
 import java.util.List;
@@ -44,7 +44,7 @@ public class BoardView extends JPanel {
     private int           frameCount;
     private int           finalD1, finalD2;
 
-    private ArrayList<Property> properties;
+    private ArrayList<PropertyTile> properties;
     private List<Player> players;
     private int currentPlayerIndex = 0;
 
@@ -89,7 +89,7 @@ public class BoardView extends JPanel {
         this.tileCount = propertyNames.length;
 
         for (int i = 0; i < tileCount; i++) {
-            properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
+            properties.add(new PropertyTile(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
         players = new ArrayList<>();
@@ -152,7 +152,7 @@ public class BoardView extends JPanel {
         // Draw properties around the board
         for (int i = 0; i < tileCount; i++) {
             Point pos = getTilePosition(i, startX, startY, tileSize);
-            Property prop = properties.get(i);
+            PropertyTile prop = properties.get(i);
 
             // Draw property tile
             g2d.setColor(Color.WHITE);
