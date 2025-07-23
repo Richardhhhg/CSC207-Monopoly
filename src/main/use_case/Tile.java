@@ -1,25 +1,20 @@
 package main.use_case;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * A single square on the board.
  */
 public abstract class Tile {
-    private final int position;
+    //private final int position;
     private final String name;
 
     /**
-     * @param name       human-readable tile name
-     * @param position   index on the board (0–n)
+     * @param name human-readable tile name
      */
     /*TODO Figure out position for potential future scaling*/
 
-    public Tile(String name, int position) {
+    public Tile(String name) {
         this.name = name;
-        this.position = position;
+
     }
 
     /** @return tile’s name */
@@ -27,10 +22,10 @@ public abstract class Tile {
         return name;
     }
 
-    /** @return tile’s position index */
+    /** @return tile’s position index
     public int getPosition() {
         return position;
-    }
+    } */
 
     /**
      * Hook for when a player lands here.
