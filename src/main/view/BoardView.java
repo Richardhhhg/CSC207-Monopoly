@@ -8,18 +8,20 @@ import java.awt.*;
 
 /**
  * BoardView is a JPanel that represents the view of the game board.
- * Updated to handle end game conditions.
+ * This refactored version focuses only on UI coordination.
  */
 public class BoardView extends JPanel {
     private final GameBoard gameBoard;
     private final DiceController diceController;
     private final BoardRenderer renderer;
     private final PlayerMovementAnimator animator;
+    private JFrame parentFrame; // Reference to parent frame for end screen
 
     // UI Components
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
-    private final JLabel gameStatusLabel = new JLabel();
+    private final JLabel roundLabel = new JLabel("Round: 1");
+    private final JLabel turnLabel = new JLabel("Turns: 0");
 
     public BoardView() {
         this.gameBoard = new GameBoard();
@@ -30,7 +32,10 @@ public class BoardView extends JPanel {
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
         setupUI();
-        updateGameStatusDisplay();
+    }
+
+    public void setParentFrame(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
     }
 
     private void setupUI() {
@@ -50,115 +55,34 @@ public class BoardView extends JPanel {
 
         add(boardPanel, BorderLayout.CENTER);
 
-        // Create side panel with controls and status
-        JPanel sidePanel = createSidePanel();
-        add(sidePanel, BorderLayout.EAST);
+        // Roll-Dice side-panel
+        JPanel side = new JPanel();
+        side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
+
+        // Game status labels
+        roundLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        side.add(roundLabel);
+        side.add(turnLabel);
+        side.add(Box.createVerticalStrut(20));
+
+        side.add(rollDiceButton);
+        side.add(endTurnButton);
+        add(side, BorderLayout.EAST);
 
         // Wire the buttons
         rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
+
+        updateStatusLabels();
     }
 
-    private JPanel createSidePanel() {
-        JPanel sidePanel = new JPanel();
-        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
-        sidePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        sidePanel.setPreferredSize(new Dimension(200, Constants.BOARD_PANEL_HEIGHT));
-
-        // Game status section
-        JPanel statusPanel = new JPanel();
-        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
-        statusPanel.setBorder(BorderFactory.createTitledBorder("Game Status"));
-
-        gameStatusLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        gameStatusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        statusPanel.add(gameStatusLabel);
-
-        statusPanel.add(Box.createVerticalStrut(10));
-
-        // Current player info
-        JLabel currentPlayerLabel = new JLabel() {
-            @Override
-            public void setText(String text) {
-                Player currentPlayer = gameBoard.getCurrentPlayer();
-                if (currentPlayer != null) {
-                    super.setText("<html><center>Current Player:<br>" +
-                            currentPlayer.getName() + "<br>$" +
-                            String.format("%.2f", currentPlayer.getMoney()) + "</center></html>");
-                } else {
-                    super.setText("Game Over");
-                }
-            }
-        };
-        currentPlayerLabel.setFont(new Font("Arial", Font.PLAIN, 11));
-        currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        statusPanel.add(currentPlayerLabel);
-
-        sidePanel.add(statusPanel);
-        sidePanel.add(Box.createVerticalStrut(20));
-
-        // Button section
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
-        rollDiceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        rollDiceButton.setMaximumSize(new Dimension(150, 30));
-        endTurnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        endTurnButton.setMaximumSize(new Dimension(150, 30));
-
-        buttonPanel.add(rollDiceButton);
-        buttonPanel.add(Box.createVerticalStrut(10));
-        buttonPanel.add(endTurnButton);
-
-        sidePanel.add(buttonPanel);
-        sidePanel.add(Box.createVerticalGlue());
-
-        // Player list section
-        JPanel playersPanel = createPlayersPanel();
-        sidePanel.add(playersPanel);
-
-        return sidePanel;
-    }
-
-    private JPanel createPlayersPanel() {
-        JPanel playersPanel = new JPanel();
-        playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
-        playersPanel.setBorder(BorderFactory.createTitledBorder("Players"));
-
-        for (Player player : gameBoard.getPlayers()) {
-            JPanel playerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-            // Color indicator
-            JPanel colorBox = new JPanel();
-            colorBox.setBackground(player.getColor());
-            colorBox.setPreferredSize(new Dimension(15, 15));
-            colorBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-            // Player info
-            JLabel playerInfo = new JLabel() {
-                @Override
-                public void setText(String text) {
-                    String status = player.isBankrupt() ? " (Bankrupt)" : "";
-                    super.setText("<html>" + player.getName() + "<br>$" +
-                            String.format("%.2f", player.getMoney()) + status + "</html>");
-                    setForeground(player.isBankrupt() ? Color.RED : Color.BLACK);
-                }
-            };
-            playerInfo.setFont(new Font("Arial", Font.PLAIN, 10));
-
-            playerPanel.add(colorBox);
-            playerPanel.add(playerInfo);
-            playersPanel.add(playerPanel);
-        }
-
-        return playersPanel;
+    private void updateStatusLabels() {
+        roundLabel.setText("Round: " + gameBoard.getCurrentRound());
+        turnLabel.setText("Turns: " + gameBoard.getTotalTurns());
     }
 
     private void handleRollDice() {
-        if (gameBoard.isGameOver()) {
-            return;
-        }
-
         rollDiceButton.setEnabled(false);
 
         diceController.startDiceAnimation(
@@ -167,10 +91,6 @@ public class BoardView extends JPanel {
                 // On animation complete
                 () -> {
                     Player currentPlayer = gameBoard.getCurrentPlayer();
-                    if (currentPlayer == null) {
-                        return;
-                    }
-
                     int diceSum = diceController.getLastDiceSum();
 
                     // Handle finish line bonus
@@ -182,53 +102,42 @@ public class BoardView extends JPanel {
                             diceSum,
                             gameBoard.getTileCount(),
                             this::repaint,  // On each move step
-                            () -> {
-                                // Handle tile landing after movement
-                                handleTileLanding(currentPlayer);
-                                updateGameStatusDisplay();
-                                repaint();
-                            }
+                            () -> {}        // On movement complete
                     );
                 }
         );
     }
 
-    private void handleTileLanding(Player player) {
-        int position = player.getPosition();
-        if (position >= 0 && position < gameBoard.getProperties().size()) {
-            gameBoard.getProperties().get(position).onLanding(player);
-        }
-    }
-
     private void handleEndTurn() {
+        gameBoard.nextPlayer();
+        updateStatusLabels();
+
         if (gameBoard.isGameOver()) {
+            showEndScreen();
             return;
         }
 
-        // Check if game ends after this turn
-        boolean gameEnded = gameBoard.nextPlayer();
-
-        if (gameEnded) {
-            // Game has ended, disable buttons
-            rollDiceButton.setEnabled(false);
-            endTurnButton.setEnabled(false);
-            updateGameStatusDisplay();
-            repaint();
-            return;
-        }
-
-        // Game continues
         rollDiceButton.setEnabled(true);
-        updateGameStatusDisplay();
         repaint();
     }
 
-    private void updateGameStatusDisplay() {
-        if (gameBoard.isGameOver()) {
-            gameStatusLabel.setText("Game Over!");
-        } else {
-            gameStatusLabel.setText("<html><center>" + gameBoard.getGameStatus() + "</center></html>");
+    private void showEndScreen() {
+        rollDiceButton.setEnabled(false);
+        endTurnButton.setEnabled(false);
+
+        // Hide the parent frame if it exists
+        if (parentFrame != null) {
+            parentFrame.setVisible(false);
         }
+
+        // Show the end screen
+        SwingUtilities.invokeLater(() -> {
+            new EndScreen(
+                    gameBoard.getPlayers(),
+                    gameBoard.getGameEndReason(),
+                    gameBoard.getCurrentRound()
+            );
+        });
     }
 
     public int getLastDiceSum() {
@@ -242,7 +151,9 @@ public class BoardView extends JPanel {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Monopoly Board");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new BoardView());
+            BoardView boardView = new BoardView();
+            boardView.setParentFrame(frame);
+            frame.add(boardView);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
