@@ -6,7 +6,7 @@ import main.use_case.Player;
 /*
  * A purchasable board tile that can collect rent.
  * */
-public class Property extends Tile {
+public class PropertyTile extends Tile {
     private final float price;
     private final float rent;
     private Player owner; //null if not owned
@@ -16,7 +16,7 @@ public class Property extends Tile {
      * @param price purchase price
      * @param rent  base rent amount
      */
-    public Property(String name, float price, float rent) {
+    public PropertyTile(String name, float price, float rent) {
         super(name);
         this.price = price;
         this.rent = rent;

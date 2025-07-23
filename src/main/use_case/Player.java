@@ -2,7 +2,7 @@
 TODO: IMPLEMENT THIS.
  */
 package main.use_case;
-import main.entity.tiles.Property;
+import main.entity.tiles.PropertyTile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +16,7 @@ public abstract class Player {
     protected int money;
     protected int position;
     protected boolean bankrupt;
-    protected List<Property> properties;
+    protected List<PropertyTile> properties;
     //protected List<Stock> stocks;
     protected Image portrait;
     private Color color;
@@ -48,7 +48,7 @@ public abstract class Player {
         return bankrupt;
     }
 
-    public List<Property> getProperties() {
+    public List<PropertyTile> getProperties() {
         return properties;
     }
 
@@ -91,27 +91,27 @@ public abstract class Player {
     }
 
     public void bankrupcyReckoning(){
-        for (Property property : this.properties) {
-            property.setOwned(false, null);
+        for (PropertyTile propertyTile : this.properties) {
+            propertyTile.setOwned(false, null);
         }
         this.properties.clear();
     }
 
-    public void buyProperty(Property property) {
-        float Price = property.getPrice();
-        if (!property.isOwned() && this.money >= Price) {
+    public void buyProperty(PropertyTile propertyTile) {
+        float Price = propertyTile.getPrice();
+        if (!propertyTile.isOwned() && this.money >= Price) {
             this.deductMoney(Price);
-            this.properties.add(property);
-            property.setOwned(true, this);
+            this.properties.add(propertyTile);
+            propertyTile.setOwned(true, this);
         }
     }
 
-    public void sellProperty(Property property) {
-        if (this.properties.contains(property)) {
-            float refund = property.getPrice();
+    public void sellProperty(PropertyTile propertyTile) {
+        if (this.properties.contains(propertyTile)) {
+            float refund = propertyTile.getPrice();
             this.addMoney(refund);
-            this.properties.remove(property);
-            property.setOwned(false, null);
+            this.properties.remove(propertyTile);
+            propertyTile.setOwned(false, null);
         }
     }
 
