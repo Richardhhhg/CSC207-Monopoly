@@ -1,7 +1,5 @@
 package main.entity;
 
-import main.use_case.Player;
-
 import java.awt.*;
 
 public class DefaultPlayer extends Player {

@@ -12,8 +12,23 @@ public class Main{
     }
 
     public static void startGame() {
-        GameView game = new GameView();
-        game.addBoard();
-        game.showStockMarket();
+        GameState gameState = new GameState();
+
+        // Use Cases
+        GameUseCase gameUseCase = new GameUseCase(gameState);
+
+        // Interface Adapters
+        BoardPositionCalculator calculator = new BoardPositionCalculator();
+        GameViewModel gameViewModel = new GameViewModel(calculator);
+        DiceController diceController = new DiceController();
+        GameController gameController = new GameController(
+                gameUseCase, gameViewModel, diceController);
+
+        // Views
+        SwingUtilities.invokeLater(() -> {
+            GameView gameView = new GameView(gameController);
+            gameView.addBoard();
+            gameView.setVisible(true);
+        });
     }
 }

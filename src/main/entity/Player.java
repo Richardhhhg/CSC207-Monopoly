@@ -1,7 +1,7 @@
 /*
 TODO: IMPLEMENT THIS.
  */
-package main.use_case;
+package main.entity;
 import main.entity.tiles.PropertyTile;
 
 import javax.imageio.ImageIO;
