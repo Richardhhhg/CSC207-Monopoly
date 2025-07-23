@@ -59,6 +59,11 @@ public class Property extends Tile {
     public void onLanding(Player p) {
         if (!isOwned()) {
             p.buyProperty(this);
+            //TODO: figure out how to update the colour of the background for tile.
+            // should probably go in the boardController
+            /*int tileIndex = allProperties.indexOf(property);
+            boardView.updateTileOwner(tileIndex, player.getColor());
+            */
             return;
         }
         if (p != owner) {
