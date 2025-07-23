@@ -2,7 +2,7 @@
 TODO: IMPLEMENT THIS.
  */
 package main.use_case;
-import main.entity.Property;
+import main.entity.tiles.Property;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,6 +1,7 @@
 package main.view;
 
 import main.entity.*;
+import main.entity.tiles.Property;
 import main.use_case.Player;
 import main.Constants.Constants;
 import java.util.List;
