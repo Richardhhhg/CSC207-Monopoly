@@ -15,10 +15,13 @@ public class BoardView extends JPanel {
     private final DiceController diceController;
     private final BoardRenderer renderer;
     private final PlayerMovementAnimator animator;
+    private JFrame parentFrame; // Reference to parent frame for end screen
 
     // UI Components
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
+    private final JLabel roundLabel = new JLabel("Round: 1");
+    private final JLabel turnLabel = new JLabel("Turns: 0");
 
     public BoardView() {
         this.gameBoard = new GameBoard();
@@ -29,6 +32,10 @@ public class BoardView extends JPanel {
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
         setupUI();
+    }
+
+    public void setParentFrame(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
     }
 
     private void setupUI() {
@@ -51,6 +58,14 @@ public class BoardView extends JPanel {
         // Roll-Dice side-panel
         JPanel side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
+
+        // Game status labels
+        roundLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        side.add(roundLabel);
+        side.add(turnLabel);
+        side.add(Box.createVerticalStrut(20));
+
         side.add(rollDiceButton);
         side.add(endTurnButton);
         add(side, BorderLayout.EAST);
@@ -58,6 +73,13 @@ public class BoardView extends JPanel {
         // Wire the buttons
         rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
+
+        updateStatusLabels();
+    }
+
+    private void updateStatusLabels() {
+        roundLabel.setText("Round: " + gameBoard.getCurrentRound());
+        turnLabel.setText("Turns: " + gameBoard.getTotalTurns());
     }
 
     private void handleRollDice() {
@@ -88,15 +110,34 @@ public class BoardView extends JPanel {
 
     private void handleEndTurn() {
         gameBoard.nextPlayer();
+        updateStatusLabels();
 
         if (gameBoard.isGameOver()) {
-            JOptionPane.showMessageDialog(this, "Game Over: All players are bankrupt.");
-            rollDiceButton.setEnabled(false);
+            showEndScreen();
             return;
         }
 
         rollDiceButton.setEnabled(true);
         repaint();
+    }
+
+    private void showEndScreen() {
+        rollDiceButton.setEnabled(false);
+        endTurnButton.setEnabled(false);
+
+        // Hide the parent frame if it exists
+        if (parentFrame != null) {
+            parentFrame.setVisible(false);
+        }
+
+        // Show the end screen
+        SwingUtilities.invokeLater(() -> {
+            new EndScreen(
+                    gameBoard.getPlayers(),
+                    gameBoard.getGameEndReason(),
+                    gameBoard.getCurrentRound()
+            );
+        });
     }
 
     public int getLastDiceSum() {
@@ -110,7 +151,9 @@ public class BoardView extends JPanel {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Monopoly Board");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new BoardView());
+            BoardView boardView = new BoardView();
+            boardView.setParentFrame(frame);
+            frame.add(boardView);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);

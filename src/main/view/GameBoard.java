@@ -18,11 +18,16 @@ public class GameBoard {
     private static final int PLAYER_COUNT = 4;
     private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
+    private static final int MAX_ROUNDS = 20;
+    private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
     private ArrayList<Property> properties;
     private List<Player> players;
     private int currentPlayerIndex = 0;
     private int tileCount;
+    private int totalTurns = 0;
+    private boolean gameEnded = false;
+    private String gameEndReason = "";
 
     public GameBoard() {
         initializeGame();
@@ -69,10 +74,20 @@ public class GameBoard {
     }
 
     public void nextPlayer() {
+        if (gameEnded) return;
+
         int startIndex = currentPlayerIndex;
         boolean foundNext = false;
 
         players.get(currentPlayerIndex).applyTurnEffects();
+        totalTurns++;
+
+        // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
+        if (totalTurns >= MAX_ROUNDS * TURNS_PER_ROUND) {
+            gameEnded = true;
+            gameEndReason = "Maximum 20 rounds reached";
+            return;
+        }
 
         for (int i = 1; i <= players.size(); i++) {
             int nextIndex = (startIndex + i) % players.size();
@@ -85,16 +100,38 @@ public class GameBoard {
 
         if (!foundNext) {
             // All players are bankrupt - game over
+            gameEnded = true;
+            gameEndReason = "All players are bankrupt";
             currentPlayerIndex = -1;
+            return;
+        }
+
+        // Check if only one player remains solvent
+        long solventPlayers = players.stream().filter(p -> !p.isBankrupt()).count();
+        if (solventPlayers == 1) {
+            gameEnded = true;
+            gameEndReason = "Only one player remains solvent";
         }
     }
 
     public boolean isGameOver() {
-        return currentPlayerIndex == -1;
+        return gameEnded;
+    }
+
+    public String getGameEndReason() {
+        return gameEndReason;
+    }
+
+    public int getCurrentRound() {
+        return (totalTurns / TURNS_PER_ROUND) + 1;
+    }
+
+    public int getTotalTurns() {
+        return totalTurns;
     }
 
     public Player getCurrentPlayer() {
-        if (currentPlayerIndex == -1) return null;
+        if (currentPlayerIndex == -1 || gameEnded) return null;
         return players.get(currentPlayerIndex);
     }
 
