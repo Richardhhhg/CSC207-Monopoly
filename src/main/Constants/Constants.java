@@ -1,5 +1,7 @@
 package main.Constants;
 
+import java.awt.*;
+
 /**
  * This class is a placeholder for constants used throughout the application.
  */
@@ -39,4 +41,8 @@ public class Constants {
 
     // Bonus Money
     public static final float FINISH_LINE_BONUS = 200.0F;
+
+    // PlayerStatesView
+    public static final int DIMENSION_DE_LA_PSV_H = 200;
+    public static final int DIMENSION_DE_LA_PSV_W = 200;
 }

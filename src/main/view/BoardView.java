@@ -1,15 +1,23 @@
 package main.view;
 
+import main.entity.*;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 import main.Constants.Constants;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.Timer;
+import java.util.Random;
+import javax.swing.ImageIcon;
+
+import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 /**
- * BoardView is a JPanel that represents the main view of the game board.
- * Follows clean architecture by delegating responsibilities to appropriate classes.
+ * BoardView is a JPanel that represents the main.view of the game board.
+ * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
  */
 public class BoardView extends JPanel {
     // Components responsible for specific functionality
@@ -17,26 +25,39 @@ public class BoardView extends JPanel {
     private final BoardRenderer boardRenderer;
     private final DiceController diceController;
     private final PlayerMovementAnimator playerMovementAnimator;
+    private JFrame parentFrame; // Reference to parent frame for end screen
 
-    // UI Components
+    // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
+    private final JButton stockMarketButton = new JButton("Stock Market");
+    private final JLabel roundLabel = new JLabel("Round: 1");
+    private final JLabel turnLabel = new JLabel("Turns: 0");
+
+    // player stats
+    private final PlayerStatsView statsPanel;
 
     public BoardView() {
-        // Initialize controllers and renderers
         this.gameBoard = new GameBoard();
-        this.boardRenderer = new BoardRenderer();
         this.diceController = new DiceController();
+        this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
+        this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
 
+        setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
+                Constants.BOARD_PANEL_HEIGHT));
         setupUI();
+    }
+
+    public void setParentFrame(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
     }
 
     private void setupUI() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
 
-        // Create board panel that delegates rendering to BoardRenderer
+        // Create board panel
         JPanel boardPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -47,18 +68,42 @@ public class BoardView extends JPanel {
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
-        add(boardPanel, BorderLayout.CENTER);
+        add(boardPanel, BorderLayout.WEST);
+        add(statsPanel, BorderLayout.CENTER);
 
-        // Create control panel
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        controlPanel.add(rollDiceButton);
-        controlPanel.add(endTurnButton);
-        add(controlPanel, BorderLayout.EAST);
+        // Roll-Dice side-panel
+        JPanel side = new JPanel();
+        side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
 
-        // Setup event handlers
-        rollDiceButton.addActionListener(e -> handleRollDice());
+        // Game status labels
+        roundLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        side.add(roundLabel);
+        side.add(turnLabel);
+        side.add(Box.createVerticalStrut(20));
+
+        side.add(rollDiceButton);
+        side.add(endTurnButton);
+        side.add(stockMarketButton);
+        add(side, BorderLayout.EAST);
+
+        // wire the button
+        rollDiceButton.addActionListener(e -> startDiceAnimation());
         endTurnButton.addActionListener(e -> handleEndTurn());
+        stockMarketButton.addActionListener(e -> displayStockMarket());
+
+        updateStatusLabels();
+    }
+
+    private void displayStockMarket() {
+        // Create a new StockMarketView with the current players' stocks
+        StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer());
+        stockMarketView.setVisible(true);
+    }
+
+    private void updateStatusLabels() {
+        roundLabel.setText("Round: " + gameBoard.getCurrentRound());
+        turnLabel.setText("Turns: " + gameBoard.getTotalTurns());
     }
 
     private void handleRollDice() {
@@ -106,48 +151,52 @@ public class BoardView extends JPanel {
     }
 
     private void handleEndTurn() {
-        if (gameBoard.isGameOver()) {
-            showGameOverDialog();
-            return;
-        }
-
-        // Use GameBoard to handle turn transitions
         gameBoard.nextPlayer();
+        updateStatusLabels();
+        statsPanel.updatePlayers(gameBoard.getPlayers());
 
         if (gameBoard.isGameOver()) {
-            showGameOverDialog();
+            showEndScreen();
             return;
         }
 
-        // Re-enable dice rolling for next player
         rollDiceButton.setEnabled(true);
-        repaint(); // Update current player display
+        repaint();
     }
 
-    private void showGameOverDialog() {
-        String message = "Game Over!\n" + gameBoard.getGameEndReason() +
-                        "\nTotal rounds played: " + gameBoard.getCurrentRound();
-
-        JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+    private void showEndScreen() {
         rollDiceButton.setEnabled(false);
         endTurnButton.setEnabled(false);
+
+        // Hide the parent frame if it exists
+        if (parentFrame != null) {
+            parentFrame.setVisible(false);
+        }
+
+        // Show the end screen
+        SwingUtilities.invokeLater(() -> {
+            new EndScreen(
+                    gameBoard.getPlayers(),
+                    gameBoard.getGameEndReason(),
+                    gameBoard.getCurrentRound()
+            );
+        });
+    }
+
+    public int getLastDiceSum() {
+        return diceController.getLastDiceSum();
     }
 
     /**
-     * Set reference to parent frame if needed for dialogs
-     */
-    public void setParentFrame(GameView gameView) {
-        // Can be used for parent frame reference if needed
-    }
-
-    /**
-     * For testing the BoardView on its own
+     * For Testing the Board View on its own
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Monopoly Board");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new BoardView());
+            BoardView boardView = new BoardView();
+            boardView.setParentFrame(frame);
+            frame.add(boardView);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);

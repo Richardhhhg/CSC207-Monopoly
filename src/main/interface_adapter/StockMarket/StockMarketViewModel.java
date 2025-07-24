@@ -6,24 +6,27 @@ import main.data_access.StockMarket.StockMarketInputDataObject;
 import main.entity.Stock;
 
 import java.util.List;
+import java.util.Map;
+
 import main.entity.StockInformationRetriever;
 import main.entity.StockMarket;
+import main.use_case.Player;
 
 /**
  * Viewmodel for StockMarket
- * This should take in list of stocks
- * and create some output that is read into
- * StockMarketView
+ * This should take in a player and create some output that is read into StockMarketView
  */
 public class StockMarketViewModel {
     private StockMarket stockMarket;
+    private Player player;
 
-    public StockMarketViewModel(StockMarket stockMarket) {
+    public StockMarketViewModel(Player player) {
         this.stockMarket = stockMarket;
+        this.player = player;
     }
 
-    public List<Stock> getStocks() {
-        return stockMarket.getStocks();
+    public Map<Stock, Integer> getStocks() {
+        return player.getStocks();
     }
 
 }
