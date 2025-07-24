@@ -2,9 +2,12 @@
 TODO: IMPLEMENT THIS.
  */
 package main.use_case;
+import main.entity.Stock;
 import main.entity.tiles.PropertyTile;
 
 import javax.imageio.ImageIO;
+import java.util.Map;
+import java.util.HashMap;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +20,7 @@ public abstract class Player {
     protected int position;
     protected boolean bankrupt;
     protected ArrayList<PropertyTile> properties;
-    //protected List<Stock> stocks;
+    protected Map<Stock, Integer> stocks;
     protected Image portrait;
     private Color color;
 
@@ -29,7 +32,7 @@ public abstract class Player {
         this.properties = new ArrayList<>();
         this.color = color;
         this.portrait = null;
-        //this.stocks = new ArrayList<>();
+        this.stocks = new HashMap<>();
     }
 
     public String getName() {
@@ -52,9 +55,9 @@ public abstract class Player {
         return properties;
     }
 
-    //public List<Stock> getStocks() {
-        //return stocks;
-    //}
+    public Map<Stock, Integer> getStocks() {
+        return stocks;
+    }
 
     public Image getPortrait() {
         return portrait;
@@ -112,6 +115,35 @@ public abstract class Player {
             this.addMoney(refund);
             this.properties.remove(propertyTile);
             propertyTile.setOwned(false, null);
+        }
+    }
+
+    public void buyStock(Stock stock, int quantity) {
+        double totalCost = stock.getCurrentPrice() * quantity;
+        if (this.money >= totalCost) {
+            this.deductMoney((float) totalCost);
+            stocks.put(stock, stocks.getOrDefault(stock, 0) + quantity);
+        }
+    }
+
+    public void sellStock(Stock stock, int quantity) {
+        if (stocks.get(stock) >= quantity) {
+            double totalSale = stock.getCurrentPrice() * quantity;
+            this.addMoney((float) totalSale);
+            stocks.put(stock, stocks.get(stock) - quantity);
+            if (stocks.get(stock) == 0) {
+                stocks.remove(stock);
+            }
+        }
+    }
+
+    public int getStockQuantity(Stock stock) {
+        return stocks.getOrDefault(stock, 0);
+    }
+
+    public void initializeStocks(List<Stock> stockList) {
+        for (Stock stock : stockList) {
+            stocks.put(stock, 0); // Initialize with 0 quantity
         }
     }
 
