@@ -16,6 +16,26 @@ public class inheritor extends Player {
         this.loadPortrait("main/Resources/inheritor.jpg");
     }
 
+    @Override
+    public void buyStock(Stock stock, int quantity) {
+        double totalCost = stock.getCurrentPrice() * quantity;
+        double finalCost = adjustStockBuyPrice((float) totalCost);
+        if (this.money >= totalCost) {
+            this.deductMoney((float) finalCost);
+            stocks.put(stock, stocks.getOrDefault(stock, 0) + quantity);
+        }
+    }
+
+    @Override
+    public void sellStock(Stock stock, int quantity) {
+        if (stocks.get(stock) >= quantity) {
+            double totalSale = stock.getCurrentPrice() * quantity;
+            double finalSale = adjustStockSellPrice((float) totalSale);
+            this.addMoney((float) finalSale);
+            stocks.put(stock, stocks.get(stock) - quantity);
+        }
+    }
+
     /**
      * Inheritors pay 10% more than the base price when buying stocks.
      *
