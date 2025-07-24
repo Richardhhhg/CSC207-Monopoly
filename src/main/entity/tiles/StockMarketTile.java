@@ -22,7 +22,7 @@ public class StockMarketTile extends Tile {
     @Override
     public void onLanding(Player player) {
         // TODO: This is a temporary implementation of the view just to test if it shows up
-        StockMarketView marketView = new StockMarketView(player.getStocks());
+        StockMarketView marketView = new StockMarketView(player);
         marketView.setVisible(true);
     }
 }

@@ -88,7 +88,7 @@ public class BoardView extends JPanel {
     // TODO: This implementation is absolutely horrible, it should be replaced by the tile logic
     private void displayStockMarket() {
         // Create a new StockMarketView with the current players' stocks
-        StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer().getStocks());
+        StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer());
         stockMarketView.setVisible(true);
     }
 
