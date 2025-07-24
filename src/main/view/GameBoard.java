@@ -2,6 +2,10 @@ package main.view;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.*;
+import main.entity.players.PoorMan;
+import main.entity.players.clerk;
+import main.entity.players.inheritor;
+import main.entity.players.landlord;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 

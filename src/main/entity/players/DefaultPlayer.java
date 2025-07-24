@@ -1,14 +1,29 @@
-package main.entity;
+package main.entity.players;
 
+import main.entity.Stock;
 import main.use_case.Player;
 
 import java.awt.*;
 
-public class clerk extends Player {
-    private static final int CLERK_INIT_MONEY = 1200;
-    public clerk(String name, Color color) {
-        super(name, CLERK_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/clerk.jpg");
+public class DefaultPlayer extends Player {
+    private static final int DEFAULT_INIT_MONEY = 1200;
+    private String name;
+
+    public DefaultPlayer(String name, Color color) {
+        super(name, DEFAULT_INIT_MONEY, color);
+        this.loadPortrait("main/Resources/default portrait.png");
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public float getMoney() {
+        return this.money;
+    }
+
+    public int getPosition() {
+        return this.position;
     }
 
     @Override
@@ -41,30 +56,18 @@ public class clerk extends Player {
         return basePrice;
     }
 
-    /**
-     * @param basePrice
-     * @return
-     */
     @Override
     public float adjustStockSellPrice(float basePrice) {
         return basePrice;
     }
 
-    /**
-     * @param baseRent
-     * @return
-     */
     @Override
     public float adjustRent(float baseRent) {
         return baseRent;
     }
 
-    /**
-     * Clerk recieves his salary every turn
-     */
     @Override
     public void applyTurnEffects() {
-        this.addMoney(50);
-        System.out.println("Just another day");
+        System.out.println("nope, normie.");
     }
 }

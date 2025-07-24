@@ -2,15 +2,13 @@ package main.view;
 
 import main.Constants.Constants;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.DefaultPlayer;
+import main.entity.players.DefaultPlayer;
 import main.entity.Stock;
-import main.interface_adapter.StockMarket.StockMarketViewModel;
 import main.use_case.Player;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -1,5 +1,6 @@
-package main.entity;
+package main.entity.players;
 
+import main.entity.Stock;
 import main.use_case.Player;
 
 import java.awt.*;
