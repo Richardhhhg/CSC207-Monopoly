@@ -145,7 +145,6 @@ public class BoardRenderer {
     private void drawPlayers(Graphics2D g2d, List<Player> players, GameBoard gameBoard,
                              int startX, int startY, int tileSize) {
         for (Player player : players) {
-            if (player.isBankrupt()) continue;
             Point pos = gameBoard.getTilePosition(player.getPosition(), startX, startY, tileSize);
             g2d.setColor(player.getColor());
             int playerSize = 15;
