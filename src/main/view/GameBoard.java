@@ -179,6 +179,18 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Gets the property at a specific position
+     * @param position Board position
+     * @return The PropertyTile at that position
+     */
+    public PropertyTile getPropertyAt(int position) {
+        if (position >= 0 && position < properties.size()) {
+            return properties.get(position);
+        }
+        return null;
+    }
+
     // Getters
     public List<PropertyTile> getProperties() {
         return properties;

@@ -2,6 +2,10 @@ package main.entity.tiles;
 
 import main.use_case.Tile;
 import main.use_case.Player;
+import main.view.BuyPropertyPopup;
+
+import javax.swing.*;
+import java.awt.*;
 
 /*
  * A purchasable board tile that can collect rent.
@@ -52,24 +56,81 @@ public class PropertyTile extends Tile {
 
     /**
      * When a player lands here:
-     * 1) If unowned, attempt to buy via Player.buyProperty(...)
-     * 2) If owned by someone else, charge rent.
+     * 1) If unowned, show buy property dialog
+     * 2) If owned by someone else, charge rent and show notification
      */
     @Override
     public void onLanding(Player p) {
         if (!isOwned()) {
-            p.buyProperty(this);
-            //TODO: figure out how to update the colour of the background for tile.
-            // should probably go in the boardController
-            /*int tileIndex = allProperties.indexOf(property);
-            boardView.updateTileOwner(tileIndex, player.getColor());
-            */
+            // Show buy property popup
+            showBuyPropertyDialog(p);
             return;
         }
+
         if (p != owner) {
+            // Charge rent
             float finalRent = owner.adjustRent(rent);
             p.deductMoney(finalRent);
             owner.addMoney(finalRent);
+
+            // Show rent payment notification
+            showRentNotification(p, finalRent);
+        }
+    }
+
+    private void showBuyPropertyDialog(Player player) {
+        SwingUtilities.invokeLater(() -> {
+            Frame parentFrame = getActiveFrame();
+            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, this,
+                new BuyPropertyPopup.PurchaseResultCallback() {
+                    @Override
+                    public void onPurchaseCompleted(boolean success, String message) {
+                        if (success) {
+                            // Trigger board repaint to show ownership change
+                            repaintBoard();
+                        }
+                    }
+                });
+        });
+    }
+
+    private void showRentNotification(Player payer, float rentAmount) {
+        SwingUtilities.invokeLater(() -> {
+            String message = payer.getName() + " paid $" + (int)rentAmount +
+                           " rent to " + owner.getName() + " for landing on " + this.getName();
+
+            JOptionPane.showMessageDialog(
+                getActiveFrame(),
+                message,
+                "Rent Payment",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        });
+    }
+
+    private Frame getActiveFrame() {
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
+            if (frame.isVisible() && frame.isActive()) {
+                return frame;
+            }
+        }
+        // Fallback to first visible frame
+        for (Frame frame : frames) {
+            if (frame.isVisible()) {
+                return frame;
+            }
+        }
+        return null;
+    }
+
+    private void repaintBoard() {
+        // Find and repaint the board component
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
+            if (frame.isVisible()) {
+                frame.repaint();
+            }
         }
     }
 
@@ -84,7 +145,7 @@ public class PropertyTile extends Tile {
     }
 
     public boolean attemptPurchase(Player player) {
-        if (isOwned() || player.getMoney() < price) {
+        if (player.getMoney() <= price) {
             return false; // Cannot purchase if already owned or insufficient funds
         }
         player.buyProperty(this);
