@@ -154,10 +154,27 @@ public class BoardView extends JPanel {
             Point pos = getTilePosition(i, startX, startY, tileSize);
             PropertyTile prop = properties.get(i);
 
-            // Draw property tile
-            g2d.setColor(Color.WHITE);
+            // Draw property tile background - colored if owned
+            if (prop.isOwned()) {
+                // Use owner's color as background
+                Color ownerColor = prop.getOwner().getColor();
+                // Make it slightly transparent so text is still readable
+                Color backgroundTint = new Color(ownerColor.getRed(), ownerColor.getGreen(),
+                                               ownerColor.getBlue(), 120);
+                g2d.setColor(backgroundTint);
+                g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
 
-            g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
+                // Draw a border in the full owner color
+                g2d.setColor(ownerColor);
+                g2d.setStroke(new BasicStroke(3));
+                g2d.drawRect(pos.x + 1, pos.y + 1, tileSize - 2, tileSize - 2);
+                g2d.setStroke(new BasicStroke(1));
+            } else {
+                // Unowned property - white background
+                g2d.setColor(Color.WHITE);
+                g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
+            }
+
             g2d.setColor(Color.BLACK);
             g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
 
@@ -187,12 +204,22 @@ public class BoardView extends JPanel {
                 int textY = pos.y + tileSize / 2 + fm.getAscent() / 2 - 4;
                 g2d.drawString(name, textX, textY);
             }
-            // Draw price
+
+            // Draw price or rent information
             if (prop.getPrice() > 0) {
-                String price = "$" + prop.getPrice();
-                int priceX = pos.x + (tileSize - fm.stringWidth(price)) / 2;
+                String priceText;
+                if (prop.isOwned()) {
+                    float rent = prop.getOwner().adjustRent(prop.getRent());
+                    priceText = "Rent: $" + (int)rent;
+                } else {
+                    priceText = "$" + (int)prop.getPrice();
+                }
+
+                g2d.setFont(new Font("Arial", Font.BOLD, 12));
+                FontMetrics priceFm = g2d.getFontMetrics();
+                int priceX = pos.x + (tileSize - priceFm.stringWidth(priceText)) / 2;
                 int priceY = pos.y + tileSize - 5;
-                g2d.drawString(price, priceX, priceY);
+                g2d.drawString(priceText, priceX, priceY);
             }
         }
 
@@ -299,9 +326,23 @@ public class BoardView extends JPanel {
                 repaint();
             } else {
                 ((Timer) e.getSource()).stop();
+                // Handle landing on property using PropertyTile's onLanding method
+                handleLandingOnProperty();
             }
         });
         moveTimer.start();
+    }
+
+    /**
+     * Handle what happens when a player lands on a property
+     */
+    private void handleLandingOnProperty() {
+        Player currentPlayer = players.get(currentPlayerIndex);
+        int position = currentPlayer.getPosition();
+        PropertyTile property = properties.get(position);
+
+        // Use the tile's built-in landing logic
+        property.onLanding(currentPlayer);
     }
 
     private void handleEndTurn() {
