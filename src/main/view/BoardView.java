@@ -20,6 +20,7 @@ public class BoardView extends JPanel {
     // UI Components
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
+    private final JButton stockMarketButton = new JButton("Stock Market");
     private final JLabel roundLabel = new JLabel("Round: 1");
     private final JLabel turnLabel = new JLabel("Turns: 0");
 
@@ -73,13 +74,22 @@ public class BoardView extends JPanel {
 
         side.add(rollDiceButton);
         side.add(endTurnButton);
+        side.add(stockMarketButton);
         add(side, BorderLayout.EAST);
 
         // Wire the buttons
         rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
+        stockMarketButton.addActionListener(e -> displayStockMarket());
 
         updateStatusLabels();
+    }
+
+    // TODO: This implementation is absolutely horrible, it should be replaced by the tile logic
+    private void displayStockMarket() {
+        // Create a new StockMarketView with the current players' stocks
+        StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer().getStocks());
+        stockMarketView.setVisible(true);
     }
 
     private void updateStatusLabels() {

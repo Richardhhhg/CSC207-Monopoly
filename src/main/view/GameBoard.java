@@ -1,5 +1,6 @@
 package main.view;
 
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.*;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
@@ -63,6 +64,22 @@ public class GameBoard {
         players.add(clerk);
         players.add(poorman);
         players.add(landlord);
+        initializeStocks();
+    }
+
+    // TODO: This should not be here, should be in separate use case or something
+    private void initializeStocks() {
+        // Temporary List of stocks just to limit API Calls:
+        // TODO: Replace with actual stock data retrieval when confident this works
+        List<Stock> stocks = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
+            Stock stock = new Stock(info);
+            stocks.add(stock);
+        }
+        for (Player player: players) {
+            player.initializeStocks(stocks);
+        }
     }
 
     public void moveCurrentPlayer(int steps) {
