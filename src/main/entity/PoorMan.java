@@ -8,7 +8,7 @@ public class PoorMan extends Player {
     private static final int POORMAN_INIT_MONEY = 20;
     public PoorMan(String name, Color color) {
         super(name, POORMAN_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/poorman.png");
+        this.loadPortrait("poormana.png");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PoorMan extends Player {
 
     @Override
     public void applyTurnEffects() {
-        System.out.println("spare a dollar for a poor fellah?");
+        System.out.println("spare a dollar for a poor fellah.?");
         this.deductMoney(20);
 
     }

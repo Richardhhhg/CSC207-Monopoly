@@ -62,7 +62,7 @@ public class GameBoard {
         landlord landlord = new landlord(PLAYER_NAMES[3], PLAYER_COLORS[3]);
         players.add(defaultPlayer);
         players.add(clerk);
-        players.add(poorman);
+        players.add(poorman);//
         players.add(landlord);
     }
 
