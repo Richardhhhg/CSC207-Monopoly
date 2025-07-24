@@ -17,7 +17,7 @@ import static main.Constants.Constants.FINISH_LINE_BONUS;
 public class GameBoard {
     private static final int PLACEHOLDER_RENT = 50;
     private static final int PLAYER_COUNT = 4;
-    private static final Color[] PLAYER_COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
+    private static final Color[] PLAYER_COLORS = {Color.RED, Color.CYAN, Color.GREEN, Color.ORANGE};
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
     private static final int MAX_ROUNDS = 20;
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
