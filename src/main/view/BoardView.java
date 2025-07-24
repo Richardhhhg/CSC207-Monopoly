@@ -88,7 +88,7 @@ public class BoardView extends JPanel {
         add(side, BorderLayout.EAST);
 
         // wire the button
-        rollDiceButton.addActionListener(e -> startDiceAnimation());
+        rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
         stockMarketButton.addActionListener(e -> displayStockMarket());
 
