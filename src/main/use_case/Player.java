@@ -123,6 +123,10 @@ public abstract class Player {
         return color;
     }
 
+    public boolean hasSufficientFunds(float amount) {
+        return money >= amount;
+    }
+
     public abstract float adjustStockBuyPrice(float basePrice);
     public abstract float adjustStockSellPrice(float basePrice);
     public abstract float adjustRent(float baseRent);
