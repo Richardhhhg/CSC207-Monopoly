@@ -16,7 +16,7 @@ public abstract class Player {
     protected int money;
     protected int position;
     protected boolean bankrupt;
-    protected List<PropertyTile> properties;
+    protected ArrayList<PropertyTile> properties;
     //protected List<Stock> stocks;
     protected Image portrait;
     private Color color;
