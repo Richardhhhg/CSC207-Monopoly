@@ -6,15 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static main.Constants.Constants.DIMONSION_H;
-import static main.Constants.Constants.DIMONSION_W;
+import static main.Constants.Constants.DIMENSION_DE_LA_PSV_W;
+import static main.Constants.Constants.DIMENSION_DE_LA_PSV_H;
 
 public class PlayerStatsView extends JPanel{
     private List<Player> players;
 
     public PlayerStatsView(List<Player> players) {
         this.players = players;
-        setPreferredSize(new Dimension(DIMONSION_W, DIMONSION_H));
+        setPreferredSize(new Dimension(DIMENSION_DE_LA_PSV_W, DIMENSION_DE_LA_PSV_H));
         setBackground(Color.WHITE);
     }
 

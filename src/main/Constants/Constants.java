@@ -43,6 +43,6 @@ public class Constants {
     public static final float FINISH_LINE_BONUS = 200.0F;
 
     // PlayerStatesView
-    public static final int DIMONSION_H = 200;
-    public static final int DIMONSION_W = 200;
+    public static final int DIMENSION_DE_LA_PSV_H = 200;
+    public static final int DIMENSION_DE_LA_PSV_W = 200;
 }

@@ -16,7 +16,7 @@ public class BoardRenderer {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int startX = 50;
-        int startY = 50;
+        int startY = 8;
         int tilesPerSide = (gameBoard.getProperties().size()-4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
 
