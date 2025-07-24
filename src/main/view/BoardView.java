@@ -369,4 +369,11 @@ public class BoardView extends JPanel {
             frame.setVisible(true);
         });
     }
+
+    public void setParentFrame(GameView gameView) {
+        // TODO: This method is a placeholder for future use if we need to interact with the GameView
+        // For now, it does nothing but can be used to set a reference to the parent frame.
+        // gameView.setVisible(false); // Example of hiding the game view when needed
+
+    }
 }

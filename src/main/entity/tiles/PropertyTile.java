@@ -82,4 +82,12 @@ public class PropertyTile extends Tile {
     public void setOwned(boolean owned, Player owner) {
         this.owner = owner;
     }
+
+    public boolean attemptPurchase(Player player) {
+        if (isOwned() || player.getMoney() < price) {
+            return false; // Cannot purchase if already owned or insufficient funds
+        }
+        player.buyProperty(this);
+        return true; // Purchase successful
+    }
 }

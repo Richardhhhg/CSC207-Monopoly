@@ -1,6 +1,6 @@
 package main.view;
 
-import main.entity.tiles.Property;
+import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 import main.Constants.Constants;
 import java.awt.*;
@@ -33,11 +33,11 @@ public class BoardRenderer {
         drawPlayers(g2d, gameBoard.getPlayers(), gameBoard, startX, startY, tileSize);
     }
 
-    private void drawProperties(Graphics2D g2d, List<Property> properties, GameBoard gameBoard,
+    private void drawProperties(Graphics2D g2d, List<PropertyTile> properties, GameBoard gameBoard,
                                 int startX, int startY, int tileSize) {
         for (int i = 0; i < properties.size(); i++) {
             Point pos = gameBoard.getTilePosition(i, startX, startY, tileSize);
-            Property prop = properties.get(i);
+            PropertyTile prop = properties.get(i);
 
             // Draw property tile
             g2d.setColor(Color.WHITE);
