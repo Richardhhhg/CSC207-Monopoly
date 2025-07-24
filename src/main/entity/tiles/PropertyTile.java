@@ -6,7 +6,7 @@ import main.use_case.Player;
 /*
  * A purchasable board tile that can collect rent.
  * */
-public class Property extends Tile {
+public class PropertyTile extends Tile {
     private final float price;
     private final float rent;
     private Player owner; //null if not owned
@@ -16,7 +16,7 @@ public class Property extends Tile {
      * @param price purchase price
      * @param rent  base rent amount
      */
-    public Property(String name, float price, float rent) {
+    public PropertyTile(String name, float price, float rent) {
         super(name);
         this.price = price;
         this.rent = rent;
@@ -59,6 +59,11 @@ public class Property extends Tile {
     public void onLanding(Player p) {
         if (!isOwned()) {
             p.buyProperty(this);
+            //TODO: figure out how to update the colour of the background for tile.
+            // should probably go in the boardController
+            /*int tileIndex = allProperties.indexOf(property);
+            boardView.updateTileOwner(tileIndex, player.getColor());
+            */
             return;
         }
         if (p != owner) {
@@ -76,5 +81,13 @@ public class Property extends Tile {
      */
     public void setOwned(boolean owned, Player owner) {
         this.owner = owner;
+    }
+
+    public boolean attemptPurchase(Player player) {
+        if (isOwned() || player.getMoney() < price) {
+            return false; // Cannot purchase if already owned or insufficient funds
+        }
+        player.buyProperty(this);
+        return true; // Purchase successful
     }
 }
