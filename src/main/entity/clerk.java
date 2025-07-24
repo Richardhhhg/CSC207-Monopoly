@@ -44,7 +44,7 @@ public class clerk extends Player {
      */
     @Override
     public void applyTurnEffects() {
-        this.addMoney(500);
+        this.addMoney(50);
         System.out.println("Just another day");
     }
 }

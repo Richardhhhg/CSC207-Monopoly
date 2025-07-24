@@ -21,7 +21,7 @@ public class landlord extends Player {
      */
     @Override
     public float adjustStockBuyPrice(float basePrice) {
-        return 0;
+        return (float) (basePrice * 1.8);
     }
 
     /**
@@ -39,7 +39,7 @@ public class landlord extends Player {
      */
     @Override
     public float adjustRent(float baseRent) {
-        return (float) (baseRent * 1.15);
+        return (float) (baseRent * 1.8);
     }
 
     /**

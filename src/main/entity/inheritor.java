@@ -35,7 +35,7 @@ public class inheritor extends Player {
      */
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return basePrice;
+        return (float) (basePrice * 0.7);
     }
 
     /**

@@ -41,6 +41,8 @@ public class PlayerStatsView extends JPanel{
             g2.drawString(info, 10, y);
             String networth = "Networth: " + player.getMoney() + "$";
             g2.drawString(networth, 180, y + 20);
+            //String stocks = "stocks: " + player.getMoney() + "$";
+            //g2.drawString(networth, 180, y + 20);
 
             if (player.getPortrait() != null) {
                 int portraitSize = 155;
