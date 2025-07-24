@@ -1,5 +1,6 @@
 package main.view;
 
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.*;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
@@ -63,6 +64,22 @@ public class GameBoard {
         players.add(clerk);
         players.add(poorman);
         players.add(landlord);
+        initializeStocks();
+    }
+
+    // TODO: This should not be here, should be in separate use case or something - Richard
+    private void initializeStocks() {
+        // Temporary List of stocks just to limit API Calls:
+        // TODO: Replace with actual stock data retrieval when confident this works - Richard
+        List<Stock> stocks = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
+            Stock stock = new Stock(info);
+            stocks.add(stock);
+        }
+        for (Player player: players) {
+            player.initializeStocks(stocks);
+        }
     }
 
     public void moveCurrentPlayer(int steps) {
@@ -73,6 +90,7 @@ public class GameBoard {
         // Note: Actual position update happens in animation
     }
 
+    // TODO: Refactor this into a separate use cases later - Richard
     public void nextPlayer() {
         if (gameEnded) return;
 
@@ -81,6 +99,13 @@ public class GameBoard {
 
         players.get(currentPlayerIndex).applyTurnEffects();
         totalTurns++;
+
+        // Update stocks at the end of each round
+        if (totalTurns % TURNS_PER_ROUND == 0) {
+            for (Stock stock : getCurrentPlayer().getStocks().keySet()) {
+                stock.updatePrice();
+            }
+        }
 
         // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
         if (totalTurns >= MAX_ROUNDS * TURNS_PER_ROUND) {

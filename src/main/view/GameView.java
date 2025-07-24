@@ -35,11 +35,6 @@ public class GameView extends JFrame{
         this.boardView = new BoardView();
         // Pass this frame reference to BoardView so it can hide it when showing end screen
         this.boardView.setParentFrame(this);
-
-        // TODO: This implementation is temporary until we get actual game entity.
-        // TODO: This will later use stockMarketViewModel to get stocks rather than passing in stocks directly.
-        this.stockMarketView = new StockMarketView(stocks);;
-        stockMarketView.setAlwaysOnTop(true);
     }
 
     /**
