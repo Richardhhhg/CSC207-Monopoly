@@ -36,6 +36,16 @@ public class BoardView extends JPanel {
     private final JLabel die2Label        = new JLabel();
     private final JLabel resultLabel      = new JLabel("Sum: 2", SwingConstants.CENTER);
 
+    // player stats
+    private final PlayerStatsView statsPanel;
+
+    public BoardView() {
+        this.gameBoard = new GameBoard();
+        this.diceController = new DiceController();
+        this.renderer = new BoardRenderer();
+        this.animator = new PlayerMovementAnimator();
+        this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
+
     // ——— Portrait icons ———
     private Image currentPortrait;
 
@@ -121,6 +131,11 @@ public class BoardView extends JPanel {
                 Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
+        add(boardPanel, BorderLayout.WEST);
+
+        add(statsPanel, BorderLayout.CENTER);
+
+        // Roll-Dice side-panel
         add(boardPanel, BorderLayout.CENTER);
         // ——— Roll-Dice side-panel (button only) ———
         JPanel side = new JPanel();
@@ -305,6 +320,9 @@ public class BoardView extends JPanel {
     }
 
     private void handleEndTurn() {
+        gameBoard.nextPlayer();
+        updateStatusLabels();
+        statsPanel.updatePlayers(gameBoard.getPlayers());
         int startIndex = currentPlayerIndex;
         boolean foundNext = false;
         players.get(currentPlayerIndex).applyTurnEffects();

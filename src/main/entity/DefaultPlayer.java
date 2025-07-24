@@ -13,7 +13,7 @@ public class DefaultPlayer extends Player {
         this.loadPortrait("main/Resources/default portrait.png");
     }
 
-    public String  getName() {
+    public String getName() {
         return this.name;
     }
 
