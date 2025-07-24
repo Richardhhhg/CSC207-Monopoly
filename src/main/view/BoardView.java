@@ -93,6 +93,7 @@ public class BoardView extends JPanel {
         handleLandingOnProperty();
     }
 
+    //TODO: Generalize this to handle all tile types
     private void handleLandingOnProperty() {
         Player currentPlayer = gameBoard.getCurrentPlayer();
         int position = currentPlayer.getPosition();

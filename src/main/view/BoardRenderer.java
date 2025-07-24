@@ -33,11 +33,13 @@ public class BoardRenderer {
         drawPlayers(g2d, gameBoard.getPlayers(), gameBoard, startX, startY, tileSize);
     }
 
+    //TODO: Refactor this to TileView
     private void drawProperties(Graphics2D g2d, List<PropertyTile> properties, GameBoard gameBoard,
                                 int startX, int startY, int tileSize) {
         for (int i = 0; i < properties.size(); i++) {
             Point pos = gameBoard.getTilePosition(i, startX, startY, tileSize);
             PropertyTile prop = properties.get(i);
+
 
             // Draw property tile background - colored if owned
             if (prop.isOwned()) {

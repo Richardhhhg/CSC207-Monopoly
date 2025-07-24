@@ -99,13 +99,13 @@ public abstract class Player {
 
     public void buyProperty(PropertyTile propertyTile) {
         float Price = propertyTile.getPrice();
-        if (!propertyTile.isOwned() && this.money >= Price) {
-            this.deductMoney(Price);
-            this.properties.add(propertyTile);
-            propertyTile.setOwned(true, this);
-        }
+        this.deductMoney(Price);
+        this.properties.add(propertyTile);
+        propertyTile.setOwned(true, this);
+
     }
 
+    //TODO: Implement property selling methods
     public void sellProperty(PropertyTile propertyTile) {
         if (this.properties.contains(propertyTile)) {
             float refund = propertyTile.getPrice();
@@ -121,10 +121,6 @@ public abstract class Player {
 
     public Color getColor() {
         return color;
-    }
-
-    public boolean hasSufficientFunds(float amount) {
-        return money >= amount;
     }
 
     public abstract float adjustStockBuyPrice(float basePrice);

@@ -145,7 +145,7 @@ public class PropertyTile extends Tile {
     }
 
     public boolean attemptPurchase(Player player) {
-        if (isOwned() || player.getMoney() < price) {
+        if (player.getMoney() <= price) {
             return false; // Cannot purchase if already owned or insufficient funds
         }
         player.buyProperty(this);

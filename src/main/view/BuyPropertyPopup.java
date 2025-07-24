@@ -124,10 +124,6 @@ public class BuyPropertyPopup extends JDialog {
 
     private void handlePurchaseAttempt() {
         // Validate purchase conditions
-        if (property.isOwned()) {
-            showMessage("Property is already owned!", Color.RED, true);
-            return;
-        }
 
         if (player.getMoney() < property.getPrice()) {
             float needed = property.getPrice() - player.getMoney();
