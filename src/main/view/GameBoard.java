@@ -57,11 +57,12 @@ public class GameBoard {
         players = new ArrayList<>();
         DefaultPlayer defaultPlayer = new DefaultPlayer(PLAYER_NAMES[0], PLAYER_COLORS[0]);
         clerk clerk = new clerk(PLAYER_NAMES[1], PLAYER_COLORS[1]);
-        collegeStudent collegeStudent = new collegeStudent(PLAYER_NAMES[2], PLAYER_COLORS[2]);
+        //collegeStudent collegeStudent = new collegeStudent(PLAYER_NAMES[2], PLAYER_COLORS[2]);
+        PoorMan poorman = new PoorMan(PLAYER_NAMES[2], PLAYER_COLORS[2]);
         landlord landlord = new landlord(PLAYER_NAMES[3], PLAYER_COLORS[3]);
         players.add(defaultPlayer);
         players.add(clerk);
-        players.add(collegeStudent);
+        players.add(poorman);
         players.add(landlord);
     }
 
