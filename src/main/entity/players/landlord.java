@@ -1,28 +1,19 @@
-package main.entity;
+package main.entity.players;
 
+import main.entity.Stock;
 import main.use_case.Player;
 
 import java.awt.*;
 
-public class DefaultPlayer extends Player {
-    private static final int DEFAULT_INIT_MONEY = 1200;
-    private String name;
-
-    public DefaultPlayer(String name, Color color) {
-        super(name, DEFAULT_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/default portrait.png");
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public float getMoney() {
-        return this.money;
-    }
-
-    public int getPosition() {
-        return this.position;
+/**
+ * A Player subclass representing a Landlord.
+ * Landlords gain extra rent and can sell properties for more money.
+ */
+public class landlord extends Player {
+    private static final int LANDLORD_INIT_MONEY = 800;
+    public landlord(String name, Color color) {
+        super(name, LANDLORD_INIT_MONEY, color);
+        this.loadPortrait("main/Resources/landlord.png");
     }
 
     @Override
@@ -46,27 +37,37 @@ public class DefaultPlayer extends Player {
     }
 
     /**
-     * Hello.
      * @param basePrice
      * @return
      */
     @Override
     public float adjustStockBuyPrice(float basePrice) {
-        return basePrice;
+        return (float) (basePrice * 1.8);
     }
 
+    /**
+     * @param basePrice
+     * @return
+     */
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return basePrice;
+        return (float) (basePrice * 0.8);
     }
 
+    /**
+     * @param baseRent
+     * @return
+     */
     @Override
     public float adjustRent(float baseRent) {
-        return baseRent;
+        return (float) (baseRent * 1.8);
     }
 
+    /**
+     * Landlord has no TurnEffects.
+     */
     @Override
     public void applyTurnEffects() {
-        System.out.println("nope, normie.");
+        System.out.println("Gimme the Rent!");
     }
 }
