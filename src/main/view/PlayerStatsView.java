@@ -31,7 +31,7 @@ public class PlayerStatsView extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(new Font("Arial", Font.PLAIN, 17));
 
-        int y = 30;
+        int y = 20;
 
         for (Player player : players) {
             if (player.isBankrupt()) continue;
