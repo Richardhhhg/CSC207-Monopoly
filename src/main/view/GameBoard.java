@@ -1,7 +1,7 @@
 package main.view;
 
 import main.entity.*;
-import main.entity.tiles.Property;
+import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class GameBoard {
     private static final int MAX_ROUNDS = 20;
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
-    private ArrayList<Property> properties;
+    private ArrayList<PropertyTile> properties;
     private List<Player> players;
     private int currentPlayerIndex = 0;
     private int tileCount;
@@ -51,7 +51,7 @@ public class GameBoard {
         this.tileCount = propertyNames.length;
 
         for (int i = 0; i < tileCount; i++) {
-            properties.add(new Property(propertyNames[i], prices[i], PLACEHOLDER_RENT));
+            properties.add(new PropertyTile(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
         players = new ArrayList<>();
@@ -155,7 +155,7 @@ public class GameBoard {
     }
 
     // Getters
-    public List<Property> getProperties() {
+    public List<PropertyTile> getProperties() {
         return properties;
     }
 

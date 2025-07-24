@@ -1,7 +1,7 @@
 package main.view;
 
+import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
-import main.entity.tiles.Property;
 
 import javax.swing.*;
 import java.awt.*;
@@ -185,7 +185,7 @@ public class EndScreen extends JFrame {
             propertiesPanel.setLayout(new BoxLayout(propertiesPanel, BoxLayout.Y_AXIS));
             propertiesPanel.setBorder(BorderFactory.createTitledBorder("Properties Owned"));
 
-            for (Property property : player.getProperties()) {
+            for (PropertyTile property : player.getProperties()) {
                 JLabel propLabel = new JLabel("• " + property.getName());
                 propLabel.setFont(new Font("Arial", Font.PLAIN, 12));
                 propertiesPanel.add(propLabel);
@@ -201,7 +201,7 @@ public class EndScreen extends JFrame {
 
     private float calculateTotalPropertyValue(Player player) {
         float total = 0;
-        for (Property property : player.getProperties()) {
+        for (PropertyTile property : player.getProperties()) {
             total += property.getPrice();
         }
         return total;
