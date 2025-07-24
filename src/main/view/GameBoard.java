@@ -73,7 +73,7 @@ public class GameBoard {
         // TODO: Replace with actual stock data retrieval when confident this works - Richard
         List<Stock> stocks = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
             Stock stock = new Stock(info);
             stocks.add(stock);
         }
@@ -90,6 +90,7 @@ public class GameBoard {
         // Note: Actual position update happens in animation
     }
 
+    // TODO: Refactor this into a separate use cases later - Richard
     public void nextPlayer() {
         if (gameEnded) return;
 
@@ -98,6 +99,13 @@ public class GameBoard {
 
         players.get(currentPlayerIndex).applyTurnEffects();
         totalTurns++;
+
+        // Update stocks at the end of each round
+        if (totalTurns % TURNS_PER_ROUND == 0) {
+            for (Stock stock : getCurrentPlayer().getStocks().keySet()) {
+                stock.updatePrice();
+            }
+        }
 
         // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
         if (totalTurns >= MAX_ROUNDS * TURNS_PER_ROUND) {

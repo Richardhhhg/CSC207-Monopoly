@@ -55,7 +55,6 @@ public class StockMarketView extends JFrame {
 
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
             Stock stock = entry.getKey();
-            int quantityOwned = entry.getValue();
             StockView stockview = new StockView(
                     player,
                     stock,

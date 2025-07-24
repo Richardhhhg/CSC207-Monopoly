@@ -131,9 +131,6 @@ public abstract class Player {
             double totalSale = stock.getCurrentPrice() * quantity;
             this.addMoney((float) totalSale);
             stocks.put(stock, stocks.get(stock) - quantity);
-            if (stocks.get(stock) == 0) {
-                stocks.remove(stock);
-            }
         }
     }
 

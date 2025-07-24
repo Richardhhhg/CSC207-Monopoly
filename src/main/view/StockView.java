@@ -48,6 +48,7 @@ public class StockView extends JPanel {
         sellButton.addActionListener(e -> sellStock());
     }
 
+    // TODO: This doesn't belong in View, refactor it out later - Richard
     private void buyStock() {
         String quantityText = quantityInput.getText();
         if (!quantityText.isEmpty()) {
@@ -57,6 +58,7 @@ public class StockView extends JPanel {
         }
     }
 
+    // TODO: This doesn't belong in View, refactor it out later - Richard
     private void sellStock() {
         String quantityText = quantityInput.getText();
         if (!quantityText.isEmpty()) {
