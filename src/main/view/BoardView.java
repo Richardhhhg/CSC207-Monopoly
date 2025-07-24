@@ -23,11 +23,15 @@ public class BoardView extends JPanel {
     private final JLabel roundLabel = new JLabel("Round: 1");
     private final JLabel turnLabel = new JLabel("Turns: 0");
 
+    // player stats
+    private final PlayerStatsView statsPanel;
+
     public BoardView() {
         this.gameBoard = new GameBoard();
         this.diceController = new DiceController();
         this.renderer = new BoardRenderer();
         this.animator = new PlayerMovementAnimator();
+        this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
@@ -53,7 +57,9 @@ public class BoardView extends JPanel {
                 Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
-        add(boardPanel, BorderLayout.CENTER);
+        add(boardPanel, BorderLayout.WEST);
+
+        add(statsPanel, BorderLayout.CENTER);
 
         // Roll-Dice side-panel
         JPanel side = new JPanel();
@@ -111,6 +117,7 @@ public class BoardView extends JPanel {
     private void handleEndTurn() {
         gameBoard.nextPlayer();
         updateStatusLabels();
+        statsPanel.updatePlayers(gameBoard.getPlayers());
 
         if (gameBoard.isGameOver()) {
             showEndScreen();
