@@ -27,6 +27,25 @@ public class GameNextTurn {
         currentPlayer.applyTurnEffects();
         game.increaseTurn();
 
+        // TODO: The next 2 blocks are horrible, make it prettier later - Richard
+        int nextIndex = -1;
+        for (int i = 1; i <= players.size(); i++) {
+            int candidateIndex = (currentPlayerIndex + i) % players.size();
+            if (!players.get(candidateIndex).isBankrupt()) {
+                nextIndex = candidateIndex;
+                break;
+            }
+        }
+
+        if (nextIndex == -1) {
+            // All players are bankrupt
+            game.endGame("All players are bankrupt");
+            game.setCurrentPlayerIndex(-1);
+            return;
+        } else {
+            game.setCurrentPlayerIndex(nextIndex);
+        }
+
         // FIXME: this does not account for player deaths
         if (game.getTotalTurns() % TURNS_PER_ROUND == 0) {
             GameNextRound nextRound = new GameNextRound(game);
