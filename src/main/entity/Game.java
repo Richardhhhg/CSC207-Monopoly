@@ -1,11 +1,9 @@
 package main.entity;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.players.PoorMan;
-import main.entity.players.clerk;
-import main.entity.players.inheritor;
-import main.entity.players.landlord;
-import main.entity.tiles.PropertyTile;
+import main.use_case.Game.GameInitializePlayers;
+import main.use_case.Game.GameInitializeStocks;
+import main.use_case.Game.GameInitializeTiles;
 import main.use_case.Player;
 import main.use_case.Tile;
 
@@ -19,9 +17,6 @@ import static main.Constants.Constants.FINISH_LINE_BONUS;
  * GameBoard manages the game state and logic, separate from UI concerns.
  */
 public class Game {
-    private static final int PLACEHOLDER_RENT = 50;
-    private static final Color[] PLAYER_COLORS = {Color.RED, Color.CYAN, Color.GREEN, Color.ORANGE}; // TODO: Later player should be able to choose this
-    private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"}; // TODO: Later player should be able to choose this
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
     private List<Tile> tiles;
@@ -41,35 +36,9 @@ public class Game {
      * Initializes Properties and Players
      */
     public void initializeGame() {
-        // Initialize properties
-        tiles = new ArrayList<>();
-        // TODO: Read this from json
-        // TODO: Remove GO from properties
-        String[] propertyNames = {
-                "GO", "Mediterranean Ave", "Baltic Ave", "Reading Railroad",
-                "Oriental Ave", "Vermont Ave", "Connecticut Ave", "St. James Place",
-                "Tennessee Ave", "New York Ave", "Kentucky Ave", "Indiana Ave",
-                "Illinois Ave", "Atlantic Ave", "Ventnor Ave", "Marvin Gardens",
-                "Pacific Ave", "North Carolina Ave", "Pennsylvania Ave", "Boardwalk"
-        };
-
-        int[] prices = {0, 60, 60, 200, 100, 100, 120, 140, 140, 160, 180, 180, 200, 220, 220, 280, 300, 300, 320, 400};
-        this.tileCount = propertyNames.length;
-
-        for (int i = 0; i < tileCount; i++) {
-            tiles.add(new PropertyTile(propertyNames[i], prices[i], PLACEHOLDER_RENT));
-        }
-
-        players = new ArrayList<>();
-        inheritor inheritor = new inheritor(PLAYER_NAMES[0], PLAYER_COLORS[0]);
-        clerk clerk = new clerk(PLAYER_NAMES[1], PLAYER_COLORS[1]);
-        PoorMan poorman = new PoorMan(PLAYER_NAMES[2], PLAYER_COLORS[2]);
-        landlord landlord = new landlord(PLAYER_NAMES[3], PLAYER_COLORS[3]);
-        players.add(inheritor);
-        players.add(clerk);
-        players.add(poorman);
-        players.add(landlord);
-        initializeStocks();
+        new GameInitializeTiles(this).execute();
+        new GameInitializePlayers(this).execute();
+        new GameInitializeStocks(this).execute();
     }
 
     // TODO: This should not be here, should be in separate use case or something - Richard
@@ -104,6 +73,7 @@ public class Game {
         return gameEndReason;
     }
 
+    // TODO: This does not account for players dying, fix later - Richard
     public int getCurrentRound() {
         return (totalTurns / TURNS_PER_ROUND) + 1;
     }
@@ -195,5 +165,38 @@ public class Game {
     public void endGame(String message) {
         this.gameEnded = true;
         this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
+    }
+
+    public void setTiles(List<Tile> tiles) {
+        if (tiles != null && !tiles.isEmpty()) {
+            this.tiles = tiles;
+            this.tileCount = tiles.size();
+        } else {
+            throw new IllegalArgumentException("Tiles list cannot be null or empty");
+        }
+    }
+
+    public void setPlayers(List<Player> players) {
+        if (players != null && !players.isEmpty()) {
+            this.players = players;
+        } else {
+            throw new IllegalArgumentException("Players list cannot be null or empty");
+        }
+    }
+
+    public void setTileCount(int tileCount) {
+        if (tileCount > 0) {
+            this.tileCount = tileCount;
+        } else {
+            throw new IllegalArgumentException("Tile count must be greater than zero");
+        }
+    }
+
+    public void setStocks(List<Stock> stocks) {
+        if (stocks != null && !stocks.isEmpty()) {
+            this.stocks = stocks;
+        } else {
+            throw new IllegalArgumentException("Stocks list cannot be null or empty");
+        }
     }
 }
