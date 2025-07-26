@@ -1,19 +1,13 @@
 package main.view;
 
 import main.entity.*;
-import main.entity.tiles.PropertyTile;
+import main.use_case.Game.GameNextTurn;
 import main.use_case.Player;
 import main.Constants.Constants;
-import java.util.List;
-import java.util.ArrayList;
+import main.use_case.Tile;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
-import java.util.Random;
-import javax.swing.ImageIcon;
-
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 /**
  * BoardView is a JPanel that represents the main.view of the game board.
@@ -21,7 +15,7 @@ import static main.Constants.Constants.FINISH_LINE_BONUS;
  */
 public class BoardView extends JPanel {
     // Components responsible for specific functionality
-    private final GameBoard gameBoard;
+    private final Game game;
     private final BoardRenderer boardRenderer;
     private final DiceController diceController;
     private final PlayerMovementAnimator playerMovementAnimator;
@@ -38,11 +32,11 @@ public class BoardView extends JPanel {
     private final PlayerStatsView statsPanel;
 
     public BoardView() {
-        this.gameBoard = new GameBoard();
+        this.game = new Game();
         this.diceController = new DiceController();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
-        this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
+        this.statsPanel = new PlayerStatsView(game.getPlayers());
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
@@ -62,7 +56,7 @@ public class BoardView extends JPanel {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                boardRenderer.drawBoard(g, gameBoard, diceController);
+                boardRenderer.drawBoard(g, game, diceController);
             }
         };
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
@@ -97,13 +91,13 @@ public class BoardView extends JPanel {
 
     private void displayStockMarket() {
         // Create a new StockMarketView with the current players' stocks
-        StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer());
+        StockMarketView stockMarketView = new StockMarketView(game.getCurrentPlayer());
         stockMarketView.setVisible(true);
     }
 
     private void updateStatusLabels() {
-        roundLabel.setText("Round: " + gameBoard.getCurrentRound());
-        turnLabel.setText("Turns: " + gameBoard.getTotalTurns());
+        roundLabel.setText("Round: " + game.getCurrentRound());
+        turnLabel.setText("Turns: " + game.getTotalTurns());
     }
 
     private void handleRollDice() {
@@ -117,17 +111,17 @@ public class BoardView extends JPanel {
     }
 
     private void onDiceRollComplete() {
-        Player currentPlayer = gameBoard.getCurrentPlayer();
+        Player currentPlayer = game.getCurrentPlayer();
         int diceSum = diceController.getLastDiceSum();
 
         // Handle crossing GO bonus using GameBoard logic
-        gameBoard.moveCurrentPlayer(diceSum);
+        game.moveCurrentPlayer(diceSum);
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
             currentPlayer,
             diceSum,
-            gameBoard.getTileCount(),
+            game.getTileCount(),
             this::repaint, // Movement step callback
             this::onPlayerMovementComplete // Completion callback
         );
@@ -140,9 +134,9 @@ public class BoardView extends JPanel {
 
     //TODO: Generalize this to handle all tile types
     private void handleLandingOnProperty() {
-        Player currentPlayer = gameBoard.getCurrentPlayer();
+        Player currentPlayer = game.getCurrentPlayer();
         int position = currentPlayer.getPosition();
-        PropertyTile property = gameBoard.getPropertyAt(position);
+        Tile property = game.getPropertyAt(position);
 
         if (property != null) {
             // Use PropertyTile's built-in landing logic
@@ -151,11 +145,11 @@ public class BoardView extends JPanel {
     }
 
     private void handleEndTurn() {
-        gameBoard.nextPlayer();
+        new GameNextTurn(game).execute();
         updateStatusLabels();
-        statsPanel.updatePlayers(gameBoard.getPlayers());
+        statsPanel.updatePlayers(game.getPlayers());
 
-        if (gameBoard.isGameOver()) {
+        if (game.isGameOver()) {
             showEndScreen();
             return;
         }
@@ -176,9 +170,9 @@ public class BoardView extends JPanel {
         // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
-                    gameBoard.getPlayers(),
-                    gameBoard.getGameEndReason(),
-                    gameBoard.getCurrentRound()
+                    game.getPlayers(),
+                    game.getGameEndReason(),
+                    game.getCurrentRound()
             );
         });
     }

@@ -1,13 +1,13 @@
-package main.view;
+package main.entity;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.*;
 import main.entity.players.PoorMan;
 import main.entity.players.clerk;
 import main.entity.players.inheritor;
 import main.entity.players.landlord;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
+import main.use_case.Tile;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -18,23 +18,22 @@ import static main.Constants.Constants.FINISH_LINE_BONUS;
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
  */
-public class GameBoard {
+public class Game {
     private static final int PLACEHOLDER_RENT = 50;
-    private static final int PLAYER_COUNT = 4;
-    private static final Color[] PLAYER_COLORS = {Color.RED, Color.CYAN, Color.GREEN, Color.ORANGE};
-    private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"};
-    private static final int MAX_ROUNDS = 20;
+    private static final Color[] PLAYER_COLORS = {Color.RED, Color.CYAN, Color.GREEN, Color.ORANGE}; // TODO: Later player should be able to choose this
+    private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"}; // TODO: Later player should be able to choose this
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
-    private ArrayList<PropertyTile> properties;
+    private List<Tile> tiles;
     private List<Player> players;
+    private List<Stock> stocks;
     private int currentPlayerIndex = 0;
     private int tileCount;
     private int totalTurns = 0;
     private boolean gameEnded = false;
     private String gameEndReason = "";
 
-    public GameBoard() {
+    public Game() {
         initializeGame();
     }
 
@@ -43,7 +42,9 @@ public class GameBoard {
      */
     public void initializeGame() {
         // Initialize properties
-        properties = new ArrayList<>();
+        tiles = new ArrayList<>();
+        // TODO: Read this from json
+        // TODO: Remove GO from properties
         String[] propertyNames = {
                 "GO", "Mediterranean Ave", "Baltic Ave", "Reading Railroad",
                 "Oriental Ave", "Vermont Ave", "Connecticut Ave", "St. James Place",
@@ -56,7 +57,7 @@ public class GameBoard {
         this.tileCount = propertyNames.length;
 
         for (int i = 0; i < tileCount; i++) {
-            properties.add(new PropertyTile(propertyNames[i], prices[i], PLACEHOLDER_RENT));
+            tiles.add(new PropertyTile(propertyNames[i], prices[i], PLACEHOLDER_RENT));
         }
 
         players = new ArrayList<>();
@@ -84,6 +85,7 @@ public class GameBoard {
         for (Player player: players) {
             player.initializeStocks(stocks);
         }
+        this.stocks = stocks;
     }
 
     public void moveCurrentPlayer(int steps) {
@@ -92,55 +94,6 @@ public class GameBoard {
             currentPlayer.addMoney(FINISH_LINE_BONUS);
         }
         // Note: Actual position update happens in animation
-    }
-
-    // TODO: Refactor this into a separate use cases later - Richard
-    public void nextPlayer() {
-        if (gameEnded) return;
-
-        int startIndex = currentPlayerIndex;
-        boolean foundNext = false;
-
-        players.get(currentPlayerIndex).applyTurnEffects();
-        totalTurns++;
-
-        // Update stocks at the end of each round
-        if (totalTurns % TURNS_PER_ROUND == 0) {
-            for (Stock stock : getCurrentPlayer().getStocks().keySet()) {
-                stock.updatePrice();
-            }
-        }
-
-        // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
-        if (totalTurns >= MAX_ROUNDS * TURNS_PER_ROUND) {
-            gameEnded = true;
-            gameEndReason = "Maximum 20 rounds reached";
-            return;
-        }
-
-        for (int i = 1; i <= players.size(); i++) {
-            int nextIndex = (startIndex + i) % players.size();
-            if (!players.get(nextIndex).isBankrupt()) {
-                currentPlayerIndex = nextIndex;
-                foundNext = true;
-                break;
-            }
-        }
-
-        if (!foundNext) {
-            // All players are bankrupt - game over
-            gameEnded = true;
-            gameEndReason = "All players are bankrupt";
-            currentPlayerIndex = -1;
-            return;
-        }
-
-        // Check if only one player remains solvent
-        long solventPlayers = players.stream().filter(p -> !p.isBankrupt()).count();
-        if (solventPlayers == 1) {
-            gameEnded = true;
-            gameEndReason = "Only one player remains solvent";
-        }
     }
 
     public boolean isGameOver() {
@@ -164,6 +117,14 @@ public class GameBoard {
         return players.get(currentPlayerIndex);
     }
 
+    /**
+     * Helper function for getting the position of a tile on the board
+     * @param position
+     * @param startX
+     * @param startY
+     * @param tileSize
+     * @return
+     */
     public Point getTilePosition(int position, int startX, int startY, int tileSize) {
         int tilesPerSide = this.tileCount / 4;
         int cool_number = tilesPerSide * tileSize;
@@ -188,16 +149,15 @@ public class GameBoard {
      * @param position Board position
      * @return The PropertyTile at that position
      */
-    public PropertyTile getPropertyAt(int position) {
-        if (position >= 0 && position < properties.size()) {
-            return properties.get(position);
+    public Tile getPropertyAt(int position) {
+        if (position >= 0 && position < tiles.size()) {
+            return tiles.get(position);
         }
         return null;
     }
 
-    // Getters
-    public List<PropertyTile> getProperties() {
-        return properties;
+    public List<Tile> getTiles() {
+        return tiles;
     }
 
     public List<Player> getPlayers() {
@@ -210,5 +170,30 @@ public class GameBoard {
 
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
+    }
+
+    public List<Stock> getStocks() {
+        return stocks;
+    }
+
+    public boolean getGameEnded() {
+        return gameEnded;
+    }
+
+    public void increaseTurn() {
+        totalTurns++;
+    }
+
+    public void setCurrentPlayerIndex(int index) {
+        if (index >= 0 && index < players.size()) {
+            this.currentPlayerIndex = index;
+        } else {
+            throw new IndexOutOfBoundsException("Invalid player index: " + index);
+        }
+    }
+
+    public void endGame(String message) {
+        this.gameEnded = true;
+        this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
     }
 }
