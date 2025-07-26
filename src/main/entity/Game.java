@@ -41,22 +41,6 @@ public class Game {
         new GameInitializeStocks(this).execute();
     }
 
-    // TODO: This should not be here, should be in separate use case or something - Richard
-    private void initializeStocks() {
-        // Temporary List of stocks just to limit API Calls:
-        // TODO: Replace with actual stock data retrieval when confident this works - Richard
-        List<Stock> stocks = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
-            Stock stock = new Stock(info);
-            stocks.add(stock);
-        }
-        for (Player player: players) {
-            player.initializeStocks(stocks);
-        }
-        this.stocks = stocks;
-    }
-
     public void moveCurrentPlayer(int steps) {
         Player currentPlayer = getCurrentPlayer();
         if (currentPlayer.getPosition() + steps >= tileCount) {

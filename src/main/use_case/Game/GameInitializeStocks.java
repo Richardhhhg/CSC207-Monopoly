@@ -39,9 +39,9 @@ public class GameInitializeStocks {
                 Stock stock = new Stock(info);
                 stocks.add(stock);
             }
-            for (Player player: players) {
-                player.initializeStocks(stocks);
-            }
+        }
+        for (Player player: players) {
+            player.initializeStocks(stocks);
         }
 
         game.setStocks(stocks);
