@@ -18,12 +18,10 @@ public class GameNextTurn {
 
     public void execute() {
         List<Player> players = game.getPlayers();
-        int totalTurns = game.getTotalTurns();
         if (game.getGameEnded()) return;
 
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         Player currentPlayer = players.get(currentPlayerIndex);
-        boolean foundNext = false;
 
         // FIXME: There may be a bug if current player has no turn effects
         currentPlayer.applyTurnEffects();
@@ -37,8 +35,9 @@ public class GameNextTurn {
 
         // Temp Comment: This checks if any player is bankrupt
         // TODO: I don't think it's possible for any player but current player to be bankrupt on current player turn
-        // TODO: Make this separate class for checking if game ended
         GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
         checkBankrupt.execute();
+
+        game.setCurrentPlayerIndex((currentPlayerIndex+1) % (players.size()));
     }
 }
