@@ -12,8 +12,9 @@ public class Constants {
     public static final int GAME_WIDTH = 1920;
     public static final int GAME_HEIGHT = 1080;
 
-    // Game entity related constants
+    // GamePlay related constants
     public static final int MAX_ROUNDS = 20;
+    public static final int PLACEHOLDER_RENT = 50;
 
     // Board JPanel Related main.Constants.main.Constants
     public static final int BOARD_SIZE = 780;
