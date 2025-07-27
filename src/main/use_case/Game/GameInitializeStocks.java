@@ -4,8 +4,8 @@ import main.Constants.Config;
 import main.Constants.Constants;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Game;
-import main.entity.Stock;
-import main.entity.StockInformationRetriever;
+import main.entity.Stocks.Stock;
+import main.entity.Stocks.StockInformationRetriever;
 import main.use_case.Player;
 
 import java.util.ArrayList;

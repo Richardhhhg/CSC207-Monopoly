@@ -1,6 +1,6 @@
 package main.entity;
 
-import main.data_access.StockMarket.StockInfoDataOutputObject;
+import main.entity.Stocks.Stock;
 import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
@@ -8,7 +8,6 @@ import main.use_case.Player;
 import main.use_case.Tile;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.awt.*;
 
 import static main.Constants.Constants.FINISH_LINE_BONUS;
