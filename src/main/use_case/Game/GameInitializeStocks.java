@@ -11,6 +11,10 @@ import main.use_case.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Use case for initializing stocks in the game.
+ * If you want to use real stock data, set USE_API to true.
+ */
 public class GameInitializeStocks {
     private static final boolean USE_API = false; // Set to true to use API for stock data
     private final Game game;
@@ -20,8 +24,6 @@ public class GameInitializeStocks {
     }
 
     public void execute() {
-        // Temporary List of stocks just to limit API Calls:
-        // TODO: Replace with actual stock data retrieval when confident this works - Richard
         List<Stock> stocks = new ArrayList<>();
         List<Player> players = game.getPlayers();
 

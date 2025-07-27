@@ -11,6 +11,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Use case for initializing players in the game.
+ * This class creates a list of players with predefined names and colors.
+ */
 public class GameInitializePlayers {
     private static final Color[] PLAYER_COLORS = {Color.RED, Color.CYAN, Color.GREEN, Color.ORANGE}; // TODO: Later player should be able to choose this
     private static final String[] PLAYER_NAMES = {"Player 1", "Player 2", "Player 3", "Player 4"}; // TODO: Later player should be able to choose this

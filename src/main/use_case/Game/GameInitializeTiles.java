@@ -1,10 +1,6 @@
 package main.use_case.Game;
 
 import main.entity.Game;
-import main.entity.players.PoorMan;
-import main.entity.players.clerk;
-import main.entity.players.inheritor;
-import main.entity.players.landlord;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Tile;
 
@@ -13,6 +9,10 @@ import java.util.List;
 
 import static main.Constants.Constants.PLACEHOLDER_RENT;
 
+/**
+ * Use case for initializing tiles in the game.
+ * This class creates a list of PropertyTiles with predefined names and prices.
+ */
 public class GameInitializeTiles {
     private Game game;
 
@@ -26,6 +26,7 @@ public class GameInitializeTiles {
 
         // TODO: Read this from json - Richard
         // TODO: Remove GO from properties - Richard
+        // TODO: Also add more than just property tiles - Richard
         String[] propertyNames = {
                 "GO", "Mediterranean Ave", "Baltic Ave", "Reading Railroad",
                 "Oriental Ave", "Vermont Ave", "Connecticut Ave", "St. James Place",
