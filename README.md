@@ -20,6 +20,14 @@ real life stocks and real data from stocks.
   - The price of stocks fluctuate every round based on real world stock data
   - The prices of stocks when the game starts will be based on real world stock data
 
+# How to Run
+1. Clone the repository to your local machine.
+2. Run the file `Main` under src/main/app
+
+If you wish to enable the use of the stock API for stock data, change the value of `useStockAPI` in `src/main/use_case/Initialize_Stock` to `true`.
+  
+Note: This project requires Java 16 or higher to run.
+
 # Contributions
 | Name         | Github      |
 |--------------|-------------|
