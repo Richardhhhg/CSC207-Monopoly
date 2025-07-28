@@ -16,11 +16,11 @@ public class Stock {
     private final double standardDeviationPct;
     private final NormalDistribution pctChangeDistribution;
 
-    public Stock(StockInfoDataOutputObject stockInfoData) {
-        this.symbol = stockInfoData.getTicker();
-        this.meanDailyReturnPct = stockInfoData.getMeanDailyReturnPct();
-        this.standardDeviationPct = stockInfoData.getStandardDeviationPct();
-        this.currentPrice = stockInfoData.getCurrentPrice();
+    public Stock(String symbol, double currentPrice, double meanDailyReturnPct, double standardDeviationPct) {
+        this.symbol = symbol;
+        this.meanDailyReturnPct = meanDailyReturnPct;
+        this.standardDeviationPct = standardDeviationPct;
+        this.currentPrice = currentPrice;
         this.pctChangeDistribution = new NormalDistribution(meanDailyReturnPct, standardDeviationPct);
         this.percentChange = 0;
     }
