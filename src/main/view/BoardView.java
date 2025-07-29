@@ -4,48 +4,55 @@ import main.entity.*;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 import main.Constants.Constants;
-import java.util.List;
-import java.util.ArrayList;
+import main.interface_adapter.dice.DicePresenter;
+import main.interface_adapter.dice.RollDiceController;
+import main.interface_adapter.view_model.DiceViewModel;
+import main.use_case.dice.RollDiceInputBoundary;
+import main.use_case.dice.RollDiceInteractor;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
-import java.util.Random;
-import javax.swing.ImageIcon;
-
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 /**
- * BoardView is a JPanel that represents the main.view of the game board.
- * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
+ * BoardView is a JPanel that represents the view of the game board.
+ * This version uses a Clean Architecture stack to handle the roll‑dice
+ * feature.  The dice values are generated in a use‑case interactor,
+ * passed through a presenter into a view model, and the view merely
+ * animates them.
  */
 public class BoardView extends JPanel {
-    // Components responsible for specific functionality
+    // Core components
     private final GameBoard gameBoard;
     private final BoardRenderer boardRenderer;
-    private final DiceController diceController;
     private final PlayerMovementAnimator playerMovementAnimator;
-    private JFrame parentFrame; // Reference to parent frame for end screen
+    private final PlayerStatsView statsPanel;
 
-    // ——— Dice UI & state ———
+    // Clean‑architecture components for dice
+    private final DiceAnimator diceAnimator;
+    private final RollDiceController rollDiceController;
+
+    // UI widgets
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
     private final JButton stockMarketButton = new JButton("Stock Market");
     private final JLabel roundLabel = new JLabel("Round: 1");
     private final JLabel turnLabel = new JLabel("Turns: 0");
-
-    // player stats
-    private final PlayerStatsView statsPanel;
+    private JFrame parentFrame;
 
     public BoardView() {
         this.gameBoard = new GameBoard();
-        this.diceController = new DiceController();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
 
-        setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
-                Constants.BOARD_PANEL_HEIGHT));
+        // Set up Clean Architecture stack for dice
+        DiceViewModel diceViewModel = new DiceViewModel();
+        DicePresenter dicePresenter = new DicePresenter(diceViewModel);
+        RollDiceInputBoundary interactor = new RollDiceInteractor(dicePresenter);
+        this.rollDiceController = new RollDiceController(interactor, diceViewModel);
+        this.diceAnimator = new DiceAnimator();
+
+        setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         setupUI();
     }
 
@@ -55,39 +62,35 @@ public class BoardView extends JPanel {
 
     private void setupUI() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
 
-        // Create board panel
+        // Board drawing panel
         JPanel boardPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                boardRenderer.drawBoard(g, gameBoard, diceController);
+                // Draw the board and current dice faces
+                boardRenderer.drawBoard(g, gameBoard, diceAnimator);
             }
         };
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
-
         add(boardPanel, BorderLayout.WEST);
         add(statsPanel, BorderLayout.CENTER);
 
-        // Roll-Dice side-panel
+        // Side panel with controls and status labels
         JPanel side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
-
-        // Game status labels
         roundLabel.setFont(new Font("Arial", Font.BOLD, 16));
         turnLabel.setFont(new Font("Arial", Font.BOLD, 16));
         side.add(roundLabel);
         side.add(turnLabel);
         side.add(Box.createVerticalStrut(20));
-
         side.add(rollDiceButton);
         side.add(endTurnButton);
         side.add(stockMarketButton);
         add(side, BorderLayout.EAST);
 
-        // wire the button
+        // Wire up button actions
         rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
         stockMarketButton.addActionListener(e -> displayStockMarket());
@@ -96,7 +99,6 @@ public class BoardView extends JPanel {
     }
 
     private void displayStockMarket() {
-        // Create a new StockMarketView with the current players' stocks
         StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer());
         stockMarketView.setVisible(true);
     }
@@ -108,44 +110,36 @@ public class BoardView extends JPanel {
 
     private void handleRollDice() {
         rollDiceButton.setEnabled(false);
-
-        // Use DiceController for dice animation and logic
-        diceController.startDiceAnimation(
-            this::repaint, // Animation frame callback
-            this::onDiceRollComplete // Completion callback
-        );
+        // Ask the use case to roll the dice; the presenter updates the view model
+        rollDiceController.rollDice();
+        int d1 = rollDiceController.getDie1();
+        int d2 = rollDiceController.getDie2();
+        // Animate the dice using the predetermined values
+        diceAnimator.startDiceAnimation(d1, d2, this::repaint, this::onDiceRollComplete);
     }
 
     private void onDiceRollComplete() {
         Player currentPlayer = gameBoard.getCurrentPlayer();
-        int diceSum = diceController.getLastDiceSum();
-
-        // Handle crossing GO bonus using GameBoard logic
+        int diceSum = rollDiceController.getSum();
         gameBoard.moveCurrentPlayer(diceSum);
-
-        // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
-            currentPlayer,
-            diceSum,
-            gameBoard.getTileCount(),
-            this::repaint, // Movement step callback
-            this::onPlayerMovementComplete // Completion callback
+                currentPlayer,
+                diceSum,
+                gameBoard.getTileCount(),
+                this::repaint,
+                this::onPlayerMovementComplete
         );
     }
 
     private void onPlayerMovementComplete() {
-        // Handle landing on property using PropertyTile's onLanding method
         handleLandingOnProperty();
     }
 
-    //TODO: Generalize this to handle all tile types
     private void handleLandingOnProperty() {
         Player currentPlayer = gameBoard.getCurrentPlayer();
         int position = currentPlayer.getPosition();
         PropertyTile property = gameBoard.getPropertyAt(position);
-
         if (property != null) {
-            // Use PropertyTile's built-in landing logic
             property.onLanding(currentPlayer);
         }
     }
@@ -154,12 +148,10 @@ public class BoardView extends JPanel {
         gameBoard.nextPlayer();
         updateStatusLabels();
         statsPanel.updatePlayers(gameBoard.getPlayers());
-
         if (gameBoard.isGameOver()) {
             showEndScreen();
             return;
         }
-
         rollDiceButton.setEnabled(true);
         repaint();
     }
@@ -167,39 +159,18 @@ public class BoardView extends JPanel {
     private void showEndScreen() {
         rollDiceButton.setEnabled(false);
         endTurnButton.setEnabled(false);
-
-        // Hide the parent frame if it exists
         if (parentFrame != null) {
             parentFrame.setVisible(false);
         }
-
-        // Show the end screen
-        SwingUtilities.invokeLater(() -> {
-            new EndScreen(
-                    gameBoard.getPlayers(),
-                    gameBoard.getGameEndReason(),
-                    gameBoard.getCurrentRound()
-            );
-        });
+        SwingUtilities.invokeLater(() -> new EndScreen(
+                gameBoard.getPlayers(),
+                gameBoard.getGameEndReason(),
+                gameBoard.getCurrentRound()
+        ));
     }
 
+    // Compatibility method if other code calls getLastDiceSum()
     public int getLastDiceSum() {
-        return diceController.getLastDiceSum();
-    }
-
-    /**
-     * For Testing the Board View on its own
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Monopoly Board");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            BoardView boardView = new BoardView();
-            boardView.setParentFrame(frame);
-            frame.add(boardView);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
+        return rollDiceController.getSum();
     }
 }
