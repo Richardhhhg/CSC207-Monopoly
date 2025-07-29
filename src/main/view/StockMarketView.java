@@ -1,6 +1,7 @@
 package main.view;
 
 import main.Constants.Constants;
+import main.data_access.StockMarket.DefaultStockInfoRepository;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.players.DefaultPlayer;
 import main.entity.Stocks.Stock;
@@ -27,7 +28,7 @@ public class StockMarketView extends JFrame {
         Map<Stock, Integer> stockQuantities = player.getStocks();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(Constants.STOCK_MARKET_WIDTH, Constants.STOCK_MARKET_HEIGHT);
-        setLocationRelativeTo(null); // Center on screen
+        setLocationRelativeTo(null);
         setAlwaysOnTop(true);
 
         JPanel mainPanel = new JPanel();
@@ -75,9 +76,11 @@ public class StockMarketView extends JFrame {
     public static void main(String[] args) {
         Player player = new DefaultPlayer("Test Player", Color.RED);
         java.util.List<Stock> stocks = new java.util.ArrayList<>();
+        DefaultStockInfoRepository stockInfoRepository = new DefaultStockInfoRepository();
         for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
-            Stock stock = new Stock(info);
+            StockInfoDataOutputObject info = stockInfoRepository.getStockInfo("TEST_" + i);
+            Stock stock = new Stock(info.ticker(), info.currentPrice(),
+                    info.meanDailyReturnPct(), info.standardDeviationPct());
             stocks.add(stock);
         }
         player.initializeStocks(stocks);

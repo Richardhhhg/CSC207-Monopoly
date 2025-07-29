@@ -2,19 +2,17 @@ package main.use_case.Game;
 
 import main.Constants.Config;
 import main.Constants.Constants;
+import main.data_access.StockMarket.DefaultStockInfoRepository;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Game;
 import main.entity.Stocks.Stock;
-import main.entity.Stocks.StockInformationRetriever;
+import main.data_access.StockMarket.APIStockInfoRepository;
+import main.interface_adapter.StockMarket.StockFactory;
 import main.use_case.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Use case for initializing stocks in the game.
- * If you want to use real stock data, set USE_API to true.
- */
 public class GameInitializeStocks {
     private static final boolean USE_API = false; // Set to true to use API for stock data
     private final Game game;
@@ -26,19 +24,25 @@ public class GameInitializeStocks {
     public void execute() {
         List<Stock> stocks = new ArrayList<>();
         List<Player> players = game.getPlayers();
+        StockFactory stockFactory = new StockFactory();
 
         if (USE_API) {
-            StockInformationRetriever stockInfoRetriever = new StockInformationRetriever(Config.getApiKey());
+            APIStockInfoRepository stockInfoRetriever = new APIStockInfoRepository(Config.getApiKey());
             try {
-                // Create stocks using the stock information retriever
-                stocks = stockInfoRetriever.createStocks(Constants.STOCK_NAME_FILE);
+                List<String> tickers = stockInfoRetriever.loadTickerSymbols(Constants.STOCK_NAME_FILE);
+                for (String ticker : tickers) {
+                    StockInfoDataOutputObject info = stockInfoRetriever.getStockInfo(ticker);
+                    Stock stock = stockFactory.execute(info);
+                    stocks.add(stock);
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Failed to initialize stocks from API", e);
             }
         } else {
+            DefaultStockInfoRepository stockInfoRetriever = new DefaultStockInfoRepository();
             for (int i = 0; i < 5; i++) {
-                StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
-                Stock stock = new Stock(info);
+                StockInfoDataOutputObject info = stockInfoRetriever.getStockInfo("TEST_" + (i + 1));
+                Stock stock = stockFactory.execute(info);
                 stocks.add(stock);
             }
         }

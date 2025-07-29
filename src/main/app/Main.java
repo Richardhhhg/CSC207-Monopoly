@@ -1,12 +1,9 @@
 package main.app;
 
-import main.entity.Stocks.StockMarket;
 import main.view.GameView;
 import main.view.StartScreen;
 
 public class Main{
-    private StockMarket stockMarket;
-
     public static void main(String[] args) {
         new StartScreen();
     }
