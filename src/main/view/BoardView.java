@@ -1,9 +1,13 @@
 package main.view;
 
-import main.entity.*;
+import main.interface_adapter.roll_dice.*;
+import main.use_case.roll_dice.*;
+import main.data_access.RandomNumberGenerator;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Player;
 import main.Constants.Constants;
+import main.view.dice.DiceAnimationController;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -15,19 +19,20 @@ import javax.swing.ImageIcon;
 
 import static main.Constants.Constants.FINISH_LINE_BONUS;
 
-/**
- * BoardView is a JPanel that represents the main.view of the game board.
- * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
- */
 public class BoardView extends JPanel {
     // Components responsible for specific functionality
     private final GameBoard gameBoard;
     private final BoardRenderer boardRenderer;
-    private final DiceController diceController;
     private final PlayerMovementAnimator playerMovementAnimator;
-    private JFrame parentFrame; // Reference to parent frame for end screen
+    private JFrame parentFrame;
 
-    // ——— Dice UI & state ———
+    // Clean Architecture Dice Components (REPLACE OLD DICECONTROLLER)
+    private RollDiceController rollDiceController;
+    private DiceViewModel diceViewModel;
+    private DiceAnimationController animationController;
+    private RollDicePresenter presenter;
+
+    // UI Components
     private final JButton rollDiceButton = new JButton("Roll Dice");
     private final JButton endTurnButton = new JButton("End Turn");
     private final JButton stockMarketButton = new JButton("Stock Market");
@@ -39,14 +44,40 @@ public class BoardView extends JPanel {
 
     public BoardView() {
         this.gameBoard = new GameBoard();
-        this.diceController = new DiceController();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(gameBoard.getPlayers());
 
+        // Initialize Clean Architecture Dice Components
+        setupDiceComponents();
+
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
         setupUI();
+    }
+
+    private void setupDiceComponents() {
+        // Create the clean architecture components
+        this.diceViewModel = new DiceViewModel();
+
+        // Animation callback that will be called when dice roll is complete
+        RollDicePresenter.DiceAnimationCallback animationCallback =
+                this::onDiceRollComplete;
+
+        // Create presenter
+        this.presenter = new RollDicePresenter(diceViewModel, animationCallback);
+
+        // Create data access
+        DiceRandomDataAccessInterface randomDataAccess = new RandomNumberGenerator();
+
+        // Create interactor
+        RollDiceInteractor interactor = new RollDiceInteractor(presenter, randomDataAccess);
+
+        // Create controller
+        this.rollDiceController = new RollDiceController(interactor);
+
+        // Create animation controller
+        this.animationController = new DiceAnimationController(diceViewModel, this::repaint);
     }
 
     public void setParentFrame(JFrame parentFrame) {
@@ -62,7 +93,8 @@ public class BoardView extends JPanel {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                boardRenderer.drawBoard(g, gameBoard, diceController);
+                // Updated to use new dice view model
+                boardRenderer.drawBoard(g, gameBoard, diceViewModel);
             }
         };
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
@@ -87,7 +119,7 @@ public class BoardView extends JPanel {
         side.add(stockMarketButton);
         add(side, BorderLayout.EAST);
 
-        // wire the button
+        // wire the button - UPDATED METHOD
         rollDiceButton.addActionListener(e -> handleRollDice());
         endTurnButton.addActionListener(e -> handleEndTurn());
         stockMarketButton.addActionListener(e -> displayStockMarket());
@@ -96,7 +128,6 @@ public class BoardView extends JPanel {
     }
 
     private void displayStockMarket() {
-        // Create a new StockMarketView with the current players' stocks
         StockMarketView stockMarketView = new StockMarketView(gameBoard.getCurrentPlayer());
         stockMarketView.setVisible(true);
     }
@@ -106,30 +137,33 @@ public class BoardView extends JPanel {
         turnLabel.setText("Turns: " + gameBoard.getTotalTurns());
     }
 
+    // UPDATED: New clean architecture dice rolling
     private void handleRollDice() {
         rollDiceButton.setEnabled(false);
+        presenter.presentDiceRolling(); // Set rolling state
 
-        // Use DiceController for dice animation and logic
-        diceController.startDiceAnimation(
-            this::repaint, // Animation frame callback
-            this::onDiceRollComplete // Completion callback
-        );
+        // Start animation first
+        animationController.startAnimation(() -> {
+            // When animation completes, actually roll the dice
+            rollDiceController.rollDice();
+        });
     }
 
-    private void onDiceRollComplete() {
+    // NEW: Called by presenter when dice roll is complete
+    public void onDiceRollComplete(DiceViewModel viewModel) {
         Player currentPlayer = gameBoard.getCurrentPlayer();
-        int diceSum = diceController.getLastDiceSum();
+        int diceSum = viewModel.getSum();
 
         // Handle crossing GO bonus using GameBoard logic
         gameBoard.moveCurrentPlayer(diceSum);
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
-            currentPlayer,
-            diceSum,
-            gameBoard.getTileCount(),
-            this::repaint, // Movement step callback
-            this::onPlayerMovementComplete // Completion callback
+                currentPlayer,
+                diceSum,
+                gameBoard.getTileCount(),
+                this::repaint, // Movement step callback
+                this::onPlayerMovementComplete // Completion callback
         );
     }
 
@@ -138,16 +172,17 @@ public class BoardView extends JPanel {
         handleLandingOnProperty();
     }
 
-    //TODO: Generalize this to handle all tile types
     private void handleLandingOnProperty() {
         Player currentPlayer = gameBoard.getCurrentPlayer();
         int position = currentPlayer.getPosition();
         PropertyTile property = gameBoard.getPropertyAt(position);
 
         if (property != null) {
-            // Use PropertyTile's built-in landing logic
             property.onLanding(currentPlayer);
         }
+
+        // Re-enable roll dice button after everything is complete
+        rollDiceButton.setEnabled(true);
     }
 
     private void handleEndTurn() {
@@ -168,12 +203,10 @@ public class BoardView extends JPanel {
         rollDiceButton.setEnabled(false);
         endTurnButton.setEnabled(false);
 
-        // Hide the parent frame if it exists
         if (parentFrame != null) {
             parentFrame.setVisible(false);
         }
 
-        // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
                     gameBoard.getPlayers(),
@@ -183,13 +216,20 @@ public class BoardView extends JPanel {
         });
     }
 
+    // UPDATED: Now uses dice view model
     public int getLastDiceSum() {
-        return diceController.getLastDiceSum();
+        return diceViewModel.getSum();
     }
 
-    /**
-     * For Testing the Board View on its own
-     */
+    // UPDATED: Get individual dice values from view model
+    public int getDice1Value() {
+        return diceViewModel.getDice1Value();
+    }
+
+    public int getDice2Value() {
+        return diceViewModel.getDice2Value();
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Monopoly Board");
