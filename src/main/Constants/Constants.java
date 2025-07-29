@@ -6,10 +6,15 @@ import java.awt.*;
  * This class is a placeholder for constants used throughout the application.
  */
 public class Constants {
+    // Game Constants
     // Game JFrame related main.Constants.main.Constants
     public static final String GAME_TITLE = "Very Epic and Cool Monopoly Game";
     public static final int GAME_WIDTH = 1920;
     public static final int GAME_HEIGHT = 1080;
+
+    // GamePlay related constants
+    public static final int MAX_ROUNDS = 20;
+    public static final int PLACEHOLDER_RENT = 50;
 
     // Board JPanel Related main.Constants.main.Constants
     public static final int BOARD_SIZE = 780;

@@ -45,7 +45,7 @@ public class StockInformationRetriever {
     /**
      * Retrieves stock information for a single ticker
      */
-    public StockInfoDataOutputObject getStockInfo(String ticker) throws IOException, InterruptedException {
+    private StockInfoDataOutputObject getStockInfo(String ticker) throws IOException, InterruptedException {
         // Get current quote
         double currentPrice = getCurrentPrice(ticker);
 
@@ -159,16 +159,19 @@ public class StockInformationRetriever {
 
     /**
      * Processes all tickers from the JSON file
+     *
+     * @param jsonFilePath Path to the JSON file containing ticker symbols
+     * @return List of Stock objects with retrieved information
      */
     public List<Stock> createStocks(String jsonFilePath) throws IOException, InterruptedException {
         List<String> tickers = loadTickerSymbols(jsonFilePath);
-        List<Stock> stockInfos = new ArrayList<>();
+        List<Stock> stocks = new ArrayList<>();
 
         for (String ticker : tickers) {
             try {
                 StockInfoDataOutputObject info = getStockInfo(ticker);
                 Stock stock = new Stock(info);
-                stockInfos.add(stock);
+                stocks.add(stock);
                 System.out.println("Retrieved data for: " + ticker);
 
                 // Note: The API has rate limit of 5 requests per minute
@@ -181,7 +184,7 @@ public class StockInformationRetriever {
         }
 
         rateLimiter.shutdown();
-        return stockInfos;
+        return stocks;
     }
 
     // Example usage
