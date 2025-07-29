@@ -8,16 +8,8 @@ import main.use_case.Player;
 import main.Constants.Constants;
 import main.view.dice.DiceAnimationController;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
-import java.util.Random;
-import javax.swing.ImageIcon;
-
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 public class BoardView extends JPanel {
     // Components responsible for specific functionality
@@ -214,20 +206,6 @@ public class BoardView extends JPanel {
                     gameBoard.getCurrentRound()
             );
         });
-    }
-
-    // UPDATED: Now uses dice view model
-    public int getLastDiceSum() {
-        return diceViewModel.getSum();
-    }
-
-    // UPDATED: Get individual dice values from view model
-    public int getDice1Value() {
-        return diceViewModel.getDice1Value();
-    }
-
-    public int getDice2Value() {
-        return diceViewModel.getDice2Value();
     }
 
     public static void main(String[] args) {
