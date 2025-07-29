@@ -9,7 +9,7 @@ public class PoorMan extends Player {
     private static final int POORMAN_INIT_MONEY = 200;
     public PoorMan(String name, Color color) {
         super(name, POORMAN_INIT_MONEY, color);
-        this.loadPortrait("poormana.png");
+        this.loadPortrait("main/Resources/poorman.png");
     }
 
     @Override
