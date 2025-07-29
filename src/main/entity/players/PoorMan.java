@@ -4,8 +4,9 @@ import main.entity.Stock;
 
 import java.awt.*;
 
+import static main.Constants.Constants.POORMAN_INIT_MONEY;
+
 public class PoorMan extends Player implements  applyAfterEffects {
-    private static final int POORMAN_INIT_MONEY = 200;
     public PoorMan(String name, Color color) {
         super(name, POORMAN_INIT_MONEY, color);
         this.loadPortrait("poormana.png");

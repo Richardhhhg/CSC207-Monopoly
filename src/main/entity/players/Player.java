@@ -118,8 +118,22 @@ public abstract class Player {
         }
     }
 
-    public abstract void buyStock(Stock stock, int quantity);
-    public abstract void sellStock(Stock stock, int quantity);
+    public void buyStock(Stock stock, int quantity) {
+        double totalCost = stock.getCurrentPrice() * quantity;
+
+        if (this.money >= totalCost) {
+            this.deductMoney((float) totalCost);
+            stocks.put(stock, stocks.getOrDefault(stock, 0) + quantity);
+        }
+    }
+
+    public void sellStock(Stock stock, int quantity) {
+        if (stocks.getOrDefault(stock, 0) >= quantity) {
+            double totalSale = stock.getCurrentPrice() * quantity;
+            this.addMoney((float) totalSale);
+            stocks.put(stock, stocks.get(stock) - quantity);
+        }
+    }
 
     public int getStockQuantity(Stock stock) {
         return stocks.getOrDefault(stock, 0);

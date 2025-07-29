@@ -4,13 +4,14 @@ import main.entity.Stock;
 
 import java.awt.*;
 
+import static main.Constants.Constants.INHERITOR_INIT_MONEY;
+
 /**
  * A special type of Player called "Inheritor".
  * This character pays more for stocks but may later get passive bonuses.
  * Starts with $1000.
  */
 public class inheritor extends Player implements StockModifier{
-    private static final int INHERITOR_INIT_MONEY = 1800;
     public inheritor(String name, Color color) {
         super(name, INHERITOR_INIT_MONEY, color);
         this.loadPortrait("main/Resources/inheritor.jpg");

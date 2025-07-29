@@ -5,8 +5,9 @@ import main.entity.tiles.PropertyTile;
 
 import java.awt.*;
 
+import static main.Constants.Constants.STUDENT_INIT_MONEY;
+
 public class collegeStudent extends Player implements applyAfterEffects, StockModifier{
-    private static final int STUDENT_INIT_MONEY = 1000;
     public collegeStudent(String name, Color color) {
         super(name, STUDENT_INIT_MONEY,color);
         this.loadPortrait("main/Resources/Computer-nerd.jpg");

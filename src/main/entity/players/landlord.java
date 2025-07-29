@@ -5,12 +5,13 @@ import main.entity.tiles.PropertyTile;
 
 import java.awt.*;
 
+import static main.Constants.Constants.LANDLORD_INIT_MONEY;
+
 /**
  * A Player subclass representing a Landlord.
  * Landlords gain extra rent and can sell properties for more money.
  */
 public class landlord extends Player implements rentModifier, StockModifier {
-    private static final int LANDLORD_INIT_MONEY = 800;
     public landlord(String name, Color color) {
         super(name, LANDLORD_INIT_MONEY, color);
         this.loadPortrait("main/Resources/landlord.png");
