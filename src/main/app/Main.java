@@ -1,6 +1,6 @@
 package main.app;
 
-import main.entity.StockMarket;
+import main.entity.Stocks.StockMarket;
 import main.view.GameView;
 import main.view.StartScreen;
 

@@ -1,40 +1,33 @@
 package main.view;
 
 import main.Constants.Constants;
-import main.entity.Stock;
-import main.use_case.Player;
+import main.interface_adapter.StockMarket.StockBuyController;
+import main.interface_adapter.StockMarket.StockSellController;
+import main.interface_adapter.StockMarket.StockViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class StockView extends JPanel {
-    private final JLabel tickerLabel;
-    private final JLabel priceLabel;
-    private final JLabel percentChangeLabel;
-    private final JLabel quantityOwnedLabel;
     private final JTextField quantityInput;
-    private final JButton buyButton;
-    private final JButton sellButton;
+    private final JLabel quantityOwnedLabel;
+    
+    private final StockViewModel stockViewModel;
 
-    private final Player player;
-    private final Stock stock;
-
-    public StockView(Player player, Stock stock, double percentChange) {
-        this.player = player;
-        this.stock = stock;
-
+    public StockView(StockViewModel stockViewModel) {
+        this.stockViewModel = stockViewModel;
         setPreferredSize(new Dimension(Constants.STOCK_WIDTH, Constants.STOCK_HEIGHT));
         setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS, Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
-        tickerLabel = new JLabel(stock.getTicker());
-        priceLabel = new JLabel("$" + String.format("%.2f", stock.getCurrentPrice()));
-        percentChangeLabel = new JLabel(String.format("%.2f", percentChange) + "%");
-        quantityOwnedLabel = new JLabel(String.valueOf(player.getStockQuantity(stock)));
+        JLabel tickerLabel = new JLabel(stockViewModel.getTicker());
+        JLabel priceLabel = new JLabel("$" + String.format("%.2f", stockViewModel.getPrice()));
+        JLabel percentChangeLabel = new JLabel(String.format("%.2f", stockViewModel.getChange()) + "%");
+        this.quantityOwnedLabel = new JLabel(String.valueOf(stockViewModel.getAmount()));
 
-        quantityInput = new JTextField(5);
-        buyButton = new JButton("Buy");
-        sellButton = new JButton("Sell");
+        this.quantityInput = new JTextField(5);
+        JButton buyButton = new JButton("Buy");
+        JButton sellButton = new JButton("Sell");
 
         add(tickerLabel);
         add(priceLabel);
@@ -48,35 +41,39 @@ public class StockView extends JPanel {
         sellButton.addActionListener(e -> sellStock());
     }
 
-    // TODO: This doesn't belong in View, refactor it out later - Richard
+    private void refreshView() {
+        quantityOwnedLabel.setText(String.valueOf(stockViewModel.getAmount()));
+        revalidate();
+        repaint();
+    }
+
     private void buyStock() {
         String quantityText = quantityInput.getText();
-        if (!quantityText.isEmpty()) {
-            int quantity = Integer.parseInt(quantityText);
-            player.buyStock(stock, quantity);
-            setQuantityOwned(player.getStockQuantity(stock));
+        if (quantityText.isEmpty() || !quantityText.matches("\\d+")) {
+            System.out.println("Invalid Input: Please enter a valid quantity.");
+            return;
         }
+        StockBuyController stockBuyController = new StockBuyController();
+        stockBuyController.execute(
+                stockViewModel.getPlayer(),
+                stockViewModel.getStock(),
+                Integer.parseInt(quantityText)
+        );
+        refreshView();
     }
 
-    // TODO: This doesn't belong in View, refactor it out later - Richard
     private void sellStock() {
         String quantityText = quantityInput.getText();
-        if (!quantityText.isEmpty()) {
-            int quantity = Integer.parseInt(quantityText);
-            player.sellStock(stock, quantity);
-            setQuantityOwned(player.getStockQuantity(stock));
+        if (quantityText.isEmpty() || !quantityText.matches("\\d+")) {
+            System.out.println("Invalid Input: Please enter a valid quantity.");
+            return;
         }
-    }
-
-    public void setPrice(double price) {
-        priceLabel.setText("$" + String.format("%.2f", price));
-    }
-
-    public void setPercentChange(double percentChange) {
-        percentChangeLabel.setText(String.format("%.2f", percentChange) + "%");
-    }
-
-    public void setQuantityOwned(int quantityOwned) {
-        quantityOwnedLabel.setText(String.valueOf(quantityOwned));
+        StockSellController stockSellController = new StockSellController();
+        stockSellController.execute(
+                stockViewModel.getPlayer(),
+                stockViewModel.getStock(),
+                Integer.parseInt(quantityText)
+        );
+        refreshView();
     }
 }

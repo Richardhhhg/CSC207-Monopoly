@@ -3,8 +3,10 @@ package main.view;
 import main.Constants.Constants;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.players.DefaultPlayer;
-import main.entity.Stock;
+import main.entity.Stocks.Stock;
+import main.interface_adapter.StockMarket.StockViewModel;
 import main.use_case.Player;
+import main.interface_adapter.StockMarket.StockPresenter;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -51,12 +53,12 @@ public class StockMarketView extends JFrame {
         mainPanel.add(headerPanel);
         mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
 
+        // TODO: This should create a presenter for the stock which then creates a StockViewModel - Richard
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
             Stock stock = entry.getKey();
+            StockViewModel stockViewModel = new StockPresenter().execute(stock, player);
             StockView stockview = new StockView(
-                    player,
-                    stock,
-                    Constants.STARTER_PCT_CHANGE // TODO: Replace with actual percent change if available
+                    stockViewModel
             );
             mainPanel.add(stockview);
             mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
@@ -72,12 +74,13 @@ public class StockMarketView extends JFrame {
      */
     public static void main(String[] args) {
         Player player = new DefaultPlayer("Test Player", Color.RED);
-        Map<Stock, Integer> stocks = new java.util.HashMap<>();
+        java.util.List<Stock> stocks = new java.util.ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
+            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 10, 30);
             Stock stock = new Stock(info);
-            stocks.put(stock, i*5);
+            stocks.add(stock);
         }
+        player.initializeStocks(stocks);
         StockMarketView marketView = new StockMarketView(player);
         marketView.setVisible(true);
     }

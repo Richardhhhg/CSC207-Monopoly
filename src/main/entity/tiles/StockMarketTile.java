@@ -1,13 +1,8 @@
 package main.entity.tiles;
 
-import main.data_access.StockMarket.StockInfoDataOutputObject;
-import java.util.Map;
-import main.entity.Stock;
 import main.use_case.Player;
 import main.use_case.Tile;
 import main.view.StockMarketView;
-
-import java.util.List;
 
 public class StockMarketTile extends Tile {
     public StockMarketTile() {

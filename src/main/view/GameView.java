@@ -1,9 +1,7 @@
 package main.view;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.Stock;
-import main.entity.StockMarket;
-import main.interface_adapter.StockMarket.StockMarketViewModel;
+import main.entity.Stocks.Stock;
 
 import javax.swing.*;
 import java.awt.*;

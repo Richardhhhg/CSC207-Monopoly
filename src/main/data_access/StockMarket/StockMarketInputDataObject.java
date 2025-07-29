@@ -1,6 +1,6 @@
 package main.data_access.StockMarket;
 
-import main.entity.Stock;
+import main.entity.Stocks.Stock;
 
 import java.util.List;
 

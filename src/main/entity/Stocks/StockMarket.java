@@ -1,12 +1,9 @@
-package main.entity;
+package main.entity.Stocks;
 
 import java.util.List;
-import com.google.gson.Gson;
+
 import main.Constants.Config;
 import main.Constants.Constants;
-
-import java.io.FileReader;
-import java.io.IOException;
 
 public class StockMarket {
     private List<Stock> stocks;

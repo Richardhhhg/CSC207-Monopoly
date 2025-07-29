@@ -1,4 +1,4 @@
-package main.entity;
+package main.entity.Stocks;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
+// TODO: This is a repo, make it into one
 // TODO: Refactor this into many smaller use cases
 public class StockInformationRetriever {
     private final HttpClient httpClient;
