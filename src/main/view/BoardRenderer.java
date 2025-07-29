@@ -1,7 +1,8 @@
 package main.view;
 
+import main.entity.players.rentModifier;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.Constants.Constants;
 import java.awt.*;
 import java.util.List;
@@ -97,7 +98,10 @@ public class BoardRenderer {
             if (prop.getPrice() > 0) {
                 String priceText;
                 if (prop.isOwned()) {
-                    float rent = prop.getOwner().adjustRent(prop.getRent());
+                    float rent = prop.getRent();
+                    if (prop.getOwner() instanceof rentModifier) {
+                        rent = ((rentModifier) prop.getOwner()).adjustRent(prop.getRent());
+                    }
                     priceText = "Rent: $" + (int)rent;
                 } else {
                     priceText = "$" + (int)prop.getPrice();

@@ -1,7 +1,6 @@
 package main.entity.players;
 
 import main.entity.Stock;
-import main.use_case.Player;
 
 import java.awt.*;
 
@@ -10,7 +9,7 @@ import java.awt.*;
  * This character pays more for stocks but may later get passive bonuses.
  * Starts with $1000.
  */
-public class inheritor extends Player {
+public class inheritor extends Player implements StockModifier{
     private static final int INHERITOR_INIT_MONEY = 1800;
     public inheritor(String name, Color color) {
         super(name, INHERITOR_INIT_MONEY, color);
@@ -57,24 +56,5 @@ public class inheritor extends Player {
     @Override
     public float adjustStockSellPrice(float basePrice) {
         return (float) (basePrice * 0.7);
-    }
-
-    /**
-     * Inheritors do not affect rent calculation (default 0 here; can be updated).
-     *
-     * @param baseRent The base rent.
-     * @return The adjusted baseRent.
-     */
-    @Override
-    public float adjustRent(float baseRent) {
-        return baseRent;
-    }
-
-    /**
-     * Inheritor has no TurnEffects.
-     */
-    @Override
-    public void applyTurnEffects() {
-
     }
 }

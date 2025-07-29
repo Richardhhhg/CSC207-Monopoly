@@ -2,12 +2,8 @@ package main.view;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.*;
-import main.entity.players.PoorMan;
-import main.entity.players.clerk;
-import main.entity.players.inheritor;
-import main.entity.players.landlord;
+import main.entity.players.*;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Player;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -101,7 +97,10 @@ public class GameBoard {
         int startIndex = currentPlayerIndex;
         boolean foundNext = false;
 
-        players.get(currentPlayerIndex).applyTurnEffects();
+        Player currentPlayer = players.get(currentPlayerIndex);
+        if (currentPlayer instanceof applyAfterEffects) {
+            ((applyAfterEffects) currentPlayer).applyTurnEffects();
+        }
         totalTurns++;
 
         // Update stocks at the end of each round

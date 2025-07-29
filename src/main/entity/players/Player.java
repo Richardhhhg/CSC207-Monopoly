@@ -1,7 +1,7 @@
 /*
 TODO: IMPLEMENT THIS.
  */
-package main.use_case;
+package main.entity.players;
 import main.entity.Stock;
 import main.entity.tiles.PropertyTile;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 public abstract class Player {
     protected String name;
-    protected int money;
+    protected float money;
     protected int position;
     protected boolean bankrupt;
     protected ArrayList<PropertyTile> properties;
@@ -24,7 +24,7 @@ public abstract class Player {
     protected Image portrait;
     private Color color;
 
-    public Player(String name, int initialMoney, Color color) {
+    public Player(String name, float initialMoney, Color color) {
         this.name = name;
         this.money = initialMoney;
         this.position = 0;
@@ -138,9 +138,4 @@ public abstract class Player {
     public Color getColor() {
         return color;
     }
-
-    public abstract float adjustStockBuyPrice(float basePrice);
-    public abstract float adjustStockSellPrice(float basePrice);
-    public abstract float adjustRent(float baseRent);
-    public abstract void applyTurnEffects(); // salary, tuition...depends on the character
 }

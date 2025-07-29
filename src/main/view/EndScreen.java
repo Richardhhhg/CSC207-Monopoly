@@ -1,7 +1,7 @@
 package main.view;
 
 import main.entity.tiles.PropertyTile;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import javax.swing.*;
 import java.awt.*;

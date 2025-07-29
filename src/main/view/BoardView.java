@@ -1,19 +1,11 @@
 package main.view;
 
-import main.entity.*;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.Constants.Constants;
-import java.util.List;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
-import java.util.Random;
-import javax.swing.ImageIcon;
-
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 
 /**
  * BoardView is a JPanel that represents the main.view of the game board.

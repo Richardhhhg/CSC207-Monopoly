@@ -4,7 +4,7 @@ import main.Constants.Constants;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.players.DefaultPlayer;
 import main.entity.Stock;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

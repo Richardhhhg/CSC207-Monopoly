@@ -2,7 +2,7 @@ package main.view;
 
 import main.Constants.Constants;
 import main.entity.Stock;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import javax.swing.*;
 import java.awt.*;
