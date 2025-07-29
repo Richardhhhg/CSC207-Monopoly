@@ -5,18 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="made player icons teleport tiles one by one">
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/dice/DicePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/dice/RollDiceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/view_model/DiceViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/dice/RollDiceInputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/dice/RollDiceInteractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/dice/RollDiceOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/dice/RollDiceResponseModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/DiceAnimator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/DiceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/DefaultPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/PoorMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/collegeStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/inheritor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/landlord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/landlord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/StockMarketView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/StockMarketView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="nathan" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -95,6 +92,7 @@
     "Application.GameView.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonopolyGame.executor": "Run",
+    "Application.TileView.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -115,6 +113,7 @@
       <recent name="$PROJECT_DIR$/src/main/use_case/dice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/Resources" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -157,7 +156,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752778410159</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="minor bug fixes">
+      <option name="closed" value="true" />
+      <created>1753397835103</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753397835103</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Player changes colour">
+      <option name="closed" value="true" />
+      <created>1753397991589</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753397991589</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +192,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added &quot;teleportation movement of players&quot;" />
     <MESSAGE value="made player icons teleport tiles one by one" />
-    <option name="LAST_COMMIT_MESSAGE" value="made player icons teleport tiles one by one" />
+    <MESSAGE value="minor bug fixes" />
+    <MESSAGE value="Player changes colour" />
+    <option name="LAST_COMMIT_MESSAGE" value="Player changes colour" />
   </component>
 </project>
