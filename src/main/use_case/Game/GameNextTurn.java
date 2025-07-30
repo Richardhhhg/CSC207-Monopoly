@@ -58,7 +58,5 @@ public class GameNextTurn {
         // TODO: I don't think it's possible for any player but current player to be bankrupt on current player turn
         GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
         checkBankrupt.execute();
-
-        game.setCurrentPlayerIndex((currentPlayerIndex+1) % (players.size()));
     }
 }
