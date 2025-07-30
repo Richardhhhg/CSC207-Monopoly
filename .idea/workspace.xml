@@ -4,21 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="made player icons teleport tiles one by one">
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="refactored the player">
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Stocks/BuyStock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Stocks/SellStock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/DefaultPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/PoorMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/clerk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/collegeStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/inheritor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/landlord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/landlord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/StockMarketView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/StockMarketView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/landlord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/landlord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Merge.Settings">
     <option name="BRANCH" value="main" />
@@ -26,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="nathan" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,22 +62,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
-    &quot;accountId&quot;: &quot;cf33d0b6-5c3c-49d7-8853-912a102d2451&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
+    "accountId": "5f9bc3f0-f956-404f-9b13-0cdd8d583502"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Richardhhhg&quot;,
-    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
+    "owner": "Richardhhhg",
+    "repository": "CSC207-Monopoly"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -87,7 +97,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "david-player-no",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -101,6 +112,26 @@
       <recent name="$PROJECT_DIR$/src/main/Resources" />
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.app.Main" />
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -123,6 +154,7 @@
       <workItem from="1752620400736" duration="12322000" />
       <workItem from="1753307514943" duration="5000" />
       <workItem from="1753308904677" duration="5497000" />
+      <workItem from="1753794843328" duration="11801000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />
@@ -156,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753397991589</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactored the player">
+      <option name="closed" value="true" />
+      <created>1753825699937</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1753825699937</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +218,7 @@
     <MESSAGE value="made player icons teleport tiles one by one" />
     <MESSAGE value="minor bug fixes" />
     <MESSAGE value="Player changes colour" />
-    <option name="LAST_COMMIT_MESSAGE" value="Player changes colour" />
+    <MESSAGE value="refactored the player" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored the player" />
   </component>
 </project>

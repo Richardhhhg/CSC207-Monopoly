@@ -1,7 +1,8 @@
 package main.entity.tiles;
 
+import main.entity.players.rentModifier;
 import main.use_case.Tile;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.view.BuyPropertyPopup;
 
 import javax.swing.*;
@@ -69,7 +70,10 @@ public class PropertyTile extends Tile {
 
         if (p != owner) {
             // Charge rent
-            float finalRent = owner.adjustRent(rent);
+            float finalRent = rent;
+            if (owner instanceof rentModifier) {
+                finalRent = ((rentModifier) owner).adjustRent(rent);
+            }
             p.deductMoney(finalRent);
             owner.addMoney(finalRent);
 

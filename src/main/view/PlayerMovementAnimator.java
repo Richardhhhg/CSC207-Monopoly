@@ -1,6 +1,6 @@
 package main.view;
 
-import main.use_case.Player;
+import main.entity.players.Player;
 import javax.swing.Timer;
 
 /**

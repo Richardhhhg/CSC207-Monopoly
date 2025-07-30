@@ -2,11 +2,14 @@ package main.entity.players;
 
 import main.entity.Stocks.Stock;
 import main.use_case.Player;
+import main.entity.Stock;
+import main.entity.tiles.PropertyTile;
 
 import java.awt.*;
 
-public class collegeStudent extends Player {
-    private static final int STUDENT_INIT_MONEY = 1000;
+import static main.Constants.Constants.STUDENT_INIT_MONEY;
+
+public class collegeStudent extends Player implements applyAfterEffects, StockModifier{
     public collegeStudent(String name, Color color) {
         super(name, STUDENT_INIT_MONEY,color);
         this.loadPortrait("main/Resources/Computer-nerd.jpg");
@@ -32,32 +35,6 @@ public class collegeStudent extends Player {
         }
     }
 
-    /**
-     * @param basePrice
-     * @return
-     */
-    @Override
-    public float adjustStockBuyPrice(float basePrice) {
-        return basePrice * 0.90f;
-    }
-
-    /**
-     * @param basePrice
-     * @return
-     */
-    @Override
-    public float adjustStockSellPrice(float basePrice) {
-        return basePrice * 1.3f;
-    }
-
-    /**
-     * @param baseRent
-     * @return
-     */
-    @Override
-    public float adjustRent(float baseRent) {
-        return baseRent;
-    }
 
     /**
      * College Student has to pay his school tuition every turn.
@@ -66,5 +43,15 @@ public class collegeStudent extends Player {
     public void applyTurnEffects() {
         this.deductMoney(100);
         System.out.println("ah man, the tuition goes up again!");
+    }
+
+    @Override
+    public float adjustStockBuyPrice(float basePrice) {
+        return basePrice * 0.90f;
+    }
+
+    @Override
+    public float adjustStockSellPrice(float basePrice) {
+        return basePrice * 1.3f;
     }
 }

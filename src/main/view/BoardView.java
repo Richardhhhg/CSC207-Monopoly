@@ -1,5 +1,7 @@
 package main.view;
 
+import main.entity.tiles.PropertyTile;
+import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
 import main.use_case.Player;

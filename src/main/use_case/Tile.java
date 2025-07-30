@@ -1,5 +1,7 @@
 package main.use_case;
 
+import main.entity.players.Player;
+
 /**
  * A single square on the board.
  */

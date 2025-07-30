@@ -1,6 +1,6 @@
 package main.entity.tiles;
 
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.use_case.Tile;
 import main.view.StockMarketView;
 

@@ -1,6 +1,8 @@
 package main.view;
 
 import main.Constants.Constants;
+import main.entity.Stock;
+import main.entity.players.Player;
 import main.interface_adapter.StockMarket.StockBuyController;
 import main.interface_adapter.StockMarket.StockSellController;
 import main.interface_adapter.StockMarket.StockViewModel;
@@ -11,7 +13,7 @@ import java.awt.*;
 public class StockView extends JPanel {
     private final JTextField quantityInput;
     private final JLabel quantityOwnedLabel;
-    
+
     private final StockViewModel stockViewModel;
 
     public StockView(StockViewModel stockViewModel) {
