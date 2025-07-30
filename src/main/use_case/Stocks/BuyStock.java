@@ -1,9 +1,7 @@
 package main.use_case.Stocks;
 
-import main.entity.Stock;
 import main.entity.players.Player;
 import main.entity.Stocks.Stock;
-import main.use_case.Player;
 
 public class BuyStock {
     public void execute(Player player, Stock stock, int quantity) {

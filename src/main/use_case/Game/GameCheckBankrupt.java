@@ -1,7 +1,7 @@
 package main.use_case.Game;
 
 import main.entity.Game;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import java.util.List;
 

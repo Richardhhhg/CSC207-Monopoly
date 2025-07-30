@@ -1,7 +1,7 @@
 package main.interface_adapter.StockMarket;
 
 import main.entity.Stocks.Stock;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.use_case.Stocks.BuyStock;
 
 public class StockBuyController {

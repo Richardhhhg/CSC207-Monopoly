@@ -1,7 +1,8 @@
 package main.use_case.Game;
 
 import main.entity.Game;
-import main.use_case.Player;
+import main.entity.players.Player;
+import main.entity.players.applyAfterEffects;
 
 import java.util.List;
 
@@ -24,7 +25,9 @@ public class GameNextTurn {
         Player currentPlayer = players.get(currentPlayerIndex);
 
         // FIXME: There may be a bug if current player has no turn effects
-        currentPlayer.applyTurnEffects();
+        if (currentPlayer instanceof applyAfterEffects) {
+            ((applyAfterEffects) currentPlayer).applyTurnEffects();
+        }
         game.increaseTurn();
 
         // TODO: The next 2 blocks are horrible, make it prettier later - Richard
@@ -55,7 +58,5 @@ public class GameNextTurn {
         // TODO: I don't think it's possible for any player but current player to be bankrupt on current player turn
         GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
         checkBankrupt.execute();
-
-        game.setCurrentPlayerIndex((currentPlayerIndex+1) % (players.size()));
     }
 }

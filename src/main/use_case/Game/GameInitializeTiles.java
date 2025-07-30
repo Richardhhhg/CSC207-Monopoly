@@ -22,7 +22,7 @@ public class GameInitializeTiles {
 
     public void execute() {
         // Initialize Tiles
-        List<Tile> tiles = new ArrayList<>();
+        List<PropertyTile> tiles = new ArrayList<>();
 
         // TODO: Read this from json - Richard
         // TODO: Remove GO from properties - Richard
