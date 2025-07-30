@@ -1,4 +1,4 @@
-package main.entity;
+package main.entity.Stocks;
 
 import main.Constants.Constants;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
@@ -9,18 +9,20 @@ import java.math.RoundingMode;
 public class Stock {
     private final String symbol;
     private double currentPrice;
+    private double percentChange;
 
     // Distribution parameters
     private final double meanDailyReturnPct;
     private final double standardDeviationPct;
     private final NormalDistribution pctChangeDistribution;
 
-    public Stock(StockInfoDataOutputObject stockInfoData) {
-        this.symbol = stockInfoData.getTicker();
-        this.meanDailyReturnPct = stockInfoData.getMeanDailyReturnPct();
-        this.standardDeviationPct = stockInfoData.getStandardDeviationPct();
-        this.currentPrice = stockInfoData.getCurrentPrice();
+    public Stock(String symbol, double currentPrice, double meanDailyReturnPct, double standardDeviationPct) {
+        this.symbol = symbol;
+        this.meanDailyReturnPct = meanDailyReturnPct;
+        this.standardDeviationPct = standardDeviationPct;
+        this.currentPrice = currentPrice;
         this.pctChangeDistribution = new NormalDistribution(meanDailyReturnPct, standardDeviationPct);
+        this.percentChange = 0;
     }
 
     public void updatePrice() {
@@ -30,6 +32,7 @@ public class Stock {
 
         BigDecimal newPriceRounded = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
         this.currentPrice = newPriceRounded.doubleValue();
+        this.percentChange = percent_change;
     }
 
     public Double getCurrentPrice() {
@@ -38,6 +41,10 @@ public class Stock {
 
     public String getTicker() {
         return symbol;
+    }
+
+    public double getChange() {
+        return percentChange;
     }
 
     // For debugging

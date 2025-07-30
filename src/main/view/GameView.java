@@ -1,9 +1,7 @@
 package main.view;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.Stock;
-import main.entity.StockMarket;
-import main.interface_adapter.StockMarket.StockMarketViewModel;
+import main.entity.Stocks.Stock;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +12,7 @@ import java.util.List;
  * This Class displays the entire game view.
  */
 public class GameView extends JFrame{
-    private BoardView boardView;
+    private final BoardView boardView;
     private StockMarketView stockMarketView;
 
     // TODO: There is a ton of coupling here, fix it
@@ -26,12 +24,6 @@ public class GameView extends JFrame{
         setLayout(new BorderLayout());
         setVisible(true);
 
-        // TODO: There should be a way to intiial the stock market elsewhere and display it here.
-        List<Stock> stocks = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = new StockInfoDataOutputObject("TEST_" + i, 100, 0.01, 0.1);
-            stocks.add(new Stock(info));
-        }
         this.boardView = new BoardView();
         // Pass this frame reference to BoardView so it can hide it when showing end screen
         this.boardView.setParentFrame(this);

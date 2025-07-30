@@ -2,7 +2,7 @@
 TODO: IMPLEMENT THIS.
  */
 package main.entity.players;
-import main.entity.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.tiles.PropertyTile;
 
 import javax.imageio.ImageIO;

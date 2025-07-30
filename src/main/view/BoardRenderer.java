@@ -1,9 +1,12 @@
 package main.view;
 
 import main.entity.players.rentModifier;
+import main.entity.Game;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.Constants.Constants;
+import main.use_case.Tile;
+
 import java.awt.*;
 import java.util.List;
 
@@ -12,40 +15,42 @@ import java.util.List;
  */
 public class BoardRenderer {
 
-    public void drawBoard(Graphics g, GameBoard gameBoard, DiceController diceController) {
+    public void drawBoard(Graphics g, Game game, DiceController diceController) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int startX = 50;
         int startY = 8;
-        int tilesPerSide = (gameBoard.getProperties().size()-4) / 4 + 2;
+        int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
 
         // Draw properties
-        drawProperties(g2d, gameBoard.getProperties(), gameBoard, startX, startY, tileSize);
+        drawProperties(g2d, game.getTiles(), game, startX, startY, tileSize);
 
         // Draw dice
         drawDice(g2d, diceController, startX, startY, tileSize);
 
         // Draw current player portrait
-        drawPlayerPortrait(g2d, gameBoard.getCurrentPlayer(), startX, startY, tileSize);
+        drawPlayerPortrait(g2d, game.getCurrentPlayer(), startX, startY, tileSize);
 
         // Draw players
-        drawPlayers(g2d, gameBoard.getPlayers(), gameBoard, startX, startY, tileSize);
+        drawPlayers(g2d, game.getPlayers(), game, startX, startY, tileSize);
     }
 
     //TODO: Refactor this to TileView
-    private void drawProperties(Graphics2D g2d, List<PropertyTile> properties, GameBoard gameBoard,
+    // TODO: This only draws properties, make it draw all tiles
+    // TODO: This implementation is kinda messy since I changed the signature of tiles in game
+    private void drawProperties(Graphics2D g2d, List<Tile> properties, Game game,
                                 int startX, int startY, int tileSize) {
         for (int i = 0; i < properties.size(); i++) {
-            Point pos = gameBoard.getTilePosition(i, startX, startY, tileSize);
-            PropertyTile prop = properties.get(i);
+            Point pos = game.getTilePosition(i, startX, startY, tileSize);
+            Tile prop = properties.get(i);
 
 
             // Draw property tile background - colored if owned
-            if (prop.isOwned()) {
+            if (((PropertyTile)prop).isOwned()) {
                 // Use owner's color as background
-                Color ownerColor = prop.getOwner().getColor();
+                Color ownerColor = ((PropertyTile)prop).getOwner().getColor();
                 // Make it slightly transparent so text is still readable
                 Color backgroundTint = new Color(ownerColor.getRed(), ownerColor.getGreen(),
                                                ownerColor.getBlue(), 120);
@@ -58,7 +63,7 @@ public class BoardRenderer {
                 g2d.drawRect(pos.x + 1, pos.y + 1, tileSize - 2, tileSize - 2);
                 g2d.setStroke(new BasicStroke(1));
             } else {
-                // Unowned property - white background
+                // Unowned property white background
                 g2d.setColor(Color.WHITE);
                 g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
             }
@@ -95,7 +100,8 @@ public class BoardRenderer {
             }
 
             // Draw price or rent information
-            if (prop.getPrice() > 0) {
+            if (!(prop instanceof PropertyTile)) continue; // Only properties have prices
+            if (((PropertyTile) prop).getPrice() > 0) {
                 String priceText;
                 if (prop.isOwned()) {
                     float rent = prop.getRent();
@@ -104,7 +110,7 @@ public class BoardRenderer {
                     }
                     priceText = "Rent: $" + (int)rent;
                 } else {
-                    priceText = "$" + (int)prop.getPrice();
+                    priceText = "$" + (int)((PropertyTile)prop).getPrice();
                 }
 
                 g2d.setFont(new Font("Arial", Font.BOLD, 12));
@@ -175,11 +181,11 @@ public class BoardRenderer {
         g2d.setFont(oldFont);
     }
 
-    private void drawPlayers(Graphics2D g2d, List<Player> players, GameBoard gameBoard,
+    private void drawPlayers(Graphics2D g2d, List<Player> players, Game game,
                              int startX, int startY, int tileSize) {
         for (Player player : players) {
             if (player.isBankrupt()) continue;//
-            Point pos = gameBoard.getTilePosition(player.getPosition(), startX, startY, tileSize);
+            Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
             g2d.setColor(player.getColor());
             int playerSize = 15;
             int offsetX = (players.indexOf(player) % 2) * 20;

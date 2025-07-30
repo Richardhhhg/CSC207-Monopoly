@@ -1,4 +1,4 @@
-package main.entity;
+package main.data_access.StockMarket;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import main.Constants.Config;
 import main.Constants.Constants;
-import main.data_access.StockMarket.StockInfoDataOutputObject;
+import main.use_case.Stocks.StockRepository;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,17 +19,16 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-
-// TODO: Refactor this into many smaller use cases
-public class StockInformationRetriever {
+/**
+ * This represents a version of stock repository that fetches stock information from an external API.
+ */
+public class APIStockInfoRepository implements StockRepository {
     private final HttpClient httpClient;
     private final Gson gson;
     private final java.util.concurrent.ScheduledExecutorService rateLimiter = java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
 
-
-    public StockInformationRetriever(String apiKey) {
+    public APIStockInfoRepository(String apiKey) {
         this.httpClient = HttpClient.newHttpClient();
         this.gson = new Gson();
     }
@@ -155,50 +154,5 @@ public class StockInformationRetriever {
                 .average()
                 .orElse(0.0);
         return Math.sqrt(variance);
-    }
-
-    /**
-     * Processes all tickers from the JSON file
-     */
-    public List<Stock> createStocks(String jsonFilePath) throws IOException, InterruptedException {
-        List<String> tickers = loadTickerSymbols(jsonFilePath);
-        List<Stock> stockInfos = new ArrayList<>();
-
-        for (String ticker : tickers) {
-            try {
-                StockInfoDataOutputObject info = getStockInfo(ticker);
-                Stock stock = new Stock(info);
-                stockInfos.add(stock);
-                System.out.println("Retrieved data for: " + ticker);
-
-                // Note: The API has rate limit of 5 requests per minute
-                // And 25 requests per day
-                rateLimiter.schedule(() -> {}, Constants.API_RATE_LIMIT_DELAY_MS, TimeUnit.MILLISECONDS);
-
-            } catch (Exception e) {
-                System.err.println("Failed to retrieve data for " + ticker + ": " + e.getMessage());
-            }
-        }
-
-        rateLimiter.shutdown();
-        return stockInfos;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        try {
-            StockInformationRetriever retriever = new StockInformationRetriever(Config.getApiKey());
-
-            // Get all stock information from JSON file
-            List<Stock> stockInfos = retriever.createStocks(Constants.STOCK_NAME_FILE);
-
-            // Print results
-            for (Stock stock: stockInfos) {
-                System.out.println(stock);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

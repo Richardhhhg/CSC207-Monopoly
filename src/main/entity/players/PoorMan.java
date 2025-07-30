@@ -1,6 +1,7 @@
 package main.entity.players;
 
-import main.entity.Stock;
+import main.entity.Stocks.Stock;
+import main.use_case.Player;
 
 import java.awt.*;
 
@@ -9,7 +10,7 @@ import static main.Constants.Constants.POORMAN_INIT_MONEY;
 public class PoorMan extends Player implements  applyAfterEffects {
     public PoorMan(String name, Color color) {
         super(name, POORMAN_INIT_MONEY, color);
-        this.loadPortrait("poormana.png");
+        this.loadPortrait("main/Resources/poorman.png");
     }
 
     @Override
