@@ -1,7 +1,8 @@
 package main.use_case.Game;
 
 import main.entity.Game;
-import main.use_case.Player;
+import main.entity.players.Player;
+import main.entity.players.applyAfterEffects;
 
 import java.util.List;
 
@@ -24,7 +25,9 @@ public class GameNextTurn {
         Player currentPlayer = players.get(currentPlayerIndex);
 
         // FIXME: There may be a bug if current player has no turn effects
-        currentPlayer.applyTurnEffects();
+        if (currentPlayer instanceof applyAfterEffects) {
+            ((applyAfterEffects) currentPlayer).applyTurnEffects();
+        }
         game.increaseTurn();
 
         // TODO: The next 2 blocks are horrible, make it prettier later - Richard

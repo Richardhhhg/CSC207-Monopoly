@@ -1,10 +1,11 @@
 package main.entity;
 
 import main.entity.Stocks.Stock;
+import main.entity.tiles.PropertyTile;
 import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.use_case.Tile;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import static main.Constants.Constants.FINISH_LINE_BONUS;
 public class Game {
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
-    private List<Tile> tiles;
+    private List<PropertyTile> tiles;
     private List<Player> players;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
@@ -109,7 +110,7 @@ public class Game {
         return null;
     }
 
-    public List<Tile> getTiles() {
+    public List<PropertyTile> getTiles() {
         return tiles;
     }
 
@@ -150,7 +151,7 @@ public class Game {
         this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
     }
 
-    public void setTiles(List<Tile> tiles) {
+    public void setTiles(List<PropertyTile> tiles) {
         if (tiles != null && !tiles.isEmpty()) {
             this.tiles = tiles;
             this.tileCount = tiles.size();

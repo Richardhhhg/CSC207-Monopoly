@@ -5,7 +5,7 @@ import main.entity.players.PoorMan;
 import main.entity.players.clerk;
 import main.entity.players.inheritor;
 import main.entity.players.landlord;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import java.awt.*;
 import java.util.ArrayList;

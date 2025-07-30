@@ -8,7 +8,7 @@ import main.entity.Game;
 import main.entity.Stocks.Stock;
 import main.data_access.StockMarket.APIStockInfoRepository;
 import main.interface_adapter.StockMarket.StockFactory;
-import main.use_case.Player;
+import main.entity.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;

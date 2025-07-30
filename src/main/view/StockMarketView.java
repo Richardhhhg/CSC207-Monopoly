@@ -4,11 +4,11 @@ import main.Constants.Constants;
 import main.data_access.StockMarket.DefaultStockInfoRepository;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.players.DefaultPlayer;
-import main.entity.Stock;
 import main.entity.players.Player;
 import main.entity.Stocks.Stock;
 import main.interface_adapter.StockMarket.StockViewModel;
-import main.use_case.Player;
+import main.entity.Stocks.Stock;
+import main.entity.players.Player;
 import main.interface_adapter.StockMarket.StockPresenter;
 
 import javax.swing.*;

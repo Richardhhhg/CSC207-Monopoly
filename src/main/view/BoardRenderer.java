@@ -40,11 +40,11 @@ public class BoardRenderer {
     //TODO: Refactor this to TileView
     // TODO: This only draws properties, make it draw all tiles
     // TODO: This implementation is kinda messy since I changed the signature of tiles in game
-    private void drawProperties(Graphics2D g2d, List<Tile> properties, Game game,
+    private void drawProperties(Graphics2D g2d, List<PropertyTile> properties, Game game,
                                 int startX, int startY, int tileSize) {
         for (int i = 0; i < properties.size(); i++) {
             Point pos = game.getTilePosition(i, startX, startY, tileSize);
-            Tile prop = properties.get(i);
+            PropertyTile prop = properties.get(i);
 
 
             // Draw property tile background - colored if owned

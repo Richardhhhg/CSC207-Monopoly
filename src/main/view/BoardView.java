@@ -4,7 +4,7 @@ import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.use_case.Player;
+import main.entity.players.Player;
 import main.Constants.Constants;
 import main.use_case.Tile;
 
