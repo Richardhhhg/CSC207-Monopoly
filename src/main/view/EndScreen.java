@@ -2,7 +2,9 @@ package main.view;
 
 import main.entity.players.Player;
 import main.interface_adapter.EndScreen.EndScreenController;
+import main.interface_adapter.EndScreen.EndScreenPresenter;
 import main.interface_adapter.EndScreen.EndScreenViewModel;
+import main.use_case.EndScreen.EndGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +20,10 @@ public class EndScreen extends JFrame {
     }
 
     private void initializeEndScreen(List<Player> players, String gameEndReason, int totalRounds) {
-        // Get data through controller
-        viewModel = controller.execute(players, gameEndReason, totalRounds);
+        // Get data through controller and presenter
+        EndGame.EndGameResult result = controller.execute(players, gameEndReason, totalRounds);
+        EndScreenPresenter presenter = new EndScreenPresenter();
+        viewModel = presenter.execute(result);
 
         setTitle("Game Over - Final Results");
         setSize(800, 600);

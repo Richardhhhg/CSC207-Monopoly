@@ -12,9 +12,7 @@ public class EndScreenController {
         this.endGameUseCase = new EndGame();
     }
 
-    public EndScreenViewModel execute(List<Player> players, String gameEndReason, int totalRounds) {
-        EndGame.EndGameResult result = endGameUseCase.execute(players, gameEndReason, totalRounds);
-        EndScreenPresenter presenter = new EndScreenPresenter();
-        return presenter.execute(result);
+    public EndGame.EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
+        return endGameUseCase.execute(players, gameEndReason, totalRounds);
     }
 }
