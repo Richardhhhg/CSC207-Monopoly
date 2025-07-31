@@ -4,6 +4,7 @@ import main.entity.Game;
 import main.entity.players.Player;
 import main.entity.players.applyAfterEffects;
 import main.use_case.Player.ApplyTurnEffects;
+import main.use_case.Player.DeclareBankruptcy;
 
 import java.util.List;
 
@@ -14,10 +15,12 @@ public class GameNextTurn {
     private Game game;
     private static final int TURNS_PER_ROUND = 4; // TODO: This is hardcoded, this does not account for player deaths
     private ApplyTurnEffects applyTurnEffects;
+    private DeclareBankruptcy declareBankruptcy;
 
     public GameNextTurn(Game game) {
         this.game = game;
         this.applyTurnEffects = new ApplyTurnEffects();
+        this.declareBankruptcy = new DeclareBankruptcy();
     }
 
     public void execute() {
@@ -30,6 +33,10 @@ public class GameNextTurn {
         // FIXME: There may be a bug if current player has no turn effects
         if (currentPlayer instanceof applyAfterEffects) {
             this.applyTurnEffects.execute(currentPlayer);
+        }
+
+        if (currentPlayer.isBankrupt()) {
+            this.declareBankruptcy.execute(currentPlayer);
         }
         game.increaseTurn();
 
