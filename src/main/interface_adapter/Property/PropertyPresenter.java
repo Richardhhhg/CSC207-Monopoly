@@ -1,9 +1,12 @@
 package main.interface_adapter.Property;
 
 import main.entity.tiles.PropertyTile;
+import main.entity.tiles.StockMarketTile;
 import main.entity.players.Player;
 import main.view.BuyPropertyPopup;
 import main.view.PlayerStatsView;
+import main.view.TileView;
+import main.use_case.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +25,32 @@ public class PropertyPresenter {
         this.boardView = boardView;
         this.statsView = statsView;
         this.players = players;
+    }
+
+    /**
+     * Configure a TileView based on the tile type
+     */
+    //TODO: This method should be more generic to handle different tile types
+    // Currently only handles PropertyTile and StockMarketTile
+    public void configureTileView(TileView tileView, Tile tile) {
+        if (tile instanceof PropertyTile) {
+            PropertyTile property = (PropertyTile) tile;
+            tileView.setMainText(tile.getName());
+            tileView.setPriceText("$" + (int)property.getPrice());
+            tileView.showPropertyInfo();
+
+            if (property.isOwned()) {
+                tileView.setOwnerText(property.getOwner().getName());
+            } else {
+                tileView.setOwnerText("");
+            }
+        } else if (tile instanceof StockMarketTile) {
+            tileView.setMainText("Stock Market");
+            tileView.hidePropertyInfo();
+        } else {
+            tileView.setMainText(tile.getName());
+            tileView.hidePropertyInfo();
+        }
     }
 
     /**
@@ -74,5 +103,15 @@ public class PropertyPresenter {
             );
         });
     }
-}
 
+    /**
+     * Update ownership display for a property tile
+     */
+    public void updatePropertyOwnership(TileView tileView, PropertyTile property) {
+        if (property.isOwned()) {
+            tileView.setOwnerText(property.getOwner().getName());
+        } else {
+            tileView.setOwnerText("");
+        }
+    }
+}

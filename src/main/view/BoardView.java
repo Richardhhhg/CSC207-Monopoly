@@ -232,6 +232,13 @@ public class BoardView extends JPanel {
     }
 
     /**
+     * Get the property presenter for tile configuration
+     */
+    public PropertyPresenter getPropertyPresenter() {
+        return propertyPresenter;
+    }
+
+    /**
      * For Testing the Board View on its own
      */
     public static void main(String[] args) {
@@ -247,4 +254,3 @@ public class BoardView extends JPanel {
         });
     }
 }
-
