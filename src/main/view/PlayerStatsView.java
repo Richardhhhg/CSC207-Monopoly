@@ -2,6 +2,8 @@ package main.view;
 
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
+import main.interface_adapter.PlayerStatsPresenter;
+import main.interface_adapter.PlayerStatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,35 +13,36 @@ import static main.Constants.Constants.DIMENSION_DE_LA_PSV_W;
 import static main.Constants.Constants.DIMENSION_DE_LA_PSV_H;
 
 public class PlayerStatsView extends JPanel{
-    private List<Player> players;
+    private PlayerStatsViewModel viewModel;
+
+    // REFACTORED: presenter that builds the view model from players
+    private final PlayerStatsPresenter presenter = new PlayerStatsPresenter();
 
     public PlayerStatsView(List<Player> players) {
-        this.players = players;
         setPreferredSize(new Dimension(DIMENSION_DE_LA_PSV_W, DIMENSION_DE_LA_PSV_H));
+        setOpaque(true);
         setBackground(Color.WHITE);
+        updatePlayers(players);  // build initial VM
     }
 
     public void updatePlayers(List<Player> players) {
-        this.players = players;
+        this.viewModel = presenter.toViewModel(players);
         repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (players == null) return;
-
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("Arial", Font.PLAIN, 17));
-
-        FontMetrics fm = g2.getFontMetrics();
-        int lineH = fm.getHeight();
+        if (viewModel == null || viewModel.getCards() == null) return;
+        Graphics2D g2 = (Graphics2D) g.create();
 
         int y = 20;
+        int lineH = 18;
 
-        for (Player player : players) {
+        for (var player : viewModel.getCards()) {
             if (player.isBankrupt()) continue;
 
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18f));
             g2.setColor(player.getColor());
             String info = player.getName() + " Information:";
             g2.drawString(info, 10, y);

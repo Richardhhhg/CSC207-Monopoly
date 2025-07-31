@@ -9,7 +9,7 @@ import static main.Constants.Constants.POORMAN_INIT_MONEY;
 public class PoorMan extends Player implements  applyAfterEffects {
     public PoorMan(String name, Color color) {
         super(name, POORMAN_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/poorman.png");
+        this.loadPortrait("Player/poorman.png");
     }
 
     @Override

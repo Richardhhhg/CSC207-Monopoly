@@ -1,6 +1,5 @@
 package main.entity.players;
 
-import main.entity.tiles.PropertyTile;
 import main.entity.Stocks.Stock;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ import static main.Constants.Constants.LANDLORD_INIT_MONEY;
 public class landlord extends Player implements rentModifier, StockModifier {
     public landlord(String name, Color color) {
         super(name, LANDLORD_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/landlord.png");
+        this.loadPortrait("Player/landlord.png");
     }
 
     @Override
