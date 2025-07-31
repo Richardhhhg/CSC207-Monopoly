@@ -50,8 +50,8 @@ public class BoardView extends JPanel {
         this.statsPanel = new PlayerStatsView(game.getPlayers());
 
         // Initialize Clean Architecture components in proper order
-        // Presenter implements output boundary and uses BoardView directly
-        this.propertyPresenter = new PropertyPresenter(this);
+        // Presenter no longer depends on view
+        this.propertyPresenter = new PropertyPresenter();
 
         // Use case depends on output boundary (presenter)
         this.propertyLandingUseCase = new PropertyLandingUseCase(propertyPresenter);
@@ -190,6 +190,36 @@ public class BoardView extends JPanel {
         if (tile != null) {
             // Use tile's built-in landing logic which will call the appropriate controller
             tile.onLanding(currentPlayer);
+
+            // Check if presenter has any view models to display
+            checkForPresenterUpdates();
+        }
+    }
+
+    /**
+     * Check if the presenter has any view models ready and display them
+     */
+    private void checkForPresenterUpdates() {
+        // Check for purchase dialog
+        PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
+        if (purchaseDialog != null) {
+            PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
+            showPurchaseDialog(purchaseDialog, callback);
+            propertyPresenter.clearPurchaseDialog();
+        }
+
+        // Check for property purchased notification
+        PropertyPurchasedViewModel propertyPurchased = propertyPresenter.getPropertyPurchasedViewModel();
+        if (propertyPurchased != null) {
+            updateAfterPropertyPurchased(propertyPurchased);
+            propertyPresenter.clearPropertyPurchased();
+        }
+
+        // Check for rent payment notification
+        RentPaymentViewModel rentPayment = propertyPresenter.getRentPaymentViewModel();
+        if (rentPayment != null) {
+            showRentPaymentNotification(rentPayment);
+            propertyPresenter.clearRentPayment();
         }
     }
 
@@ -278,7 +308,7 @@ public class BoardView extends JPanel {
         });
     }
 
-    // Property-related view methods (no longer implementing interface)
+    // Property-related view methods (now work with view models only)
     public void showPurchaseDialog(PurchaseDialogViewModel viewModel, PurchaseResultCallback callback) {
         Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
 

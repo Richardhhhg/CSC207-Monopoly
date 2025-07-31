@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Fixed TODOS in TileView, just moved the">
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyViewModel.java" afterDir="false" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels">
       <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/TileView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753825699937</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels">
+      <option name="closed" value="true" />
+      <created>1753973787803</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1753973787803</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +231,7 @@
     <MESSAGE value="minor bug fixes" />
     <MESSAGE value="Player changes colour" />
     <MESSAGE value="refactored the player" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored the player" />
+    <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
   </component>
 </project>

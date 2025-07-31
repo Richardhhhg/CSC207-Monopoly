@@ -3,51 +3,48 @@ package main.interface_adapter.Property;
 import main.use_case.Property.PropertyLandingOutputBoundary;
 import main.use_case.Property.PropertyLandingUseCase.*;
 import main.interface_adapter.Property.PropertyViewModel.*;
-import main.view.BoardView;
 
 /**
  * Presenter that implements the output boundary and creates view models for property-related UI.
- * Directly communicates with BoardView without unnecessary interface abstraction.
+ * No longer depends on view - follows Clean Architecture dependency rule.
  */
 public class PropertyPresenter implements PropertyLandingOutputBoundary {
-    private final BoardView boardView;
+    private PurchaseDialogViewModel currentPurchaseDialog;
+    private PropertyPurchasedViewModel currentPropertyPurchased;
+    private RentPaymentViewModel currentRentPayment;
+    private PurchaseResultCallback currentCallback;
 
-    public PropertyPresenter(BoardView boardView) {
-        this.boardView = boardView;
+    public PropertyPresenter() {
+        // No view dependency
     }
 
     @Override
     public void presentPurchaseDialog(PropertyPurchaseData data, PurchaseResultCallback callback) {
-        // Convert use case data to view model
-        PurchaseDialogViewModel viewModel = new PurchaseDialogViewModel(
+        // Convert use case data to view model and store it
+        this.currentPurchaseDialog = new PurchaseDialogViewModel(
             data.playerName,
             data.playerMoney,
             data.propertyName,
             data.propertyPrice,
             data.canAfford
         );
-
-        // Send view model to board view
-        boardView.showPurchaseDialog(viewModel, callback);
+        this.currentCallback = callback;
     }
 
     @Override
     public void presentPropertyPurchased(PropertyOwnershipData data) {
-        // Convert use case data to view model
-        PropertyPurchasedViewModel viewModel = new PropertyPurchasedViewModel(
+        // Convert use case data to view model and store it
+        this.currentPropertyPurchased = new PropertyPurchasedViewModel(
             data.propertyName,
             data.ownerName,
             data.newOwnerMoney
         );
-
-        // Send view model to board view
-        boardView.updateAfterPropertyPurchased(viewModel);
     }
 
     @Override
     public void presentRentPayment(RentPaymentData data) {
-        // Convert use case data to view model
-        RentPaymentViewModel viewModel = new RentPaymentViewModel(
+        // Convert use case data to view model and store it
+        this.currentRentPayment = new RentPaymentViewModel(
             data.payerName,
             data.ownerName,
             data.propertyName,
@@ -55,8 +52,36 @@ public class PropertyPresenter implements PropertyLandingOutputBoundary {
             data.payerNewMoney,
             data.ownerNewMoney
         );
+    }
 
-        // Send view model to board view
-        boardView.showRentPaymentNotification(viewModel);
+    // View can call these methods to get the view models
+    public PurchaseDialogViewModel getPurchaseDialogViewModel() {
+        return currentPurchaseDialog;
+    }
+
+    public PropertyPurchasedViewModel getPropertyPurchasedViewModel() {
+        return currentPropertyPurchased;
+    }
+
+    public RentPaymentViewModel getRentPaymentViewModel() {
+        return currentRentPayment;
+    }
+
+    public PurchaseResultCallback getPurchaseCallback() {
+        return currentCallback;
+    }
+
+    // Clear methods for cleanup
+    public void clearPurchaseDialog() {
+        this.currentPurchaseDialog = null;
+        this.currentCallback = null;
+    }
+
+    public void clearPropertyPurchased() {
+        this.currentPropertyPurchased = null;
+    }
+
+    public void clearRentPayment() {
+        this.currentRentPayment = null;
     }
 }
