@@ -40,7 +40,7 @@ public class PlayerStatsView extends JPanel {
         for (var player : viewModel.getCards()) {
             if (player.isBankrupt()) continue;
 
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18f));
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18f));
             g2.setColor(player.getColor());
             String info = player.getName() + " Information:";
             g2.drawString(info, 10, y);
@@ -56,7 +56,7 @@ public class PlayerStatsView extends JPanel {
             if (props == null || props.isEmpty()) {
                 g2.drawString("", labelX, labelY + lineH);
             } else {
-                final int startX = 180;
+                final int startX = 185;
                 final int colWidth = 160;
                 final int linesPerCol = 5;
 

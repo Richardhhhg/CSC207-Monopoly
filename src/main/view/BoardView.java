@@ -171,6 +171,7 @@ public class BoardView extends JPanel {
 
         // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
+        playerStatsView.setViewModel(playerStatsPresenter.toViewModel(game.getPlayers()));
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
