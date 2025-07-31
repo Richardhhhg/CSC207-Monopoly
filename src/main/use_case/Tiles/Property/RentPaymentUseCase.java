@@ -1,4 +1,4 @@
-package main.use_case.Property;
+package main.use_case.Tiles.Property;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;

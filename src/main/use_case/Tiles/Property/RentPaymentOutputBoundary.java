@@ -1,6 +1,6 @@
-package main.use_case.Property;
+package main.use_case.Tiles.Property;
 
-import main.use_case.Property.RentPaymentUseCase.*;
+import main.use_case.Tiles.Property.RentPaymentUseCase.*;
 
 /**
  * Output boundary interface for rent payment use case.

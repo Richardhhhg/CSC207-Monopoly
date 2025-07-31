@@ -1,6 +1,6 @@
-package main.use_case.Property;
+package main.use_case.Tiles.Property;
 
-import main.use_case.Property.PropertyPurchaseUseCase.*;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase.*;
 
 /**
  * Output boundary interface for property purchase use case.

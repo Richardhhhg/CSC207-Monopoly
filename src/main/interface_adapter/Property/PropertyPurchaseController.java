@@ -2,7 +2,7 @@ package main.interface_adapter.Property;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.use_case.Property.PropertyPurchaseUseCase;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.view.BuyPropertyPopup;
 
 import javax.swing.*;

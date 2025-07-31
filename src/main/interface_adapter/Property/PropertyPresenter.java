@@ -1,9 +1,9 @@
 package main.interface_adapter.Property;
 
-import main.use_case.Property.PropertyPurchaseOutputBoundary;
-import main.use_case.Property.RentPaymentOutputBoundary;
-import main.use_case.Property.PropertyPurchaseUseCase.*;
-import main.use_case.Property.RentPaymentUseCase.*;
+import main.use_case.Tiles.Property.PropertyPurchaseOutputBoundary;
+import main.use_case.Tiles.Property.RentPaymentOutputBoundary;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase.*;
+import main.use_case.Tiles.Property.RentPaymentUseCase.*;
 import main.interface_adapter.Property.PropertyViewModel.*;
 
 /**

@@ -2,7 +2,7 @@ package main.interface_adapter.Property;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.use_case.Property.RentPaymentUseCase;
+import main.use_case.Tiles.Property.RentPaymentUseCase;
 
 import javax.swing.*;
 import java.awt.*;

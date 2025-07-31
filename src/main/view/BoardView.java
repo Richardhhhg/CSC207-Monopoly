@@ -5,13 +5,16 @@ import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
 import main.Constants.Constants;
-import main.use_case.Property.PropertyPurchaseUseCase;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;
 import main.interface_adapter.Property.PropertyPurchaseController;
 import main.interface_adapter.Property.RentPaymentController;
+import main.use_case.Tiles.OnLandingUseCase;
+import main.use_case.Tiles.OnLandingController;
+import main.use_case.Tiles.Property.RentPaymentUseCase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +36,7 @@ public class BoardView extends JPanel {
     private final PropertyPresenter propertyPresenter;
     private final PropertyPurchaseController propertyPurchaseController;
     private final RentPaymentController rentPaymentController;
+    private final OnLandingController onLandingController;
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -59,22 +63,17 @@ public class BoardView extends JPanel {
         this.propertyPurchaseController = new PropertyPurchaseController(propertyPresenter);
         this.rentPaymentController = new RentPaymentController(propertyPresenter);
 
-        // Set controllers directly as the landing handlers for all property tiles
-        setupPropertyLandingHandlers();
+        // Create use cases
+        PropertyPurchaseUseCase propertyPurchaseUseCase = new PropertyPurchaseUseCase(propertyPresenter);
+        RentPaymentUseCase rentPaymentUseCase = new RentPaymentUseCase(propertyPresenter);
+
+        // Create OnLanding components
+        OnLandingUseCase onLandingUseCase = new OnLandingUseCase(propertyPurchaseUseCase, rentPaymentUseCase);
+        this.onLandingController = new OnLandingController(onLandingUseCase);
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
         setupUI();
-    }
-
-    /**
-     * Configure property tiles to use the specific controllers directly
-     */
-    private void setupPropertyLandingHandlers() {
-        for (PropertyTile property : game.getTiles()) {
-            property.setPurchaseController(propertyPurchaseController);
-            property.setRentPaymentController(rentPaymentController);
-        }
     }
 
     public void setParentFrame(JFrame parentFrame) {
@@ -180,8 +179,7 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Handle landing on tile - delegate to tile's onLanding method
-     * The tile will use the appropriate controller (PropertyController for properties)
+     * Handle landing on tile - delegate to OnLandingController
      */
     private void handleLandingOnTile() {
         Player currentPlayer = game.getCurrentPlayer();
@@ -189,8 +187,8 @@ public class BoardView extends JPanel {
         Tile tile = game.getPropertyAt(position);
 
         if (tile != null) {
-            // Use tile's built-in landing logic which will call the appropriate controller
-            tile.onLanding(currentPlayer);
+            // Use OnLandingController to handle all tile landing logic
+            onLandingController.handleLanding(currentPlayer, tile);
 
             // Check if presenter has any view models to display
             checkForPresenterUpdates();
