@@ -41,22 +41,27 @@ public class DiceAnimator {
      */
     public void startDiceAnimation(Runnable onAnimationFrame, Runnable onComplete) {
         frameCount = 0;
-
-        // Get the final result and convert to view model
-        RollDice.DiceResult result = diceController.execute();
-        currentResult = dicePresenter.execute(result);
+        currentResult = null; // Clear previous result
 
         diceTimer = new Timer(100, null);
         diceTimer.addActionListener(evt -> {
-            if (frameCount < 10) {
+            if (frameCount < 9) {
                 // During animation: show random dice faces for animation effect
                 animationD1 = rand.nextInt(6) + 1;
                 animationD2 = rand.nextInt(6) + 1;
                 frameCount++;
                 onAnimationFrame.run();
+            } else if (frameCount == 9) {
+                // Last animation frame: get the final result and show it immediately
+                RollDice.DiceResult result = diceController.execute();
+                currentResult = dicePresenter.execute(result);
+                frameCount++;
+
+                // Show the final result immediately (no pause)
+                onAnimationFrame.run();
             } else {
+                // Animation truly complete
                 diceTimer.stop();
-                // Animation complete - now we show the real result
                 onComplete.run();
             }
         });
@@ -68,16 +73,18 @@ public class DiceAnimator {
     }
 
     public int getFinalD1() {
-        // During animation, return animation dice; after animation, return real result
-        if (diceTimer != null && diceTimer.isRunning()) {
+        // During animation (frames 0-8), return animation dice
+        // On frame 9+, return real result
+        if (diceTimer != null && diceTimer.isRunning() && frameCount < 9) {
             return animationD1;
         }
         return currentResult != null ? currentResult.getDice1() : 1;
     }
 
     public int getFinalD2() {
-        // During animation, return animation dice; after animation, return real result
-        if (diceTimer != null && diceTimer.isRunning()) {
+        // During animation (frames 0-8), return animation dice
+        // On frame 9+, return real result
+        if (diceTimer != null && diceTimer.isRunning() && frameCount < 9) {
             return animationD2;
         }
         return currentResult != null ? currentResult.getDice2() : 1;
