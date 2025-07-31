@@ -1,5 +1,7 @@
 package main.view;
 
+import main.entity.tiles.PropertyTile;
+import main.entity.tiles.StockMarketTile;
 import main.use_case.Tile;
 
 import javax.swing.*;
@@ -75,6 +77,31 @@ public class TileView extends JPanel {
         priceLabel.setVisible(true);
         ownerLabel.setVisible(true);
         repaint();
+    }
+
+    /**
+     * TODO: Configure this TileView based on the tile type.
+     * This method handles the general tile configuration logic.
+     */
+    public void configureForTile(Tile tile) {
+        if (tile instanceof PropertyTile) {
+            PropertyTile property = (PropertyTile) tile;
+            setMainText(tile.getName());
+            setPriceText("$" + (int)property.getPrice());
+            showPropertyInfo();
+
+            if (property.isOwned()) {
+                setOwnerText(property.getOwner().getName());
+            } else {
+                setOwnerText("");
+            }
+        } else if (tile instanceof StockMarketTile) {
+            setMainText("Stock Market");
+            hidePropertyInfo();
+        } else {
+            setMainText(tile.getName());
+            hidePropertyInfo();
+        }
     }
 
     public static void main(String[] args) {

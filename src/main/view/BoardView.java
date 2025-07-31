@@ -232,10 +232,17 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Get the property presenter for tile configuration
+     * Get the property presenter for property-specific UI concerns
      */
     public PropertyPresenter getPropertyPresenter() {
         return propertyPresenter;
+    }
+
+    /**
+     * Get the property controller for property-related business logic
+     */
+    public PropertyController getPropertyController() {
+        return propertyController;
     }
 
     /**
