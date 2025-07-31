@@ -1,10 +1,8 @@
 package main.view;
 
-import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.entity.players.Player;
 import main.Constants.Constants;
 import main.use_case.Tile;
 
@@ -19,7 +17,7 @@ public class BoardView extends JPanel {
     // Components responsible for specific functionality
     private final Game game;
     private final BoardRenderer boardRenderer;
-    private final DiceController diceController;
+    private final DiceControllerView diceControllerView;
     private final PlayerMovementAnimator playerMovementAnimator;
     private JFrame parentFrame; // Reference to parent frame for end screen
 
@@ -35,7 +33,7 @@ public class BoardView extends JPanel {
 
     public BoardView() {
         this.game = new Game();
-        this.diceController = new DiceController();
+        this.diceControllerView = new DiceControllerView();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(game.getPlayers());
@@ -58,7 +56,7 @@ public class BoardView extends JPanel {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                boardRenderer.drawBoard(g, game, diceController);
+                boardRenderer.drawBoard(g, game, diceControllerView);
             }
         };
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
@@ -106,7 +104,7 @@ public class BoardView extends JPanel {
         rollDiceButton.setEnabled(false);
 
         // Use DiceController for dice animation and logic
-        diceController.startDiceAnimation(
+        diceControllerView.startDiceAnimation(
             this::repaint, // Animation frame callback
             this::onDiceRollComplete // Completion callback
         );
@@ -114,7 +112,7 @@ public class BoardView extends JPanel {
 
     private void onDiceRollComplete() {
         Player currentPlayer = game.getCurrentPlayer();
-        int diceSum = diceController.getLastDiceSum();
+        int diceSum = diceControllerView.getLastDiceSum();
 
         // Handle crossing GO bonus using GameBoard logic
         game.moveCurrentPlayer(diceSum);
@@ -180,7 +178,7 @@ public class BoardView extends JPanel {
     }
 
     public int getLastDiceSum() {
-        return diceController.getLastDiceSum();
+        return diceControllerView.getLastDiceSum();
     }
 
     /**

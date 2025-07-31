@@ -1,21 +1,23 @@
 package main.view;
 
+import main.interface_adapter.Dice.DiceViewModel;
+
 import javax.swing.*;
-import java.util.Random;
 
 /**
  * DiceController handles dice rolling logic and animation.
+ * Now follows Clean Architecture by delegating business logic to use cases.
  */
-public class DiceController {
+public class DiceControllerView {
     private final ImageIcon[] diceIcons = new ImageIcon[7];
-    private final Random rand = new Random();
+    private final main.interface_adapter.Dice.DiceController diceController;
     private Timer diceTimer;
     private int frameCount;
-    private int finalD1 = 1, finalD2 = 1;
-    private int lastDiceSum = 2;
+    private DiceViewModel currentResult;
 
-    public DiceController() {
+    public DiceControllerView() {
         loadDiceIcons();
+        this.diceController = new main.interface_adapter.Dice.DiceController();
     }
 
     private void loadDiceIcons() {
@@ -33,20 +35,14 @@ public class DiceController {
         diceTimer = new Timer(100, null);
         diceTimer.addActionListener(evt -> {
             if (frameCount < 10) {
-                // Pick two random faces for animation
-                finalD1 = rand.nextInt(6) + 1;
-                finalD2 = rand.nextInt(6) + 1;
+                // Animation frames - show random dice during animation
                 frameCount++;
-
-                // Trigger animation frame update
                 onAnimationFrame.run();
             } else {
                 diceTimer.stop();
 
-                // Final roll
-                finalD1 = rand.nextInt(6) + 1;
-                finalD2 = rand.nextInt(6) + 1;
-                lastDiceSum = finalD1 + finalD2;
+                // Get final dice result from controller
+                currentResult = diceController.execute();
 
                 // Trigger completion callback
                 onComplete.run();
@@ -56,15 +52,15 @@ public class DiceController {
     }
 
     public int getLastDiceSum() {
-        return lastDiceSum;
+        return currentResult != null ? currentResult.getSum() : 2;
     }
 
     public int getFinalD1() {
-        return finalD1;
+        return currentResult != null ? currentResult.getDice1() : 1;
     }
 
     public int getFinalD2() {
-        return finalD2;
+        return currentResult != null ? currentResult.getDice2() : 1;
     }
 
     public ImageIcon getDiceIcon(int face) {
