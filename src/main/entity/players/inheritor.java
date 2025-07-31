@@ -1,7 +1,6 @@
 package main.entity.players;
 
 import main.entity.Stocks.Stock;
-import main.entity.players.Player;
 
 import java.awt.*;
 
@@ -15,7 +14,7 @@ import static main.Constants.Constants.INHERITOR_INIT_MONEY;
 public class inheritor extends Player implements StockModifier{
     public inheritor(String name, Color color) {
         super(name, INHERITOR_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/inheritor.jpg");
+        this.loadPortrait("Player/inheritor.jpg");
     }
 
     @Override

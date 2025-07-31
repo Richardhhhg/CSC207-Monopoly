@@ -1,7 +1,6 @@
 package main.view;
 
-import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,36 +9,38 @@ import java.util.List;
 import static main.Constants.Constants.DIMENSION_DE_LA_PSV_W;
 import static main.Constants.Constants.DIMENSION_DE_LA_PSV_H;
 
-public class PlayerStatsView extends JPanel{
-    private List<Player> players;
+public class PlayerStatsView extends JPanel {
+    private PlayerStatsViewModel viewModel;
 
-    public PlayerStatsView(List<Player> players) {
-        this.players = players;
+    public PlayerStatsView() {
         setPreferredSize(new Dimension(DIMENSION_DE_LA_PSV_W, DIMENSION_DE_LA_PSV_H));
+        setOpaque(true);
         setBackground(Color.WHITE);
     }
 
-    public void updatePlayers(List<Player> players) {
-        this.players = players;
+    public void setViewModel(PlayerStatsViewModel vm) {
+        this.viewModel = vm;
         repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (players == null) return;
+        if (viewModel == null || viewModel.getCards() == null) return;
 
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("Arial", Font.PLAIN, 17));
-
-        FontMetrics fm = g2.getFontMetrics();
-        int lineH = fm.getHeight();
+        Graphics2D g2 = (Graphics2D) g.create();
 
         int y = 20;
 
-        for (Player player : players) {
+        // Match your original font & metrics usage
+        g2.setFont(new Font("Arial", Font.PLAIN, 17));
+        FontMetrics fm = g2.getFontMetrics();
+        int lineH = fm.getHeight();
+
+        for (var player : viewModel.getCards()) {
             if (player.isBankrupt()) continue;
 
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18f));
             g2.setColor(player.getColor());
             String info = player.getName() + " Information:";
             g2.drawString(info, 10, y);
@@ -51,21 +52,21 @@ public class PlayerStatsView extends JPanel{
             int labelY = y + 40;
             g2.drawString("Properties:", labelX, labelY);
 
-            List<PropertyTile> props = player.getProperties();
+            List<String> props = player.getPropertyNames();
             if (props == null || props.isEmpty()) {
                 g2.drawString("", labelX, labelY + lineH);
             } else {
-                final int startX = 180;
+                final int startX = 185;
                 final int colWidth = 160;
                 final int linesPerCol = 5;
 
                 int col = 0;
                 int line = 0;
 
-                for (PropertyTile prop : props) {
+                for (String propName : props) {
                     int x = startX + col * colWidth;
                     int py = labelY + lineH * (line + 1);
-                    g2.drawString("- " + prop.getName(), x, py);
+                    g2.drawString("- " + propName, x, py);
 
                     line++;
                     if (line == linesPerCol) {
@@ -74,8 +75,6 @@ public class PlayerStatsView extends JPanel{
                     }
                 }
             }
-
-
 
             if (player.getPortrait() != null) {
                 int portraitSize = 155;
@@ -88,5 +87,7 @@ public class PlayerStatsView extends JPanel{
                 y += 80;
             }
         }
+
+        g2.dispose();
     }
 }

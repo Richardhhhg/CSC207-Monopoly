@@ -4,7 +4,6 @@ import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.entity.players.Player;
 import main.Constants.Constants;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
@@ -13,6 +12,8 @@ import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;
 import main.use_case.Property.PropertyLandingUseCase;
 import main.use_case.Property.PropertyLandingUseCase.PurchaseResultCallback;
+import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,14 +44,18 @@ public class BoardView extends JPanel {
     private final JLabel turnLabel = new JLabel("Turns: 0");
 
     // player stats
-    private final PlayerStatsView statsPanel;
+    //private final PlayerStatsView statsPanel;
+    private final PlayerStatsPresenter playerStatsPresenter = new PlayerStatsPresenter();
+    private final PlayerStatsView playerStatsView = new PlayerStatsView();
 
     public BoardView() {
         this.game = new Game();
         this.diceAnimator = new DiceAnimator();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
-        this.statsPanel = new PlayerStatsView(game.getPlayers());
+        //this.statsPanel = new PlayerStatsView(game.getPlayers());
+        PlayerStatsViewModel statsVM = playerStatsPresenter.toViewModel(game.getPlayers());
+        playerStatsView.setViewModel(statsVM);
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         // Initialize Clean Architecture components in proper order
@@ -100,7 +105,7 @@ public class BoardView extends JPanel {
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
         add(boardPanel, BorderLayout.WEST);
-        add(statsPanel, BorderLayout.CENTER);
+        add(playerStatsView, BorderLayout.CENTER);
 
         // Roll-Dice side-panel
         JPanel side = new JPanel();
@@ -164,6 +169,7 @@ public class BoardView extends JPanel {
 
         // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
+        playerStatsView.setViewModel(playerStatsPresenter.toViewModel(game.getPlayers()));
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
@@ -233,7 +239,7 @@ public class BoardView extends JPanel {
     private void handleEndTurn() {
         new GameNextTurn(game).execute();
         updateStatusLabels();
-        statsPanel.updatePlayers(game.getPlayers());
+        playerStatsView.setViewModel(playerStatsPresenter.toViewModel(game.getPlayers()));
 
         if (game.isGameOver()) {
             showEndScreen();
@@ -302,7 +308,7 @@ public class BoardView extends JPanel {
 
     public void updateAfterPropertyPurchased(PropertyPurchasedViewModel viewModel) {
         // Update UI after property purchase
-        statsPanel.updatePlayers(game.getPlayers());
+        playerStatsView.setViewModel(playerStatsPresenter.toViewModel(game.getPlayers()));
         repaint(); // Trigger board repaint to show ownership change
     }
 
@@ -312,7 +318,7 @@ public class BoardView extends JPanel {
         showRentNotification(parentFrame, viewModel);
 
         // Update UI after rent payment
-        statsPanel.updatePlayers(game.getPlayers());
+        playerStatsView.setViewModel(playerStatsPresenter.toViewModel(game.getPlayers()));
         repaint();
     }
 
