@@ -11,8 +11,11 @@ public class RentPaymentUseCase {
     }
 
     public void execute(Player payer, Player owner, PropertyTile property, float rentAmount) {
-        // Business logic is already handled in PropertyTile.onLanding()
-        // Create data transfer object for presenter
+        // Business logic: Perform the money transfer
+        payer.deductMoney(rentAmount);
+        owner.addMoney(rentAmount);
+
+        // Create data transfer object for presenter (with updated money amounts)
         RentPaymentData rentData = new RentPaymentData(
             payer.getName(),
             owner.getName(),

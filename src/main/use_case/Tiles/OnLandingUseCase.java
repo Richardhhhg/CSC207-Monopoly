@@ -29,14 +29,10 @@ public class OnLandingUseCase {
             // Property is unowned - trigger purchase flow
             propertyPurchaseUseCase.execute(player, property);
         } else if (player != property.getOwner()) {
-            // Property is owned by someone else - calculate and pay rent
+            // Property is owned by someone else - calculate rent and delegate to RentPaymentUseCase
             float rent = property.calculateRent();
 
-            // Perform the transaction (business logic)
-            player.deductMoney(rent);
-            property.getOwner().addMoney(rent);
-
-            // Trigger rent payment notification
+            // Delegate the entire rent payment process (including money transfer) to RentPaymentUseCase
             rentPaymentUseCase.execute(player, property.getOwner(), property, rent);
         }
         // If player owns the property, nothing happens
