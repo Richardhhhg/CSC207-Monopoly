@@ -262,36 +262,6 @@ public class BoardView extends JPanel {
         });
     }
 
-    // Getters for components that need access
-    public int getLastDiceSum() {
-        return diceController.getLastDiceSum();
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    /**
-     * Get the property presenter for property-specific UI concerns
-     */
-    public PropertyPresenter getPropertyPresenter() {
-        return propertyPresenter;
-    }
-
-    /**
-     * Get the property controller for property-related business logic
-     */
-    public PropertyController getPropertyController() {
-        return propertyController;
-    }
-
-    /**
-     * Get the property use case for testing purposes
-     */
-    public PropertyLandingUseCase getPropertyLandingUseCase() {
-        return propertyLandingUseCase;
-    }
-
     /**
      * For Testing the Board View on its own
      */
