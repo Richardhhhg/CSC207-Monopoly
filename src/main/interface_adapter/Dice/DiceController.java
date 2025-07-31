@@ -9,9 +9,7 @@ public class DiceController {
         this.rollDiceUseCase = new RollDice();
     }
 
-    public DiceViewModel execute() {
-        RollDice.DiceResult result = rollDiceUseCase.execute();
-        DicePresenter presenter = new DicePresenter();
-        return presenter.execute(result);
+    public RollDice.DiceResult execute() {
+        return rollDiceUseCase.execute();
     }
 }

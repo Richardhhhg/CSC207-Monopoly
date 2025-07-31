@@ -1,17 +1,21 @@
 package main.view;
 
+import main.interface_adapter.Dice.DiceController;
+import main.interface_adapter.Dice.DicePresenter;
 import main.interface_adapter.Dice.DiceViewModel;
+import main.use_case.Dice.RollDice;
 
 import javax.swing.*;
 import java.util.Random;
 
 /**
- * DiceController handles dice rolling logic and animation.
- * Now follows Clean Architecture by delegating business logic to use cases.
+ * DiceAnimator handles dice rolling animation and UI concerns.
+ * Delegates business logic to controllers and use cases.
  */
-public class DiceControllerView {
+public class DiceAnimator {
     private final ImageIcon[] diceIcons = new ImageIcon[7];
-    private final main.interface_adapter.Dice.DiceController diceController;
+    private final DiceController diceController;
+    private final DicePresenter dicePresenter;
     private final Random rand = new Random();
     private Timer diceTimer;
     private int frameCount;
@@ -20,9 +24,10 @@ public class DiceControllerView {
     // Animation state - these change during animation
     private int animationD1 = 1, animationD2 = 1;
 
-    public DiceControllerView() {
+    public DiceAnimator() {
         loadDiceIcons();
-        this.diceController = new main.interface_adapter.Dice.DiceController();
+        this.diceController = new DiceController();
+        this.dicePresenter = new DicePresenter();
     }
 
     private void loadDiceIcons() {
@@ -37,8 +42,9 @@ public class DiceControllerView {
     public void startDiceAnimation(Runnable onAnimationFrame, Runnable onComplete) {
         frameCount = 0;
 
-        // Get the final result first, but don't show it until animation ends
-        currentResult = diceController.execute();
+        // Get the final result and convert to view model
+        RollDice.DiceResult result = diceController.execute();
+        currentResult = dicePresenter.execute(result);
 
         diceTimer = new Timer(100, null);
         diceTimer.addActionListener(evt -> {

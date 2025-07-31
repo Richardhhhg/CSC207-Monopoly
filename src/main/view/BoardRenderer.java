@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class BoardRenderer {
 
-    public void drawBoard(Graphics g, Game game, DiceControllerView diceControllerView) {
+    public void drawBoard(Graphics g, Game game, DiceAnimator diceAnimator) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -27,7 +27,7 @@ public class BoardRenderer {
         drawProperties(g2d, game.getTiles(), game, startX, startY, tileSize);
 
         // Draw dice
-        drawDice(g2d, diceControllerView, startX, startY, tileSize);
+        drawDice(g2d, diceAnimator, startX, startY, tileSize);
 
         // Draw current player portrait
         drawPlayerPortrait(g2d, game.getCurrentPlayer(), startX, startY, tileSize);
@@ -121,7 +121,7 @@ public class BoardRenderer {
         }
     }
 
-    private void drawDice(Graphics2D g2d, DiceControllerView diceControllerView,
+    private void drawDice(Graphics2D g2d, DiceAnimator diceAnimator,
                           int startX, int startY, int tileSize) {
         // Centre of the board
         int centerX = startX + Constants.BOARD_SIZE/2;
@@ -136,13 +136,13 @@ public class BoardRenderer {
         int y = centerY - diceSize/2;
 
         // Draw dice
-        g2d.drawImage(diceControllerView.getDiceIcon(diceControllerView.getFinalD1()).getImage(),
+        g2d.drawImage(diceAnimator.getDiceIcon(diceAnimator.getFinalD1()).getImage(),
                 x1, y, diceSize, diceSize, null);
-        g2d.drawImage(diceControllerView.getDiceIcon(diceControllerView.getFinalD2()).getImage(),
+        g2d.drawImage(diceAnimator.getDiceIcon(diceAnimator.getFinalD2()).getImage(),
                 x2, y, diceSize, diceSize, null);
 
         // Draw the sum underneath
-        String sumText = "Sum: " + diceControllerView.getLastDiceSum();
+        String sumText = "Sum: " + diceAnimator.getLastDiceSum();
         Font oldFont = g2d.getFont();
         g2d.setFont(new Font("Arial", Font.BOLD, 16));
         FontMetrics fm = g2d.getFontMetrics();
