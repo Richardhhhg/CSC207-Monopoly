@@ -41,14 +41,6 @@ public class Game {
         new GameInitializeStocks(this).execute();
     }
 
-    public void moveCurrentPlayer(int steps) {
-        Player currentPlayer = getCurrentPlayer();
-        if (currentPlayer.getPosition() + steps >= tileCount) {
-            currentPlayer.addMoney(FINISH_LINE_BONUS);
-        }
-        // Note: Actual position update happens in animation
-    }
-
     public boolean isGameOver() {
         return gameEnded;
     }

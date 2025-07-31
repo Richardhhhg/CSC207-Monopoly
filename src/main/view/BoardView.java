@@ -7,6 +7,7 @@ import main.use_case.Game.GameNextTurn;
 import main.entity.players.Player;
 import main.Constants.Constants;
 import main.use_case.Tile;
+import main.use_case.Game.GameMoveCurrentPlayer;
 import main.interface_adapter.Property.PropertyController;
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;
@@ -27,6 +28,7 @@ public class BoardView extends JPanel {
     private final DiceAnimator diceAnimator;
     private final PlayerMovementAnimator playerMovementAnimator;
     private JFrame parentFrame; // Reference to parent frame for end screen
+    private final GameMoveCurrentPlayer gameMoveCurrentPlayer;
 
     // Controllers, Use Cases, and Presenters following Clean Architecture
     private final PropertyPresenter propertyPresenter;
@@ -49,6 +51,7 @@ public class BoardView extends JPanel {
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(game.getPlayers());
+        this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         // Initialize Clean Architecture components in proper order
         // Presenter no longer depends on view
@@ -159,8 +162,8 @@ public class BoardView extends JPanel {
         Player currentPlayer = game.getCurrentPlayer();
         int diceSum = diceAnimator.getLastDiceSum();
 
-        // Handle crossing GO bonus using Game logic
-        game.moveCurrentPlayer(diceSum);
+        // Handle crossing GO bonus using GameBoard logic
+        gameMoveCurrentPlayer.execute(diceSum);
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
