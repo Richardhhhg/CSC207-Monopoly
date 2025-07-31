@@ -8,7 +8,9 @@ import main.Constants.Constants;
 import main.use_case.Tile;
 import main.interface_adapter.Property.PropertyController;
 import main.interface_adapter.Property.PropertyPresenter;
+import main.interface_adapter.Property.PropertyViewModel.*;
 import main.use_case.Property.PropertyLandingUseCase;
+import main.use_case.Property.PropertyLandingUseCase.PurchaseResultCallback;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,8 +50,8 @@ public class BoardView extends JPanel {
         this.statsPanel = new PlayerStatsView(game.getPlayers());
 
         // Initialize Clean Architecture components in proper order
-        // Presenter implements output boundary
-        this.propertyPresenter = new PropertyPresenter(this, statsPanel, game.getPlayers());
+        // Presenter implements output boundary and uses BoardView directly
+        this.propertyPresenter = new PropertyPresenter(this);
 
         // Use case depends on output boundary (presenter)
         this.propertyLandingUseCase = new PropertyLandingUseCase(propertyPresenter);
@@ -273,6 +275,68 @@ public class BoardView extends JPanel {
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
+        });
+    }
+
+    // Property-related view methods (no longer implementing interface)
+    public void showPurchaseDialog(PurchaseDialogViewModel viewModel, PurchaseResultCallback callback) {
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+
+        // Find the actual player and property objects for the popup
+        Player player = findPlayerByName(viewModel.playerName);
+        PropertyTile property = findPropertyByName(viewModel.propertyName);
+
+        if (player != null && property != null) {
+            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, property,
+                    (success, message) -> callback.onResult(success));
+        }
+    }
+
+    public void updateAfterPropertyPurchased(PropertyPurchasedViewModel viewModel) {
+        // Update UI after property purchase
+        statsPanel.updatePlayers(game.getPlayers());
+        repaint(); // Trigger board repaint to show ownership change
+    }
+
+    public void showRentPaymentNotification(RentPaymentViewModel viewModel) {
+        // Show rent payment notification
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        showRentNotification(parentFrame, viewModel);
+
+        // Update UI after rent payment
+        statsPanel.updatePlayers(game.getPlayers());
+        repaint();
+    }
+
+    // Helper methods for finding entities (needed for legacy popup interface)
+    private Player findPlayerByName(String name) {
+        return game.getPlayers().stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private PropertyTile findPropertyByName(String name) {
+        return game.getTiles().stream()
+                .filter(tile -> tile.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Shows rent payment notification dialog using view model data
+     */
+    private void showRentNotification(Frame parent, RentPaymentViewModel viewModel) {
+        SwingUtilities.invokeLater(() -> {
+            String message = viewModel.payerName + " paid $" + (int) viewModel.rentAmount +
+                    " rent to " + viewModel.ownerName + " for landing on " + viewModel.propertyName;
+
+            JOptionPane.showMessageDialog(
+                    parent,
+                    message,
+                    "Rent Payment",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         });
     }
 }
