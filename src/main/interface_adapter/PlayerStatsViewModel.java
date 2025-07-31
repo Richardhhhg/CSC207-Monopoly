@@ -1,6 +1,5 @@
 package main.interface_adapter;
 
-import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
 
 import java.awt.Color;

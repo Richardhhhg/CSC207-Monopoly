@@ -12,7 +12,7 @@ public class PlayerStatsPresenter {
             cards.add(new PlayerStatsViewModel.Card(
                     p.getName(),
                     p.getMoney(),
-                    p.getProperties(),   // keep PropertyTile list
+                    p.getProperties(),
                     p.isBankrupt(),
                     p.getColor(),
                     p.getPortrait()
