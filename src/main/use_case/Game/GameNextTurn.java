@@ -3,6 +3,7 @@ package main.use_case.Game;
 import main.entity.Game;
 import main.entity.players.Player;
 import main.entity.players.applyAfterEffects;
+import main.use_case.Player.ApplyTurnEffects;
 
 import java.util.List;
 
@@ -12,9 +13,11 @@ import java.util.List;
 public class GameNextTurn {
     private Game game;
     private static final int TURNS_PER_ROUND = 4; // TODO: This is hardcoded, this does not account for player deaths
+    private ApplyTurnEffects applyTurnEffects;
 
     public GameNextTurn(Game game) {
         this.game = game;
+        this.applyTurnEffects = new ApplyTurnEffects();
     }
 
     public void execute() {
@@ -26,7 +29,7 @@ public class GameNextTurn {
 
         // FIXME: There may be a bug if current player has no turn effects
         if (currentPlayer instanceof applyAfterEffects) {
-            ((applyAfterEffects) currentPlayer).applyTurnEffects();
+            this.applyTurnEffects.execute(currentPlayer);
         }
         game.increaseTurn();
 

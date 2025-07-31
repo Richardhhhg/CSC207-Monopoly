@@ -7,6 +7,7 @@ import main.use_case.Game.GameNextTurn;
 import main.entity.players.Player;
 import main.Constants.Constants;
 import main.use_case.Tile;
+import main.use_case.Game.GameMoveCurrentPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class BoardView extends JPanel {
     private final DiceController diceController;
     private final PlayerMovementAnimator playerMovementAnimator;
     private JFrame parentFrame; // Reference to parent frame for end screen
+    private final GameMoveCurrentPlayer gameMoveCurrentPlayer;
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -39,6 +41,7 @@ public class BoardView extends JPanel {
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(game.getPlayers());
+        this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
@@ -117,7 +120,7 @@ public class BoardView extends JPanel {
         int diceSum = diceController.getLastDiceSum();
 
         // Handle crossing GO bonus using GameBoard logic
-        game.moveCurrentPlayer(diceSum);
+        gameMoveCurrentPlayer.execute(diceSum);
 
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
