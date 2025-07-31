@@ -3,7 +3,8 @@ package main.entity.tiles;
 import main.entity.players.rentModifier;
 import main.use_case.Tile;
 import main.entity.players.Player;
-import main.interface_adapter.Property.PropertyLandingHandler;
+import main.interface_adapter.Property.PropertyPurchaseController;
+import main.interface_adapter.Property.RentPaymentController;
 
 /*
  * A purchasable board tile that can collect rent.
@@ -13,7 +14,8 @@ public class PropertyTile extends Tile {
     private final float rent;
     private Player owner; //null if not owned
 
-    private PropertyLandingHandler landingHandler;
+    private PropertyPurchaseController purchaseController;
+    private RentPaymentController rentPaymentController;
 
     /**
      * @param name  tile name
@@ -26,8 +28,12 @@ public class PropertyTile extends Tile {
         this.rent = rent;
     }
 
-    public void setLandingHandler(PropertyLandingHandler handler) {
-        this.landingHandler = handler;
+    public void setPurchaseController(PropertyPurchaseController controller) {
+        this.purchaseController = controller;
+    }
+
+    public void setRentPaymentController(RentPaymentController controller) {
+        this.rentPaymentController = controller;
     }
 
     /**
@@ -59,13 +65,13 @@ public class PropertyTile extends Tile {
     }
 
     /**
-     * When a player lands here - delegate to handler for UI concerns
+     * When a player lands here - delegate to specific controllers for UI concerns
      */
     @Override
     public void onLanding(Player p) {
         if (!isOwned()) {
-            if (landingHandler != null) {
-                landingHandler.handleUnownedProperty(p, this);
+            if (purchaseController != null) {
+                purchaseController.handleUnownedProperty(p, this);
             }
             return;
         }
@@ -81,9 +87,9 @@ public class PropertyTile extends Tile {
             p.deductMoney(finalRent);
             owner.addMoney(finalRent);
 
-            // Notify handler about rent payment
-            if (landingHandler != null) {
-                landingHandler.handleRentPayment(p, owner, this, finalRent);
+            // Notify controller about rent payment
+            if (rentPaymentController != null) {
+                rentPaymentController.handleRentPayment(p, owner, this, finalRent);
             }
         }
     }

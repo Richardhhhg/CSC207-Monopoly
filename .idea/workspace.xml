@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels">
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/PropertyPurchaseUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/RentPaymentUseCase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Property/PropertyLandingOutputBoundary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Property/PropertyLandingUseCase.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/TileView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +106,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#82 on nathan-refactor",
+    "git-widget-placeholder": "#89 on break-up-property-use-cases",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

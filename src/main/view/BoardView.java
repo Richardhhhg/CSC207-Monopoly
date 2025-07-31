@@ -4,15 +4,14 @@ import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.entity.players.Player;
 import main.Constants.Constants;
+import main.use_case.Property.PropertyPurchaseUseCase;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
-import main.interface_adapter.Property.PropertyController;
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;
-import main.use_case.Property.PropertyLandingUseCase;
-import main.use_case.Property.PropertyLandingUseCase.PurchaseResultCallback;
+import main.interface_adapter.Property.PropertyPurchaseController;
+import main.interface_adapter.Property.RentPaymentController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,10 +29,10 @@ public class BoardView extends JPanel {
     private JFrame parentFrame; // Reference to parent frame for end screen
     private final GameMoveCurrentPlayer gameMoveCurrentPlayer;
 
-    // Controllers, Use Cases, and Presenters following Clean Architecture
+    // Controllers and Presenters following Clean Architecture
     private final PropertyPresenter propertyPresenter;
-    private final PropertyLandingUseCase propertyLandingUseCase;
-    private final PropertyController propertyController;
+    private final PropertyPurchaseController propertyPurchaseController;
+    private final RentPaymentController rentPaymentController;
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -54,16 +53,13 @@ public class BoardView extends JPanel {
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         // Initialize Clean Architecture components in proper order
-        // Presenter no longer depends on view
         this.propertyPresenter = new PropertyPresenter();
 
-        // Use case depends on output boundary (presenter)
-        this.propertyLandingUseCase = new PropertyLandingUseCase(propertyPresenter);
+        // Controllers act as interactors and depend on presenter
+        this.propertyPurchaseController = new PropertyPurchaseController(propertyPresenter);
+        this.rentPaymentController = new RentPaymentController(propertyPresenter);
 
-        // Controller depends on use case
-        this.propertyController = new PropertyController(propertyLandingUseCase);
-
-        // Set controller as the landing handler for all property tiles
+        // Set controllers directly as the landing handlers for all property tiles
         setupPropertyLandingHandlers();
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
@@ -72,11 +68,12 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Configure property tiles to use the controller for landing events
+     * Configure property tiles to use the specific controllers directly
      */
     private void setupPropertyLandingHandlers() {
         for (PropertyTile property : game.getTiles()) {
-            property.setLandingHandler(propertyController);
+            property.setPurchaseController(propertyPurchaseController);
+            property.setRentPaymentController(rentPaymentController);
         }
     }
 
@@ -207,7 +204,7 @@ public class BoardView extends JPanel {
         // Check for purchase dialog
         PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
         if (purchaseDialog != null) {
-            PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
+            PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
             showPurchaseDialog(purchaseDialog, callback);
             propertyPresenter.clearPurchaseDialog();
         }
@@ -287,7 +284,7 @@ public class BoardView extends JPanel {
     }
 
     // Property-related view methods (now work with view models only)
-    public void showPurchaseDialog(PurchaseDialogViewModel viewModel, PurchaseResultCallback callback) {
+    public void showPurchaseDialog(PurchaseDialogViewModel viewModel, PropertyPurchaseUseCase.PurchaseResultCallback callback) {
         Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
 
         // Find the actual player and property objects for the popup

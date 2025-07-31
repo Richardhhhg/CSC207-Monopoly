@@ -1,14 +1,14 @@
 package main.interface_adapter.Property;
 
-import main.use_case.Property.PropertyLandingOutputBoundary;
-import main.use_case.Property.PropertyLandingUseCase.*;
+import main.use_case.Property.PropertyPurchaseUseCase.*;
+import main.use_case.Property.RentPaymentUseCase.*;
 import main.interface_adapter.Property.PropertyViewModel.*;
 
 /**
- * Presenter that implements the output boundary and creates view models for property-related UI.
- * No longer depends on view - follows Clean Architecture dependency rule.
+ * Presenter that creates view models for property-related UI.
+ * No longer implements output boundary - works directly with use cases.
  */
-public class PropertyPresenter implements PropertyLandingOutputBoundary {
+public class PropertyPresenter {
     private PurchaseDialogViewModel currentPurchaseDialog;
     private PropertyPurchasedViewModel currentPropertyPurchased;
     private RentPaymentViewModel currentRentPayment;
@@ -18,7 +18,6 @@ public class PropertyPresenter implements PropertyLandingOutputBoundary {
         // No view dependency
     }
 
-    @Override
     public void presentPurchaseDialog(PropertyPurchaseData data, PurchaseResultCallback callback) {
         // Convert use case data to view model and store it
         this.currentPurchaseDialog = new PurchaseDialogViewModel(
@@ -31,7 +30,6 @@ public class PropertyPresenter implements PropertyLandingOutputBoundary {
         this.currentCallback = callback;
     }
 
-    @Override
     public void presentPropertyPurchased(PropertyOwnershipData data) {
         // Convert use case data to view model and store it
         this.currentPropertyPurchased = new PropertyPurchasedViewModel(
@@ -41,7 +39,6 @@ public class PropertyPresenter implements PropertyLandingOutputBoundary {
         );
     }
 
-    @Override
     public void presentRentPayment(RentPaymentData data) {
         // Convert use case data to view model and store it
         this.currentRentPayment = new RentPaymentViewModel(
