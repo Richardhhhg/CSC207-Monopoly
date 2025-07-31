@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PlayerStatsPresenter {
     public PlayerStatsViewModel toViewModel(List<Player> players) {
-        List<PlayerStatsViewModel.Card> cards = new ArrayList<>(players.size());
+        List<PlayerCard> cards = new ArrayList<>(players.size());
         for (Player p : players) {
             List<String> propertyNames = (p.getProperties() == null)
                     ? List.of()
@@ -18,7 +18,7 @@ public class PlayerStatsPresenter {
                     .map(PropertyTile::getName)
                     .collect(Collectors.toList());
 
-            cards.add(new PlayerStatsViewModel.Card(
+            cards.add(new PlayerCard(
                     p.getName(),
                     p.getMoney(),
                     p.isBankrupt(),
