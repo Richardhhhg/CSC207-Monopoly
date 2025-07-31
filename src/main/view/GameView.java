@@ -1,12 +1,7 @@
 package main.view;
 
-import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.Stocks.Stock;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This Class displays the entire game view.

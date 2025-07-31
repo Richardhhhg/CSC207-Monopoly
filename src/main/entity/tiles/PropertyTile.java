@@ -3,10 +3,7 @@ package main.entity.tiles;
 import main.entity.players.rentModifier;
 import main.use_case.Tile;
 import main.entity.players.Player;
-import main.view.BuyPropertyPopup;
-
-import javax.swing.*;
-import java.awt.*;
+import main.interface_adapter.Property.PropertyLandingHandler;
 
 /*
  * A purchasable board tile that can collect rent.
@@ -15,6 +12,8 @@ public class PropertyTile extends Tile {
     private final float price;
     private final float rent;
     private Player owner; //null if not owned
+
+    private PropertyLandingHandler landingHandler;
 
     /**
      * @param name  tile name
@@ -25,6 +24,10 @@ public class PropertyTile extends Tile {
         super(name);
         this.price = price;
         this.rent = rent;
+    }
+
+    public void setLandingHandler(PropertyLandingHandler handler) {
+        this.landingHandler = handler;
     }
 
     /**
@@ -56,86 +59,46 @@ public class PropertyTile extends Tile {
     }
 
     /**
-     * When a player lands here:
-     * 1) If unowned, show buy property dialog
-     * 2) If owned by someone else, charge rent and show notification
+     * When a player lands here - delegate to handler for UI concerns
      */
     @Override
     public void onLanding(Player p) {
         if (!isOwned()) {
-            // Show buy property popup
-            showBuyPropertyDialog(p);
+            if (landingHandler != null) {
+                landingHandler.handleUnownedProperty(p, this);
+            }
             return;
         }
 
         if (p != owner) {
-            // Charge rent
+            // Calculate rent
             float finalRent = rent;
             if (owner instanceof rentModifier) {
                 finalRent = ((rentModifier) owner).adjustRent(rent);
             }
+
+            // Perform the transaction
             p.deductMoney(finalRent);
             owner.addMoney(finalRent);
 
-            // Show rent payment notification
-            showRentNotification(p, finalRent);
-        }
-    }
-
-    private void showBuyPropertyDialog(Player player) {
-        SwingUtilities.invokeLater(() -> {
-            Frame parentFrame = getActiveFrame();
-            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, this,
-                new BuyPropertyPopup.PurchaseResultCallback() {
-                    @Override
-                    public void onPurchaseCompleted(boolean success, String message) {
-                        if (success) {
-                            // Trigger board repaint to show ownership change
-                            repaintBoard();
-                        }
-                    }
-                });
-        });
-    }
-
-    private void showRentNotification(Player payer, float rentAmount) {
-        SwingUtilities.invokeLater(() -> {
-            String message = payer.getName() + " paid $" + (int)rentAmount +
-                           " rent to " + owner.getName() + " for landing on " + this.getName();
-
-            JOptionPane.showMessageDialog(
-                getActiveFrame(),
-                message,
-                "Rent Payment",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-        });
-    }
-
-    private Frame getActiveFrame() {
-        Frame[] frames = Frame.getFrames();
-        for (Frame frame : frames) {
-            if (frame.isVisible() && frame.isActive()) {
-                return frame;
+            // Notify handler about rent payment
+            if (landingHandler != null) {
+                landingHandler.handleRentPayment(p, owner, this, finalRent);
             }
         }
-        // Fallback to first visible frame
-        for (Frame frame : frames) {
-            if (frame.isVisible()) {
-                return frame;
-            }
-        }
-        return null;
     }
 
-    private void repaintBoard() {
-        // Find and repaint the board component
-        Frame[] frames = Frame.getFrames();
-        for (Frame frame : frames) {
-            if (frame.isVisible()) {
-                frame.repaint();
-            }
+    /**
+     * Business logic for purchasing this property
+     */
+    public boolean attemptPurchase(Player player) {
+        if (isOwned() || player.getMoney() < price) {
+            return false;
         }
+
+        player.buyProperty(this);
+        this.owner = player;
+        return true;
     }
 
     /**
@@ -146,13 +109,5 @@ public class PropertyTile extends Tile {
      */
     public void setOwned(boolean owned, Player owner) {
         this.owner = owner;
-    }
-
-    public boolean attemptPurchase(Player player) {
-        if (player.getMoney() <= price) {
-            return false; // Cannot purchase if already owned or insufficient funds
-        }
-        player.buyProperty(this);
-        return true; // Purchase successful
     }
 }
