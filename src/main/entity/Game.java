@@ -12,6 +12,7 @@ import java.util.List;
 import java.awt.*;
 
 import static main.Constants.Constants.FINISH_LINE_BONUS;
+import static main.Constants.Constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
@@ -51,7 +52,7 @@ public class Game {
 
     // TODO: This does not account for players dying, fix later - Richard
     public int getCurrentRound() {
-        return (totalTurns / TURNS_PER_ROUND) + 1;
+        return Math.min((totalTurns / TURNS_PER_ROUND) + 1, MAX_ROUNDS);
     }
 
     public int getTotalTurns() {
