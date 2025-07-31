@@ -3,6 +3,7 @@ package main.view;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
+import main.interface_adapter.Property.PropertyViewModel;
 import main.use_case.Game.GameNextTurn;
 import main.Constants.Constants;
 import main.use_case.Property.PropertyPurchaseUseCase;

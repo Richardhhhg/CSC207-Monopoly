@@ -6,15 +6,14 @@ import main.use_case.Property.RentPaymentUseCase;
 
 public class RentPaymentController {
     private final RentPaymentUseCase rentPaymentUseCase;
-    private final PropertyPresenter presenter;
 
     public RentPaymentController(PropertyPresenter presenter) {
-        this.presenter = presenter;
-        this.rentPaymentUseCase = new RentPaymentUseCase();
+        // Inject presenter as output boundary into use case
+        this.rentPaymentUseCase = new RentPaymentUseCase(presenter);
     }
 
     public void execute(Player payer, Player owner, PropertyTile property, float rentAmount) {
-        rentPaymentUseCase.execute(payer, owner, property, rentAmount, presenter);
+        rentPaymentUseCase.execute(payer, owner, property, rentAmount);
     }
 
     public void handleRentPayment(Player payer, Player owner, PropertyTile property, float rentAmount) {

@@ -1,14 +1,15 @@
 package main.interface_adapter.Property;
 
+import main.use_case.Property.PropertyPurchaseOutputBoundary;
+import main.use_case.Property.RentPaymentOutputBoundary;
 import main.use_case.Property.PropertyPurchaseUseCase.*;
 import main.use_case.Property.RentPaymentUseCase.*;
 import main.interface_adapter.Property.PropertyViewModel.*;
 
 /**
- * Presenter that creates view models for property-related UI.
- * No longer implements output boundary - works directly with use cases.
+ * Presenter that implements both output boundaries and creates view models for property-related UI.
  */
-public class PropertyPresenter {
+public class PropertyPresenter implements PropertyPurchaseOutputBoundary, RentPaymentOutputBoundary {
     private PurchaseDialogViewModel currentPurchaseDialog;
     private PropertyPurchasedViewModel currentPropertyPurchased;
     private RentPaymentViewModel currentRentPayment;
@@ -18,6 +19,7 @@ public class PropertyPresenter {
         // No view dependency
     }
 
+    @Override
     public void presentPurchaseDialog(PropertyPurchaseData data, PurchaseResultCallback callback) {
         // Convert use case data to view model and store it
         this.currentPurchaseDialog = new PurchaseDialogViewModel(
@@ -30,6 +32,7 @@ public class PropertyPresenter {
         this.currentCallback = callback;
     }
 
+    @Override
     public void presentPropertyPurchased(PropertyOwnershipData data) {
         // Convert use case data to view model and store it
         this.currentPropertyPurchased = new PropertyPurchasedViewModel(
@@ -39,6 +42,7 @@ public class PropertyPresenter {
         );
     }
 
+    @Override
     public void presentRentPayment(RentPaymentData data) {
         // Convert use case data to view model and store it
         this.currentRentPayment = new RentPaymentViewModel(

@@ -2,11 +2,15 @@ package main.use_case.Property;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.interface_adapter.Property.PropertyPresenter;
 
 public class PropertyPurchaseUseCase {
+    private final PropertyPurchaseOutputBoundary outputBoundary;
 
-    public void execute(Player player, PropertyTile property, PropertyPresenter presenter) {
+    public PropertyPurchaseUseCase(PropertyPurchaseOutputBoundary outputBoundary) {
+        this.outputBoundary = outputBoundary;
+    }
+
+    public void execute(Player player, PropertyTile property) {
         // Business logic: Validate property can be purchased
         if (property.isOwned()) {
             return; // Should not happen, but safety check
@@ -21,8 +25,8 @@ public class PropertyPurchaseUseCase {
             player.getMoney() >= property.getPrice()
         );
 
-        // Send to presenter directly
-        presenter.presentPurchaseDialog(purchaseData, (success) -> {
+        // Send to presenter through output boundary
+        outputBoundary.presentPurchaseDialog(purchaseData, (success) -> {
             if (success) {
                 // Execute the purchase
                 boolean purchaseSuccessful = property.attemptPurchase(player);
@@ -32,7 +36,7 @@ public class PropertyPurchaseUseCase {
                         player.getName(),
                         player.getMoney()
                     );
-                    presenter.presentPropertyPurchased(ownershipData);
+                    outputBoundary.presentPropertyPurchased(ownershipData);
                 }
             }
         });

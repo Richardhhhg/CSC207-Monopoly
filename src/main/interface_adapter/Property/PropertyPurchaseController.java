@@ -6,15 +6,14 @@ import main.use_case.Property.PropertyPurchaseUseCase;
 
 public class PropertyPurchaseController {
     private final PropertyPurchaseUseCase propertyPurchaseUseCase;
-    private final PropertyPresenter presenter;
 
     public PropertyPurchaseController(PropertyPresenter presenter) {
-        this.presenter = presenter;
-        this.propertyPurchaseUseCase = new PropertyPurchaseUseCase();
+        // Inject presenter as output boundary into use case
+        this.propertyPurchaseUseCase = new PropertyPurchaseUseCase(presenter);
     }
 
     public void execute(Player player, PropertyTile property) {
-        propertyPurchaseUseCase.execute(player, property, presenter);
+        propertyPurchaseUseCase.execute(player, property);
     }
 
     public void handleUnownedProperty(Player player, PropertyTile property) {

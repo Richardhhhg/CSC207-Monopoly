@@ -2,11 +2,15 @@ package main.use_case.Property;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.interface_adapter.Property.PropertyPresenter;
 
 public class RentPaymentUseCase {
+    private final RentPaymentOutputBoundary outputBoundary;
 
-    public void execute(Player payer, Player owner, PropertyTile property, float rentAmount, PropertyPresenter presenter) {
+    public RentPaymentUseCase(RentPaymentOutputBoundary outputBoundary) {
+        this.outputBoundary = outputBoundary;
+    }
+
+    public void execute(Player payer, Player owner, PropertyTile property, float rentAmount) {
         // Business logic is already handled in PropertyTile.onLanding()
         // Create data transfer object for presenter
         RentPaymentData rentData = new RentPaymentData(
@@ -18,8 +22,8 @@ public class RentPaymentUseCase {
             owner.getMoney()
         );
 
-        // Send to presenter directly
-        presenter.presentRentPayment(rentData);
+        // Send to presenter through output boundary
+        outputBoundary.presentRentPayment(rentData);
     }
 
     // Data transfer object
