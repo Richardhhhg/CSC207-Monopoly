@@ -5,30 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="refactored the player">
+      <change afterPath="$PROJECT_DIR$/src/main/controller/PropertyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/clerk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/landlord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/landlord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockBuyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockBuyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockMarketViewModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockSellController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockSellController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameCheckBankrupt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameCheckBankrupt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializePlayers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializePlayers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeStocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeStocks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameNextTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameNextTurn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Stocks/BuyStock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Stocks/BuyStock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Stocks/SellStock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Stocks/SellStock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/GameBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/StockMarketView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/StockMarketView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/StockView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/StockView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/BuyPropertyPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BuyPropertyPopup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +93,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "fix-import",
+    "git-widget-placeholder": "nathan-refactor",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -142,6 +125,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>

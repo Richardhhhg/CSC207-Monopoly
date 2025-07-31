@@ -8,7 +8,7 @@ import java.awt.*;
 
 /**
  * Modal dialog prompting the user to buy an unowned PropertyTile.
- * Follows clean architecture by handling all purchase UI logic and validation.
+ * Follows clean architecture by handling only UI concerns.
  */
 public class BuyPropertyPopup extends JDialog {
 
@@ -29,7 +29,7 @@ public class BuyPropertyPopup extends JDialog {
     /**
      * @param owner      parent frame for centering
      * @param player     the current player attempting purchase
-     * @param property   the PropertyTile being landed on
+     * @param property   the PropertyTile being purchased
      * @param callback   callback to notify about purchase results
      */
     public BuyPropertyPopup(
@@ -187,11 +187,12 @@ public class BuyPropertyPopup extends JDialog {
     }
 
     /**
-     * Static factory method for easier usage
+     * Static factory method for creating purchase dialogs
      */
     public static void showPurchaseDialog(Frame parent, Player player, PropertyTile property,
                                           PurchaseResultCallback callback) {
         SwingUtilities.invokeLater(() ->
                 new BuyPropertyPopup(parent, player, property, callback));
     }
+
 }
