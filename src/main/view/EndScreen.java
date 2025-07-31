@@ -1,28 +1,26 @@
 package main.view;
 
-import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
+import main.interface_adapter.EndScreen.EndScreenController;
+import main.interface_adapter.EndScreen.EndScreenViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 public class EndScreen extends JFrame {
-    private final List<Player> players;
-    private final String gameEndReason;
-    private final int totalRounds;
+    private final EndScreenController controller;
+    private EndScreenViewModel viewModel;
 
     public EndScreen(List<Player> players, String gameEndReason, int totalRounds) {
-        this.players = new ArrayList<>(players);
-        this.gameEndReason = gameEndReason;
-        this.totalRounds = totalRounds;
-
-        initializeEndScreen();
+        this.controller = new EndScreenController();
+        initializeEndScreen(players, gameEndReason, totalRounds);
     }
 
-    private void initializeEndScreen() {
+    private void initializeEndScreen(List<Player> players, String gameEndReason, int totalRounds) {
+        // Get data through controller
+        viewModel = controller.execute(players, gameEndReason, totalRounds);
+
         setTitle("Game Over - Final Results");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,29 +54,28 @@ public class EndScreen extends JFrame {
         titlePanel.setBackground(new Color(220, 220, 220));
         titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel gameOverLabel = new JLabel("GAME OVER", SwingConstants.CENTER);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        gameOverLabel.setForeground(new Color(150, 0, 0));
-        gameOverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel reasonLabel = new JLabel(gameEndReason, SwingConstants.CENTER);
-        reasonLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        reasonLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel roundsLabel = new JLabel("Total Rounds Played: " + totalRounds, SwingConstants.CENTER);
-        roundsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        roundsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Determine winner
-        Player winner = determineWinner();
-        if (winner != null) {
-            JLabel winnerLabel = new JLabel("🏆 WINNER: " + winner.getName() + " 🏆", SwingConstants.CENTER);
+        // Winner label (if exists)
+        if (!viewModel.getWinnerText().isEmpty()) {
+            JLabel winnerLabel = new JLabel(viewModel.getWinnerText(), SwingConstants.CENTER);
             winnerLabel.setFont(new Font("Arial", Font.BOLD, 24));
             winnerLabel.setForeground(new Color(0, 150, 0));
             winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             titlePanel.add(winnerLabel);
             titlePanel.add(Box.createVerticalStrut(10));
         }
+
+        JLabel gameOverLabel = new JLabel(viewModel.getGameOverTitle(), SwingConstants.CENTER);
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        gameOverLabel.setForeground(new Color(150, 0, 0));
+        gameOverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel reasonLabel = new JLabel(viewModel.getGameEndReason(), SwingConstants.CENTER);
+        reasonLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        reasonLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel roundsLabel = new JLabel(viewModel.getTotalRoundsText(), SwingConstants.CENTER);
+        roundsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        roundsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         titlePanel.add(gameOverLabel);
         titlePanel.add(Box.createVerticalStrut(10));
@@ -94,13 +91,8 @@ public class EndScreen extends JFrame {
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
         resultsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Sort players by money (descending) for ranking
-        List<Player> sortedPlayers = new ArrayList<>(players);
-        sortedPlayers.sort(Comparator.comparingDouble(Player::getMoney).reversed());
-
-        for (int i = 0; i < sortedPlayers.size(); i++) {
-            Player player = sortedPlayers.get(i);
-            JPanel playerPanel = createPlayerStatsPanel(player, i + 1);
+        for (EndScreenViewModel.PlayerDisplayData playerData : viewModel.getPlayerDisplayData()) {
+            JPanel playerPanel = createPlayerStatsPanel(playerData);
             resultsPanel.add(playerPanel);
             resultsPanel.add(Box.createVerticalStrut(15));
         }
@@ -108,11 +100,11 @@ public class EndScreen extends JFrame {
         return resultsPanel;
     }
 
-    private JPanel createPlayerStatsPanel(Player player, int rank) {
+    private JPanel createPlayerStatsPanel(EndScreenViewModel.PlayerDisplayData playerData) {
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new BorderLayout());
         playerPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(player.getColor(), 3),
+                BorderFactory.createLineBorder(playerData.getPlayer().getColor(), 3),
                 BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         playerPanel.setBackground(Color.WHITE);
@@ -122,14 +114,14 @@ public class EndScreen extends JFrame {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
         // Rank and name
-        JLabel rankLabel = new JLabel("#" + rank + " - " + player.getName());
+        JLabel rankLabel = new JLabel(playerData.getRankText());
         rankLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        rankLabel.setForeground(player.getColor());
+        rankLabel.setForeground(playerData.getPlayer().getColor());
         rankLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Portrait
-        if (player.getPortrait() != null) {
-            ImageIcon portraitIcon = new ImageIcon(player.getPortrait().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+        if (playerData.getPlayer().getPortrait() != null) {
+            ImageIcon portraitIcon = new ImageIcon(playerData.getPlayer().getPortrait().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
             JLabel portraitLabel = new JLabel(portraitIcon);
             portraitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftPanel.add(portraitLabel);
@@ -139,9 +131,9 @@ public class EndScreen extends JFrame {
         leftPanel.add(rankLabel);
 
         // Status
-        JLabel statusLabel = new JLabel(player.isBankrupt() ? "BANKRUPT" : "SOLVENT");
+        JLabel statusLabel = new JLabel(playerData.getStatusText());
         statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        statusLabel.setForeground(player.isBankrupt() ? Color.RED : Color.GREEN);
+        statusLabel.setForeground(playerData.getPlayer().isBankrupt() ? Color.RED : Color.GREEN);
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(statusLabel);
 
@@ -153,39 +145,37 @@ public class EndScreen extends JFrame {
 
         // Money
         statsPanel.add(new JLabel("💰 Cash:"));
-        JLabel moneyLabel = new JLabel("$" + String.format("%.2f", player.getMoney()));
+        JLabel moneyLabel = new JLabel("$" + playerData.getMoneyText());
         moneyLabel.setFont(new Font("Arial", Font.BOLD, 14));
         statsPanel.add(moneyLabel);
 
         // Properties
         statsPanel.add(new JLabel("🏠 Properties Owned:"));
-        statsPanel.add(new JLabel(String.valueOf(player.getProperties().size())));
+        statsPanel.add(new JLabel(playerData.getPropertiesCountText()));
 
         // Property value
-        float totalPropertyValue = calculateTotalPropertyValue(player);
         statsPanel.add(new JLabel("🏘️ Property Value:"));
-        statsPanel.add(new JLabel("$" + String.format("%.2f", totalPropertyValue)));
+        statsPanel.add(new JLabel("$" + playerData.getPropertyValueText()));
 
-        // Net worth (cash + properties)
-        float netWorth = player.getMoney() + totalPropertyValue;
+        // Net worth
         statsPanel.add(new JLabel("💎 Net Worth:"));
-        JLabel netWorthLabel = new JLabel("$" + String.format("%.2f", netWorth));
+        JLabel netWorthLabel = new JLabel("$" + playerData.getNetWorthText());
         netWorthLabel.setFont(new Font("Arial", Font.BOLD, 14));
         statsPanel.add(netWorthLabel);
 
         // Current position
         statsPanel.add(new JLabel("📍 Final Position:"));
-        statsPanel.add(new JLabel("Tile " + player.getPosition()));
+        statsPanel.add(new JLabel("Tile " + playerData.getPositionText()));
 
         playerPanel.add(statsPanel, BorderLayout.CENTER);
 
         // Right side - Properties list
-        if (!player.getProperties().isEmpty()) {
+        if (!playerData.getPlayer().getProperties().isEmpty()) {
             JPanel propertiesPanel = new JPanel();
             propertiesPanel.setLayout(new BoxLayout(propertiesPanel, BoxLayout.Y_AXIS));
             propertiesPanel.setBorder(BorderFactory.createTitledBorder("Properties Owned"));
 
-            for (PropertyTile property : player.getProperties()) {
+            for (var property : playerData.getPlayer().getProperties()) {
                 JLabel propLabel = new JLabel("• " + property.getName());
                 propLabel.setFont(new Font("Arial", Font.PLAIN, 12));
                 propertiesPanel.add(propLabel);
@@ -199,45 +189,19 @@ public class EndScreen extends JFrame {
         return playerPanel;
     }
 
-    private float calculateTotalPropertyValue(Player player) {
-        float total = 0;
-        for (PropertyTile property : player.getProperties()) {
-            total += property.getPrice();
-        }
-        return total;
-    }
-
-    private Player determineWinner() {
-        // Filter out bankrupt players
-        List<Player> solventPlayers = players.stream()
-                .filter(p -> !p.isBankrupt())
-                .toList();
-
-        if (solventPlayers.size() == 1) {
-            return solventPlayers.get(0);
-        } else if (solventPlayers.size() > 1) {
-            // Find player with most money
-            return solventPlayers.stream()
-                    .max(Comparator.comparingDouble(Player::getMoney))
-                    .orElse(null);
-        }
-
-        return null; // No winner if all bankrupt
-    }
-
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JButton newGameButton = new JButton("New Game");
+        JButton newGameButton = new JButton(viewModel.getNewGameButtonText());
         newGameButton.setFont(new Font("Arial", Font.PLAIN, 16));
         newGameButton.addActionListener(e -> {
             dispose();
             new StartScreen();
         });
 
-        JButton exitButton = new JButton("Exit");
+        JButton exitButton = new JButton(viewModel.getExitButtonText());
         exitButton.setFont(new Font("Arial", Font.PLAIN, 16));
         exitButton.addActionListener(e -> System.exit(0));
 
@@ -245,19 +209,5 @@ public class EndScreen extends JFrame {
         buttonPanel.add(exitButton);
 
         return buttonPanel;
-    }
-
-    /**
-     * Test method to demonstrate the EndScreen
-     */
-    public static void main(String[] args) {
-        // Create mock players for testing
-        List<Player> testPlayers = new ArrayList<>();
-
-        // You would need to import your concrete player classes for this test
-        // For now, this is just to show the structure
-        SwingUtilities.invokeLater(() -> {
-            new EndScreen(testPlayers, "Maximum 20 rounds reached", 20);
-        });
     }
 }
