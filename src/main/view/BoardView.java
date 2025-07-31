@@ -4,15 +4,17 @@ import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.entity.players.Player;
 import main.Constants.Constants;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
-import main.interface_adapter.Property.PropertyController;
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;
-import main.use_case.Property.PropertyLandingUseCase;
-import main.use_case.Property.PropertyLandingUseCase.PurchaseResultCallback;
+import main.interface_adapter.Property.PropertyPurchaseController;
+import main.interface_adapter.Property.RentPaymentController;
+import main.use_case.Tiles.OnLandingUseCase;
+import main.use_case.Tiles.OnLandingController;
+import main.use_case.Tiles.Property.RentPaymentUseCase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,10 +32,11 @@ public class BoardView extends JPanel {
     private JFrame parentFrame; // Reference to parent frame for end screen
     private final GameMoveCurrentPlayer gameMoveCurrentPlayer;
 
-    // Controllers, Use Cases, and Presenters following Clean Architecture
+    // Controllers and Presenters following Clean Architecture
     private final PropertyPresenter propertyPresenter;
-    private final PropertyLandingUseCase propertyLandingUseCase;
-    private final PropertyController propertyController;
+    private final PropertyPurchaseController propertyPurchaseController;
+    private final RentPaymentController rentPaymentController;
+    private final OnLandingController onLandingController;
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -54,30 +57,23 @@ public class BoardView extends JPanel {
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         // Initialize Clean Architecture components in proper order
-        // Presenter no longer depends on view
         this.propertyPresenter = new PropertyPresenter();
 
-        // Use case depends on output boundary (presenter)
-        this.propertyLandingUseCase = new PropertyLandingUseCase(propertyPresenter);
+        // Controllers act as interactors and depend on presenter
+        this.propertyPurchaseController = new PropertyPurchaseController(propertyPresenter);
+        this.rentPaymentController = new RentPaymentController(propertyPresenter);
 
-        // Controller depends on use case
-        this.propertyController = new PropertyController(propertyLandingUseCase);
+        // Create use cases
+        PropertyPurchaseUseCase propertyPurchaseUseCase = new PropertyPurchaseUseCase(propertyPresenter);
+        RentPaymentUseCase rentPaymentUseCase = new RentPaymentUseCase(propertyPresenter);
 
-        // Set controller as the landing handler for all property tiles
-        setupPropertyLandingHandlers();
+        // Create OnLanding components
+        OnLandingUseCase onLandingUseCase = new OnLandingUseCase(propertyPurchaseUseCase, rentPaymentUseCase);
+        this.onLandingController = new OnLandingController(onLandingUseCase);
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
         setupUI();
-    }
-
-    /**
-     * Configure property tiles to use the controller for landing events
-     */
-    private void setupPropertyLandingHandlers() {
-        for (PropertyTile property : game.getTiles()) {
-            property.setLandingHandler(propertyController);
-        }
     }
 
     public void setParentFrame(JFrame parentFrame) {
@@ -183,8 +179,7 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Handle landing on tile - delegate to tile's onLanding method
-     * The tile will use the appropriate controller (PropertyController for properties)
+     * Handle landing on tile - delegate to OnLandingController
      */
     private void handleLandingOnTile() {
         Player currentPlayer = game.getCurrentPlayer();
@@ -192,8 +187,8 @@ public class BoardView extends JPanel {
         Tile tile = game.getPropertyAt(position);
 
         if (tile != null) {
-            // Use tile's built-in landing logic which will call the appropriate controller
-            tile.onLanding(currentPlayer);
+            // Use OnLandingController to handle all tile landing logic
+            onLandingController.handleLanding(currentPlayer, tile);
 
             // Check if presenter has any view models to display
             checkForPresenterUpdates();
@@ -207,8 +202,13 @@ public class BoardView extends JPanel {
         // Check for purchase dialog
         PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
         if (purchaseDialog != null) {
-            PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
-            showPurchaseDialog(purchaseDialog, callback);
+            PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
+
+            // Find the actual player and property objects
+            Player player = findPlayerByName(purchaseDialog.playerName);
+            PropertyTile property = findPropertyByName(purchaseDialog.propertyName);
+
+            propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, player, property, this);
             propertyPresenter.clearPurchaseDialog();
         }
 
@@ -222,7 +222,8 @@ public class BoardView extends JPanel {
         // Check for rent payment notification
         RentPaymentViewModel rentPayment = propertyPresenter.getRentPaymentViewModel();
         if (rentPayment != null) {
-            showRentPaymentNotification(rentPayment);
+            rentPaymentController.showRentPaymentNotification(rentPayment, this);
+            updateAfterPropertyPurchased(null); // Just update the UI
             propertyPresenter.clearRentPayment();
         }
     }
@@ -286,34 +287,10 @@ public class BoardView extends JPanel {
         });
     }
 
-    // Property-related view methods (now work with view models only)
-    public void showPurchaseDialog(PurchaseDialogViewModel viewModel, PurchaseResultCallback callback) {
-        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
-
-        // Find the actual player and property objects for the popup
-        Player player = findPlayerByName(viewModel.playerName);
-        PropertyTile property = findPropertyByName(viewModel.propertyName);
-
-        if (player != null && property != null) {
-            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, property,
-                    (success, message) -> callback.onResult(success));
-        }
-    }
-
     public void updateAfterPropertyPurchased(PropertyPurchasedViewModel viewModel) {
-        // Update UI after property purchase
+        // Update UI after property purchase or rent payment
         statsPanel.updatePlayers(game.getPlayers());
         repaint(); // Trigger board repaint to show ownership change
-    }
-
-    public void showRentPaymentNotification(RentPaymentViewModel viewModel) {
-        // Show rent payment notification
-        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
-        showRentNotification(parentFrame, viewModel);
-
-        // Update UI after rent payment
-        statsPanel.updatePlayers(game.getPlayers());
-        repaint();
     }
 
     // Helper methods for finding entities (needed for legacy popup interface)
@@ -329,22 +306,5 @@ public class BoardView extends JPanel {
                 .filter(tile -> tile.getName().equals(name))
                 .findFirst()
                 .orElse(null);
-    }
-
-    /**
-     * Shows rent payment notification dialog using view model data
-     */
-    private void showRentNotification(Frame parent, RentPaymentViewModel viewModel) {
-        SwingUtilities.invokeLater(() -> {
-            String message = viewModel.payerName + " paid $" + (int) viewModel.rentAmount +
-                    " rent to " + viewModel.ownerName + " for landing on " + viewModel.propertyName;
-
-            JOptionPane.showMessageDialog(
-                    parent,
-                    message,
-                    "Rent Payment",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-        });
     }
 }

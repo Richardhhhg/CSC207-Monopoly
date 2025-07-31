@@ -1,14 +1,15 @@
 package main.interface_adapter.Property;
 
-import main.use_case.Property.PropertyLandingOutputBoundary;
-import main.use_case.Property.PropertyLandingUseCase.*;
+import main.use_case.Tiles.Property.PropertyPurchaseOutputBoundary;
+import main.use_case.Tiles.Property.RentPaymentOutputBoundary;
+import main.use_case.Tiles.Property.PropertyPurchaseUseCase.*;
+import main.use_case.Tiles.Property.RentPaymentUseCase.*;
 import main.interface_adapter.Property.PropertyViewModel.*;
 
 /**
- * Presenter that implements the output boundary and creates view models for property-related UI.
- * No longer depends on view - follows Clean Architecture dependency rule.
+ * Presenter that implements both output boundaries and creates view models for property-related UI.
  */
-public class PropertyPresenter implements PropertyLandingOutputBoundary {
+public class PropertyPresenter implements PropertyPurchaseOutputBoundary, RentPaymentOutputBoundary {
     private PurchaseDialogViewModel currentPurchaseDialog;
     private PropertyPurchasedViewModel currentPropertyPurchased;
     private RentPaymentViewModel currentRentPayment;

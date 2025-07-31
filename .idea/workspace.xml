@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels">
-      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/TileView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,22 +62,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
-    &quot;accountId&quot;: &quot;5f9bc3f0-f956-404f-9b13-0cdd8d583502&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
+    "accountId": "cf33d0b6-5c3c-49d7-8853-912a102d2451"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Richardhhhg&quot;,
-    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
+    "owner": "Richardhhhg",
+    "repository": "CSC207-Monopoly"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -99,7 +98,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#82 on nathan-refactor",
+    "git-widget-placeholder": "#90 on break-up-property-use-cases",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -208,7 +207,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753973787803</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers">
+      <option name="closed" value="true" />
+      <created>1753989347135</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1753989347135</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Created Output Boundary Interfaces for Clean Architecture">
+      <option name="closed" value="true" />
+      <created>1753990384291</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753990384291</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +247,8 @@
     <MESSAGE value="Player changes colour" />
     <MESSAGE value="refactored the player" />
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
+    <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
+    <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
   </component>
 </project>

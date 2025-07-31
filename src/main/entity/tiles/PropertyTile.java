@@ -3,7 +3,6 @@ package main.entity.tiles;
 import main.entity.players.rentModifier;
 import main.use_case.Tile;
 import main.entity.players.Player;
-import main.interface_adapter.Property.PropertyLandingHandler;
 
 /*
  * A purchasable board tile that can collect rent.
@@ -12,8 +11,6 @@ public class PropertyTile extends Tile {
     private final float price;
     private final float rent;
     private Player owner; //null if not owned
-
-    private PropertyLandingHandler landingHandler;
 
     /**
      * @param name  tile name
@@ -24,10 +21,6 @@ public class PropertyTile extends Tile {
         super(name);
         this.price = price;
         this.rent = rent;
-    }
-
-    public void setLandingHandler(PropertyLandingHandler handler) {
-        this.landingHandler = handler;
     }
 
     /**
@@ -45,6 +38,17 @@ public class PropertyTile extends Tile {
     }
 
     /**
+     * Calculate the actual rent to be paid, including any modifiers
+     */
+    public float calculateRent() {
+        float finalRent = rent;
+        if (owner instanceof rentModifier) {
+            finalRent = ((rentModifier) owner).adjustRent(rent);
+        }
+        return finalRent;
+    }
+
+    /**
      * @return true if someone owns this property
      */
     public boolean isOwned() {
@@ -56,36 +60,6 @@ public class PropertyTile extends Tile {
      */
     public Player getOwner() {
         return owner;
-    }
-
-    /**
-     * When a player lands here - delegate to handler for UI concerns
-     */
-    @Override
-    public void onLanding(Player p) {
-        if (!isOwned()) {
-            if (landingHandler != null) {
-                landingHandler.handleUnownedProperty(p, this);
-            }
-            return;
-        }
-
-        if (p != owner) {
-            // Calculate rent
-            float finalRent = rent;
-            if (owner instanceof rentModifier) {
-                finalRent = ((rentModifier) owner).adjustRent(rent);
-            }
-
-            // Perform the transaction
-            p.deductMoney(finalRent);
-            owner.addMoney(finalRent);
-
-            // Notify handler about rent payment
-            if (landingHandler != null) {
-                landingHandler.handleRentPayment(p, owner, this, finalRent);
-            }
-        }
     }
 
     /**
