@@ -20,7 +20,7 @@ public class DiceController {
 
     private void loadDiceIcons() {
         for (int i = 1; i <= 6; i++) {
-            diceIcons[i] = new ImageIcon(getClass().getResource("images/dice" + i + ".png"));
+            diceIcons[i] = new ImageIcon(getClass().getResource("/dice" + i + ".png"));
         }
     }
 
