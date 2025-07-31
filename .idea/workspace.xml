@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers">
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/PropertyPurchaseOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/RentPaymentOutputBoundary.java" afterDir="false" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyLandingHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Property/PropertyPurchaseUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Property/PropertyPurchaseUseCase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753989347135</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Created Output Boundary Interfaces for Clean Architecture">
+      <option name="closed" value="true" />
+      <created>1753990384291</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753990384291</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,6 +248,7 @@
     <MESSAGE value="refactored the player" />
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
+    <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
   </component>
 </project>

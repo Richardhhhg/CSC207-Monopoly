@@ -3,6 +3,10 @@ package main.interface_adapter.Property;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.use_case.Property.PropertyPurchaseUseCase;
+import main.view.BuyPropertyPopup;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class PropertyPurchaseController {
     private final PropertyPurchaseUseCase propertyPurchaseUseCase;
@@ -18,5 +22,16 @@ public class PropertyPurchaseController {
 
     public void handleUnownedProperty(Player player, PropertyTile property) {
         execute(player, property);
+    }
+
+    public void showPurchaseDialog(PropertyViewModel.PurchaseDialogViewModel viewModel,
+                                   PropertyPurchaseUseCase.PurchaseResultCallback callback,
+                                   Player player, PropertyTile property, Component parentComponent) {
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(parentComponent);
+
+        if (player != null && property != null) {
+            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, property,
+                    (success, message) -> callback.onResult(success));
+        }
     }
 }
