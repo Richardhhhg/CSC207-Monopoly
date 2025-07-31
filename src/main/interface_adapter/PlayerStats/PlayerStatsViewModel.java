@@ -1,4 +1,4 @@
-package main.interface_adapter;
+package main.interface_adapter.PlayerStats;
 
 import java.awt.Color;
 import java.awt.Image;

@@ -1,6 +1,6 @@
 package main.view;
 
-import main.interface_adapter.PlayerStatsViewModel;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;

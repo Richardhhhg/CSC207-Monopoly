@@ -1,4 +1,4 @@
-package main.interface_adapter;
+package main.interface_adapter.PlayerStats;
 
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
