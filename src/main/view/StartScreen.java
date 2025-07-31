@@ -2,7 +2,9 @@ package main.view;
 
 import main.app.Main;
 import main.interface_adapter.StartScreen.StartScreenController;
+import main.interface_adapter.StartScreen.StartScreenPresenter;
 import main.interface_adapter.StartScreen.StartScreenViewModel;
+import main.use_case.StartScreen.StartGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +19,10 @@ public class StartScreen extends JFrame {
     }
 
     private void initializeScreen() {
-        // Get data through controller
-        viewModel = controller.execute();
+        // Get data through controller and presenter
+        StartGame.StartGameResult result = controller.execute();
+        StartScreenPresenter presenter = new StartScreenPresenter();
+        viewModel = presenter.execute(result);
 
         setTitle("Monopoly Game - Start");
         setSize(600, 400);

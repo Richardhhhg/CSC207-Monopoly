@@ -9,9 +9,7 @@ public class StartScreenController {
         this.startGameUseCase = new StartGame();
     }
 
-    public StartScreenViewModel execute() {
-        StartGame.StartGameResult result = startGameUseCase.execute();
-        StartScreenPresenter presenter = new StartScreenPresenter();
-        return presenter.execute(result);
+    public StartGame.StartGameResult execute() {
+        return startGameUseCase.execute();
     }
 }
