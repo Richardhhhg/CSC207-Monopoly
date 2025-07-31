@@ -1,7 +1,6 @@
 package main.entity.Stocks;
 
 import main.Constants.Constants;
-import main.data_access.StockMarket.StockInfoDataOutputObject;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
