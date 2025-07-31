@@ -11,7 +11,7 @@ public class DeclareBankruptcy {
         if (player == null) return;
         List<PropertyTile> owned = new ArrayList<>(player.getProperties());
         for (PropertyTile p : owned) {
-            p.setOwned(false, null);   // unowned
+            p.setOwned(false, null);
         }
         player.getProperties().clear();
     }
