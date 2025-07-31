@@ -3,6 +3,7 @@ package main.entity.tiles;
 import main.entity.players.rentModifier;
 import main.use_case.Tile;
 import main.entity.players.Player;
+import main.interface_adapter.Property.PropertyLandingHandler;
 
 /*
  * A purchasable board tile that can collect rent.
@@ -11,12 +12,6 @@ public class PropertyTile extends Tile {
     private final float price;
     private final float rent;
     private Player owner; //null if not owned
-
-    // Interface for handling property landing events
-    public interface PropertyLandingHandler {
-        void handleUnownedProperty(Player player, PropertyTile property);
-        void handleRentPayment(Player payer, Player owner, PropertyTile property, float rentAmount);
-    }
 
     private PropertyLandingHandler landingHandler;
 

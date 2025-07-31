@@ -8,6 +8,7 @@ import main.Constants.Constants;
 import main.use_case.Tile;
 import main.interface_adapter.Property.PropertyController;
 import main.interface_adapter.Property.PropertyPresenter;
+import main.use_case.Property.PropertyLandingUseCase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +25,10 @@ public class BoardView extends JPanel {
     private final PlayerMovementAnimator playerMovementAnimator;
     private JFrame parentFrame; // Reference to parent frame for end screen
 
-    // Controllers and Presenters
-    private final PropertyController propertyController;
+    // Controllers, Use Cases, and Presenters following Clean Architecture
     private final PropertyPresenter propertyPresenter;
+    private final PropertyLandingUseCase propertyLandingUseCase;
+    private final PropertyController propertyController;
 
     // ——— Dice UI & state ———
     private final JButton rollDiceButton = new JButton("Roll Dice");
@@ -45,9 +47,15 @@ public class BoardView extends JPanel {
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(game.getPlayers());
 
-        // Initialize presenter and controller following Clean Architecture
+        // Initialize Clean Architecture components in proper order
+        // Presenter implements output boundary
         this.propertyPresenter = new PropertyPresenter(this, statsPanel, game.getPlayers());
-        this.propertyController = new PropertyController(propertyPresenter);
+
+        // Use case depends on output boundary (presenter)
+        this.propertyLandingUseCase = new PropertyLandingUseCase(propertyPresenter);
+
+        // Controller depends on use case
+        this.propertyController = new PropertyController(propertyLandingUseCase);
 
         // Set controller as the landing handler for all property tiles
         setupPropertyLandingHandlers();
@@ -243,6 +251,13 @@ public class BoardView extends JPanel {
      */
     public PropertyController getPropertyController() {
         return propertyController;
+    }
+
+    /**
+     * Get the property use case for testing purposes
+     */
+    public PropertyLandingUseCase getPropertyLandingUseCase() {
+        return propertyLandingUseCase;
     }
 
     /**

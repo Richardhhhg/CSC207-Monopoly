@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Fixed TODOS in TileView, just moved the" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Fixed TODOS in TileView, just moved the">
+      <change afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyLandingHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/PropertyLandingOutputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/Property/PropertyLandingUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,17 +49,24 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GitHubPullRequestState">{
-  &quot;prStates&quot;: [
+  <component name="GitHubPullRequestState"><![CDATA[{
+  "prStates": [
     {
-      &quot;id&quot;: {
-        &quot;id&quot;: &quot;PR_kwDOPKf49c6gYayq&quot;,
-        &quot;number&quot;: 47
+      "id": {
+        "id": "PR_kwDOPKf49c6gYayq",
+        "number": 47
       },
-      &quot;lastSeen&quot;: 1753393943033
+      "lastSeen": 1753393943033
+    },
+    {
+      "id": {
+        "id": "PR_kwDOPKf49c6hcvxy",
+        "number": 82
+      },
+      "lastSeen": 1753933397482
     }
   ]
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
@@ -78,12 +95,13 @@
   "keyToString": {
     "Application.BoardView.executor": "Run",
     "Application.GameView.executor": "Run",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.MonopolyGame.executor": "Run",
     "Application.TileView.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "#82 on nathan-refactor",
     "ignore.virus.scanning.warn.message": "true",
@@ -117,8 +135,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -187,15 +203,7 @@
       <option name="project" value="LOCAL" />
       <updated>1753825699937</updated>
     </task>
-    <task id="LOCAL-00006" summary="Fixed TODOS in TileView, just moved the">
-      <option name="closed" value="true" />
-      <created>1753922821342</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1753922821342</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,7 +226,6 @@
     <MESSAGE value="minor bug fixes" />
     <MESSAGE value="Player changes colour" />
     <MESSAGE value="refactored the player" />
-    <MESSAGE value="Fixed TODOS in TileView, just moved the" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed TODOS in TileView, just moved the" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored the player" />
   </component>
 </project>
