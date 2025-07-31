@@ -26,7 +26,7 @@ public class GameNextRound {
         }
 
         // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
-        if (game.getCurrentRound() >= MAX_ROUNDS) {
+        if (game.getTotalTurns() >= MAX_ROUNDS * 4) {
             game.endGame("Maximum 20 rounds reached");
         }
     }
