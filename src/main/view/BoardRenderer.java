@@ -47,9 +47,9 @@ public class BoardRenderer {
 
 
             // Draw property tile background - colored if owned
-            if (((PropertyTile)prop).isOwned()) {
+            if (prop.isOwned()) {
                 // Use owner's color as background
-                Color ownerColor = ((PropertyTile)prop).getOwner().getColor();
+                Color ownerColor = prop.getOwner().getColor();
                 // Make it slightly transparent so text is still readable
                 Color backgroundTint = new Color(ownerColor.getRed(), ownerColor.getGreen(),
                                                ownerColor.getBlue(), 120);
