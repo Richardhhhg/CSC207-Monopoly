@@ -2,7 +2,7 @@ package main.use_case.Tiles;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.use_case.Tile;
+import main.entity.tiles.Tile;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tiles.Property.RentPaymentUseCase;
 

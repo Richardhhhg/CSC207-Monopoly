@@ -6,7 +6,7 @@ import main.entity.*;
 import main.use_case.Game.GameNextTurn;
 import main.Constants.Constants;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
-import main.use_case.Tile;
+import main.entity.tiles.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyViewModel.*;

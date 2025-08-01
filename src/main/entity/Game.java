@@ -6,12 +6,11 @@ import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
-import main.use_case.Tile;
+import main.entity.tiles.Tile;
 
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 import static main.Constants.Constants.MAX_ROUNDS;
 
 /**

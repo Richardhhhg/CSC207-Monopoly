@@ -2,7 +2,6 @@ package main.use_case.Game;
 
 import main.entity.Game;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Tile;
 
 import java.util.ArrayList;
 import java.util.List;

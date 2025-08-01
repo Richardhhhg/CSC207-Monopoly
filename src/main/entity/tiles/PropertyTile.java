@@ -1,7 +1,6 @@
 package main.entity.tiles;
 
 import main.entity.players.rentModifier;
-import main.use_case.Tile;
 import main.entity.players.Player;
 
 /*

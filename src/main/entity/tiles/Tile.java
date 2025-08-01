@@ -1,6 +1,4 @@
-package main.use_case;
-
-import main.entity.players.Player;
+package main.entity.tiles;
 
 /**
  * A single square on the board.
