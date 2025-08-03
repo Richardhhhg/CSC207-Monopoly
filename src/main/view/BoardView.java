@@ -3,8 +3,13 @@ package main.view;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
+import main.interface_adapter.PlayerStats.PlayerStatsController;
+import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 import main.use_case.Game.GameNextTurn;
 import main.Constants.Constants;
+import main.use_case.PlayerStats.PlayerStatsInputBoundary;
+import main.use_case.PlayerStats.PlayerStatsInteractor;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
@@ -46,11 +51,11 @@ public class BoardView extends JPanel {
     private final JLabel turnLabel = new JLabel("Turns: 0");
 
     // player stats panel
-    private final main.interface_adapter.PlayerStats.PlayerStatsViewModel playerStatsViewModel;
-    private final main.interface_adapter.PlayerStats.PlayerStatsPresenter playerStatsPresenter;
-    private final main.use_case.PlayerStats.PlayerStatsInputBoundary playerStatsInputBoundary;
-    private final main.interface_adapter.PlayerStats.PlayerStatsController playerStatsController;
-    private final main.view.PlayerStatsView statsPanel;
+    private final PlayerStatsViewModel playerStatsViewModel;
+    private final PlayerStatsPresenter playerStatsPresenter;
+    private final PlayerStatsInputBoundary playerStatsInputBoundary;
+    private final PlayerStatsController playerStatsController;
+    private final PlayerStatsView statsPanel;
 
     public BoardView() {
         this.game = new Game();
@@ -75,14 +80,11 @@ public class BoardView extends JPanel {
         this.onLandingController = new OnLandingController(onLandingUseCase);
 
         // StatsViewPanel
-        this.playerStatsViewModel = new main.interface_adapter.PlayerStats.PlayerStatsViewModel();
-        this.playerStatsPresenter =
-                new main.interface_adapter.PlayerStats.PlayerStatsPresenter(playerStatsViewModel);
-        this.playerStatsInputBoundary =
-                new main.use_case.PlayerStats.PlayerStatsInteractor(playerStatsPresenter);
-        this.playerStatsController =
-                new main.interface_adapter.PlayerStats.PlayerStatsController(playerStatsInputBoundary);
-        this.statsPanel = new main.view.PlayerStatsView(playerStatsViewModel, playerStatsController);
+        this.playerStatsViewModel = new PlayerStatsViewModel();
+        this.playerStatsPresenter = new PlayerStatsPresenter(playerStatsViewModel);
+        this.playerStatsInputBoundary = new PlayerStatsInteractor(playerStatsPresenter);
+        this.playerStatsController = new PlayerStatsController(playerStatsInputBoundary);
+        this.statsPanel = new PlayerStatsView(playerStatsViewModel, playerStatsController);
         this.statsPanel.refreshFrom(this.game);
 
 
