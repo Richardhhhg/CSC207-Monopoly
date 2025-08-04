@@ -33,37 +33,6 @@ public class BoardRenderer {
 
         drawDice(g2d, diceAnimator, startX, startY, tileSize);
         drawPlayerPortrait(g2d, game.getCurrentPlayer(), startX, startY, tileSize);
-        drawPlayers(g2d, game.getPlayers(), game, startX, startY, tileSize);
-    }
-
-
-    //TODO: Refactor this to TileView
-    // TODO: This implementation is kinda messy since I changed the signature of tiles in game
-    private void drawTiles(Graphics2D g2d, List<Tile> tiles, Game game,
-                           int startX, int startY, int tileSize) {
-        for (int i = 0; i < tiles.size(); i++) {
-            Point pos = game.getTilePosition(i, startX, startY, tileSize);
-            Tile tile = tiles.get(i);
-
-            TileView tileView;
-            if (tile instanceof PropertyTile property) {
-                PropertyTileViewModel viewModel = new PropertyTileViewModel(
-                        property.getName(),
-                        property.getPrice(),
-                        property.isOwned() ? property.getOwner().getName() : "",
-                        property.getRent(),
-                        property.isOwned() ? property.getOwner().getColor() : Color.WHITE
-                );
-                tileView = new PropertyTileView(viewModel);
-            } else {
-                // Example for StockMarketTile, add other types as needed
-                StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
-                tileView = new StockMarketTileView(viewModel);
-            }
-
-            tileView.setBounds(pos.x, pos.y, tileSize, tileSize);
-            tileView.paint(g2d);
-        }
     }
 
     private void drawDice(Graphics2D g2d, DiceAnimator diceAnimator,
@@ -123,20 +92,5 @@ public class BoardRenderer {
 
         g2d.drawImage(currentPlayer.getPortrait(), portraitX, portraitY, portraitSize, portraitSize, null);
         g2d.setFont(oldFont);
-    }
-
-    private void drawPlayers(Graphics2D g2d, List<Player> players, Game game,
-                             int startX, int startY, int tileSize) {
-        for (Player player : players) {
-            if (player.isBankrupt()) continue;//
-            Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
-            g2d.setColor(player.getColor());
-            int playerSize = 15;
-            int offsetX = (players.indexOf(player) % 2) * 20;
-            int offsetY = (players.indexOf(player) / 2) * 20;
-            g2d.fillOval(pos.x + offsetX + 5, pos.y + offsetY + 5, playerSize, playerSize);
-            g2d.setColor(Color.BLACK);
-            g2d.drawOval(pos.x + offsetX + 5, pos.y + offsetY + 5, playerSize, playerSize);
-        }
     }
 }

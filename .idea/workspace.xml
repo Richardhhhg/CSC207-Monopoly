@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/GoTileViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/PropertyTileViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/StockMarketTileViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/TileViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/GoTileView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/PropertyTileView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/StockMarketTileView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/TileView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeTiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeTiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/Tiles/OnLandingUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Tiles/OnLandingUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/Tile/TileView_OLD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +35,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;history&quot;: [
@@ -75,22 +65,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
-    &quot;accountId&quot;: &quot;cf33d0b6-5c3c-49d7-8853-912a102d2451&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
+    "accountId": "996b4463-4bb6-4344-8d71-fd060cb98fce"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Richardhhhg&quot;,
-    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
+    "owner": "Richardhhhg",
+    "repository": "CSC207-Monopoly"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -106,6 +96,7 @@
     "Application.GameView.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonopolyGame.executor": "Run",
+    "Application.PlayerView.executor": "Run",
     "Application.PropertyTileView.executor": "Run",
     "Application.TileView.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -130,31 +121,11 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.app.Main" />
-      <module name="monopoly-java-csc207" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
       </set>
     </attachedChunks>
   </component>

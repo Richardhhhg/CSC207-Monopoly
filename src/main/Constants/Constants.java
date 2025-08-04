@@ -47,6 +47,9 @@ public class Constants {
     // Bonus Money
     public static final float FINISH_LINE_BONUS = 200.0F;
 
+    // Player Drawing
+    public static final int PLAYER_SIZE = 25;
+
     // PlayerStatesView
     public static final int DIMENSION_DE_LA_PSV_H = 200;
     public static final int DIMENSION_DE_LA_PSV_W = 200;

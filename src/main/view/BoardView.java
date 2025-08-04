@@ -21,6 +21,7 @@ import main.view.Tile.PropertyTileView;
 import main.view.Tile.StockMarketTileView;
 import main.interface_adapter.Tile.PropertyTileViewModel;
 import main.interface_adapter.Tile.StockMarketTileViewModel;
+import org.jetbrains.annotations.NotNull;
 
 
 import javax.swing.*;
@@ -33,7 +34,6 @@ import java.awt.*;
 public class BoardView extends JPanel {
     // Components responsible for specific functionality
     private final Game game;
-    private final BoardRenderer boardRenderer;
     private final DiceAnimator diceAnimator;
     private final PlayerMovementAnimator playerMovementAnimator;
     private JFrame parentFrame; // Reference to parent frame for end screen
@@ -55,10 +55,9 @@ public class BoardView extends JPanel {
     // player stats
     private final PlayerStatsView statsPanel;
 
-    public BoardView() {
-        this.game = new Game();
+    public BoardView(Game game) {
+        this.game = game;
         this.diceAnimator = new DiceAnimator();
-        this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.statsPanel = new PlayerStatsView(game.getPlayers());
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
@@ -87,12 +86,6 @@ public class BoardView extends JPanel {
         this.parentFrame = parentFrame;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        boardRenderer.drawBoard(g, game, diceAnimator);
-    }
-
     private void setupUI() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
@@ -110,22 +103,7 @@ public class BoardView extends JPanel {
         List<Tile> tiles = game.getTiles();
         for (int i = 0; i < game.getTileCount(); i++) {
             Point pos = game.getTilePosition(i, startX, startY, tileSize);
-            Tile tile = tiles.get(i);
-
-            TileView tileView;
-            if (tile instanceof PropertyTile property) {
-                PropertyTileViewModel viewModel = new PropertyTileViewModel(
-                        property.getName(),
-                        property.getPrice(),
-                        property.isOwned() ? property.getOwner().getName() : "",
-                        property.getRent(),
-                        property.isOwned() ? property.getOwner().getColor() : Color.WHITE
-                );
-                tileView = new PropertyTileView(viewModel);
-            } else {
-                StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
-                tileView = new StockMarketTileView(viewModel);
-            }
+            TileView tileView = drawTile(tiles, i);
 
             tileView.setBounds(pos.x, pos.y, tileSize, tileSize);
             boardPanel.add(tileView);
@@ -156,6 +134,27 @@ public class BoardView extends JPanel {
         stockMarketButton.addActionListener(e -> displayStockMarket());
 
         updateStatusLabels();
+    }
+
+    @NotNull
+    private static TileView drawTile(List<Tile> tiles, int i) {
+        Tile tile = tiles.get(i);
+
+        TileView tileView;
+        if (tile instanceof PropertyTile property) {
+            PropertyTileViewModel viewModel = new PropertyTileViewModel(
+                    property.getName(),
+                    property.getPrice(),
+                    property.isOwned() ? property.getOwner().getName() : "",
+                    property.getRent(),
+                    property.isOwned() ? property.getOwner().getColor() : Color.WHITE
+            );
+            tileView = new PropertyTileView(viewModel);
+        } else {
+            StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
+            tileView = new StockMarketTileView(viewModel);
+        }
+        return tileView;
     }
 
     /**
@@ -305,22 +304,6 @@ public class BoardView extends JPanel {
 
     public int getLastDiceSum() {
         return diceAnimator.getLastDiceSum();
-    }
-
-    /**
-     * For Testing the Board View on its own
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Monopoly Board");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            BoardView boardView = new BoardView();
-            boardView.setParentFrame(frame);
-            frame.add(boardView);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
     }
 
     public void updateAfterPropertyPurchased(PropertyPurchasedViewModel viewModel) {
