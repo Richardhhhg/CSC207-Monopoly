@@ -32,7 +32,24 @@ public class GameView extends JFrame{
         drawPlayers();
 
         // Drawing Dice
+        int startX = 50;
+        int startY = 8;
+        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
+
+        int centerX = startX + Constants.BOARD_SIZE / 2;
+        int centerY = startY + Constants.BOARD_SIZE / 2;
+
         DiceAnimator diceAnimator = new DiceAnimator();
+        DiceView diceView = new DiceView(diceAnimator, tileSize);
+
+// Center the DiceView
+        int viewWidth = diceView.getWidth();
+        int viewHeight = diceView.getHeight();
+        diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
+
+        layeredPane.add(diceView, Integer.valueOf(2)); // Layer 2 = above board and players
+        layeredPane.repaint();
 
         setVisible(true);
     }
