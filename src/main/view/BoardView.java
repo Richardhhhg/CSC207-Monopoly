@@ -3,8 +3,13 @@ package main.view;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
+import main.interface_adapter.PlayerStats.PlayerStatsController;
+import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 import main.use_case.Game.GameNextTurn;
 import main.Constants.Constants;
+import main.use_case.PlayerStats.PlayerStatsInputBoundary;
+import main.use_case.PlayerStats.PlayerStatsInteractor;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
@@ -45,7 +50,11 @@ public class BoardView extends JPanel {
     private final JLabel roundLabel = new JLabel("Round: 1");
     private final JLabel turnLabel = new JLabel("Turns: 0");
 
-    // player stats
+    // player stats panel
+    private final PlayerStatsViewModel playerStatsViewModel;
+    private final PlayerStatsPresenter playerStatsPresenter;
+    private final PlayerStatsInputBoundary playerStatsInputBoundary;
+    private final PlayerStatsController playerStatsController;
     private final PlayerStatsView statsPanel;
 
     public BoardView() {
@@ -53,7 +62,6 @@ public class BoardView extends JPanel {
         this.diceAnimator = new DiceAnimator();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
-        this.statsPanel = new PlayerStatsView(game.getPlayers());
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         // Initialize Clean Architecture components in proper order
@@ -70,6 +78,15 @@ public class BoardView extends JPanel {
         // Create OnLanding components
         OnLandingUseCase onLandingUseCase = new OnLandingUseCase(propertyPurchaseUseCase, rentPaymentUseCase);
         this.onLandingController = new OnLandingController(onLandingUseCase);
+
+        // StatsViewPanel
+        this.playerStatsViewModel = new PlayerStatsViewModel();
+        this.playerStatsPresenter = new PlayerStatsPresenter(playerStatsViewModel);
+        this.playerStatsInputBoundary = new PlayerStatsInteractor(playerStatsPresenter);
+        this.playerStatsController = new PlayerStatsController(playerStatsInputBoundary);
+        this.statsPanel = new PlayerStatsView(playerStatsViewModel, playerStatsController);
+        this.statsPanel.refreshFrom(this.game);
+
 
         setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
                 Constants.BOARD_PANEL_HEIGHT));
@@ -161,6 +178,9 @@ public class BoardView extends JPanel {
         // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
 
+        // Update player stats finish lap bonus
+        refreshStats();
+
         // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
             currentPlayer,
@@ -189,6 +209,9 @@ public class BoardView extends JPanel {
         if (tile != null) {
             // Use OnLandingController to handle all tile landing logic
             onLandingController.handleLanding(currentPlayer, tile);
+
+            // update stat to show addition and deduction amount of rent
+            refreshStats();
 
             // Check if presenter has any view models to display
             checkForPresenterUpdates();
@@ -234,7 +257,7 @@ public class BoardView extends JPanel {
     private void handleEndTurn() {
         new GameNextTurn(game).execute();
         updateStatusLabels();
-        statsPanel.updatePlayers(game.getPlayers());
+        refreshStats();
 
         if (game.isGameOver()) {
             showEndScreen();
@@ -289,7 +312,6 @@ public class BoardView extends JPanel {
 
     public void updateAfterPropertyPurchased(PropertyPurchasedViewModel viewModel) {
         // Update UI after property purchase or rent payment
-        statsPanel.updatePlayers(game.getPlayers());
         repaint(); // Trigger board repaint to show ownership change
     }
 
@@ -306,5 +328,11 @@ public class BoardView extends JPanel {
                 .filter(tile -> tile.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private void refreshStats() { //everytime theres a change in money
+        if (this.statsPanel != null) {
+            this.statsPanel.refreshFrom(this.game);
+        }
     }
 }

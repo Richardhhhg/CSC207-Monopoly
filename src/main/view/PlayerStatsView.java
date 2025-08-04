@@ -1,43 +1,53 @@
 package main.view;
 
-import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
+import main.entity.Game;
+import main.interface_adapter.PlayerStats.PlayerStatsController;
+import main.interface_adapter.PlayerStats.DisplayPlayer;
+import main.interface_adapter.PlayerStats.DisplayProperty;
+import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static main.Constants.Constants.DIMENSION_DE_LA_PSV_W;
-import static main.Constants.Constants.DIMENSION_DE_LA_PSV_H;
+/**
+ * Clean Architecture view WITHOUT PropertyChangeListener:
+ * - Reads state from ViewModel only.
+ * - Calls Controller (Input Boundary) to refresh.
+ * - Rendering code is a strict refactor of the provided method.
+ */
+public class PlayerStatsView extends JPanel {
 
-public class PlayerStatsView extends JPanel{
-    private List<Player> players;
+    private final PlayerStatsViewModel viewModel;
+    private final PlayerStatsController controller;
 
-    public PlayerStatsView(List<Player> players) {
-        this.players = players;
-        setPreferredSize(new Dimension(DIMENSION_DE_LA_PSV_W, DIMENSION_DE_LA_PSV_H));
-        setBackground(Color.WHITE);
+    public PlayerStatsView(PlayerStatsViewModel viewModel, PlayerStatsController controller) {
+        this.viewModel = viewModel;
+        this.controller = controller;
     }
 
-    public void updatePlayers(List<Player> players) {
-        this.players = players;
+    /** External code supplies Game; we trigger the use case via controller and then repaint. */
+    public void refreshFrom(Game game) {
+        controller.execute(game);
         repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        List<DisplayPlayer> players = viewModel.getState().getPlayers();
         if (players == null) return;
 
         Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("Arial", Font.PLAIN, 17));
+        g2.setFont(new Font("ok", Font.PLAIN, 17));
 
         FontMetrics fm = g2.getFontMetrics();
         int lineH = fm.getHeight();
 
         int y = 20;
 
-        for (Player player : players) {
+        for (DisplayPlayer player : players) {
             if (player.isBankrupt()) continue;
 
             g2.setColor(player.getColor());
@@ -51,7 +61,7 @@ public class PlayerStatsView extends JPanel{
             int labelY = y + 40;
             g2.drawString("Properties:", labelX, labelY);
 
-            List<PropertyTile> props = player.getProperties();
+            List<DisplayProperty> props = player.getProperties();
             if (props == null || props.isEmpty()) {
                 g2.drawString("", labelX, labelY + lineH);
             } else {
@@ -62,10 +72,10 @@ public class PlayerStatsView extends JPanel{
                 int col = 0;
                 int line = 0;
 
-                for (PropertyTile prop : props) {
+                for (DisplayProperty prop : props) {
                     int x = startX + col * colWidth;
                     int py = labelY + lineH * (line + 1);
-                    g2.drawString("- " + prop.getName(), x, py);
+                    g2.drawString("- " + prop.getPropertyName(), x, py);
 
                     line++;
                     if (line == linesPerCol) {
@@ -74,8 +84,6 @@ public class PlayerStatsView extends JPanel{
                     }
                 }
             }
-
-
 
             if (player.getPortrait() != null) {
                 int portraitSize = 155;
