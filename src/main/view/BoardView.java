@@ -191,7 +191,7 @@ public class BoardView extends JPanel {
     }
 
     /**
-     * Handle dice roll - delegate to DiceController
+     * Handle dice roll - delegate to DiceAnimator
      */
     private void handleRollDice() {
         rollDiceButton.setEnabled(false);

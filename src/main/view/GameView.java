@@ -29,9 +29,22 @@ public class GameView extends JFrame{
         setContentPane(layeredPane);
 
         drawBoard();
+        drawDice();
+        drawPlayerPortrait();
         drawPlayers();
 
-        // Drawing Dice
+        setVisible(true);
+    }
+
+    // TODO: This should probably be like separate class - Richard
+    private void drawBoard() {
+        BoardView boardView = new BoardView(game);
+        boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        layeredPane.add(boardView, Integer.valueOf(0));
+    }
+
+    // TODO: There is a lot of repeated code, fix it - Richard
+    private void drawDice() {
         int startX = 50;
         int startY = 8;
         int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
@@ -43,22 +56,38 @@ public class GameView extends JFrame{
         DiceAnimator diceAnimator = new DiceAnimator();
         DiceView diceView = new DiceView(diceAnimator, tileSize);
 
-// Center the DiceView
+        // Center the DiceView
         int viewWidth = diceView.getWidth();
         int viewHeight = diceView.getHeight();
         diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
 
         layeredPane.add(diceView, Integer.valueOf(2)); // Layer 2 = above board and players
         layeredPane.repaint();
-
-        setVisible(true);
     }
 
-    // TODO: This should probably be like separate class - Richard
-    private void drawBoard() {
-        BoardView boardView = new BoardView(game);
-        boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        layeredPane.add(boardView, Integer.valueOf(0));
+    // TODO: There is a lot of repeated code, fix it - Richard
+    private void drawPlayerPortrait() {
+        int startX = 50;
+        int startY = 8;
+
+        Player currentPlayer = game.getCurrentPlayer();
+        if (currentPlayer != null && currentPlayer.getPortrait() != null) {
+            int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+            int tileSize = Constants.BOARD_SIZE / tilesPerSide;
+
+            int centerX = startX + Constants.BOARD_SIZE / 2;
+            int centerY = startY + Constants.BOARD_SIZE / 2;
+
+            int portraitSize = tileSize; // same as dice size
+            PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
+
+            // Offset to top-right of center area (as in original)
+            int x = centerX - tileSize - 10 + 80;
+            int y = centerY - tileSize / 2 - 150;
+
+            portraitView.setBounds(x, y, portraitSize, portraitSize + 30); // height includes label
+            layeredPane.add(portraitView, Integer.valueOf(2));
+        }
     }
 
     // TODO: This should probably be like separate class - Richard
