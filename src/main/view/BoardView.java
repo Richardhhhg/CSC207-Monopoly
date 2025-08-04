@@ -15,6 +15,13 @@ import main.interface_adapter.Property.RentPaymentController;
 import main.use_case.Tiles.OnLandingUseCase;
 import main.use_case.Tiles.OnLandingController;
 import main.use_case.Tiles.Property.RentPaymentUseCase;
+import java.util.List;
+import main.view.Tile.TileView;
+import main.view.Tile.PropertyTileView;
+import main.view.Tile.StockMarketTileView;
+import main.interface_adapter.Tile.PropertyTileViewModel;
+import main.interface_adapter.Tile.StockMarketTileViewModel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,20 +87,49 @@ public class BoardView extends JPanel {
         this.parentFrame = parentFrame;
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        boardRenderer.drawBoard(g, game, diceAnimator);
+    }
+
     private void setupUI() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
 
         // Create board panel
-        JPanel boardPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                boardRenderer.drawBoard(g, game, diceAnimator);
-            }
-        };
+        JPanel boardPanel = new JPanel(null); // Use null layout for manual positioning
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
+
+        // Add TileView components
+        int startX = 50;
+        int startY = 8;
+        int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
+        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
+        List<Tile> tiles = game.getTiles();
+        for (int i = 0; i < game.getTileCount(); i++) {
+            Point pos = game.getTilePosition(i, startX, startY, tileSize);
+            Tile tile = tiles.get(i);
+
+            TileView tileView;
+            if (tile instanceof PropertyTile property) {
+                PropertyTileViewModel viewModel = new PropertyTileViewModel(
+                        property.getName(),
+                        property.getPrice(),
+                        property.isOwned() ? property.getOwner().getName() : "",
+                        property.getRent(),
+                        property.isOwned() ? property.getOwner().getColor() : Color.WHITE
+                );
+                tileView = new PropertyTileView(viewModel);
+            } else {
+                StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
+                tileView = new StockMarketTileView(viewModel);
+            }
+
+            tileView.setBounds(pos.x, pos.y, tileSize, tileSize);
+            boardPanel.add(tileView);
+        }
 
         add(boardPanel, BorderLayout.WEST);
         add(statsPanel, BorderLayout.CENTER);
@@ -302,7 +338,7 @@ public class BoardView extends JPanel {
     }
 
     private PropertyTile findPropertyByName(String name) {
-        return game.getTiles().stream()
+        return (PropertyTile) game.getTiles().stream()
                 .filter(tile -> tile.getName().equals(name))
                 .findFirst()
                 .orElse(null);

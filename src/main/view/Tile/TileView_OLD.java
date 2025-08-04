@@ -1,4 +1,4 @@
-package main.view;
+package main.view.Tile;
 
 import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
@@ -12,20 +12,11 @@ import java.awt.*;
  * Generic visual component for a single board tile.
  * Creates different layouts based on tile type (Go, Property, Stock Market).
  */
-public class TileView extends JPanel {
+public class TileView_OLD extends JPanel {
     private JLabel mainLabel;
     private JLabel priceLabel;
     private JLabel ownerLabel;
     private Tile currentTile;
-
-    /**
-     * Create a generic tile view with basic layout
-     */
-    public TileView() {
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.setBackground(Color.LIGHT_GRAY);
-        // Layout will be set based on tile type in configureForTile
-    }
 
     /**
      * Configure this TileView based on the tile type.
@@ -35,7 +26,7 @@ public class TileView extends JPanel {
         this.currentTile = tile;
 
         // Clear existing components
-        this.removeAll();
+        this.removeAll(); // TODO: Is this used????? - Richard to Richard
 
         if (tile instanceof PropertyTile) {
             configureForPropertyTile((PropertyTile) tile);
@@ -128,7 +119,7 @@ public class TileView extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(200, 200);
 
-        TileView tileView = new TileView();
+        TileView_OLD tileView = new TileView_OLD();
 
         frame.add(tileView);
         frame.setVisible(true);

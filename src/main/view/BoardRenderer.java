@@ -5,6 +5,12 @@ import main.entity.Game;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.Constants.Constants;
+import main.entity.tiles.Tile;
+import main.interface_adapter.Tile.PropertyTileViewModel;
+import main.interface_adapter.Tile.StockMarketTileViewModel;
+import main.view.Tile.PropertyTileView;
+import main.view.Tile.StockMarketTileView;
+import main.view.Tile.TileView;
 
 import java.awt.*;
 import java.util.List;
@@ -23,101 +29,40 @@ public class BoardRenderer {
         int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
 
-        // Draw properties
-        drawProperties(g2d, game.getTiles(), game, startX, startY, tileSize);
+        // Remove: drawTiles(g2d, game.getTiles(), game, startX, startY, tileSize);
 
-        // Draw dice
         drawDice(g2d, diceAnimator, startX, startY, tileSize);
-
-        // Draw current player portrait
         drawPlayerPortrait(g2d, game.getCurrentPlayer(), startX, startY, tileSize);
-
-        // Draw players
         drawPlayers(g2d, game.getPlayers(), game, startX, startY, tileSize);
     }
 
+
     //TODO: Refactor this to TileView
-    // TODO: This only draws properties, make it draw all tiles
     // TODO: This implementation is kinda messy since I changed the signature of tiles in game
-    private void drawProperties(Graphics2D g2d, List<PropertyTile> properties, Game game,
-                                int startX, int startY, int tileSize) {
-        for (int i = 0; i < properties.size(); i++) {
+    private void drawTiles(Graphics2D g2d, List<Tile> tiles, Game game,
+                           int startX, int startY, int tileSize) {
+        for (int i = 0; i < tiles.size(); i++) {
             Point pos = game.getTilePosition(i, startX, startY, tileSize);
-            PropertyTile prop = properties.get(i);
+            Tile tile = tiles.get(i);
 
-
-            // Draw property tile background - colored if owned
-            if (prop.isOwned()) {
-                // Use owner's color as background
-                Color ownerColor = prop.getOwner().getColor();
-                // Make it slightly transparent so text is still readable
-                Color backgroundTint = new Color(ownerColor.getRed(), ownerColor.getGreen(),
-                                               ownerColor.getBlue(), 120);
-                g2d.setColor(backgroundTint);
-                g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
-
-                // Draw a border in the full owner color
-                g2d.setColor(ownerColor);
-                g2d.setStroke(new BasicStroke(3));
-                g2d.drawRect(pos.x + 1, pos.y + 1, tileSize - 2, tileSize - 2);
-                g2d.setStroke(new BasicStroke(1));
+            TileView tileView;
+            if (tile instanceof PropertyTile property) {
+                PropertyTileViewModel viewModel = new PropertyTileViewModel(
+                        property.getName(),
+                        property.getPrice(),
+                        property.isOwned() ? property.getOwner().getName() : "",
+                        property.getRent(),
+                        property.isOwned() ? property.getOwner().getColor() : Color.WHITE
+                );
+                tileView = new PropertyTileView(viewModel);
             } else {
-                // Unowned property white background
-                g2d.setColor(Color.WHITE);
-                g2d.fillRect(pos.x, pos.y, tileSize, tileSize);
+                // Example for StockMarketTile, add other types as needed
+                StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
+                tileView = new StockMarketTileView(viewModel);
             }
 
-            g2d.setColor(Color.BLACK);
-            g2d.drawRect(pos.x, pos.y, tileSize, tileSize);
-
-            // Draw property name
-            g2d.setFont(new Font("Arial", Font.BOLD, 16));
-            FontMetrics fm = g2d.getFontMetrics();
-            String name = prop.getName();
-            int maxWidth = tileSize - 8; // Padding for text
-
-            if (fm.stringWidth(name) > maxWidth) {
-                // Split name into two lines at the nearest space
-                int splitIndex = name.lastIndexOf(' ', name.length() / 2);
-                if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
-                    splitIndex = name.indexOf(' ', name.length() / 2);
-                    if (splitIndex == -1 || splitIndex == 0 || splitIndex == name.length() - 1) {
-                        splitIndex = name.length() / 2;
-                    }
-                }
-                String line1 = name.substring(0, splitIndex).trim();
-                String line2 = name.substring(splitIndex).trim();
-                int textX = pos.x + (tileSize - Math.max(fm.stringWidth(line1), fm.stringWidth(line2))) / 2;
-                int textY1 = pos.y + tileSize / 2 - 8;
-                int textY2 = pos.y + tileSize / 2 + 10;
-                g2d.drawString(line1, textX, textY1);
-                g2d.drawString(line2, textX, textY2);
-            } else {
-                int textX = pos.x + (tileSize - fm.stringWidth(name)) / 2;
-                int textY = pos.y + tileSize / 2 + fm.getAscent() / 2 - 4;
-                g2d.drawString(name, textX, textY);
-            }
-
-            // Draw price or rent information
-            if (!(prop instanceof PropertyTile)) continue; // Only properties have prices
-            if (((PropertyTile) prop).getPrice() > 0) {
-                String priceText;
-                if (prop.isOwned()) {
-                    float rent = prop.getRent();
-                    if (prop.getOwner() instanceof rentModifier) {
-                        rent = ((rentModifier) prop.getOwner()).adjustRent(prop.getRent());
-                    }
-                    priceText = "Rent: $" + (int)rent;
-                } else {
-                    priceText = "$" + (int)((PropertyTile)prop).getPrice();
-                }
-
-                g2d.setFont(new Font("Arial", Font.BOLD, 12));
-                FontMetrics priceFm = g2d.getFontMetrics();
-                int priceX = pos.x + (tileSize - priceFm.stringWidth(priceText)) / 2;
-                int priceY = pos.y + tileSize - 5;
-                g2d.drawString(priceText, priceX, priceY);
-            }
+            tileView.setBounds(pos.x, pos.y, tileSize, tileSize);
+            tileView.paint(g2d);
         }
     }
 

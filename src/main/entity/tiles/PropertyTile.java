@@ -7,7 +7,7 @@ import main.entity.players.Player;
  * A purchasable board tile that can collect rent.
  * */
 public class PropertyTile extends Tile {
-    private final float price;
+    private final int price;
     private final float rent;
     private Player owner; //null if not owned
 
@@ -16,7 +16,7 @@ public class PropertyTile extends Tile {
      * @param price purchase price
      * @param rent  base rent amount
      */
-    public PropertyTile(String name, float price, float rent) {
+    public PropertyTile(String name, int price, int rent) {
         super(name);
         this.price = price;
         this.rent = rent;
@@ -25,7 +25,7 @@ public class PropertyTile extends Tile {
     /**
      * @return purchase price
      */
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 

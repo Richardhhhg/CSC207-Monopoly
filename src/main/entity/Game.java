@@ -19,7 +19,7 @@ import static main.Constants.Constants.MAX_ROUNDS;
 public class Game {
     private static final int TURNS_PER_ROUND = 4; // 4 players per round
 
-    private List<PropertyTile> tiles;
+    private List<Tile> tiles;
     private List<Player> players;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
@@ -102,7 +102,7 @@ public class Game {
         return null;
     }
 
-    public List<PropertyTile> getTiles() {
+    public List<Tile> getTiles() {
         return tiles;
     }
 
@@ -143,7 +143,7 @@ public class Game {
         this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
     }
 
-    public void setTiles(List<PropertyTile> tiles) {
+    public void setTiles(List<Tile> tiles) {
         if (tiles != null && !tiles.isEmpty()) {
             this.tiles = tiles;
             this.tileCount = tiles.size();
@@ -157,14 +157,6 @@ public class Game {
             this.players = players;
         } else {
             throw new IllegalArgumentException("Players list cannot be null or empty");
-        }
-    }
-
-    public void setTileCount(int tileCount) {
-        if (tileCount > 0) {
-            this.tileCount = tileCount;
-        } else {
-            throw new IllegalArgumentException("Tile count must be greater than zero");
         }
     }
 

@@ -5,10 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/GoTileViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/PropertyTileViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/StockMarketTileViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/TileViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/GoTileView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/PropertyTileView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/StockMarketTileView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/Tile/TileView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeTiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameInitializeTiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Tiles/OnLandingUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Tiles/OnLandingUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/Tile/TileView_OLD.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="finishing_stocks" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -62,22 +75,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "cf33d0b6-5c3c-49d7-8853-912a102d2451"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
+    &quot;accountId&quot;: &quot;cf33d0b6-5c3c-49d7-8853-912a102d2451&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Richardhhhg",
-    "repository": "CSC207-Monopoly"
+    &quot;owner&quot;: &quot;Richardhhhg&quot;,
+    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -88,17 +101,19 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BoardRenderer.executor": "Run",
     "Application.BoardView.executor": "Run",
     "Application.GameView.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonopolyGame.executor": "Run",
+    "Application.PropertyTileView.executor": "Run",
     "Application.TileView.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#90 on break-up-property-use-cases",
+    "git-widget-placeholder": "Cleaning",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

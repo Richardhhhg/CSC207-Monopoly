@@ -66,20 +66,7 @@ public class GameInitializeTiles {
             tiles.add(insertPosition, new StockMarketTile());
         }
 
-        // Convert to PropertyTile list for backward compatibility
-        List<PropertyTile> propertyTileList = new ArrayList<>();
-        for (Tile tile : tiles) {
-            if (tile instanceof PropertyTile) {
-                propertyTileList.add((PropertyTile) tile);
-            } else {
-                // For non-property tiles, create a dummy PropertyTile for backward compatibility
-                // This is a temporary solution until Game class is updated to handle mixed tile types
-                propertyTileList.add(new PropertyTile(tile.getName(), 0, 0));
-            }
-        }
-
-        game.setTiles(propertyTileList);
-        game.setTileCount(tiles.size());
+        game.setTiles(tiles);
     }
 
     /**
