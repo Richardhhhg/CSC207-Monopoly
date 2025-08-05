@@ -26,6 +26,7 @@ public class Game {
     private int totalTurns = 0;
     private int currentRound = 1;
     private int turnsInCurrentRound = 0;
+    private int roundStartPlayerIndex = 0; // Track which player started the current round
     private boolean gameEnded = false;
     private String gameEndReason = "";
 
@@ -139,6 +140,10 @@ public class Game {
         return stocks;
     }
 
+    public int getRoundStartPlayerIndex() {
+        return roundStartPlayerIndex;
+    }
+
     public boolean getGameEnded() {
         return gameEnded;
     }
@@ -152,11 +157,12 @@ public class Game {
     }
 
     /**
-     * Start a new round - reset turn counter and increment round number
+     * Start a new round - reset turn counter, increment round number, and set new round start player
      */
-    public void startNewRound() {
+    public void startNewRound(int newRoundStartPlayerIndex) {
         currentRound++;
         turnsInCurrentRound = 0;
+        roundStartPlayerIndex = newRoundStartPlayerIndex;
 
         // Check if we've reached the maximum number of rounds
         if (currentRound > MAX_ROUNDS) {
@@ -166,11 +172,33 @@ public class Game {
 
     /**
      * Check if the current round is complete
-     * A round is complete when each active player has had one turn
+     * A round is complete when we've cycled back to the player who started the round
+     * and all active players have had at least one turn
      */
-    public boolean isRoundComplete() {
-        int activePlayers = getActivePlayers();
-        return turnsInCurrentRound >= activePlayers;
+    public boolean isRoundComplete(int nextPlayerIndex) {
+        // Round is complete when:
+        // 1. We have at least one turn in this round
+        // 2. The next player would be the one who started the round (or the next active player after them if they died)
+        if (turnsInCurrentRound == 0) {
+            return false;
+        }
+
+        // Find the next active player from the round start position
+        int expectedRoundStartPlayer = findNextActivePlayerFrom(roundStartPlayerIndex - 1);
+        return nextPlayerIndex == expectedRoundStartPlayer;
+    }
+
+    /**
+     * Find the next active player starting from a given index
+     */
+    public int findNextActivePlayerFrom(int startIndex) {
+        for (int i = 1; i <= players.size(); i++) {
+            int candidateIndex = (startIndex + i) % players.size();
+            if (!players.get(candidateIndex).isBankrupt()) {
+                return candidateIndex;
+            }
+        }
+        return -1; // No active players found
     }
 
     public void setCurrentPlayerIndex(int index) {
