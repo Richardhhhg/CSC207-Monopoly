@@ -51,15 +51,18 @@ public class GameNextTurn {
             return;
         }
 
+        // Check if we've completed a full round BEFORE setting the next player
+        boolean roundComplete = game.isRoundComplete(nextIndex);
+
         game.setCurrentPlayerIndex(nextIndex);
 
-        // Check if we've completed a full round (all active players have played)
-        if (game.isRoundComplete()) {
+        // If round is complete, handle round transition
+        if (roundComplete) {
             GameNextRound nextRound = new GameNextRound(game);
             nextRound.execute();
 
-            // Start a new round
-            game.startNewRound();
+            // Start a new round with the current next player
+            game.startNewRound(nextIndex);
         }
 
         // Check for game-ending conditions
@@ -71,16 +74,6 @@ public class GameNextTurn {
      * Find the next active (non-bankrupt) player in turn order
      */
     private int findNextActivePlayer(int currentPlayerIndex) {
-        List<Player> players = game.getPlayers();
-
-        for (int i = 1; i <= players.size(); i++) {
-            int candidateIndex = (currentPlayerIndex + i) % players.size();
-            if (!players.get(candidateIndex).isBankrupt()) {
-                return candidateIndex;
-            }
-        }
-
-        // No active players found
-        return -1;
+        return game.findNextActivePlayerFrom(currentPlayerIndex);
     }
 }
