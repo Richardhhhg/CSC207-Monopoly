@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class GameNextTurn {
     private Game game;
-    private static final int TURNS_PER_ROUND = 4; // TODO: This is hardcoded, this does not account for player deaths
     private ApplyTurnEffects applyTurnEffects;
     private DeclareBankruptcy declareBankruptcy;
 
@@ -30,7 +29,7 @@ public class GameNextTurn {
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         Player currentPlayer = players.get(currentPlayerIndex);
 
-        // FIXME: There may be a bug if current player has no turn effects
+        // Apply turn effects for the current player
         if (currentPlayer instanceof applyAfterEffects) {
             this.applyTurnEffects.execute(currentPlayer);
         }
@@ -38,35 +37,43 @@ public class GameNextTurn {
         if (currentPlayer.isBankrupt()) {
             this.declareBankruptcy.execute(currentPlayer);
         }
+
+        // Increment turn counter
         game.increaseTurn();
 
-        // TODO: The next 2 blocks are horrible, make it prettier later - Richard
-        int nextIndex = -1;
-        for (int i = 1; i <= players.size(); i++) {
-            int candidateIndex = (currentPlayerIndex + i) % players.size();
-            if (!players.get(candidateIndex).isBankrupt()) {
-                nextIndex = candidateIndex;
-                break;
-            }
-        }
+        // Find the next non-bankrupt player
+        int nextIndex = findNextActivePlayer(currentPlayerIndex);
 
         if (nextIndex == -1) {
             // All players are bankrupt
             game.endGame("All players are bankrupt");
             game.setCurrentPlayerIndex(-1);
             return;
-        } else {
-            game.setCurrentPlayerIndex(nextIndex);
         }
 
-        // FIXME: this does not account for player deaths
-        if (game.getTotalTurns() % TURNS_PER_ROUND == 0) {
+        // Check if we've completed a full round BEFORE setting the next player
+        boolean roundComplete = game.isRoundComplete(nextIndex);
+
+        game.setCurrentPlayerIndex(nextIndex);
+
+        // If round is complete, handle round transition
+        if (roundComplete) {
             GameNextRound nextRound = new GameNextRound(game);
             nextRound.execute();
+
+            // Start a new round with the current next player
+            game.startNewRound(nextIndex);
         }
 
-        // TODO: I don't think it's possible for any player but current player to be bankrupt on current player turn
+        // Check for game-ending conditions
         GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
         checkBankrupt.execute();
+    }
+
+    /**
+     * Find the next active (non-bankrupt) player in turn order
+     */
+    private int findNextActivePlayer(int currentPlayerIndex) {
+        return game.findNextActivePlayerFrom(currentPlayerIndex);
     }
 }

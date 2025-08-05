@@ -18,14 +18,15 @@ import static main.Constants.Constants.MAX_ROUNDS;
  * GameBoard manages the game state and logic, separate from UI concerns.
  */
 public class Game {
-    private static final int TURNS_PER_ROUND = 4; // 4 players per round
-
     private List<PropertyTile> tiles;
     private List<Player> players;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
     private int tileCount;
     private int totalTurns = 0;
+    private int currentRound = 1;
+    private int turnsInCurrentRound = 0;
+    private int roundStartPlayerIndex = 0; // Track which player started the current round
     private boolean gameEnded = false;
     private String gameEndReason = "";
 
@@ -50,9 +51,25 @@ public class Game {
         return gameEndReason;
     }
 
-    // TODO: This does not account for players dying, fix later - Richard
+    /**
+     * Get the current round number (1-based)
+     */
     public int getCurrentRound() {
-        return Math.min((totalTurns / TURNS_PER_ROUND) + 1, MAX_ROUNDS);
+        return currentRound;
+    }
+
+    /**
+     * Get the number of active (non-bankrupt) players
+     */
+    public int getActivePlayers() {
+        return (int) players.stream().filter(p -> !p.isBankrupt()).count();
+    }
+
+    /**
+     * Get turns completed in the current round
+     */
+    public int getTurnsInCurrentRound() {
+        return turnsInCurrentRound;
     }
 
     public int getTotalTurns() {
@@ -123,12 +140,66 @@ public class Game {
         return stocks;
     }
 
+    public int getRoundStartPlayerIndex() {
+        return roundStartPlayerIndex;
+    }
+
     public boolean getGameEnded() {
         return gameEnded;
     }
 
+    /**
+     * Increment total turns and track turns in current round
+     */
     public void increaseTurn() {
         totalTurns++;
+        turnsInCurrentRound++;
+    }
+
+    /**
+     * Start a new round - reset turn counter, increment round number, and set new round start player
+     */
+    public void startNewRound(int newRoundStartPlayerIndex) {
+        // Check if we've reached the maximum number of rounds BEFORE incrementing
+        if (currentRound >= MAX_ROUNDS) {
+            endGame("Maximum " + MAX_ROUNDS + " rounds reached");
+            return;
+        }
+
+        currentRound++;
+        turnsInCurrentRound = 0;
+        roundStartPlayerIndex = newRoundStartPlayerIndex;
+    }
+
+    /**
+     * Check if the current round is complete
+     * A round is complete when we've cycled back to the player who started the round
+     * and all active players have had at least one turn
+     */
+    public boolean isRoundComplete(int nextPlayerIndex) {
+        // Round is complete when:
+        // 1. We have at least one turn in this round
+        // 2. The next player would be the one who started the round (or the next active player after them if they died)
+        if (turnsInCurrentRound == 0) {
+            return false;
+        }
+
+        // Find the next active player from the round start position
+        int expectedRoundStartPlayer = findNextActivePlayerFrom(roundStartPlayerIndex - 1);
+        return nextPlayerIndex == expectedRoundStartPlayer;
+    }
+
+    /**
+     * Find the next active player starting from a given index
+     */
+    public int findNextActivePlayerFrom(int startIndex) {
+        for (int i = 1; i <= players.size(); i++) {
+            int candidateIndex = (startIndex + i) % players.size();
+            if (!players.get(candidateIndex).isBankrupt()) {
+                return candidateIndex;
+            }
+        }
+        return -1; // No active players found
     }
 
     public void setCurrentPlayerIndex(int index) {
