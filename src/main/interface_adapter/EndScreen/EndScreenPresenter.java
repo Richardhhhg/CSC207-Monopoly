@@ -12,11 +12,11 @@ public class EndScreenPresenter {
                 .map(playerResult -> new EndScreenViewModel.PlayerDisplayData(
                         playerResult.getPlayer(),
                         playerResult.getRank(),
-                        String.format("%.2f", playerResult.getPlayer().getMoney()),
+                        String.format("%.2f", playerResult.getFinalCash()), // Just liquid cash
                         String.valueOf(playerResult.getPlayer().getProperties().size()),
                         String.format("%.2f", playerResult.getTotalPropertyValue()),
-                        String.format("%.2f", playerResult.getTotalStockValue()),
-                        String.format("%.2f", playerResult.getNetWorth()),
+                        String.format("%.2f", playerResult.getTotalStockValue()), // Current stock value
+                        String.format("%.2f", playerResult.getNetWorth()), // Cash + properties + stocks
                         playerResult.getPlayer().isBankrupt() ? "BANKRUPT" : "SOLVENT"
                 ))
                 .collect(Collectors.toList());

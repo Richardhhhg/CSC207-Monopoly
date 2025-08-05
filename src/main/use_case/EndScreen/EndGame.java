@@ -14,32 +14,23 @@ public class EndGame {
     public EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
         List<PlayerResult> playerResults = new ArrayList<>();
 
-        // FIRST: Calculate stock values BEFORE liquidation for display purposes
-        Map<Player, Float> stockValuesBeforeLiquidation = new HashMap<>();
-        for (Player player : players) {
-            stockValuesBeforeLiquidation.put(player, calculateTotalStockValue(player));
-        }
-
-        // THEN: Auto-liquidate all stocks for all players at game end
-        for (Player player : players) {
-            liquidateAllStocks(player);
-        }
-
-        // Sort players by total net worth (money + property value) for ranking
+        // Sort players by total net worth (cash + properties + current stock values) for ranking
         List<Player> sortedPlayers = new ArrayList<>(players);
         sortedPlayers.sort(Comparator.comparingDouble(this::calculateNetWorth).reversed());
 
         for (int i = 0; i < sortedPlayers.size(); i++) {
             Player player = sortedPlayers.get(i);
+            float finalCash = player.getMoney(); // Just the liquid cash (no liquidation)
             float totalPropertyValue = calculateTotalPropertyValue(player);
-            float stockValueBeforeLiquidation = stockValuesBeforeLiquidation.get(player);
-            float netWorth = player.getMoney() + totalPropertyValue; // Money now includes liquidated stocks
+            float stockValue = calculateTotalStockValue(player); // Current stock value
+            float netWorth = finalCash + totalPropertyValue + stockValue; // All three components
 
             playerResults.add(new PlayerResult(
                     player,
                     i + 1, // rank
+                    finalCash,
                     totalPropertyValue,
-                    stockValueBeforeLiquidation, // Show original stock value
+                    stockValue,
                     netWorth
             ));
         }
@@ -55,22 +46,7 @@ public class EndGame {
     }
 
     /**
-     * Liquidates all stocks owned by a player, converting them to cash
-     */
-    private void liquidateAllStocks(Player player) {
-        Map<Stock, Integer> stocks = player.getStocks();
-        List<Stock> stocksToSell = new ArrayList<>(stocks.keySet());
-
-        for (Stock stock : stocksToSell) {
-            int quantity = stocks.get(stock);
-            if (quantity > 0) {
-                player.sellStock(stock, quantity);
-            }
-        }
-    }
-
-    /**
-     * Calculate total net worth including cash, properties, and stocks
+     * Calculate total net worth including cash, properties, and current stock values
      */
     private double calculateNetWorth(Player player) {
         return player.getMoney() + calculateTotalPropertyValue(player) + calculateTotalStockValue(player);
@@ -109,7 +85,7 @@ public class EndGame {
         if (solventPlayers.size() == 1) {
             return solventPlayers.get(0);
         } else if (solventPlayers.size() > 1) {
-            // Find player with highest net worth (including liquidated stocks)
+            // Find player with highest net worth (cash + properties + stock values)
             return solventPlayers.stream()
                     .max(Comparator.comparingDouble(this::calculateNetWorth))
                     .orElse(null);
@@ -141,14 +117,16 @@ public class EndGame {
     public static class PlayerResult {
         private final Player player;
         private final int rank;
+        private final float finalCash;
         private final float totalPropertyValue;
         private final float totalStockValue;
         private final float netWorth;
 
-        public PlayerResult(Player player, int rank, float totalPropertyValue,
-                            float totalStockValue, float netWorth) {
+        public PlayerResult(Player player, int rank, float finalCash,
+                            float totalPropertyValue, float totalStockValue, float netWorth) {
             this.player = player;
             this.rank = rank;
+            this.finalCash = finalCash;
             this.totalPropertyValue = totalPropertyValue;
             this.totalStockValue = totalStockValue;
             this.netWorth = netWorth;
@@ -156,6 +134,7 @@ public class EndGame {
 
         public Player getPlayer() { return player; }
         public int getRank() { return rank; }
+        public float getFinalCash() { return finalCash; }
         public float getTotalPropertyValue() { return totalPropertyValue; }
         public float getTotalStockValue() { return totalStockValue; }
         public float getNetWorth() { return netWorth; }
