@@ -160,14 +160,15 @@ public class Game {
      * Start a new round - reset turn counter, increment round number, and set new round start player
      */
     public void startNewRound(int newRoundStartPlayerIndex) {
+        // Check if we've reached the maximum number of rounds BEFORE incrementing
+        if (currentRound >= MAX_ROUNDS) {
+            endGame("Maximum " + MAX_ROUNDS + " rounds reached");
+            return;
+        }
+
         currentRound++;
         turnsInCurrentRound = 0;
         roundStartPlayerIndex = newRoundStartPlayerIndex;
-
-        // Check if we've reached the maximum number of rounds
-        if (currentRound > MAX_ROUNDS) {
-            endGame("Maximum " + MAX_ROUNDS + " rounds reached");
-        }
     }
 
     /**
