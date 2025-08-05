@@ -2,7 +2,7 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Game.GameInitializePlayers;
+//import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
@@ -31,7 +31,7 @@ public class Game {
     private String gameEndReason = "";
 
     public Game() {
-        initializeGame();
+        //initializeGame();
     }
 
     /**
@@ -39,8 +39,9 @@ public class Game {
      */
     public void initializeGame() {
         new GameInitializeTiles(this).execute();
-        new GameInitializePlayers(this).execute();
+        //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
+        //this.setPlayers(players);
     }
 
     public boolean isGameOver() {

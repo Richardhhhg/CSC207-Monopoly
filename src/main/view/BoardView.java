@@ -57,8 +57,8 @@ public class BoardView extends JPanel {
     private final PlayerStatsController playerStatsController;
     private final PlayerStatsView statsPanel;
 
-    public BoardView() {
-        this.game = new Game();
+    public BoardView(Game game) {
+        this.game = game;
         this.diceAnimator = new DiceAnimator();
         this.boardRenderer = new BoardRenderer();
         this.playerMovementAnimator = new PlayerMovementAnimator();
@@ -301,7 +301,8 @@ public class BoardView extends JPanel {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Monopoly Board");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            BoardView boardView = new BoardView();
+            Game fakeGame = new Game();
+            BoardView boardView = new BoardView(fakeGame);
             boardView.setParentFrame(frame);
             frame.add(boardView);
             frame.pack();

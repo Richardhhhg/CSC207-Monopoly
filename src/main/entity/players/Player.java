@@ -23,6 +23,7 @@ public abstract class Player {
     protected Map<Stock, Integer> stocks;
     protected Image portrait;
     private Color color;
+    private boolean isNullPlayer = false;
 
     public Player(String name, float initialMoney, Color color) {
         this.name = name;
@@ -33,6 +34,11 @@ public abstract class Player {
         this.color = color;
         this.portrait = null;
         this.stocks = new HashMap<>();
+    }
+
+    public Player() {
+        this.isNullPlayer = true;
+        this.portrait = null;
     }
 
     public String getName() {
@@ -143,5 +149,9 @@ public abstract class Player {
 
     public Color getColor() {
         return color;
+    }
+
+    public Boolean isNullPlayer(){
+        return this.isNullPlayer;
     }
 }

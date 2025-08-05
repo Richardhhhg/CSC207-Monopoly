@@ -1,5 +1,7 @@
 package main.view;
 
+import main.entity.Game;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,19 +11,22 @@ import java.awt.*;
 public class GameView extends JFrame{
     private final BoardView boardView;
     private StockMarketView stockMarketView;
+    private final Game game;
 
     // TODO: There is a ton of coupling here, fix it
-    public GameView() {
+    public GameView(Game game) {
         super("Stock Market Game");
+        this.game = game;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(Color.lightGray);
         setLayout(new BorderLayout());
         setVisible(true);
 
-        this.boardView = new BoardView();
+        this.boardView = new BoardView(this.game);
         // Pass this frame reference to BoardView so it can hide it when showing end screen
         this.boardView.setParentFrame(this);
+        addBoard();
     }
 
     /**
@@ -44,7 +49,8 @@ public class GameView extends JFrame{
      * This is just for testing purposes.
      */
     public static void main(String[] args) {
-        GameView game = new GameView();
+        Game newgame = new Game();
+        GameView game = new GameView(newgame);
         game.addBoard();
         game.showStockMarket();
     }
