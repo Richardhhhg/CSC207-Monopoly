@@ -10,15 +10,10 @@ public class Stock {
     private double currentPrice;
     private double percentChange;
 
-    // Distribution parameters
-    private final double meanDailyReturnPct;
-    private final double standardDeviationPct;
     private final NormalDistribution pctChangeDistribution;
 
     public Stock(String symbol, double currentPrice, double meanDailyReturnPct, double standardDeviationPct) {
         this.symbol = symbol;
-        this.meanDailyReturnPct = meanDailyReturnPct;
-        this.standardDeviationPct = standardDeviationPct;
         this.currentPrice = currentPrice;
         this.pctChangeDistribution = new NormalDistribution(meanDailyReturnPct, standardDeviationPct);
         this.percentChange = 0;
@@ -44,12 +39,5 @@ public class Stock {
 
     public double getChange() {
         return percentChange;
-    }
-
-    // For debugging
-    @Override
-    public String toString() {
-        return String.format("StockInfo{ticker='%s', currentPrice=%.2f, meanDailyReturn=%.4f%%, stdDev=%.4f%%}",
-                symbol, currentPrice, meanDailyReturnPct, standardDeviationPct);
     }
 }

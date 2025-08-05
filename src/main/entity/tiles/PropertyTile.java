@@ -3,7 +3,7 @@ package main.entity.tiles;
 import main.entity.players.rentModifier;
 import main.entity.players.Player;
 
-/*
+/**
  * A purchasable board tile that can collect rent.
  * */
 public class PropertyTile extends Tile {

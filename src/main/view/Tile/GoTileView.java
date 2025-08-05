@@ -1,6 +1,5 @@
 package main.view.Tile;
 
-import main.entity.tiles.GoTile;
 import main.interface_adapter.Tile.GoTileViewModel;
 
 import javax.swing.*;

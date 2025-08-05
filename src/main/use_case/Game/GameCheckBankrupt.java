@@ -24,17 +24,15 @@ public class GameCheckBankrupt {
         for (int i = 1; i <= players.size(); i++) {
             int nextIndex = (currentPlayerIndex + i) % players.size();
             if (!players.get(nextIndex).isBankrupt()) {
-                currentPlayerIndex = nextIndex; // idk if this is needed but i'll keep it since it was in original - Richard
                 foundNext = true;
                 break;
             }
         }
 
-        // Idk if this condition will ever execute, but it's here just in case - Richard
+        // All players are bankrupt - game over
         if (!foundNext) {
-            // All players are bankrupt - game over
             game.endGame("All players are bankrupt");
-            game.setCurrentPlayerIndex(-1); // idk if this is needed but i'll keep it since it was in original- Richard
+            game.setCurrentPlayerIndex(-1);
             return;
         }
 

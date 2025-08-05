@@ -9,6 +9,7 @@ import static main.Constants.Constants.MAX_ROUNDS;
 
 /**
  * This is a use case of game for advancing to the next round.
+ * Currently it only updates the stock prices for all stocks in the game.
  * Note: This is different from nextTurn, which advances to the next turn within the same round.
  */
 public class GameNextRound {
@@ -19,13 +20,9 @@ public class GameNextRound {
     }
 
     public void execute() {
-        // Update stock prices at the end of each round
         List<Stock> stocks = game.getStocks();
         for (Stock stock : stocks) {
             stock.updatePrice();
         }
-
-        // The round increment and max rounds check is now handled in Game.startNewRound()
-        // This method just handles the round-end logic like stock price updates
     }
 }

@@ -3,10 +3,10 @@ package main.interface_adapter.Tile;
 import java.awt.*;
 
 public class PropertyTileViewModel extends TileViewModel {
-    private int price;
-    private String owner;
-    private float rent;
-    private Color color;
+    private final int price;
+    private final String owner;
+    private final float rent;
+    private final Color color;
 
     public PropertyTileViewModel(String name, int price, String owner, float rent, Color color) {
         super(name);

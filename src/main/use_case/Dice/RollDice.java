@@ -1,7 +1,5 @@
 package main.use_case.Dice;
 
-import main.entity.Game;
-import main.entity.players.Player;
 import java.util.Random;
 
 public class RollDice {

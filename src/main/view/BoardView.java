@@ -34,7 +34,6 @@ import java.util.Map;
  * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
  */
 public class BoardView extends JPanel {
-    // Components responsible for specific functionality
     private final Game game;
 
     private final PropertyPresenter propertyPresenter;
@@ -48,6 +47,7 @@ public class BoardView extends JPanel {
         this.game = game;
         this.propertyPresenter = new PropertyPresenter();
 
+        // TODO: Probably should clean a lot of these presenters and stuff up
         // Controllers act as interactors and depend on presenter
         this.propertyPurchaseController = new PropertyPurchaseController(propertyPresenter);
         this.rentPaymentController = new RentPaymentController(propertyPresenter);
@@ -70,12 +70,10 @@ public class BoardView extends JPanel {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
 
-        // Create board panel
         JPanel boardPanel = new JPanel(null); // Use null layout for manual positioning
         boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
-        // Add TileView components
         int startX = 50;
         int startY = 8;
         int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
@@ -164,11 +162,10 @@ public class BoardView extends JPanel {
             TileView oldTile = tileViewMap.get(propertyName);
 
             if (oldTile != null) {
-                this.remove(oldTile); // remove old one
+                this.remove(oldTile);
                 int tilePosition = getTilePosition(propertyName);
-                Tile tile = game.getPropertyAt(tilePosition);
 
-                TileView newTile = drawTile(game.getTiles(), tilePosition); // regenerate based on new state
+                TileView newTile = drawTile(game.getTiles(), tilePosition);
                 Point pos = game.getTilePosition(tilePosition, 50, 8, Constants.BOARD_SIZE / ((game.getTiles().size() - 4) / 4 + 2));
                 newTile.setBounds(pos.x, pos.y, oldTile.getWidth(), oldTile.getHeight());
 
@@ -177,7 +174,6 @@ public class BoardView extends JPanel {
                 this.revalidate();
                 this.repaint();
             } else {
-                // fallback if viewModel is null (e.g. rent case)
                 this.repaint();
             }
         }
@@ -191,7 +187,6 @@ public class BoardView extends JPanel {
         return -1; // Not found
     }
 
-    // Helper methods for finding entities (needed for legacy popup interface)
     private Player findPlayerByName(String name) {
         return game.getPlayers().stream()
                 .filter(p -> p.getName().equals(name))

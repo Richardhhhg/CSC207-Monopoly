@@ -28,7 +28,6 @@ public class ButtonPanelView extends JPanel {
         add(endTurnButton);
         add(stockMarketButton);
 
-        // Wire actions
         rollDiceButton.addActionListener(e -> onRollDice.run());
         endTurnButton.addActionListener(e -> onEndTurn.run());
         stockMarketButton.addActionListener(e -> onStockMarket.run());
@@ -41,13 +40,5 @@ public class ButtonPanelView extends JPanel {
 
     public static JButton getRollDiceButton() {
         return rollDiceButton;
-    }
-
-    public static JButton getEndTurnButton() {
-        return endTurnButton;
-    }
-
-    public static JButton getStockMarketButton() {
-        return stockMarketButton;
     }
 }

@@ -3,22 +3,13 @@ package main.view;
 import main.Constants.Constants;
 import main.entity.Game;
 import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
-import main.entity.tiles.Tile;
 import main.interface_adapter.PlayerStats.PlayerStatsController;
 import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
 import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.interface_adapter.Property.PropertyPresenter;
-import main.interface_adapter.Property.PropertyPurchaseController;
-import main.interface_adapter.Property.PropertyViewModel;
-import main.interface_adapter.Property.RentPaymentController;
 import main.use_case.Game.GameMoveCurrentPlayer;
 import main.use_case.Game.GameNextTurn;
 import main.use_case.PlayerStats.PlayerStatsInteractor;
-import main.use_case.Tiles.OnLandingController;
-import main.use_case.Tiles.OnLandingUseCase;
-import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
-import main.use_case.Tiles.Property.RentPaymentUseCase;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,16 +20,12 @@ import java.awt.*;
  * This Class displays the entire game view.
  */
 public class GameView extends JFrame{
-    private Game game;
-    private JLayeredPane layeredPane;
-    private DiceAnimator diceAnimator;
-    private PlayerMovementAnimator playerMovementAnimator;
-    private GameMoveCurrentPlayer gameMoveCurrentPlayer;
+    private final Game game;
+    private final JLayeredPane layeredPane;
+    private final DiceAnimator diceAnimator;
+    private final PlayerMovementAnimator playerMovementAnimator;
+    private final GameMoveCurrentPlayer gameMoveCurrentPlayer;
 
-    private PlayerStatsViewModel playerStatsViewModel;
-    private PlayerStatsPresenter playerStatsPresenter;
-    private PlayerStatsInteractor playerStatsInputBoundary;
-    private PlayerStatsController playerStatsController;
     private PlayerStatsView statsPanel;
 
     private BoardView boardView;
@@ -133,30 +120,42 @@ public class GameView extends JFrame{
 
         Player currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
-            int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-            int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
-            int centerX = startX + Constants.BOARD_SIZE / 2;
-            int centerY = startY + Constants.BOARD_SIZE / 2;
-
-            int portraitSize = tileSize;
-            PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
-
-            int x = centerX - tileSize - 10 + 80;
-            int y = centerY - tileSize / 2 - 150;
-
-            portraitView.setBounds(x, y, portraitSize, portraitSize + 30);
+            PlayerPortraitView portraitView = getPlayerPortraitView(startX, startY, currentPlayer);
             layeredPane.add(portraitView, Integer.valueOf(2));
             layeredPane.repaint();
         }
     }
 
+    /**
+     * Helper method for getting the PlayerPortraitView of a given player.
+     * @param startX: the starting X coordinate for the board
+     * @param startY: the starting Y coordinate for the board
+     * @param currentPlayer: the current player whose portrait is to be displayed
+     * @return PlayerPortraitView: the view of the player's portrait
+     */
+    @NotNull
+    private PlayerPortraitView getPlayerPortraitView(int startX, int startY, Player currentPlayer) {
+        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
+
+        int centerX = startX + Constants.BOARD_SIZE / 2;
+        int centerY = startY + Constants.BOARD_SIZE / 2;
+
+        PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", tileSize);
+
+        int x = centerX - tileSize - 10 + 80;
+        int y = centerY - tileSize / 2 - 150;
+
+        portraitView.setBounds(x, y, tileSize, tileSize + 30);
+        return portraitView;
+    }
+
 
     private void drawStatsPanel() {
-        this.playerStatsViewModel = new PlayerStatsViewModel();
-        this.playerStatsPresenter = new PlayerStatsPresenter(playerStatsViewModel);
-        this.playerStatsInputBoundary = new PlayerStatsInteractor(playerStatsPresenter);
-        this.playerStatsController = new PlayerStatsController(playerStatsInputBoundary);
+        PlayerStatsViewModel playerStatsViewModel = new PlayerStatsViewModel();
+        PlayerStatsPresenter playerStatsPresenter = new PlayerStatsPresenter(playerStatsViewModel);
+        PlayerStatsInteractor playerStatsInputBoundary = new PlayerStatsInteractor(playerStatsPresenter);
+        PlayerStatsController playerStatsController = new PlayerStatsController(playerStatsInputBoundary);
         this.statsPanel = new PlayerStatsView(playerStatsViewModel, playerStatsController);
         this.statsPanel.refreshFrom(this.game);
         this.statsPanel.setBounds(Constants.GAME_WIDTH/2, 0, 600, Constants.GAME_HEIGHT);
@@ -167,7 +166,6 @@ public class GameView extends JFrame{
     // TODO: This should probably be like separate class - Richard
     // TODO: This is really messy, fix later
     private void drawPlayers() {
-        // Remove old PlayerViews first
         Component[] components = layeredPane.getComponentsInLayer(1);
         for (Component c : components) {
             if (c instanceof PlayerView) {
@@ -175,7 +173,6 @@ public class GameView extends JFrame{
             }
         }
 
-        // Draw updated player views
         int startX = 50;
         int startY = 8;
         int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
@@ -192,7 +189,7 @@ public class GameView extends JFrame{
             layeredPane.add(playerView, Integer.valueOf(1));
         }
 
-        layeredPane.repaint();  // Important to trigger UI update
+        layeredPane.repaint();
     }
 
     private void displayStockMarket() {
@@ -203,11 +200,10 @@ public class GameView extends JFrame{
     private void handleRollDice() {
         ButtonPanelView.getRollDiceButton().setEnabled(false);
 
-        // Use DiceController for dice animation and logic
         diceAnimator.startDiceAnimation(
                 // TODO: This could probably just repaint the DiceView rather than the whole GameView - Richard
                 this::drawDice,
-                this::onDiceRollComplete // Completion callback
+                this::onDiceRollComplete
         );
     }
 
@@ -218,10 +214,8 @@ public class GameView extends JFrame{
         // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
 
-        // Update player stats finish lap bonus
         refreshStats();
 
-        // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
                 currentPlayer,
                 diceSum,
@@ -270,7 +264,6 @@ public class GameView extends JFrame{
 
     private void showEndScreen() {
         this.setVisible(false);
-        // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
                     game.getPlayers(),
@@ -280,7 +273,11 @@ public class GameView extends JFrame{
         });
     }
 
-    private void refreshStats() { //everytime theres a change in money
+    /**
+     * Refreshes the stats panel with the current game state.
+     * To be used every time there is a change in Money or Properties.
+     */
+    private void refreshStats() {
         if (this.statsPanel != null) {
             this.statsPanel.refreshFrom(this.game);
         }

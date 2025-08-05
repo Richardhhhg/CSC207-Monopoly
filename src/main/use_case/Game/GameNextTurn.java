@@ -12,9 +12,9 @@ import java.util.List;
  * This is a use case of game for advancing to the next turn.
  */
 public class GameNextTurn {
-    private Game game;
-    private ApplyTurnEffects applyTurnEffects;
-    private DeclareBankruptcy declareBankruptcy;
+    private final Game game;
+    private final ApplyTurnEffects applyTurnEffects;
+    private final DeclareBankruptcy declareBankruptcy;
 
     public GameNextTurn(Game game) {
         this.game = game;

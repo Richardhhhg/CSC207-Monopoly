@@ -7,8 +7,6 @@ import main.entity.players.DefaultPlayer;
 import main.entity.players.Player;
 import main.entity.Stocks.Stock;
 import main.interface_adapter.StockMarket.StockViewModel;
-import main.entity.Stocks.Stock;
-import main.entity.players.Player;
 import main.interface_adapter.StockMarket.StockPresenter;
 
 import javax.swing.*;
@@ -56,7 +54,6 @@ public class StockMarketView extends JFrame {
         mainPanel.add(headerPanel);
         mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
 
-        // TODO: This should create a presenter for the stock which then creates a StockViewModel - Richard
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
             Stock stock = entry.getKey();
             StockViewModel stockViewModel = new StockPresenter().execute(stock, player);

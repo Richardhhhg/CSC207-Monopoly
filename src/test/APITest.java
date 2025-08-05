@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 public class APITest {
     public static void main(String[] args) {
-        String symbol = "AAPL"; // Example stock symbol
-        String interval = "1min"; // Example interval
+        String symbol = "AAPL";
+        String interval = "1min";
         String apiKey = Config.getApiKey();
         String url = String.format(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=%s&apikey=%s",

@@ -1,14 +1,11 @@
 package main.view.Tile;
 
-import main.entity.tiles.PropertyTile;
-import main.entity.tiles.Tile;
 import main.interface_adapter.Tile.PropertyTileViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PropertyTileView extends TileView {
-    private final JLabel priceLabel;
     private final JLabel ownerLabel;
     private final PropertyTileViewModel viewModel;
 
@@ -21,7 +18,7 @@ public class PropertyTileView extends TileView {
         mainLabel.setFont(mainLabel.getFont().deriveFont(10f));
         add(mainLabel, BorderLayout.NORTH);
 
-        priceLabel = new JLabel("$" + viewModel.getPrice(), SwingConstants.CENTER);
+        JLabel priceLabel = new JLabel("$" + viewModel.getPrice(), SwingConstants.CENTER);
         priceLabel.setFont(priceLabel.getFont().deriveFont(9f));
         add(priceLabel, BorderLayout.CENTER);
 

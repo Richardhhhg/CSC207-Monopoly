@@ -4,13 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Fixed Bug of Game Not ending properly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/Board/propertyNames.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/Computer-nerd.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/Computer-nerd.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/clerk.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/clerk.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/default portrait.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/default portrait.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/dice6.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/DiceImages/dice6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/inheritor.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/inheritor.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/landlord.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/landlord.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Resources/poorman.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/PlayerPortraits/poorman.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/Stocks/Stock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Stocks/Stock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/DefaultPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/PoorMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/collegeStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/inheritor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/landlord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/landlord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/tiles/PropertyTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Dice/DiceViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Dice/DiceViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/StockMarket/StockMarketDataController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Tile/PropertyTileViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Tile/PropertyTileViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/ViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/board/BoardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/board/BoardPresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/board/BoardState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/board/BoardViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Dice/RollDice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Dice/RollDice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameCheckBankrupt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameCheckBankrupt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameNextRound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameNextRound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/Game/GameNextTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/Game/GameNextTurn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/StartScreen/StartGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/StartScreen/StartGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/ButtonPanelView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/ButtonPanelView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/DiceAnimator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/DiceAnimator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/DiceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/DiceView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/EndScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/EndScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/Tile/GoTileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/Tile/GoTileView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/Tile/PropertyTileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/Tile/PropertyTileView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/Tile/TileView_OLD.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +71,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="finishing_stocks" />
+        <entry key="$PROJECT_DIR$" value="Cleaning" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -93,6 +133,7 @@
   "keyToString": {
     "Application.BoardRenderer.executor": "Run",
     "Application.BoardView.executor": "Run",
+    "Application.ButtonPanelView.executor": "Run",
     "Application.GameView.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonopolyGame.executor": "Run",
@@ -104,7 +145,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "Cleaning",
+    "git-widget-placeholder": "Cleaning-Comments-Imports",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -117,6 +158,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Richard Hong\Desktop\Skool\Year 3\Summer\CSC207\CSC207-Monopoly\src\main\Resources\DiceImages" />
+      <recent name="C:\Users\Richard Hong\Desktop\Skool\Year 3\Summer\CSC207\CSC207-Monopoly\src\main\Resources\PlayerPortraits" />
       <recent name="$PROJECT_DIR$/src/main/Resources" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -209,7 +252,79 @@
       <option name="project" value="LOCAL" />
       <updated>1753990384291</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Implemented new PlayerView and made drawPlayer now part of GameView. Game now is just JLayeredThings">
+      <option name="closed" value="true" />
+      <created>1754329690188</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754329690188</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Made DiceView Separate Class">
+      <option name="closed" value="true" />
+      <created>1754330038302</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1754330038302</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added PlayerPortraitView">
+      <option name="closed" value="true" />
+      <created>1754330813281</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1754330813281</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Completely removed everything from old boardview into new GameView. Dice animation now works fine!">
+      <option name="closed" value="true" />
+      <created>1754401272456</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1754401272456</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Completely removed everything from old boardview into new GameView. Dice animation now works fine!">
+      <option name="closed" value="true" />
+      <created>1754401466559</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1754401466559</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Made players move properly using old animation">
+      <option name="closed" value="true" />
+      <created>1754402265374</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1754402265374</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fixed Player portraits not changing">
+      <option name="closed" value="true" />
+      <created>1754402611968</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1754402611968</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fixed tiles not changing color after being bought">
+      <option name="closed" value="true" />
+      <created>1754410805695</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1754410805695</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fixed Bug of Game Not ending properly">
+      <option name="closed" value="true" />
+      <created>1754411912862</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1754411912862</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +350,14 @@
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
     <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
+    <MESSAGE value="Implemented new PlayerView and made drawPlayer now part of GameView. Game now is just JLayeredThings" />
+    <MESSAGE value="Made DiceView Separate Class" />
+    <MESSAGE value="Added PlayerPortraitView" />
+    <MESSAGE value="Completely removed everything from old boardview into new GameView. Dice animation now works fine!" />
+    <MESSAGE value="Made players move properly using old animation" />
+    <MESSAGE value="Fixed Player portraits not changing" />
+    <MESSAGE value="Fixed tiles not changing color after being bought" />
+    <MESSAGE value="Fixed Bug of Game Not ending properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Bug of Game Not ending properly" />
   </component>
 </project>

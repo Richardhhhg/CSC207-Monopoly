@@ -46,21 +46,17 @@ public class DiceAnimator {
         diceTimer = new Timer(100, null);
         diceTimer.addActionListener(evt -> {
             if (frameCount < 9) {
-                // During animation: show random dice faces for animation effect
                 animationD1 = rand.nextInt(6) + 1;
                 animationD2 = rand.nextInt(6) + 1;
                 frameCount++;
                 onAnimationFrame.run();
             } else if (frameCount == 9) {
-                // Last animation frame: get the final result and show it immediately
                 RollDice.DiceResult result = diceController.execute();
                 currentResult = dicePresenter.execute(result);
                 frameCount++;
 
-                // Show the final result immediately (no pause)
                 onAnimationFrame.run();
             } else {
-                // Animation truly complete
                 diceTimer.stop();
                 onComplete.run();
             }

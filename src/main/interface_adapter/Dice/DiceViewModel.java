@@ -15,7 +15,4 @@ public class DiceViewModel {
     public int getDice2() { return dice2; }
     public int getSum() { return sum; }
 
-    public String getSumText() {
-        return "Sum: " + sum;
-    }
 }

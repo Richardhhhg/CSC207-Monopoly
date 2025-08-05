@@ -104,8 +104,6 @@ public class EndScreen extends JFrame {
         return resultsPanel;
     }
 
-    // Add this method to your EndScreen.java to update the createPlayerStatsPanel method
-
     private JPanel createPlayerStatsPanel(EndScreenViewModel.PlayerDisplayData playerData) {
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new BorderLayout());
@@ -115,7 +113,6 @@ public class EndScreen extends JFrame {
         ));
         playerPanel.setBackground(Color.WHITE);
 
-        // Left side - Portrait and basic info
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
@@ -145,7 +142,6 @@ public class EndScreen extends JFrame {
 
         playerPanel.add(leftPanel, BorderLayout.WEST);
 
-        // Center - Stats
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new GridLayout(0, 2, 10, 5));
 
@@ -171,7 +167,6 @@ public class EndScreen extends JFrame {
         stockValueLabel.setToolTipText("Current market value of stock portfolio");
         statsPanel.add(stockValueLabel);
 
-        // Separator line
         statsPanel.add(new JSeparator());
         statsPanel.add(new JSeparator());
 

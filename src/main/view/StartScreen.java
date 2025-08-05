@@ -46,8 +46,8 @@ public class StartScreen extends JFrame {
         JButton startButton = new JButton(viewModel.getStartButtonText());
         startButton.setFont(new Font("Arial", Font.PLAIN, 20));
         startButton.addActionListener(e -> {
-            dispose(); // close start screen
-            new Main().startGame(); // start actual game
+            dispose();
+            new Main().startGame();
         });
 
         JButton rulesButton = new JButton(viewModel.getRulesButtonText());

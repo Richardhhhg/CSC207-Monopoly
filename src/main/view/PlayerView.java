@@ -5,6 +5,11 @@ import main.Constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * PlayerView is a JComponent that represents a player in the game.
+ * It displays the player's color as a circle.
+ * This class is used to visually represent players on the game board.
+ */
 public class PlayerView extends JComponent {
     private final Color color;
 

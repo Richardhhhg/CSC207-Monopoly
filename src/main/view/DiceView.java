@@ -12,11 +12,10 @@ public class DiceView extends JComponent {
         this.diceAnimator = diceAnimator;
         this.tileSize = tileSize;
 
-        // Set size large enough to contain two dice and the text
         int width = tileSize * 2 + gap;
-        int height = tileSize + 30; // extra space for text
+        int height = tileSize + 30;
         setSize(width, height);
-        setOpaque(false); // allow transparency
+        setOpaque(false);
     }
 
     @Override
@@ -28,13 +27,11 @@ public class DiceView extends JComponent {
         int x2 = tileSize + gap;
         int y = 0;
 
-        // Draw dice images
         g2d.drawImage(diceAnimator.getDiceIcon(diceAnimator.getFinalD1()).getImage(),
                 x1, y, tileSize, tileSize, null);
         g2d.drawImage(diceAnimator.getDiceIcon(diceAnimator.getFinalD2()).getImage(),
                 x2, y, tileSize, tileSize, null);
 
-        // Draw the sum text
         String sumText = "Sum: " + diceAnimator.getLastDiceSum();
         Font oldFont = g2d.getFont();
         g2d.setFont(new Font("Arial", Font.BOLD, 16));

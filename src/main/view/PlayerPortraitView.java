@@ -10,7 +10,7 @@ public class PlayerPortraitView extends JComponent {
     public PlayerPortraitView(Image portrait, String labelText, int portraitSize) {
         this.portrait = portrait;
         this.labelText = labelText;
-        setSize(portraitSize, portraitSize + 30); // extra space for label
+        setSize(portraitSize, portraitSize + 30);
         setOpaque(false);
     }
 
@@ -21,10 +21,9 @@ public class PlayerPortraitView extends JComponent {
         if (portrait == null) return;
 
         Graphics2D g2d = (Graphics2D) g;
-        int portraitSize = getWidth(); // assuming width == height
+        int portraitSize = getWidth();
         int portraitY = 20;
 
-        // Draw label
         Font oldFont = g2d.getFont();
         g2d.setFont(new Font("Arial", Font.BOLD, 14));
         FontMetrics fm = g2d.getFontMetrics();
@@ -33,7 +32,6 @@ public class PlayerPortraitView extends JComponent {
         g2d.setColor(Color.BLACK);
         g2d.drawString(labelText, labelX, labelY);
 
-        // Draw portrait image
         g2d.drawImage(portrait, 0, portraitY, portraitSize, portraitSize, null);
 
         g2d.setFont(oldFont);

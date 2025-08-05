@@ -2,7 +2,6 @@ package main.use_case.StartScreen;
 
 public class StartGame {
     public StartGameResult execute() {
-        // Business logic for starting the game
         return new StartGameResult(
                 "Welcome to our Monopoly!",
                 getRulesText()

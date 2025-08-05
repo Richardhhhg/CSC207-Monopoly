@@ -1,7 +1,6 @@
 package main.entity;
 
 import main.entity.Stocks.Stock;
-import main.entity.tiles.PropertyTile;
 import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
@@ -22,10 +21,9 @@ public class Game {
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
     private int tileCount;
-    private int totalTurns = 0;
     private int currentRound = 1;
     private int turnsInCurrentRound = 0;
-    private int roundStartPlayerIndex = 0; // Track which player started the current round
+    private int roundStartPlayerIndex = 0;
     private boolean gameEnded = false;
     private String gameEndReason = "";
 
@@ -57,24 +55,6 @@ public class Game {
         return currentRound;
     }
 
-    /**
-     * Get the number of active (non-bankrupt) players
-     */
-    public int getActivePlayers() {
-        return (int) players.stream().filter(p -> !p.isBankrupt()).count();
-    }
-
-    /**
-     * Get turns completed in the current round
-     */
-    public int getTurnsInCurrentRound() {
-        return turnsInCurrentRound;
-    }
-
-    public int getTotalTurns() {
-        return totalTurns;
-    }
-
     public Player getCurrentPlayer() {
         if (currentPlayerIndex == -1 || gameEnded) return null;
         return players.get(currentPlayerIndex);
@@ -82,11 +62,11 @@ public class Game {
 
     /**
      * Helper function for getting the position of a tile on the board
-     * @param position
-     * @param startX
-     * @param startY
-     * @param tileSize
-     * @return
+     * @param position: Which position on the board it is on (from 0 to tileCount-1)
+     * @param startX: Starting X coordinate of the board
+     * @param startY: Starting Y coordinate of the board
+     * @param tileSize: Size of each tile in pixels
+     * @return Point representing the top-left corner of the tile
      */
     public Point getTilePosition(int position, int startX, int startY, int tileSize) {
         int tilesPerSide = this.tileCount / 4;
@@ -139,10 +119,6 @@ public class Game {
         return stocks;
     }
 
-    public int getRoundStartPlayerIndex() {
-        return roundStartPlayerIndex;
-    }
-
     public boolean getGameEnded() {
         return gameEnded;
     }
@@ -151,7 +127,6 @@ public class Game {
      * Increment total turns and track turns in current round
      */
     public void increaseTurn() {
-        totalTurns++;
         turnsInCurrentRound++;
     }
 

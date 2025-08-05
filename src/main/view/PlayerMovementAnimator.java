@@ -27,11 +27,9 @@ public class PlayerMovementAnimator {
                 player.setPosition(newPosition);
                 movesLeft[0]--;
 
-                // Trigger repaint
                 onMoveStep.run();
             } else {
                 ((Timer) e.getSource()).stop();
-                // Animation complete
                 onComplete.run();
             }
         });

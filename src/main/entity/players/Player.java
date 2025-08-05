@@ -1,7 +1,5 @@
-/*
-TODO: IMPLEMENT THIS.
- */
 package main.entity.players;
+
 import main.entity.Stocks.Stock;
 import main.entity.tiles.PropertyTile;
 
@@ -100,16 +98,6 @@ public abstract class Player {
 
     }
 
-    //TODO: Implement property selling methods
-    public void sellProperty(PropertyTile propertyTile) {
-        if (this.properties.contains(propertyTile)) {
-            float refund = propertyTile.getPrice();
-            this.addMoney(refund);
-            this.properties.remove(propertyTile);
-            propertyTile.setOwned(false, null);
-        }
-    }
-
     public void buyStock(Stock stock, int quantity) {
         double totalCost = stock.getCurrentPrice() * quantity;
 
@@ -133,7 +121,7 @@ public abstract class Player {
 
     public void initializeStocks(List<Stock> stockList) {
         for (Stock stock : stockList) {
-            stocks.put(stock, 0); // Initialize with 0 quantity
+            stocks.put(stock, 0);
         }
     }
 
