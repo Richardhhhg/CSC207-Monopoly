@@ -15,6 +15,7 @@ public class EndScreenPresenter {
                         String.format("%.2f", playerResult.getPlayer().getMoney()),
                         String.valueOf(playerResult.getPlayer().getProperties().size()),
                         String.format("%.2f", playerResult.getTotalPropertyValue()),
+                        String.format("%.2f", playerResult.getTotalStockValue()),
                         String.format("%.2f", playerResult.getNetWorth()),
                         String.valueOf(playerResult.getPlayer().getPosition()),
                         playerResult.getPlayer().isBankrupt() ? "BANKRUPT" : "SOLVENT"
