@@ -147,8 +147,8 @@ public class EndScreen extends JFrame {
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new GridLayout(0, 2, 10, 5));
 
-        // Money
-        statsPanel.add(new JLabel("💰 Cash:"));
+        // Cash after stock liquidation
+        statsPanel.add(new JLabel("💰 Final Cash:"));
         JLabel moneyLabel = new JLabel("$" + playerData.getMoneyText());
         moneyLabel.setFont(new Font("Arial", Font.BOLD, 14));
         statsPanel.add(moneyLabel);
@@ -161,10 +161,17 @@ public class EndScreen extends JFrame {
         statsPanel.add(new JLabel("🏘️ Property Value:"));
         statsPanel.add(new JLabel("$" + playerData.getPropertyValueText()));
 
+        // Stock value (should be $0.00 after liquidation)
+        statsPanel.add(new JLabel("📈 Stock Value:"));
+        JLabel stockValueLabel = new JLabel("$" + playerData.getStockValueText() + " (liquidated)");
+        stockValueLabel.setFont(new Font("Arial", Font.ITALIC, 12));
+        statsPanel.add(stockValueLabel);
+
         // Net worth
-        statsPanel.add(new JLabel("💎 Net Worth:"));
+        statsPanel.add(new JLabel("💎 Total Net Worth:"));
         JLabel netWorthLabel = new JLabel("$" + playerData.getNetWorthText());
-        netWorthLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        netWorthLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        netWorthLabel.setForeground(new Color(0, 120, 0));
         statsPanel.add(netWorthLabel);
 
         // Current position
