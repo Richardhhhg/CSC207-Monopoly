@@ -251,6 +251,11 @@ public class GameView extends JFrame{
 
     private void handleEndTurn() {
         new GameNextTurn(game).execute();
+        if (game.isGameOver()) {
+            showEndScreen();
+            return;
+        }
+
         ButtonPanelView.updateStatus(
                 game.getCurrentRound(),
                 game.getCurrentPlayer().getName()
@@ -258,24 +263,13 @@ public class GameView extends JFrame{
         refreshStats();
         drawPlayerPortrait();
 
-        if (game.isGameOver()) {
-            showEndScreen();
-            return;
-        }
-
         ButtonPanelView.getRollDiceButton().setEnabled(true);
         resetBoardView();
         repaint();
     }
 
     private void showEndScreen() {
-        // TODO: Idk if any of these buttons will even need to be manually disabled
-        ButtonPanelView.getRollDiceButton().setEnabled(false);
-        ButtonPanelView.getEndTurnButton().setEnabled(false);
-        ButtonPanelView.getStockMarketButton().setEnabled(false);
-        System.out.println("AMOGNUS");
         this.setVisible(false);
-        System.out.println("GAME OVER");
         // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
