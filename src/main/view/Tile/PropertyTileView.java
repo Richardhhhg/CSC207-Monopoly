@@ -59,17 +59,4 @@ public class PropertyTileView extends TileView {
 
         g2d.dispose();
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        PropertyTileViewModel viewModel = new PropertyTileViewModel(
-                "Park Place", 350, "John Doe", 50, Color.BLUE);
-        PropertyTileView tileView = new PropertyTileView(viewModel);
-
-        JFrame frame = new JFrame("Property Tile View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(tileView);
-        frame.setSize(200, 200);
-        frame.setVisible(true);
-    }
 }

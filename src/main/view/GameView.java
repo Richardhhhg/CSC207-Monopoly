@@ -41,11 +41,7 @@ public class GameView extends JFrame{
     private PlayerStatsController playerStatsController;
     private PlayerStatsView statsPanel;
 
-    private final PropertyPresenter propertyPresenter;
-    private final PropertyPurchaseController propertyPurchaseController;
-    private final RentPaymentController rentPaymentController;
-    private final OnLandingController onLandingController;
-
+    private BoardView boardView;
 
     // TODO: There is a ton of coupling here, fix it
     public GameView() {
@@ -55,20 +51,6 @@ public class GameView extends JFrame{
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(Color.lightGray);
         setLayout(null);
-
-        this.propertyPresenter = new PropertyPresenter();
-
-        // Controllers act as interactors and depend on presenter
-        this.propertyPurchaseController = new PropertyPurchaseController(propertyPresenter);
-        this.rentPaymentController = new RentPaymentController(propertyPresenter);
-
-        // Create use cases
-        PropertyPurchaseUseCase propertyPurchaseUseCase = new PropertyPurchaseUseCase(propertyPresenter);
-        RentPaymentUseCase rentPaymentUseCase = new RentPaymentUseCase(propertyPresenter);
-
-        // Create OnLanding components
-        OnLandingUseCase onLandingUseCase = new OnLandingUseCase(propertyPurchaseUseCase, rentPaymentUseCase);
-        this.onLandingController = new OnLandingController(onLandingUseCase);
 
         this.diceAnimator = new DiceAnimator();
         this.playerMovementAnimator = new PlayerMovementAnimator();
@@ -90,7 +72,7 @@ public class GameView extends JFrame{
 
     // TODO: This should probably be like separate class - Richard
     private void drawBoard() {
-        BoardView boardView = new BoardView(game, this);
+        boardView = new BoardView(game);
         boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         layeredPane.add(boardView, Integer.valueOf(0));
     }
@@ -112,7 +94,7 @@ public class GameView extends JFrame{
         int viewHeight = diceView.getHeight();
         diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
 
-        layeredPane.add(diceView, Integer.valueOf(2)); // Layer 2 = above board and players
+        layeredPane.add(diceView, Integer.valueOf(2));
         layeredPane.repaint();
     }
 
@@ -165,7 +147,7 @@ public class GameView extends JFrame{
 
             portraitView.setBounds(x, y, portraitSize, portraitSize + 30);
             layeredPane.add(portraitView, Integer.valueOf(2));
-            layeredPane.repaint(); // Ensure it's painted immediately
+            layeredPane.repaint();
         }
     }
 
@@ -249,75 +231,22 @@ public class GameView extends JFrame{
         );
     }
 
+    private void resetBoardView() {
+        Component[] components = layeredPane.getComponentsInLayer(0);
+        for (Component c : components) {
+            if (c instanceof BoardView) {
+                layeredPane.remove(c);
+            }
+        }
+
+        boardView = new BoardView(game);
+        boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        layeredPane.add(boardView, Integer.valueOf(0));
+    }
+
     private void onPlayerMovementComplete() {
-        handleLandingOnTile();
-    }
-
-    private void handleLandingOnTile() {
-        Player currentPlayer = game.getCurrentPlayer();
-        int position = currentPlayer.getPosition();
-        Tile tile = game.getPropertyAt(position);
-
-        if (tile != null) {
-            // Use OnLandingController to handle all tile landing logic
-            onLandingController.handleLanding(currentPlayer, tile);
-
-            // update stat to show addition and deduction amount of rent
-            refreshStats();
-
-            // Check if presenter has any view models to display
-            checkForPresenterUpdates();
-        }
-    }
-
-    private void checkForPresenterUpdates() {
-        // Check for purchase dialog
-        PropertyViewModel.PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
-        if (purchaseDialog != null) {
-            PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
-
-            // Find the actual player and property objects
-            Player player = findPlayerByName(purchaseDialog.playerName);
-            PropertyTile property = findPropertyByName(purchaseDialog.propertyName);
-
-            propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, player, property, this);
-            propertyPresenter.clearPurchaseDialog();
-        }
-
-        // Check for property purchased notification
-        PropertyViewModel.PropertyPurchasedViewModel propertyPurchased = propertyPresenter.getPropertyPurchasedViewModel();
-        if (propertyPurchased != null) {
-            updateAfterPropertyPurchased(propertyPurchased);
-            propertyPresenter.clearPropertyPurchased();
-        }
-
-        // Check for rent payment notification
-        PropertyViewModel.RentPaymentViewModel rentPayment = propertyPresenter.getRentPaymentViewModel();
-        if (rentPayment != null) {
-            rentPaymentController.showRentPaymentNotification(rentPayment, this);
-            updateAfterPropertyPurchased(null); // Just update the UI
-            propertyPresenter.clearRentPayment();
-        }
-    }
-
-    public void updateAfterPropertyPurchased(PropertyViewModel.PropertyPurchasedViewModel viewModel) {
-        // Update UI after property purchase or rent payment
-        repaint(); // Trigger board repaint to show ownership change
-    }
-
-    // Helper methods for finding entities (needed for legacy popup interface)
-    private Player findPlayerByName(String name) {
-        return game.getPlayers().stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private PropertyTile findPropertyByName(String name) {
-        return (PropertyTile) game.getTiles().stream()
-                .filter(tile -> tile.getName().equals(name))
-                .findFirst()
-                .orElse(null);
+        boardView.handleLandingOnTile();
+        refreshStats();
     }
 
     private void handleEndTurn() {
@@ -335,17 +264,18 @@ public class GameView extends JFrame{
         }
 
         ButtonPanelView.getRollDiceButton().setEnabled(true);
+        resetBoardView();
         repaint();
     }
 
     private void showEndScreen() {
         // TODO: Idk if any of these buttons will even need to be manually disabled
-//        ButtonPanelView.getRollDiceButton().setEnabled(false);
-//        ButtonPanelView.getEndTurnButton().setEnabled(false);
-//        ButtonPanelView.getStockMarketButton().setEnabled(false);
-
+        ButtonPanelView.getRollDiceButton().setEnabled(false);
+        ButtonPanelView.getEndTurnButton().setEnabled(false);
+        ButtonPanelView.getStockMarketButton().setEnabled(false);
+        System.out.println("AMOGNUS");
         this.setVisible(false);
-
+        System.out.println("GAME OVER");
         // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
