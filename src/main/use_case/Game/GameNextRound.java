@@ -19,15 +19,13 @@ public class GameNextRound {
     }
 
     public void execute() {
-        // TODO: Get the stocks from the game rather than from the player
+        // Update stock prices at the end of each round
         List<Stock> stocks = game.getStocks();
         for (Stock stock : stocks) {
             stock.updatePrice();
         }
 
-        // Check if maximum rounds reached (20 rounds = 80 turns for 4 players)
-        if (game.getTotalTurns() >= MAX_ROUNDS * 4) {
-            game.endGame("Maximum 20 rounds reached");
-        }
+        // The round increment and max rounds check is now handled in Game.startNewRound()
+        // This method just handles the round-end logic like stock price updates
     }
 }
