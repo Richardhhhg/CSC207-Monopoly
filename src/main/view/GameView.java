@@ -141,6 +141,14 @@ public class GameView extends JFrame{
         int startX = 50;
         int startY = 8;
 
+        // Remove existing portrait views (layer 2)
+        Component[] components = layeredPane.getComponentsInLayer(2);
+        for (Component c : components) {
+            if (c instanceof PlayerPortraitView) {
+                layeredPane.remove(c);
+            }
+        }
+
         Player currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
             int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
@@ -149,17 +157,18 @@ public class GameView extends JFrame{
             int centerX = startX + Constants.BOARD_SIZE / 2;
             int centerY = startY + Constants.BOARD_SIZE / 2;
 
-            int portraitSize = tileSize; // same as dice size
+            int portraitSize = tileSize;
             PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
 
-            // Offset to top-right of center area (as in original)
             int x = centerX - tileSize - 10 + 80;
             int y = centerY - tileSize / 2 - 150;
 
-            portraitView.setBounds(x, y, portraitSize, portraitSize + 30); // height includes label
+            portraitView.setBounds(x, y, portraitSize, portraitSize + 30);
             layeredPane.add(portraitView, Integer.valueOf(2));
+            layeredPane.repaint(); // Ensure it's painted immediately
         }
     }
+
 
     private void drawStatsPanel() {
         this.playerStatsViewModel = new PlayerStatsViewModel();
@@ -215,7 +224,7 @@ public class GameView extends JFrame{
         // Use DiceController for dice animation and logic
         diceAnimator.startDiceAnimation(
                 // TODO: This could probably just repaint the DiceView rather than the whole GameView - Richard
-                this::repaint, // Animation frame callback
+                this::drawDice,
                 this::onDiceRollComplete // Completion callback
         );
     }
@@ -235,9 +244,8 @@ public class GameView extends JFrame{
                 currentPlayer,
                 diceSum,
                 game.getTileCount(),
-//                this::repaint, // Movement step callback
                 this::drawPlayers,
-                this::onPlayerMovementComplete // Completion callback
+                this::onPlayerMovementComplete
         );
     }
 
@@ -319,6 +327,7 @@ public class GameView extends JFrame{
                 game.getCurrentPlayer().getName()
         );
         refreshStats();
+        drawPlayerPortrait();
 
         if (game.isGameOver()) {
             showEndScreen();
