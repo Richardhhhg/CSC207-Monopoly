@@ -176,15 +176,23 @@ public class GameView extends JFrame{
     // TODO: This should probably be like separate class - Richard
     // TODO: This is really messy, fix later
     private void drawPlayers() {
-        // draws players
+        // Remove old PlayerViews first
+        Component[] components = layeredPane.getComponentsInLayer(1);
+        for (Component c : components) {
+            if (c instanceof PlayerView) {
+                layeredPane.remove(c);
+            }
+        }
+
+        // Draw updated player views
         int startX = 50;
         int startY = 8;
-        int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
+        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
 
         List<Player> players = game.getPlayers();
 
-        for (Player player : game.getPlayers()) {
+        for (Player player : players) {
             PlayerView playerView = new PlayerView(player.getColor());
             Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
             int offsetX = (players.indexOf(player) % 2) * 20;
@@ -192,6 +200,8 @@ public class GameView extends JFrame{
             playerView.setBounds(pos.x + offsetX, pos.y + offsetY, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE);
             layeredPane.add(playerView, Integer.valueOf(1));
         }
+
+        layeredPane.repaint();  // Important to trigger UI update
     }
 
     private void displayStockMarket() {
@@ -204,6 +214,7 @@ public class GameView extends JFrame{
 
         // Use DiceController for dice animation and logic
         diceAnimator.startDiceAnimation(
+                // TODO: This could probably just repaint the DiceView rather than the whole GameView - Richard
                 this::repaint, // Animation frame callback
                 this::onDiceRollComplete // Completion callback
         );
@@ -224,7 +235,8 @@ public class GameView extends JFrame{
                 currentPlayer,
                 diceSum,
                 game.getTileCount(),
-                this::repaint, // Movement step callback
+//                this::repaint, // Movement step callback
+                this::drawPlayers,
                 this::onPlayerMovementComplete // Completion callback
         );
     }
