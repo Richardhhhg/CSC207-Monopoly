@@ -6,6 +6,7 @@ import main.entity.Stocks.Stock;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,13 @@ public class EndGame {
     public EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
         List<PlayerResult> playerResults = new ArrayList<>();
 
-        // Auto-liquidate all stocks for all players at game end
+        // FIRST: Calculate stock values BEFORE liquidation for display purposes
+        Map<Player, Float> stockValuesBeforeLiquidation = new HashMap<>();
+        for (Player player : players) {
+            stockValuesBeforeLiquidation.put(player, calculateTotalStockValue(player));
+        }
+
+        // THEN: Auto-liquidate all stocks for all players at game end
         for (Player player : players) {
             liquidateAllStocks(player);
         }
@@ -25,14 +32,14 @@ public class EndGame {
         for (int i = 0; i < sortedPlayers.size(); i++) {
             Player player = sortedPlayers.get(i);
             float totalPropertyValue = calculateTotalPropertyValue(player);
-            float stockValue = calculateTotalStockValue(player); // Should be 0 after liquidation
-            float netWorth = player.getMoney() + totalPropertyValue + stockValue;
+            float stockValueBeforeLiquidation = stockValuesBeforeLiquidation.get(player);
+            float netWorth = player.getMoney() + totalPropertyValue; // Money now includes liquidated stocks
 
             playerResults.add(new PlayerResult(
                     player,
                     i + 1, // rank
                     totalPropertyValue,
-                    stockValue,
+                    stockValueBeforeLiquidation, // Show original stock value
                     netWorth
             ));
         }
