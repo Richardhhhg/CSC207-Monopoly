@@ -38,19 +38,20 @@ public class EndScreenViewModel {
         private final String moneyText;
         private final String propertiesCountText;
         private final String propertyValueText;
+        private final String stockValueText;
         private final String netWorthText;
-        private final String positionText;
         private final String statusText;
 
         public PlayerDisplayData(Player player, int rank, String moneyText, String propertiesCountText,
-                                 String propertyValueText, String netWorthText, String positionText, String statusText) {
+                                 String propertyValueText, String stockValueText, String netWorthText,
+                                 String statusText) {
             this.player = player;
             this.rank = rank;
             this.moneyText = moneyText;
             this.propertiesCountText = propertiesCountText;
             this.propertyValueText = propertyValueText;
+            this.stockValueText = stockValueText;
             this.netWorthText = netWorthText;
-            this.positionText = positionText;
             this.statusText = statusText;
         }
 
@@ -59,8 +60,8 @@ public class EndScreenViewModel {
         public String getMoneyText() { return moneyText; }
         public String getPropertiesCountText() { return propertiesCountText; }
         public String getPropertyValueText() { return propertyValueText; }
+        public String getStockValueText() { return stockValueText; }
         public String getNetWorthText() { return netWorthText; }
-        public String getPositionText() { return positionText; }
         public String getStatusText() { return statusText; }
         public String getRankText() { return "#" + rank + " - " + player.getName(); }
     }

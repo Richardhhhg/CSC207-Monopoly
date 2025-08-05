@@ -104,6 +104,8 @@ public class EndScreen extends JFrame {
         return resultsPanel;
     }
 
+    // Add this method to your EndScreen.java to update the createPlayerStatsPanel method
+
     private JPanel createPlayerStatsPanel(EndScreenViewModel.PlayerDisplayData playerData) {
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new BorderLayout());
@@ -147,29 +149,39 @@ public class EndScreen extends JFrame {
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new GridLayout(0, 2, 10, 5));
 
-        // Money
-        statsPanel.add(new JLabel("💰 Cash:"));
+        // Cash (liquid money only, same as during game)
+        statsPanel.add(new JLabel(" Cash:"));
         JLabel moneyLabel = new JLabel("$" + playerData.getMoneyText());
         moneyLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        moneyLabel.setToolTipText("Liquid cash (same as shown during game)");
         statsPanel.add(moneyLabel);
 
-        // Properties
-        statsPanel.add(new JLabel("🏠 Properties Owned:"));
+        // Properties count
+        statsPanel.add(new JLabel(" Properties Owned:"));
         statsPanel.add(new JLabel(playerData.getPropertiesCountText()));
 
         // Property value
-        statsPanel.add(new JLabel("🏘️ Property Value:"));
+        statsPanel.add(new JLabel(" Property Value:"));
         statsPanel.add(new JLabel("$" + playerData.getPropertyValueText()));
 
-        // Net worth
-        statsPanel.add(new JLabel("💎 Net Worth:"));
-        JLabel netWorthLabel = new JLabel("$" + playerData.getNetWorthText());
-        netWorthLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        statsPanel.add(netWorthLabel);
+        // Stock value (current market value)
+        statsPanel.add(new JLabel(" Stock Value:"));
+        JLabel stockValueLabel = new JLabel("$" + playerData.getStockValueText());
+        stockValueLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        stockValueLabel.setToolTipText("Current market value of stock portfolio");
+        statsPanel.add(stockValueLabel);
 
-        // Current position
-        statsPanel.add(new JLabel("📍 Final Position:"));
-        statsPanel.add(new JLabel("Tile " + playerData.getPositionText()));
+        // Separator line
+        statsPanel.add(new JSeparator());
+        statsPanel.add(new JSeparator());
+
+        // Net worth (cash + properties + stocks)
+        statsPanel.add(new JLabel(" Total Net Worth:"));
+        JLabel netWorthLabel = new JLabel("$" + playerData.getNetWorthText());
+        netWorthLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        netWorthLabel.setForeground(new Color(0, 120, 0));
+        netWorthLabel.setToolTipText("Cash + Property Value + Stock Value");
+        statsPanel.add(netWorthLabel);
 
         playerPanel.add(statsPanel, BorderLayout.CENTER);
 
