@@ -1,7 +1,5 @@
 package main.Constants;
 
-import java.awt.*;
-
 /**
  * This class is a placeholder for constants used throughout the application.
  */
@@ -62,12 +60,12 @@ public class Constants {
     public static final int CLERK_ADD_MONEY = 50;
 
     //Portrait Path
-    public static final String CLERK_POR = "main/Resources/clerk.jpg";
-    public static final String CS_POR = "main/Resources/Computer-nerd.jpg";
-    public static final String LL_POR = "main/Resources/landlord.png";
-    public static final String INH_POR = "main/Resources/inheritor.jpg";
-    public static final String PP_POR = "main/Resources/poorman.png";
-    public static final String NP_POR= "main/Resources/default portrait.png";
+    public static final String CLERK_POR = "CharacterPortrait/clerk.jpg";
+    public static final String CS_POR = "CharacterPortrait/Computer-nerd.jpg";
+    public static final String LL_POR = "CharacterPortrait/landlord.png";
+    public static final String INH_POR = "CharacterPortrait/inheritor.jpg";
+    public static final String PP_POR = "CharacterPortrait/poorman.png";
+    public static final String NP_POR= "CharacterPortrait/default portrait.png";
 
     //CHARSELSCR CONST
     public static final int MAX_NP_BAR = 3;
