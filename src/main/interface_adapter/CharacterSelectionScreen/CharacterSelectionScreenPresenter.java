@@ -19,7 +19,7 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
         for (PlayerOutputData p : selectedPlayers) {
             names.add(p.getName());
             types.add(p.getType());
-            colors.add(toHex(p.getColor()));  // ✅ Clean hex color
+            colors.add(toHex(p.getColor()));
         }
 
         this.launchOutputData = new GameLaunchOutputData(names, types, colors);

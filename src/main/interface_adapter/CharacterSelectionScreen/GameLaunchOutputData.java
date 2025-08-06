@@ -5,7 +5,7 @@ import java.util.List;
 public class GameLaunchOutputData {
     private final List<String> playerNames;
     private final List<String> playerTypes;
-    private final List<String> playerColors; // e.g., "RED", "BLUE"
+    private final List<String> playerColors;
 
     public GameLaunchOutputData(List<String> names, List<String> types, List<String> colors) {
         this.playerNames = names;
