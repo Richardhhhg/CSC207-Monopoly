@@ -1,5 +1,6 @@
 package main.app;
 
+import main.entity.Game;
 import main.view.GameView;
 import main.view.StartScreen;
 
@@ -9,6 +10,6 @@ public class Main{
     }
 
     public static void startGame() {
-        new GameView();
+        new GameView(new Game());
     }
 }

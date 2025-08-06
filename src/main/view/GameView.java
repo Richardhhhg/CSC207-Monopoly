@@ -44,7 +44,7 @@ public class GameView extends JFrame{
     private BoardView boardView;
 
     // TODO: There is a ton of coupling here, fix it
-    public GameView() {
+    public GameView(Game game) {
         super(Constants.GAME_TITLE);
         this.game = new Game();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
