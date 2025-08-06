@@ -27,13 +27,19 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
     @Override
     public void confirmSelection() {
-        List<Player> realPlayers = new ArrayList<>();
-        for (Player player : selectPlayers) {
-            if (!player.isNullPlayer()) {
-                realPlayers.add(player);
+        List<String> names = new ArrayList<>();
+        List<String> types = new ArrayList<>();
+        List<String> colors = new ArrayList<>();
+
+        for (Player p : selectPlayers) {
+            if (!p.isNullPlayer()) {
+                names.add(p.getName());
+                types.add(p.getClass().getSimpleName()); // e.g. "Landlord"
+                colors.add(p.getColor().toString());     // Convert color to string like "java.awt.Color[r=255,g=0,b=0]"
             }
         }
-        presenter.launchGame(realPlayers);
+
+        presenter.prepareLaunchData(names, types, colors);
     }
 
     @Override

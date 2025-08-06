@@ -47,8 +47,7 @@ public class StartScreen extends JFrame {
         startButton.setFont(new Font("Arial", Font.PLAIN, 20));
         startButton.addActionListener(e -> {
             dispose(); // close start screen
-            //new Main().startGame(); // start actual game
-            new CharacterSelectionScreen();
+            new Main().startGame(); // start actual game
         });
 
         JButton rulesButton = new JButton(viewModel.getRulesButtonText());

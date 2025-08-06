@@ -3,19 +3,28 @@ package main.interface_adapter.CharacterSelectionScreen;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenInteractor;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenOutputBoundary;
-import main.use_case.CharacterSelectionScreen.GameLauncher;
 
 public class CharacterSelectionScreenAdapter {
 
     private final CharacterSelectionScreenController controller;
+    private final CharacterSelectionScreenPresenter presenter;
 
-    public CharacterSelectionScreenAdapter(CharacterSelectionInputBoundary interactor) {
+    public CharacterSelectionScreenAdapter() {
+        this.presenter = new CharacterSelectionScreenPresenter();
+        CharacterSelectionScreenOutputBoundary outputBoundary = presenter;
+        CharacterSelectionInputBoundary interactor = new CharacterSelectionScreenInteractor(outputBoundary);
         this.controller = new CharacterSelectionScreenController(interactor);
     }
 
-    public static CharacterSelectionScreenController inject() {
-        CharacterSelectionScreenOutputBoundary presenter = new CharacterSelectionScreenPresenter(new GameLauncher());
-        CharacterSelectionInputBoundary interactor = new CharacterSelectionScreenInteractor(presenter);
-        return new CharacterSelectionScreenController(interactor);
+    public CharacterSelectionScreenController getController() {
+        return controller;
+    }
+
+    public CharacterSelectionScreenPresenter getPresenter() {
+        return presenter;
+    }
+
+    public static CharacterSelectionScreenAdapter inject() {
+        return new CharacterSelectionScreenAdapter();
     }
 }

@@ -1,8 +1,12 @@
 package main.view;
 
+import main.entity.Game;
 import main.entity.players.*;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
+import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenPresenter;
+import main.interface_adapter.CharacterSelectionScreen.GameLaunchOutputData;
+import main.use_case.CharacterSelectionScreen.GameLauncher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +16,12 @@ import java.util.List;
 public class CharacterSelectionScreen extends JFrame {
     private CharacterSelectionScreenController controller;
     private final List<PlayerSelection> selections = new ArrayList<>();
+    private final CharacterSelectionScreenPresenter presenter;
 
     public CharacterSelectionScreen() {
-        this.controller = CharacterSelectionScreenAdapter.inject();
+        CharacterSelectionScreenAdapter adapter = CharacterSelectionScreenAdapter.inject();
+        this.controller = adapter.getController();
+        this.presenter = adapter.getPresenter();
         initializeScreen();
     }
 
@@ -87,7 +94,11 @@ public class CharacterSelectionScreen extends JFrame {
 
             if (controller.canStartGame()) {
                 controller.confirmSelection();
+                GameLaunchOutputData data = presenter.getLaunchOutputData();
+                GameLauncher launcher = new GameLauncher();
+                Game game = launcher.launch(data);
                 dispose();
+                new GameView().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Please select at least 2 characters.");
             }

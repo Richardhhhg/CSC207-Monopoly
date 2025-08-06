@@ -1,9 +1,7 @@
 package main.use_case.CharacterSelectionScreen;
 
-import main.entity.players.Player;
-
 import java.util.List;
 
 public interface CharacterSelectionScreenOutputBoundary {
-    void launchGame(List<Player> players);
+    void prepareLaunchData(List<String> names, List<String> types, List<String> colors);
 }

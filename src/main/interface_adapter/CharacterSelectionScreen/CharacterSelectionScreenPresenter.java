@@ -10,16 +10,14 @@ import java.util.List;
 
 // Not clean yet
 public class CharacterSelectionScreenPresenter implements CharacterSelectionScreenOutputBoundary {
-    private final GameLauncher gameLauncher;
-
-    public CharacterSelectionScreenPresenter(GameLauncher gameLauncher) {
-        this.gameLauncher = gameLauncher;
-    }
+    private GameLaunchOutputData launchOutputData;
 
     @Override
-    public void launchGame(List<Player> players) {
-        Game game = gameLauncher.launch(players);
-        GameView gameView = new GameView(game);
-        gameView.setVisible(true);
+    public void prepareLaunchData(List<String> names, List<String> types, List<String> colors) {
+        this.launchOutputData = new GameLaunchOutputData(names, types, colors);
+    }
+
+    public GameLaunchOutputData getLaunchOutputData() {
+        return launchOutputData;
     }
 }
