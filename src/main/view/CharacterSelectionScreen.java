@@ -49,7 +49,6 @@ public class CharacterSelectionScreen extends JFrame {
 
             Player initial = controller.selectPlayer(index, nameField.getText(), "None");
             portrait.setIcon(new ImageIcon(initial.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
-            controller.selectPlayer(index, initial);
             selections.add(new PlayerSelection("None", nameField, characterDropdown));
 
             characterDropdown.addActionListener(e -> {
@@ -82,11 +81,11 @@ public class CharacterSelectionScreen extends JFrame {
                 finalPlayers.add(player);
             }
 
-            long activeCount = finalPlayers.stream().filter(p -> !(p instanceof NullPlayer)).count();
-            if (activeCount >= 2) {
-                for (int i = 0; i < 4; i++) {
-                    controller.selectPlayer(i, finalPlayers.get(i));
-                }
+            for (int i = 0; i < 4; i++) {
+                controller.selectPlayer(i, finalPlayers.get(i));
+            }
+
+            if (controller.canStartGame()) {
                 controller.confirmSelection();
                 dispose();
             } else {

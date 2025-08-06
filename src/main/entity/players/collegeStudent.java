@@ -1,16 +1,15 @@
 package main.entity.players;
 
 import main.entity.Stocks.Stock;
-import main.entity.tiles.PropertyTile;
 
 import java.awt.*;
 
-import static main.Constants.Constants.STUDENT_INIT_MONEY;
+import static main.Constants.Constants.*;
 
 public class collegeStudent extends Player implements applyAfterEffects, StockModifier{
     public collegeStudent(String name, Color color) {
         super(name, STUDENT_INIT_MONEY,color);
-        this.loadPortrait("main/Resources/Computer-nerd.jpg");
+        this.loadPortrait(CS_POR);
     }
 
     @Override

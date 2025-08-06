@@ -151,7 +151,7 @@ public abstract class Player {
         return color;
     }
 
-    public Boolean isNullPlayer(){
+    public boolean isNullPlayer(){
         return this.isNullPlayer;
     }
 }

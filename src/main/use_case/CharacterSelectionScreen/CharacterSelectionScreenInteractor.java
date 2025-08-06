@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static main.Constants.Constants.MAX_NP_BAR;
+
 public class CharacterSelectionScreenInteractor implements CharacterSelectionInputBoundary{
     private final CharacterSelectionScreenOutputBoundary presenter;
     private final List<Player> selectPlayers = new ArrayList<>(Arrays.asList(new NullPlayer(),
@@ -25,7 +27,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
     @Override
     public void confirmSelection() {
-        List<Player> realPlayers = new ArrayList<>(); // real list of charaters
+        List<Player> realPlayers = new ArrayList<>();
         for (Player player : selectPlayers) {
             if (!player.isNullPlayer()) {
                 realPlayers.add(player);
@@ -42,10 +44,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
                 numOfNullPlayers++;
             }
         }
-        if (numOfNullPlayers < 3) {
-            return true;
-        }
-        return false;
+        return numOfNullPlayers < MAX_NP_BAR;
     }
 
     @Override

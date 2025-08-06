@@ -11,7 +11,6 @@ public class Main{
 
     public static void startGame() {
         GameView game = new GameView(new Game());
-        game.addBoard();
         game.showStockMarket();
     }
 }
