@@ -20,7 +20,7 @@ public class BuyPropertyPopup extends JDialog {
     }
 
     private JLabel infoLabel;
-    private JButton yesButton;
+    private JButton yesButton;//he
     private JButton noButton;
     private final Player player;
     private final PropertyTile property;
