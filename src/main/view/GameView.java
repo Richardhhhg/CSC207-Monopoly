@@ -1,6 +1,7 @@
 package main.view;
 
 import main.Constants.Constants;
+import main.app.GameHolder;
 import main.entity.Game;
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
@@ -46,7 +47,10 @@ public class GameView extends JFrame{
     // TODO: There is a ton of coupling here, fix it
     public GameView() {
         super(Constants.GAME_TITLE);
-        this.game = new Game();
+        this.game = GameHolder.getGame();;
+        if (this.game == null) {
+            throw new IllegalStateException("Game not initialized");
+        }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(Color.lightGray);

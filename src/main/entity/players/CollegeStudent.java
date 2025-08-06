@@ -4,17 +4,12 @@ import main.entity.Stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.LANDLORD_INIT_MONEY;
-import static main.Constants.Constants.LL_POR;
+import static main.Constants.Constants.*;
 
-/**
- * A Player subclass representing a Landlord.
- * Landlords gain extra rent and can sell properties for more money.
- */
-public class landlord extends Player implements rentModifier, StockModifier {
-    public landlord(String name, Color color) {
-        super(name, LANDLORD_INIT_MONEY, color);
-        this.loadPortrait(LL_POR);
+public class CollegeStudent extends Player implements applyAfterEffects, StockModifier{
+    public CollegeStudent(String name, Color color) {
+        super(name, STUDENT_INIT_MONEY,color);
+        this.loadPortrait(CS_POR);
     }
 
     @Override
@@ -37,29 +32,23 @@ public class landlord extends Player implements rentModifier, StockModifier {
         }
     }
 
-    /**
-     * @param basePrice
-     * @return
-     */
-    @Override
-    public float adjustStockBuyPrice(float basePrice) {
-        return (float) (basePrice * 1.8);
-    }
 
     /**
-     * @param basePrice
-     * @return
+     * College Student has to pay his school tuition every turn.
      */
+    @Override
+    public void applyTurnEffects() {
+        this.deductMoney(100);
+        System.out.println("ah man, the tuition goes up again!");
+    }
+
+    @Override
+    public float adjustStockBuyPrice(float basePrice) {
+        return basePrice * 0.90f;
+    }
+
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return (float) (basePrice * 0.8);
-    }
-    /**
-     * @param baseRent
-     * @return
-     */
-    @Override
-    public float adjustRent(float baseRent) {
-        return (float) (baseRent * 1.8);
+        return basePrice * 1.3f;
     }
 }

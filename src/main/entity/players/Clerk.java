@@ -5,8 +5,8 @@ import java.awt.*;
 
 import static main.Constants.Constants.*;
 
-public class clerk extends Player implements applyAfterEffects {
-    public clerk(String name, Color color) {
+public class Clerk extends Player implements applyAfterEffects {
+    public Clerk(String name, Color color) {
         super(name, CLERK_INIT_MONEY, color);
         this.loadPortrait(CLERK_POR);
     }

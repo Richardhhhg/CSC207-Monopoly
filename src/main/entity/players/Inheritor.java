@@ -4,12 +4,18 @@ import main.entity.Stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.*;
+import static main.Constants.Constants.INHERITOR_INIT_MONEY;
+import static main.Constants.Constants.INH_POR;
 
-public class collegeStudent extends Player implements applyAfterEffects, StockModifier{
-    public collegeStudent(String name, Color color) {
-        super(name, STUDENT_INIT_MONEY,color);
-        this.loadPortrait(CS_POR);
+/**
+ * A special type of Player called "Inheritor".
+ * This character pays more for stocks but may later get passive bonuses.
+ * Starts with $1000.
+ */
+public class Inheritor extends Player implements StockModifier{
+    public Inheritor(String name, Color color) {
+        super(name, INHERITOR_INIT_MONEY, color);
+        this.loadPortrait(INH_POR);
     }
 
     @Override
@@ -32,23 +38,25 @@ public class collegeStudent extends Player implements applyAfterEffects, StockMo
         }
     }
 
-
     /**
-     * College Student has to pay his school tuition every turn.
+     * Inheritors pay 10% more than the base price when buying stocks.
+     *
+     * @param basePrice The base stock price.
+     * @return The adjusted stock buy price.
      */
     @Override
-    public void applyTurnEffects() {
-        this.deductMoney(100);
-        System.out.println("ah man, the tuition goes up again!");
-    }
-
-    @Override
     public float adjustStockBuyPrice(float basePrice) {
-        return basePrice * 0.90f;
+        return (float) (basePrice * 1.1); // Pays 10% more when buying
     }
 
+    /**
+     * Inheritors receive no bonus when selling stocks (default 0 here; can be updated).
+     *
+     * @param basePrice The base stock price.
+     * @return The basePrice.
+     */
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return basePrice * 1.3f;
+        return (float) (basePrice * 0.7);
     }
 }

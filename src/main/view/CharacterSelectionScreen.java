@@ -1,5 +1,6 @@
 package main.view;
 
+import main.app.GameHolder;
 import main.entity.Game;
 import main.entity.players.*;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
@@ -97,6 +98,9 @@ public class CharacterSelectionScreen extends JFrame {
                 GameLaunchOutputData data = presenter.getLaunchOutputData();
                 GameLauncher launcher = new GameLauncher();
                 Game game = launcher.launch(data);
+                GameHolder.setGame(game);
+                dispose();
+                new GameView().setVisible(true);
                 dispose();
                 new GameView().setVisible(true);
             } else {

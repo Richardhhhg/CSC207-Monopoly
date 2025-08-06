@@ -27,19 +27,16 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
     @Override
     public void confirmSelection() {
-        List<String> names = new ArrayList<>();
-        List<String> types = new ArrayList<>();
-        List<String> colors = new ArrayList<>();
-
+        List<PlayerOutputData> outputDataList = new ArrayList<>();
         for (Player p : selectPlayers) {
             if (!p.isNullPlayer()) {
-                names.add(p.getName());
-                types.add(p.getClass().getSimpleName()); // e.g. "Landlord"
-                colors.add(p.getColor().toString());     // Convert color to string like "java.awt.Color[r=255,g=0,b=0]"
+                String name = p.getName();
+                String type = p.getClass().getSimpleName();
+                Color color = p.getColor();
+                outputDataList.add(new PlayerOutputData(name, type, color));
             }
         }
-
-        presenter.prepareLaunchData(names, types, colors);
+        presenter.prepareLaunchData(outputDataList);
     }
 
     @Override
@@ -58,10 +55,10 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
         Color color = colors[index];
         return switch (type) {
-            case "Clerk" -> new clerk(name, color);
-            case "Landlord" -> new landlord(name, color);
-            case "Inheritor" -> new inheritor(name, color);
-            case "College Student" -> new collegeStudent(name, color);
+            case "Clerk" -> new Clerk(name, color);
+            case "Landlord" -> new Landlord(name, color);
+            case "Inheritor" -> new Inheritor(name, color);
+            case "College Student" -> new CollegeStudent(name, color);
             case "Poor Man" -> new PoorMan(name, color);
             default -> new NullPlayer();
         };

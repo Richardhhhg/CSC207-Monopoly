@@ -17,12 +17,12 @@ public class GameLauncher {
         for (int i = 0; i < data.getPlayerNames().size(); i++) {
             String name = data.getPlayerNames().get(i);
             String type = data.getPlayerTypes().get(i);
-            Color color = Color.decode(data.getPlayerColors().get(i)); // You can define a better mapping
+            Color color = Color.decode(data.getPlayerColors().get(i));
             Player p = switch (type) {
-                case "Clerk" -> new clerk(name, color);
-                case "Landlord" -> new landlord(name, color);
-                case "Inheritor" -> new inheritor(name, color);
-                case "CollegeStudent" -> new collegeStudent(name, color);
+                case "Clerk" -> new Clerk(name, color);
+                case "Landlord" -> new Landlord(name, color);
+                case "Inheritor" -> new Inheritor(name, color);
+                case "CollegeStudent" -> new CollegeStudent(name, color);
                 case "PoorMan" -> new PoorMan(name, color);
                 default -> new NullPlayer();
             };
