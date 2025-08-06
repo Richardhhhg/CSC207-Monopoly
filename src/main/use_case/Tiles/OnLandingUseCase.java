@@ -2,9 +2,11 @@ package main.use_case.Tiles;
 
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.use_case.Tile;
+import main.entity.tiles.StockMarketTile;
+import main.entity.tiles.Tile;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tiles.Property.RentPaymentUseCase;
+import main.view.StockMarketView;
 
 public class OnLandingUseCase {
     private final PropertyPurchaseUseCase propertyPurchaseUseCase;
@@ -20,8 +22,9 @@ public class OnLandingUseCase {
         if (tile instanceof PropertyTile) {
             PropertyTile property = (PropertyTile) tile;
             handlePropertyLanding(player, property);
+        } else if (tile instanceof StockMarketTile) {
+            handleStockMarketTileLanding(player);
         }
-        // Future: Add other tile types (RailroadTile, UtilityTile, etc.)
     }
 
     private void handlePropertyLanding(Player player, PropertyTile property) {
@@ -36,5 +39,10 @@ public class OnLandingUseCase {
             rentPaymentUseCase.execute(player, property.getOwner(), property, rent);
         }
         // If player owns the property, nothing happens
+    }
+
+    private void handleStockMarketTileLanding(Player player) {
+        StockMarketView stockMarketView = new StockMarketView(player);
+        stockMarketView.setVisible(true);
     }
 }

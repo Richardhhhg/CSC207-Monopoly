@@ -25,8 +25,6 @@ public class Constants {
     public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
     public static final int STOCK_MARKET_WIDTH = 800;
     public static final int STOCK_MARKET_HEIGHT = 400;
-    public static final int STARTER_PCT_CHANGE = 0;
-    public static final int STARTER_QUANTITY = 0;
     public static final int STOCK_MKT_PADDING = 10;
 
     public static final int STOCK_WIDTH = 1600;
@@ -39,7 +37,6 @@ public class Constants {
     // API Constants
     public static final String STOCK_API_URL = "https://www.alphavantage.co/query";
     public static final int YEARS_OF_DATA = 5;
-    public static final int API_RATE_LIMIT_DELAY_MS = 12000;
 
     // Math
     public static final double PERCENTAGE_MULTIPLIER = 100.0;
@@ -47,7 +44,10 @@ public class Constants {
     // Bonus Money
     public static final float FINISH_LINE_BONUS = 200.0F;
 
-    // PlayerStatesView
+    // Player Drawing
+    public static final int PLAYER_SIZE = 25;
+
+    // PlayerStatsView
     public static final int DIMENSION_DE_LA_PSV_H = 200;
     public static final int DIMENSION_DE_LA_PSV_W = 200;
 
