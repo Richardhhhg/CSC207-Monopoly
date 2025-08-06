@@ -42,7 +42,7 @@ public class OnLandingUseCase {
     }
 
     private void handleStockMarketTileLanding(Player player) {
-        StockMarketView stockMarketView = new StockMarketView(player);
+        StockMarketView stockMarketView = new StockMarketView(player, true);
         stockMarketView.setVisible(true);
     }
 }

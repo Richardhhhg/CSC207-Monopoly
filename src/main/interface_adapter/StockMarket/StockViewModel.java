@@ -9,10 +9,12 @@ import main.entity.players.Player;
 public class StockViewModel {
     private final Stock stock;
     private final Player player;
+    private final boolean allowBuy;
 
-    public StockViewModel(Stock stock, Player player) {
+    public StockViewModel(Stock stock, Player player, boolean allowBuy) {
         this.stock = stock;
         this.player = player;
+        this.allowBuy = allowBuy;
     }
 
     public String getTicker() {
@@ -37,5 +39,9 @@ public class StockViewModel {
     
     public Stock getStock() {
         return stock;
+    }
+
+    public boolean isAllowBuy() {
+        return allowBuy;
     }
 }
