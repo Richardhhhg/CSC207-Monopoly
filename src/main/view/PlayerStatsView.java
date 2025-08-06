@@ -7,7 +7,7 @@ import main.interface_adapter.PlayerStats.DisplayProperty;
 import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.*;//
 import java.util.List;
 
 /**
