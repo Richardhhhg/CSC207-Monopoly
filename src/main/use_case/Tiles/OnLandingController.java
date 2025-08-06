@@ -1,7 +1,7 @@
 package main.use_case.Tiles;
 
 import main.entity.players.Player;
-import main.use_case.Tile;
+import main.entity.tiles.Tile;
 
 public class OnLandingController {
     private final OnLandingUseCase onLandingUseCase;
