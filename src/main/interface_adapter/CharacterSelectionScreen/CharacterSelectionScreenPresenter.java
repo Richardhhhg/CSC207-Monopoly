@@ -19,7 +19,7 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
     @Override
     public void launchGame(List<Player> players) {
         Game game = gameLauncher.launch(players);
-        GameView gameView = new GameView(game);
+        GameView gameView = new GameView();
         gameView.setVisible(true);
     }
 }
