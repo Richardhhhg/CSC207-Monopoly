@@ -8,7 +8,7 @@ import java.awt.*;
 public class StockMarketTileView extends TileView {
     public StockMarketTileView(StockMarketTileViewModel viewModel) {
         super(viewModel);
-        this.setBackground(Color.GREEN);
+        this.setBackground(new Color(29, 145, 56, 128));
         this.setLayout(new BorderLayout());
 
         mainLabel = new JLabel(this.name, SwingConstants.CENTER);

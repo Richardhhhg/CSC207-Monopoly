@@ -9,7 +9,7 @@ import java.awt.*;
 public class GoTileView extends TileView {
     public GoTileView(GoTileViewModel viewModel) {
         super(viewModel);
-        this.setBackground(Color.RED);
+        this.setBackground(new Color(209, 48, 48, 128));
         this.setLayout(new BorderLayout());
 
         mainLabel = new JLabel("GO", SwingConstants.CENTER);
