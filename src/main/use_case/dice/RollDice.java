@@ -2,13 +2,15 @@ package main.use_case.dice;
 
 import java.util.Random;
 
+import main.Constants.Constants;
+
 /**
  * Use case that performs a roll of two dice.
  */
 public class RollDice {
 
     /** Number of sides on each die. */
-    private static final int SIDES = 6;
+    private static final int SIDES = Constants.DICE_SIDES;
     private final Random random;
 
     public RollDice() {
