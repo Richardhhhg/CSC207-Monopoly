@@ -2,17 +2,28 @@ package main.use_case.dice;
 
 import java.util.Random;
 
+/**
+ * Use case that performs a roll of two dice.
+ */
 public class RollDice {
+
+    /** Number of sides on each die. */
+    private static final int SIDES = 6;
     private final Random random;
 
     public RollDice() {
         this.random = new Random();
     }
 
+    /**
+     * Rolls two dice and returns both values plus their sum.
+     *
+     * @return a {@link DiceResult} containing the two individual die results and their sum
+     */
     public DiceResult execute() {
-        int dice1 = random.nextInt(6) + 1;
-        int dice2 = random.nextInt(6) + 1;
-        int sum = dice1 + dice2;
+        final int dice1 = random.nextInt(SIDES) + 1;
+        final int dice2 = random.nextInt(SIDES) + 1;
+        final int sum = dice1 + dice2;
 
         return new DiceResult(dice1, dice2, sum);
     }
@@ -28,8 +39,16 @@ public class RollDice {
             this.sum = sum;
         }
 
-        public int getDice1() { return dice1; }
-        public int getDice2() { return dice2; }
-        public int getSum() { return sum; }
+        public int getDice1() {
+            return dice1;
+        }
+
+        public int getDice2() {
+            return dice2;
+        }
+
+        public int getSum() {
+            return sum;
+        }
     }
 }
