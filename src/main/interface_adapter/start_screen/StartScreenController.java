@@ -1,6 +1,6 @@
 package main.interface_adapter.start_screen;
 
-import main.use_case.StartScreen.StartGame;
+import main.use_case.start_screen.StartGame;
 
 public class StartScreenController {
     private final StartGame startGameUseCase;
