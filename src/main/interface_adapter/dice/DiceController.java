@@ -9,6 +9,11 @@ public class DiceController {
         this.rollDiceUseCase = new RollDice();
     }
 
+    /**
+     * Executes the dice roll and returns the outcome.
+     *
+     * @return a {RollDice.DiceResult} representing the rolled values
+     */
     public RollDice.DiceResult execute() {
         return rollDiceUseCase.execute();
     }
