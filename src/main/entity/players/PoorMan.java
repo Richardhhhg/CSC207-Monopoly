@@ -1,10 +1,10 @@
 package main.entity.players;
 
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.POORMAN_INIT_MONEY;
+import static main.constants.constants.POORMAN_INIT_MONEY;
 
 public class PoorMan extends Player implements  applyAfterEffects {
     public PoorMan(String name, Color color) {

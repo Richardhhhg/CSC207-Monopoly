@@ -4,7 +4,7 @@ import main.entity.players.rentModifier;
 import main.entity.Game;
 import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
-import main.Constants.Constants;
+import main.constants.constants;
 
 import java.awt.*;
 import java.util.List;
@@ -21,7 +21,7 @@ public class BoardRenderer {
         int startX = 50;
         int startY = 8;
         int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
-        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
+        int tileSize = constants.BOARD_SIZE / tilesPerSide;
 
         // Draw properties
         drawProperties(g2d, game.getTiles(), game, startX, startY, tileSize);
@@ -124,8 +124,8 @@ public class BoardRenderer {
     private void drawDice(Graphics2D g2d, DiceAnimator diceAnimator,
                           int startX, int startY, int tileSize) {
         // Centre of the board
-        int centerX = startX + Constants.BOARD_SIZE/2;
-        int centerY = startY + Constants.BOARD_SIZE/2;
+        int centerX = startX + constants.BOARD_SIZE/2;
+        int centerY = startY + constants.BOARD_SIZE/2;
 
         int diceSize = tileSize;
         int gap = 10;
@@ -156,8 +156,8 @@ public class BoardRenderer {
                                     int startX, int startY, int tileSize) {
         if (currentPlayer == null || currentPlayer.getPortrait() == null) return;
 
-        int centerX = startX + Constants.BOARD_SIZE/2;
-        int centerY = startY + Constants.BOARD_SIZE/2;
+        int centerX = startX + constants.BOARD_SIZE/2;
+        int centerY = startY + constants.BOARD_SIZE/2;
         int diceSize = tileSize;
         int gap = 10;
         int x1 = centerX - diceSize - gap/2;

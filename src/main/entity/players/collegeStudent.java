@@ -1,11 +1,10 @@
 package main.entity.players;
 
-import main.entity.Stocks.Stock;
-import main.entity.tiles.PropertyTile;
+import main.entity.stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.STUDENT_INIT_MONEY;
+import static main.constants.constants.STUDENT_INIT_MONEY;
 
 public class collegeStudent extends Player implements applyAfterEffects, StockModifier{
     public collegeStudent(String name, Color color) {

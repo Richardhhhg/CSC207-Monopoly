@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static main.Constants.Constants.DIMENSION_DE_LA_PSV_W;
-import static main.Constants.Constants.DIMENSION_DE_LA_PSV_H;
+import static main.constants.constants.DIMENSION_DE_LA_PSV_W;
+import static main.constants.constants.DIMENSION_DE_LA_PSV_H;
 
 public class PlayerStatsView extends JPanel{
     private List<Player> players;

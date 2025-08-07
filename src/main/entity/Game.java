@@ -1,6 +1,6 @@
 package main.entity;
 
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 import main.entity.tiles.PropertyTile;
 import main.use_case.Game.GameInitializePlayers;
 import main.use_case.Game.GameInitializeStocks;
@@ -11,7 +11,7 @@ import main.entity.tiles.Tile;
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import static main.constants.constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.

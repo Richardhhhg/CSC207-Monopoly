@@ -3,8 +3,8 @@ package main.interface_adapter;
 import java.beans.PropertyChangeSupport;
 
 /**
- * A viewmodel class that is meant to detect changes in the model
- * and change the main.view accordingly
+ * A viewmodel class that is meant to detect changes in the model.
+ * and change the main.view accordingly.
  *
  * @param <T> The type of the model that this ViewModel is associated with
  */

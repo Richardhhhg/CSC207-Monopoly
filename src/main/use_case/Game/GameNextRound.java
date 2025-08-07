@@ -1,11 +1,11 @@
 package main.use_case.Game;
 
 import main.entity.Game;
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 
 import java.util.List;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import static main.constants.constants.MAX_ROUNDS;
 
 /**
  * This is a use case of game for advancing to the next round.

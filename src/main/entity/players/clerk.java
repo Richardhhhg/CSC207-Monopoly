@@ -1,11 +1,9 @@
 package main.entity.players;
 
-import main.entity.Stocks.Stock;
-
 import java.awt.*;
 
-import static main.Constants.Constants.CLERK_ADD_MONEY;
-import static main.Constants.Constants.CLERK_INIT_MONEY;
+import static main.constants.constants.CLERK_ADD_MONEY;
+import static main.constants.constants.CLERK_INIT_MONEY;
 
 public class clerk extends Player implements applyAfterEffects {
     public clerk(String name, Color color) {

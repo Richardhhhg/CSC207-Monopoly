@@ -4,7 +4,7 @@ import main.entity.tiles.PropertyTile;
 import main.entity.players.Player;
 import main.entity.*;
 import main.use_case.Game.GameNextTurn;
-import main.Constants.Constants;
+import main.constants.constants;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.entity.tiles.Tile;
 import main.use_case.Game.GameMoveCurrentPlayer;
@@ -15,6 +15,7 @@ import main.interface_adapter.Property.RentPaymentController;
 import main.use_case.Tiles.OnLandingUseCase;
 import main.use_case.Tiles.OnLandingController;
 import main.use_case.Tiles.Property.RentPaymentUseCase;
+import main.view.stocks.StockMarketView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,8 +72,8 @@ public class BoardView extends JPanel {
         OnLandingUseCase onLandingUseCase = new OnLandingUseCase(propertyPurchaseUseCase, rentPaymentUseCase);
         this.onLandingController = new OnLandingController(onLandingUseCase);
 
-        setPreferredSize(new java.awt.Dimension(Constants.BOARD_PANEL_WIDTH,
-                Constants.BOARD_PANEL_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(constants.BOARD_PANEL_WIDTH,
+                constants.BOARD_PANEL_HEIGHT));
         setupUI();
     }
 
@@ -82,7 +83,7 @@ public class BoardView extends JPanel {
 
     private void setupUI() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
+        setPreferredSize(new Dimension(constants.BOARD_PANEL_WIDTH, constants.BOARD_PANEL_HEIGHT));
 
         // Create board panel
         JPanel boardPanel = new JPanel() {
@@ -92,7 +93,7 @@ public class BoardView extends JPanel {
                 boardRenderer.drawBoard(g, game, diceAnimator);
             }
         };
-        boardPanel.setPreferredSize(new Dimension(Constants.BOARD_PANEL_WIDTH, Constants.BOARD_PANEL_HEIGHT));
+        boardPanel.setPreferredSize(new Dimension(constants.BOARD_PANEL_WIDTH, constants.BOARD_PANEL_HEIGHT));
         boardPanel.setBackground(Color.LIGHT_GRAY);
 
         add(boardPanel, BorderLayout.WEST);

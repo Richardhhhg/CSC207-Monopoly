@@ -1,11 +1,10 @@
 package main.entity.players;
 
-import main.entity.tiles.PropertyTile;
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.LANDLORD_INIT_MONEY;
+import static main.constants.constants.LANDLORD_INIT_MONEY;
 
 /**
  * A Player subclass representing a Landlord.

@@ -1,5 +1,7 @@
 package main.view;
 
+import main.view.stocks.StockMarketView;
+
 import javax.swing.*;
 import java.awt.*;
 
