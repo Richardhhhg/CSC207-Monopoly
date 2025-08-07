@@ -1,4 +1,4 @@
-package main.interface_adapter.Dice;
+package main.interface_adapter.dice;
 
 import main.use_case.Dice.RollDice;
 
