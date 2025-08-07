@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="updated now clean architecture">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/PlayerOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/PlayerOutputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,22 +63,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "996b4463-4bb6-4344-8d71-fd060cb98fce"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
+    &quot;accountId&quot;: &quot;996b4463-4bb6-4344-8d71-fd060cb98fce&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Richardhhhg",
-    "repository": "CSC207-Monopoly"
+    &quot;owner&quot;: &quot;Richardhhhg&quot;,
+    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -104,7 +102,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "Cleaning",
+    "git-widget-placeholder": "#103 on david-character-sele-screen",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -117,6 +115,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wdebg\OneDrive\Desktop\dfrgthy\src\main\Resources\DicePicture" />
+      <recent name="C:\Users\wdebg\OneDrive\Desktop\dfrgthy\src\main\Resources\CharacterPortrait" />
       <recent name="$PROJECT_DIR$/src/main/Resources" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -209,7 +209,31 @@
       <option name="project" value="LOCAL" />
       <updated>1753990384291</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="css now compatable with the rest">
+      <option name="closed" value="true" />
+      <created>1754518875035</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754518875035</updated>
+    </task>
+    <task id="LOCAL-00010" summary="updated now clean architecture">
+      <option name="closed" value="true" />
+      <created>1754565244721</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1754565244721</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated now clean architecture">
+      <option name="closed" value="true" />
+      <created>1754567115566</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1754567115566</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +259,8 @@
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
     <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
+    <MESSAGE value="css now compatable with the rest" />
+    <MESSAGE value="updated now clean architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated now clean architecture" />
   </component>
 </project>
