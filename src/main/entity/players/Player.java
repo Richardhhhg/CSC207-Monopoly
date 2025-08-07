@@ -39,6 +39,7 @@ public abstract class Player {
     public Player() {
         this.isNullPlayer = true;
         this.portrait = null;
+        this.stocks = new HashMap<>();
     }
 
     public String getName() {

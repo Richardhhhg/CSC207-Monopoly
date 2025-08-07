@@ -40,7 +40,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         List<PlayerOutputData> outputList = new ArrayList<>();
         for (Player p : selectedPlayers) {
             if (!p.isNullPlayer()) {
-                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(), p.getColor()));
+                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(), p.getColor(), p.getPortrait()));
             }
         }
         presenter.prepareLaunchData(outputList);
@@ -68,7 +68,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
         Player player = CharacterFactory.createPlayer(name, type, color);
         selectedPlayers.set(index, player);
-        PlayerOutputData output = new PlayerOutputData(name, type, color);
+        PlayerOutputData output = new PlayerOutputData(name, type, color, player.getPortrait());
         presenter.preparePlayer(output, index);
     }
 }

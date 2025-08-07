@@ -59,8 +59,11 @@ public class CharacterSelectionScreen extends JFrame {
             characterDropdown.setMaximumSize(new Dimension(150, 25));
             characterDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            Player defaultPlayer = CharacterFactory.createPlayer(nameField.getText(), "None", getDefaultColor(idx));
-            portraitLabel.setIcon(new ImageIcon(defaultPlayer.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
+            controller.selectPlayer(idx, "Player " + (idx + 1), "None");
+            PlayerOutputData data = viewModel.getPlayerData(idx);
+            if (data != null && data.getPortrait() != null) {
+                portraitLabel.setIcon(new ImageIcon(data.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
+            }
 
             selections.add(new PlayerSelection(nameField, characterDropdown, portraitLabel));
 
@@ -120,13 +123,10 @@ public class CharacterSelectionScreen extends JFrame {
         controller.selectPlayer(index, name, type);
 
         PlayerOutputData data = viewModel.getPlayerData(index);
-        if (data != null) {
-            Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
-            if (player.getPortrait() != null) {
-                portraitLabel.setIcon(new ImageIcon(player.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
-            } else {
-                portraitLabel.setIcon(null);
-            }
+        if (data != null && data.getPortrait() != null) {
+            portraitLabel.setIcon(new ImageIcon(data.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
+        } else {
+            portraitLabel.setIcon(null);
         }
     }
 
