@@ -60,4 +60,10 @@ public class Constants {
     public static final int POORMAN_INIT_MONEY = 200;
 
     public static final int CLERK_ADD_MONEY = 50;
+
+    // End Screen Constants
+    public static final String DECIMAL_FORMAT = "%.2f";
+    public static final String STATUS_BANKRUPT = "BANKRUPT";
+    public static final String STATUS_SOLVENT = "SOLVENT";
+    public static final String WINNER_PREFIX = " WINNER: ";
 }

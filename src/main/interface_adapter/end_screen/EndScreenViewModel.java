@@ -1,7 +1,8 @@
 package main.interface_adapter.end_screen;
 
-import main.entity.players.Player;
 import java.util.List;
+
+import main.entity.players.Player;
 
 public class EndScreenViewModel {
     private final String gameOverTitle;
@@ -24,13 +25,33 @@ public class EndScreenViewModel {
         this.exitButtonText = exitButtonText;
     }
 
-    public String getGameOverTitle() { return gameOverTitle; }
-    public String getGameEndReason() { return gameEndReason; }
-    public String getTotalRoundsText() { return totalRoundsText; }
-    public String getWinnerText() { return winnerText; }
-    public List<PlayerDisplayData> getPlayerDisplayData() { return playerDisplayData; }
-    public String getNewGameButtonText() { return newGameButtonText; }
-    public String getExitButtonText() { return exitButtonText; }
+    public String getGameOverTitle() {
+        return gameOverTitle;
+    }
+
+    public String getGameEndReason() {
+        return gameEndReason;
+    }
+
+    public String getTotalRoundsText() {
+        return totalRoundsText;
+    }
+
+    public String getWinnerText() {
+        return winnerText;
+    }
+
+    public List<PlayerDisplayData> getPlayerDisplayData() {
+        return playerDisplayData;
+    }
+
+    public String getNewGameButtonText() {
+        return newGameButtonText;
+    }
+
+    public String getExitButtonText() {
+        return exitButtonText;
+    }
 
     public static class PlayerDisplayData {
         private final Player player;
