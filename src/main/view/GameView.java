@@ -1,24 +1,15 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.entity.Game;
 import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
-import main.entity.tiles.Tile;
 import main.interface_adapter.PlayerStats.PlayerStatsController;
 import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
 import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.interface_adapter.Property.PropertyPresenter;
-import main.interface_adapter.Property.PropertyPurchaseController;
-import main.interface_adapter.Property.PropertyViewModel;
-import main.interface_adapter.Property.RentPaymentController;
 import main.use_case.Game.GameMoveCurrentPlayer;
 import main.use_case.Game.GameNextTurn;
 import main.use_case.PlayerStats.PlayerStatsInteractor;
-import main.use_case.Tiles.OnLandingController;
-import main.use_case.Tiles.OnLandingUseCase;
-import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
-import main.use_case.Tiles.Property.RentPaymentUseCase;
+import main.view.stock.StockMarketView;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package main.use_case.Game;
 import main.entity.Game;
 import main.entity.players.Player;
 
-import static main.Constants.Constants.FINISH_LINE_BONUS;
+import static main.constants.Constants.FINISH_LINE_BONUS;
 
 public class GameMoveCurrentPlayer  {
     private final Game game;

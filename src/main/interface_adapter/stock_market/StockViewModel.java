@@ -1,7 +1,7 @@
-package main.interface_adapter.StockMarket;
+package main.interface_adapter.stock_market;
 
-import main.entity.Stocks.Stock;
 import main.entity.players.Player;
+import main.entity.stocks.Stock;
 
 /**
  * Viewmodel for Individual Stock held by a player.

@@ -1,9 +1,11 @@
-package main.entity.Stocks;
+package main.entity.stocks;
 
-import main.Constants.Constants;
-import org.apache.commons.math3.distribution.NormalDistribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import org.apache.commons.math3.distribution.NormalDistribution;
+
+import main.constants.Constants;
 
 public class Stock {
     private final String symbol;
@@ -24,14 +26,17 @@ public class Stock {
         this.percentChange = 0;
     }
 
+    /**
+     * Updates price of stock according to its distribution.
+     */
     public void updatePrice() {
-        double percent_change = pctChangeDistribution.sample();
+        final double percentChangeSample = pctChangeDistribution.sample();
 
-        double newPrice = currentPrice * (1 + percent_change / Constants.PERCENTAGE_MULTIPLIER);
+        final double newPrice = currentPrice * (1 + percentChangeSample / Constants.PERCENTAGE_MULTIPLIER);
 
-        BigDecimal newPriceRounded = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
+        final BigDecimal newPriceRounded = BigDecimal.valueOf(newPrice).setScale(2, RoundingMode.HALF_UP);
         this.currentPrice = newPriceRounded.doubleValue();
-        this.percentChange = percent_change;
+        this.percentChange = percentChangeSample;
     }
 
     public Double getCurrentPrice() {

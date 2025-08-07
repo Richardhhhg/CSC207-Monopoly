@@ -1,12 +1,8 @@
 package main.entity.players;
 
-import main.entity.Stocks.Stock;
-import main.entity.players.Player;
-import main.entity.Stocks.Stock;
-
 import java.awt.*;
 
-import static main.Constants.Constants.DEFAULT_INIT_MONEY;
+import static main.constants.Constants.DEFAULT_INIT_MONEY;
 
 public class DefaultPlayer extends Player {
 

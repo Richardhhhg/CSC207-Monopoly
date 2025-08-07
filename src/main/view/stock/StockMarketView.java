@@ -1,25 +1,28 @@
-package main.view;
+package main.view.stock;
 
-import main.Constants.Constants;
-import main.data_access.StockMarket.DefaultStockInfoRepository;
-import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.players.DefaultPlayer;
-import main.entity.players.Player;
-import main.entity.Stocks.Stock;
-import main.interface_adapter.StockMarket.StockViewModel;
-import main.entity.Stocks.Stock;
-import main.entity.players.Player;
-import main.interface_adapter.StockMarket.StockPresenter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.util.Map;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
+import main.constants.Constants;
+import main.entity.players.Player;
+import main.entity.stocks.Stock;
+import main.interface_adapter.stock_market.StockPresenter;
+import main.interface_adapter.stock_market.StockViewModel;
 
 /**
  * StockMarketView is a JFrame that represents the stock market view in the application.
  */
 public class StockMarketView extends JFrame {
+    private static final int STOCK_COLUMNS = 7;
+
     /**
      * Constructor for StockMarketView that initializes the view with a map of stocks and their owned quantities.
      *
@@ -28,13 +31,13 @@ public class StockMarketView extends JFrame {
      */
     public StockMarketView(Player player, boolean allowBuy) {
         super("Stock Market");
-        Map<Stock, Integer> stockQuantities = player.getStocks();
+        final Map<Stock, Integer> stockQuantities = player.getStocks();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(Constants.STOCK_MARKET_WIDTH, Constants.STOCK_MARKET_HEIGHT);
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
 
-        JPanel mainPanel = new JPanel();
+        final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(),
@@ -43,25 +46,24 @@ public class StockMarketView extends JFrame {
                 TitledBorder.TOP
         ));
 
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridLayout(1, 7)); // 7 columns
+        final JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new GridLayout(1, STOCK_COLUMNS));
 
         headerPanel.add(new JLabel("Symbol"));
         headerPanel.add(new JLabel("Price"));
         headerPanel.add(new JLabel("Change %"));
         headerPanel.add(new JLabel("Owned"));
-        headerPanel.add(new JLabel("")); // Buy button slot
-        headerPanel.add(new JLabel("")); // Sell button slot
+        headerPanel.add(new JLabel(""));
+        headerPanel.add(new JLabel(""));
         headerPanel.add(new JLabel("Quantity"));
 
         mainPanel.add(headerPanel);
         mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
 
-        // TODO: This should create a presenter for the stock which then creates a StockViewModel - Richard
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
-            Stock stock = entry.getKey();
-            StockViewModel stockViewModel = new StockPresenter().execute(stock, player, allowBuy);
-            StockView stockview = new StockView(
+            final Stock stock = entry.getKey();
+            final StockViewModel stockViewModel = new StockPresenter().execute(stock, player, allowBuy);
+            final StockView stockview = new StockView(
                     stockViewModel
             );
             mainPanel.add(stockview);

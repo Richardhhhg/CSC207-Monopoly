@@ -1,4 +1,4 @@
-package main.Constants;
+package main.constants;
 
 public class Config {
     private static final String API_KEY;

@@ -3,7 +3,7 @@ package main.view;
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.entity.tiles.Tile;
 
 import java.util.HashMap;

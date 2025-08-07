@@ -1,13 +1,13 @@
 package main.use_case.Game;
 
-import main.Constants.Config;
-import main.Constants.Constants;
-import main.data_access.StockMarket.DefaultStockInfoRepository;
-import main.data_access.StockMarket.StockInfoDataOutputObject;
+import main.constants.Config;
+import main.constants.Constants;
+import main.data_access.stock_market.DefaultStockInfoRepository;
+import main.data_access.stock_market.StockInfoDataOutputObject;
 import main.entity.Game;
-import main.entity.Stocks.Stock;
-import main.data_access.StockMarket.APIStockInfoRepository;
-import main.interface_adapter.StockMarket.StockFactory;
+import main.entity.stocks.Stock;
+import main.data_access.stock_market.ApiStockInfoRepository;
+import main.interface_adapter.stock_market.StockFactory;
 import main.entity.players.Player;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class GameInitializeStocks {
         StockFactory stockFactory = new StockFactory();
 
         if (USE_API) {
-            APIStockInfoRepository stockInfoRetriever = new APIStockInfoRepository(Config.getApiKey());
+            ApiStockInfoRepository stockInfoRetriever = new ApiStockInfoRepository(Config.getApiKey());
             try {
                 List<String> tickers = stockInfoRetriever.loadTickerSymbols(Constants.STOCK_NAME_FILE);
                 for (String ticker : tickers) {

@@ -9,7 +9,7 @@ import main.entity.tiles.Tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static main.Constants.Constants.PLACEHOLDER_RENT;
+import static main.constants.Constants.PLACEHOLDER_RENT;
 
 /**
  * Use case for initializing tiles in the game.
