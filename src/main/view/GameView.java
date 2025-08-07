@@ -3,22 +3,12 @@ package main.view;
 import main.Constants.Constants;
 import main.entity.Game;
 import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
-import main.entity.tiles.Tile;
 import main.interface_adapter.PlayerStats.PlayerStatsController;
 import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
 import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.interface_adapter.Property.PropertyPresenter;
-import main.interface_adapter.Property.PropertyPurchaseController;
-import main.interface_adapter.Property.PropertyViewModel;
-import main.interface_adapter.Property.RentPaymentController;
 import main.use_case.Game.GameMoveCurrentPlayer;
 import main.use_case.Game.GameNextTurn;
 import main.use_case.PlayerStats.PlayerStatsInteractor;
-import main.use_case.Tiles.OnLandingController;
-import main.use_case.Tiles.OnLandingUseCase;
-import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
-import main.use_case.Tiles.Property.RentPaymentUseCase;
 
 import java.util.List;
 
@@ -50,22 +40,25 @@ public class GameView extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(Color.lightGray);
-        setLayout(null);
+
+        setLayout(new BorderLayout());
 
         this.diceAnimator = new DiceAnimator();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        setContentPane(layeredPane);
+        layeredPane.setPreferredSize(new Dimension(Constants.GAME_WIDTH, Constants.GAME_HEIGHT));
+
+        add(layeredPane, BorderLayout.CENTER);
 
         drawBoard();
         drawDice();
         drawPlayerPortrait();
         drawPlayers();
-        drawButtonPanel();
         drawStatsPanel();
+
+        drawButtonPanel();
 
         setVisible(true);
     }
@@ -89,7 +82,6 @@ public class GameView extends JFrame{
 
         DiceView diceView = new DiceView(diceAnimator, tileSize);
 
-        // Center the DiceView
         int viewWidth = diceView.getWidth();
         int viewHeight = diceView.getHeight();
         diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
@@ -113,17 +105,20 @@ public class GameView extends JFrame{
                     repaint();
                 }
                 );
-        buttonPanelView.setBounds(Constants.GAME_WIDTH-200, 0, 200, Constants.GAME_HEIGHT);
-        layeredPane.add(buttonPanelView, Integer.valueOf(4));
-        layeredPane.repaint();
+        for (Component c : getContentPane().getComponents()) {
+            if (c instanceof ButtonPanelView) {
+                remove(c);
+            }
+        }
+        add(buttonPanelView, BorderLayout.EAST);
+        revalidate();
+        repaint();
     }
 
-    // TODO: There is a lot of repeated code, fix it - Richard
     private void drawPlayerPortrait() {
         int startX = 50;
         int startY = 8;
 
-        // Remove existing portrait views (layer 2)
         Component[] components = layeredPane.getComponentsInLayer(2);
         for (Component c : components) {
             if (c instanceof PlayerPortraitView) {
@@ -164,10 +159,7 @@ public class GameView extends JFrame{
         layeredPane.repaint();
     }
 
-    // TODO: This should probably be like separate class - Richard
-    // TODO: This is really messy, fix later
     private void drawPlayers() {
-        // Remove old PlayerViews first
         Component[] components = layeredPane.getComponentsInLayer(1);
         for (Component c : components) {
             if (c instanceof PlayerView) {
@@ -175,7 +167,6 @@ public class GameView extends JFrame{
             }
         }
 
-        // Draw updated player views
         int startX = 50;
         int startY = 8;
         int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
@@ -185,7 +176,7 @@ public class GameView extends JFrame{
 
         for (Player player : players) {
             if (player.isBankrupt()) {
-                continue; // Skip bankrupt players
+                continue;
             }
             PlayerView playerView = new PlayerView(player.getColor());
             Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
@@ -195,7 +186,7 @@ public class GameView extends JFrame{
             layeredPane.add(playerView, Integer.valueOf(1));
         }
 
-        layeredPane.repaint();  // Important to trigger UI update
+        layeredPane.repaint();
     }
 
     private void displayStockMarket() {
@@ -206,9 +197,7 @@ public class GameView extends JFrame{
     private void handleRollDice() {
         ButtonPanelView.getRollDiceButton().setEnabled(false);
 
-        // Use DiceController for dice animation and logic
         diceAnimator.startDiceAnimation(
-                // TODO: This could probably just repaint the DiceView rather than the whole GameView - Richard
                 this::drawDice,
                 this::onDiceRollComplete // Completion callback
         );
@@ -218,13 +207,10 @@ public class GameView extends JFrame{
         Player currentPlayer = game.getCurrentPlayer();
         int diceSum = diceAnimator.getLastDiceSum();
 
-        // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
 
-        // Update player stats finish lap bonus
         refreshStats();
 
-        // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
                 currentPlayer,
                 diceSum,
@@ -274,7 +260,6 @@ public class GameView extends JFrame{
 
     private void showEndScreen() {
         this.setVisible(false);
-        // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
                     game.getPlayers(),
