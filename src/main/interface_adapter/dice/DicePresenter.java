@@ -1,6 +1,6 @@
 package main.interface_adapter.dice;
 
-import main.use_case.Dice.RollDice;
+import main.use_case.dice.RollDice;
 
 public class DicePresenter {
 
