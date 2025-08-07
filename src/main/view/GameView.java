@@ -184,6 +184,9 @@ public class GameView extends JFrame{
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
+            if (player.isBankrupt()) {
+                continue; // Skip bankrupt players
+            }
             PlayerView playerView = new PlayerView(player.getColor());
             Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
             int offsetX = (players.indexOf(player) % 2) * 20;
@@ -265,6 +268,7 @@ public class GameView extends JFrame{
 
         ButtonPanelView.getRollDiceButton().setEnabled(true);
         resetBoardView();
+        drawPlayers();
         repaint();
     }
 
