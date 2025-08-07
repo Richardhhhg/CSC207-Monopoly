@@ -23,8 +23,8 @@ public class CharacterSelectionScreen extends JFrame {
 
     public CharacterSelectionScreen() {
         var adapter = CharacterSelectionScreenAdapter.inject();
-        this.controller = adapter.controller;
-        this.viewModel = adapter.viewModel;
+        this.controller = adapter.getController();
+        this.viewModel = adapter.getViewModel();
         initializeScreen();
     }
 

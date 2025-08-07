@@ -1,6 +1,6 @@
 package main.entity.players;
 
-import java.awt.*;
+import java.awt.*; //fix
 
 public class CharacterFactory {
 

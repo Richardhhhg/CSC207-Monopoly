@@ -1,14 +1,14 @@
 package main.use_case.CharacterSelectionScreen;
 
-import main.entity.players.*;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
+import static main.Constants.Constants.MAX_NP_BAR;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static main.Constants.Constants.MAX_NP_BAR;
+import main.entity.players.*;
+import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 
 public class CharacterSelectionScreenInteractor implements CharacterSelectionInputBoundary {
     private final CharacterSelectionScreenOutputBoundary presenter;
@@ -40,7 +40,8 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         List<PlayerOutputData> outputList = new ArrayList<>();
         for (Player p : selectedPlayers) {
             if (!p.isNullPlayer()) {
-                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(), p.getColor(), p.getPortrait()));
+                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(),
+                        p.getColor(), p.getPortrait()));
             }
         }
         presenter.prepareLaunchData(outputList);

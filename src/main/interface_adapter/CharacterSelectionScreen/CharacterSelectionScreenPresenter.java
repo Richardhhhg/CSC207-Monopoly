@@ -1,8 +1,8 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
-import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenOutputBoundary;
-
 import java.util.List;
+
+import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenOutputBoundary;
 
 public class CharacterSelectionScreenPresenter implements CharacterSelectionScreenOutputBoundary {
     private final CharacterSelectionScreenViewModel viewModel;
@@ -10,7 +10,6 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
     public CharacterSelectionScreenPresenter(CharacterSelectionScreenViewModel viewModel) {
         this.viewModel = viewModel;
     }
-
 
     @Override
     public void prepareLaunchData(List<PlayerOutputData> players) {
@@ -25,6 +24,10 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
         viewModel.setPlayerData(index, data);
     }
 
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return stuff
+     */
     public CharacterSelectionScreenViewModel getViewModel() {
         return viewModel;
     }

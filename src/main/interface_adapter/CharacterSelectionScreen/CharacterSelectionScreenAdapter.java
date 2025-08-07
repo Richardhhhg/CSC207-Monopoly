@@ -6,14 +6,19 @@ import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenDataAccess
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenInteractor;
 
 public class CharacterSelectionScreenAdapter {
-    public final CharacterSelectionScreenController controller;
-    public final CharacterSelectionScreenViewModel viewModel;
+    private final CharacterSelectionScreenController controller;
+    private final CharacterSelectionScreenViewModel viewModel;
 
-    public CharacterSelectionScreenAdapter(CharacterSelectionScreenController controller, CharacterSelectionScreenViewModel viewModel) {
+    public CharacterSelectionScreenAdapter(CharacterSelectionScreenController controller,
+                                           CharacterSelectionScreenViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
     }
 
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return CharacterSelectionScreenAdapterBundle.
+     */
     public static CharacterSelectionScreenAdapterBundle inject() {
         CharacterSelectionScreenViewModel viewModel = new CharacterSelectionScreenViewModel();
         CharacterSelectionScreenPresenter presenter = new CharacterSelectionScreenPresenter(viewModel);
@@ -23,7 +28,4 @@ public class CharacterSelectionScreenAdapter {
 
         return new CharacterSelectionScreenAdapterBundle(controller, viewModel);
     }
-
 }
-
-

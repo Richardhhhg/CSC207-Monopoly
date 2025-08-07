@@ -8,6 +8,13 @@ public class PlayerOutputData {
     private final Color color;
     private final Image portrait;
 
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @param name name.
+     * @param type type.
+     * @param color color
+     * @param portrait portrait
+     */
     public PlayerOutputData(String name, String type, Color color, Image portrait) {
         this.name = name;
         this.type = type;
@@ -15,8 +22,35 @@ public class PlayerOutputData {
         this.portrait = portrait;
     }
 
-    public String getName() { return name; }
-    public String getType() { return type; }
-    public Color getColor() { return color; }
-    public Image getPortrait() { return portrait; }
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return PlayerOutputData name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return PlayerOutputData type.
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return PlayerOutputData color.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return PlayerOutputData portrait.
+     */
+    public Image getPortrait() {
+        return portrait;
+    }
 }

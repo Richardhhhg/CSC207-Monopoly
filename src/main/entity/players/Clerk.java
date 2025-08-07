@@ -1,7 +1,6 @@
 package main.entity.players;
 
-
-import java.awt.*;
+import java.awt.*;   //fix
 
 import static main.Constants.Constants.*;
 
@@ -12,7 +11,6 @@ public class Clerk extends Player implements applyAfterEffects {
     }
 
     /**
-     *
      * apply turn effect
      */
     @Override

@@ -5,15 +5,11 @@ import main.entity.Game;
 public class GameHolder {
     private static Game game;
 
-    public static void setGame(Game g) {
-        game = g;
+    public static void setGame(Game thisGame) {
+        game = thisGame;
     }
 
     public static Game getGame() {
         return game;
-    }
-
-    public static void clearGame() {
-        game = null;
     }
 }

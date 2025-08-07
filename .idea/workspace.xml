@@ -4,13 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="updated now clean architecture">
-      <change afterPath="$PROJECT_DIR$/src/main/view/PortraitProvider.java" afterDir="false" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/GameHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/GameHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +44,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="finishing_stocks" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,22 +78,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
-    &quot;accountId&quot;: &quot;996b4463-4bb6-4344-8d71-fd060cb98fce&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
+    "accountId": "5f9bc3f0-f956-404f-9b13-0cdd8d583502"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Richardhhhg&quot;,
-    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
+    "owner": "Richardhhhg",
+    "repository": "CSC207-Monopoly"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -89,32 +102,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BoardRenderer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.BoardView.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GameView.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MonopolyGame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PlayerView.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PropertyTileView.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TileView.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#103 on david-character-sele-screen&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BoardRenderer.executor": "Run",
+    "Application.BoardView.executor": "Run",
+    "Application.GameView.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MonopolyGame.executor": "Run",
+    "Application.PlayerView.executor": "Run",
+    "Application.PropertyTileView.executor": "Run",
+    "Application.TileView.executor": "Run",
+    "JUnit.CharacterSelectionScreenInteractorTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "#103 on david-character-sele-screen",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.infernus.idea.checkstyle.CheckStyleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\wdebg\OneDrive\Desktop\dfrgthy\src\main\Resources\DicePicture" />
@@ -123,11 +137,33 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="CharacterSelectionScreenInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.CharacterSelectScreen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.CharacterSelectScreen" />
+      <option name="MAIN_CLASS_NAME" value="use_case.CharacterSelectScreen.CharacterSelectionScreenInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CharacterSelectionScreenInteractorTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -146,6 +182,7 @@
       <workItem from="1753308904677" duration="5497000" />
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
+      <workItem from="1754592541463" duration="4596000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />
