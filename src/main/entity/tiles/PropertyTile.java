@@ -16,7 +16,7 @@ public class PropertyTile extends Tile {
      * @param price purchase price
      * @param rent  base rent amount
      */
-    public PropertyTile(String name, int price, int rent) {
+    public PropertyTile(String name, int price, float rent) {
         super(name);
         this.price = price;
         this.rent = rent;

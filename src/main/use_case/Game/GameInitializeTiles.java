@@ -56,7 +56,7 @@ public class GameInitializeTiles {
         for (int i = 0; i < propertyTiles; i++) {
             String propertyName = generatePropertyName(i + 1);
             int price = generatePropertyPrice(i + 1);
-            tiles.add(new PropertyTile(propertyName, price, PLACEHOLDER_RENT));
+            tiles.add(new PropertyTile(propertyName, price, Constants.PLACEHOLDER_RENT));
         }
 
         // Add stock market tiles distributed throughout the board

@@ -33,6 +33,7 @@ public class GameView extends JFrame{
     private PlayerStatsView statsPanel;
 
     private BoardView boardView;
+    private int tileSize;
 
     // TODO: There is a ton of coupling here, fix it
     public GameView() {
@@ -41,46 +42,43 @@ public class GameView extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(Color.lightGray);
-        setLayout(null);
+
+        setLayout(new BorderLayout());
 
         this.diceAnimator = new DiceAnimator();
         this.playerMovementAnimator = new PlayerMovementAnimator();
         this.gameMoveCurrentPlayer = new GameMoveCurrentPlayer(game);
 
         layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        setContentPane(layeredPane);
+        layeredPane.setPreferredSize(new Dimension(Constants.GAME_WIDTH, Constants.GAME_HEIGHT));
+
+        setTileSize();
+
+        add(layeredPane, BorderLayout.CENTER);
 
         drawBoard();
         drawDice();
         drawPlayerPortrait();
         drawPlayers();
-        drawButtonPanel();
         drawStatsPanel();
+
+        drawButtonPanel();
 
         setVisible(true);
     }
 
-    // TODO: This should probably be like separate class - Richard
     private void drawBoard() {
         boardView = new BoardView(game);
         boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         layeredPane.add(boardView, Integer.valueOf(0));
     }
 
-    // TODO: There is a lot of repeated code, fix it - Richard
     private void drawDice() {
-        int startX = 50;
-        int startY = 8;
-        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
-        int centerX = startX + Constants.BOARD_SIZE / 2;
-        int centerY = startY + Constants.BOARD_SIZE / 2;
+        int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+        int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
         DiceView diceView = new DiceView(diceAnimator, tileSize);
 
-        // Center the DiceView
         int viewWidth = diceView.getWidth();
         int viewHeight = diceView.getHeight();
         diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
@@ -104,17 +102,22 @@ public class GameView extends JFrame{
                     repaint();
                 }
                 );
-        buttonPanelView.setBounds(Constants.GAME_WIDTH-200, 0, 200, Constants.GAME_HEIGHT);
-        layeredPane.add(buttonPanelView, Integer.valueOf(4));
-        layeredPane.repaint();
+        for (Component c : getContentPane().getComponents()) {
+            if (c instanceof ButtonPanelView) {
+                remove(c);
+            }
+        }
+        add(buttonPanelView, BorderLayout.EAST);
+        revalidate();
+        repaint();
     }
 
-    // TODO: There is a lot of repeated code, fix it - Richard
-    private void drawPlayerPortrait() {
-        int startX = 50;
-        int startY = 8;
+    private void setTileSize() {
+        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+        this.tileSize = Constants.BOARD_SIZE / tilesPerSide;
+    }
 
-        // Remove existing portrait views (layer 2)
+    private void drawPlayerPortrait() {
         Component[] components = layeredPane.getComponentsInLayer(2);
         for (Component c : components) {
             if (c instanceof PlayerPortraitView) {
@@ -124,11 +127,8 @@ public class GameView extends JFrame{
 
         Player currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
-            int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-            int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
-            int centerX = startX + Constants.BOARD_SIZE / 2;
-            int centerY = startY + Constants.BOARD_SIZE / 2;
+            int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+            int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
             int portraitSize = tileSize;
             PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
@@ -155,10 +155,7 @@ public class GameView extends JFrame{
         layeredPane.repaint();
     }
 
-    // TODO: This should probably be like separate class - Richard
-    // TODO: This is really messy, fix later
     private void drawPlayers() {
-        // Remove old PlayerViews first
         Component[] components = layeredPane.getComponentsInLayer(1);
         for (Component c : components) {
             if (c instanceof PlayerView) {
@@ -166,24 +163,21 @@ public class GameView extends JFrame{
             }
         }
 
-        // Draw updated player views
-        int startX = 50;
-        int startY = 8;
-        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
+            if (player.isBankrupt()) {
+                continue;
+            }
             PlayerView playerView = new PlayerView(player.getColor());
-            Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
+            Point pos = game.getTilePosition(player.getPosition(), Constants.START_X, Constants.START_Y, tileSize);
             int offsetX = (players.indexOf(player) % 2) * 20;
             int offsetY = (players.indexOf(player) / 2) * 20;
             playerView.setBounds(pos.x + offsetX, pos.y + offsetY, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE);
             layeredPane.add(playerView, Integer.valueOf(1));
         }
 
-        layeredPane.repaint();  // Important to trigger UI update
+        layeredPane.repaint();
     }
 
     private void displayStockMarket() {
@@ -194,9 +188,7 @@ public class GameView extends JFrame{
     private void handleRollDice() {
         ButtonPanelView.getRollDiceButton().setEnabled(false);
 
-        // Use DiceController for dice animation and logic
         diceAnimator.startDiceAnimation(
-                // TODO: This could probably just repaint the DiceView rather than the whole GameView - Richard
                 this::drawDice,
                 this::onDiceRollComplete // Completion callback
         );
@@ -206,13 +198,10 @@ public class GameView extends JFrame{
         Player currentPlayer = game.getCurrentPlayer();
         int diceSum = diceAnimator.getLastDiceSum();
 
-        // Handle crossing GO bonus using GameBoard logic
         gameMoveCurrentPlayer.execute(diceSum);
 
-        // Update player stats finish lap bonus
         refreshStats();
 
-        // Use PlayerMovementAnimator for movement animation
         playerMovementAnimator.animatePlayerMovement(
                 currentPlayer,
                 diceSum,
@@ -256,12 +245,12 @@ public class GameView extends JFrame{
 
         ButtonPanelView.getRollDiceButton().setEnabled(true);
         resetBoardView();
+        drawPlayers();
         repaint();
     }
 
     private void showEndScreen() {
         this.setVisible(false);
-        // Show the end screen
         SwingUtilities.invokeLater(() -> {
             new EndScreen(
                     game.getPlayers(),
@@ -271,7 +260,7 @@ public class GameView extends JFrame{
         });
     }
 
-    private void refreshStats() { //everytime theres a change in money
+    private void refreshStats() {
         if (this.statsPanel != null) {
             this.statsPanel.refreshFrom(this.game);
         }

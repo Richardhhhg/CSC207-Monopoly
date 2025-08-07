@@ -9,6 +9,8 @@ public class Constants {
     public static final String GAME_TITLE = "Very Epic and Cool Monopoly Game";
     public static final int GAME_WIDTH = 1920;
     public static final int GAME_HEIGHT = 1080;
+    public static final int START_X = 50;
+    public static final int START_Y = 8;
 
     // GamePlay related constants
     public static final int MAX_ROUNDS = 20;

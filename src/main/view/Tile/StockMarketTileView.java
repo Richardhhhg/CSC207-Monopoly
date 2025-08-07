@@ -9,6 +9,7 @@ public class StockMarketTileView extends TileView {
     public StockMarketTileView(StockMarketTileViewModel viewModel) {
         super(viewModel);
         this.setBackground(Color.GREEN);
+        this.setLayout(new BorderLayout());
 
         mainLabel = new JLabel(this.name, SwingConstants.CENTER);
         mainLabel.setFont(mainLabel.getFont().deriveFont(Font.BOLD, 14f));
