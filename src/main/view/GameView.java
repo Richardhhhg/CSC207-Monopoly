@@ -32,6 +32,7 @@ public class GameView extends JFrame{
     private PlayerStatsView statsPanel;
 
     private BoardView boardView;
+    private int tileSize;
 
     // TODO: There is a ton of coupling here, fix it
     public GameView() {
@@ -50,6 +51,8 @@ public class GameView extends JFrame{
         layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(Constants.GAME_WIDTH, Constants.GAME_HEIGHT));
 
+        setTileSize();
+
         add(layeredPane, BorderLayout.CENTER);
 
         drawBoard();
@@ -63,22 +66,15 @@ public class GameView extends JFrame{
         setVisible(true);
     }
 
-    // TODO: This should probably be like separate class - Richard
     private void drawBoard() {
         boardView = new BoardView(game);
         boardView.setBounds(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         layeredPane.add(boardView, Integer.valueOf(0));
     }
 
-    // TODO: There is a lot of repeated code, fix it - Richard
     private void drawDice() {
-        int startX = 50;
-        int startY = 8;
-        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
-        int centerX = startX + Constants.BOARD_SIZE / 2;
-        int centerY = startY + Constants.BOARD_SIZE / 2;
+        int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+        int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
         DiceView diceView = new DiceView(diceAnimator, tileSize);
 
@@ -115,10 +111,12 @@ public class GameView extends JFrame{
         repaint();
     }
 
-    private void drawPlayerPortrait() {
-        int startX = 50;
-        int startY = 8;
+    private void setTileSize() {
+        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+        this.tileSize = Constants.BOARD_SIZE / tilesPerSide;
+    }
 
+    private void drawPlayerPortrait() {
         Component[] components = layeredPane.getComponentsInLayer(2);
         for (Component c : components) {
             if (c instanceof PlayerPortraitView) {
@@ -128,11 +126,8 @@ public class GameView extends JFrame{
 
         Player currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
-            int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-            int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
-            int centerX = startX + Constants.BOARD_SIZE / 2;
-            int centerY = startY + Constants.BOARD_SIZE / 2;
+            int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+            int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
             int portraitSize = tileSize;
             PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
@@ -167,11 +162,6 @@ public class GameView extends JFrame{
             }
         }
 
-        int startX = 50;
-        int startY = 8;
-        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
-        int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
@@ -179,7 +169,7 @@ public class GameView extends JFrame{
                 continue;
             }
             PlayerView playerView = new PlayerView(player.getColor());
-            Point pos = game.getTilePosition(player.getPosition(), startX, startY, tileSize);
+            Point pos = game.getTilePosition(player.getPosition(), Constants.START_X, Constants.START_Y, tileSize);
             int offsetX = (players.indexOf(player) % 2) * 20;
             int offsetY = (players.indexOf(player) / 2) * 20;
             playerView.setBounds(pos.x + offsetX, pos.y + offsetY, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE);
@@ -269,7 +259,7 @@ public class GameView extends JFrame{
         });
     }
 
-    private void refreshStats() { //everytime theres a change in money
+    private void refreshStats() {
         if (this.statsPanel != null) {
             this.statsPanel.refreshFrom(this.game);
         }

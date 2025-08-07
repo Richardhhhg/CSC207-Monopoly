@@ -10,6 +10,7 @@ public class GoTileView extends TileView {
     public GoTileView(GoTileViewModel viewModel) {
         super(viewModel);
         this.setBackground(Color.RED);
+        this.setLayout(new BorderLayout());
 
         mainLabel = new JLabel("GO", SwingConstants.CENTER);
         mainLabel.setFont(mainLabel.getFont().deriveFont(Font.BOLD, 16f));

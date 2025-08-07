@@ -1,5 +1,6 @@
 package main.use_case.Game;
 
+import main.Constants.Constants;
 import main.entity.Game;
 import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
@@ -8,8 +9,6 @@ import main.entity.tiles.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static main.Constants.Constants.PLACEHOLDER_RENT;
 
 /**
  * Use case for initializing tiles in the game.
@@ -56,7 +55,7 @@ public class GameInitializeTiles {
         for (int i = 0; i < propertyTiles; i++) {
             String propertyName = generatePropertyName(i + 1);
             int price = generatePropertyPrice(i + 1);
-            tiles.add(new PropertyTile(propertyName, price, PLACEHOLDER_RENT));
+            tiles.add(new PropertyTile(propertyName, price, Constants.PLACEHOLDER_RENT));
         }
 
         // Add stock market tiles distributed throughout the board
