@@ -1,9 +1,9 @@
 package main.view;
 
 import main.entity.players.Player;
-import main.interface_adapter.EndScreen.EndScreenController;
-import main.interface_adapter.EndScreen.EndScreenPresenter;
-import main.interface_adapter.EndScreen.EndScreenViewModel;
+import main.interface_adapter.end_screen.EndScreenController;
+import main.interface_adapter.end_screen.EndScreenPresenter;
+import main.interface_adapter.end_screen.EndScreenViewModel;
 import main.use_case.EndScreen.EndGame;
 
 import javax.swing.*;
@@ -104,7 +104,7 @@ public class EndScreen extends JFrame {
         return resultsPanel;
     }
 
-    // Add this method to your EndScreen.java to update the createPlayerStatsPanel method
+    // Add this method to your end_screen.java to update the createPlayerStatsPanel method
 
     private JPanel createPlayerStatsPanel(EndScreenViewModel.PlayerDisplayData playerData) {
         JPanel playerPanel = new JPanel();

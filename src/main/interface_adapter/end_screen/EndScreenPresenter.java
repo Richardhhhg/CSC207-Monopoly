@@ -1,4 +1,4 @@
-package main.interface_adapter.EndScreen;
+package main.interface_adapter.end_screen;
 
 import main.use_case.EndScreen.EndGame;
 

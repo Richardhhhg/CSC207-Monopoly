@@ -1,4 +1,4 @@
-package main.interface_adapter.EndScreen;
+package main.interface_adapter.end_screen;
 
 import main.entity.players.Player;
 import java.util.List;
