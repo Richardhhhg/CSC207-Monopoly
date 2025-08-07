@@ -1,6 +1,5 @@
 package main.Constants;
 
-import java.awt.*;
 
 /**
  * This class is a placeholder for constants used throughout the application.
