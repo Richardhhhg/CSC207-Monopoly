@@ -1,9 +1,9 @@
-package main.use_case.Game;
+package main.use_case.game;
+
+import java.util.List;
 
 import main.entity.Game;
 import main.entity.stocks.Stock;
-
-import java.util.List;
 
 /**
  * This is a use case of game for advancing to the next round.
@@ -16,14 +16,14 @@ public class GameNextRound {
         this.game = game;
     }
 
+    /**
+     * Executes the logic to advance to the next round.
+     */
     public void execute() {
         // Update stock prices at the end of each round
-        List<Stock> stocks = game.getStocks();
+        final List<Stock> stocks = game.getStocks();
         for (Stock stock : stocks) {
             stock.updatePrice();
         }
-
-        // The round increment and max rounds check is now handled in Game.startNewRound()
-        // This method just handles the round-end logic like stock price updates
     }
 }

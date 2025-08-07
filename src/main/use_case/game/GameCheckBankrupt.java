@@ -1,4 +1,4 @@
-package main.use_case.Game;
+package main.use_case.game;
 
 import main.entity.Game;
 import main.entity.players.Player;

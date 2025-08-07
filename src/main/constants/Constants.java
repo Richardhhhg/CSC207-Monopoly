@@ -4,6 +4,9 @@ package main.constants;
  * This class is a placeholder for constants used throughout the application.
  */
 public class Constants {
+    // Toggle API usage
+    public static final boolean USE_API = false;
+
     // Game Constants
     // Game JFrame related main.Constants.main.Constants
     public static final String GAME_TITLE = "Very Epic and Cool Monopoly Game";
@@ -11,17 +14,23 @@ public class Constants {
     public static final int GAME_HEIGHT = 1080;
     public static final int START_X = 50;
     public static final int START_Y = 8;
+    public static final int PORTRAIT_X_ADJ = 60;
+    public static final int PORTRAIT_Y_ADJ = 200;
+    public static final int PORTRAIT_PADDING = 30;
 
     // GamePlay related constants
     public static final int MAX_ROUNDS = 20;
     public static final int PLACEHOLDER_RENT = 50;
 
-    // Board JPanel Related main.Constants.main.Constants
+    // Board JPanel Related Constants
     public static final int BOARD_SIZE = 780;
     public static final int BOARD_PANEL_WIDTH = 900;
     public static final int BOARD_PANEL_HEIGHT = 900;
+    public static final int BOARD_SIDES = 4;
 
     // Stock Market and Stock Related
+    public static final int NUM_STOCKS = 5;
+
     public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
     public static final int STOCK_MARKET_WIDTH = 800;
     public static final int STOCK_MARKET_HEIGHT = 400;
@@ -40,6 +49,7 @@ public class Constants {
 
     // Math
     public static final double PERCENTAGE_MULTIPLIER = 100.0;
+    public static final int TILES_PER_SIDE_ADJ_3 = 3;
 
     // Bonus Money
     public static final float FINISH_LINE_BONUS = 200.0F;
@@ -50,6 +60,8 @@ public class Constants {
     // PlayerStatsView
     public static final int DIMENSION_DE_LA_PSV_H = 200;
     public static final int DIMENSION_DE_LA_PSV_W = 200;
+    public static final int STATS_PANEL_WIDTH = 400;
+    public static final int STATS_PANEL_LAYER = 3;
 
     // Character Constants
     public static final int CLERK_INIT_MONEY = 1200;

@@ -1,5 +1,6 @@
-package main.use_case.Game;
+package main.use_case.game;
 
+import main.constants.Constants;
 import main.entity.Game;
 import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
@@ -8,8 +9,6 @@ import main.entity.tiles.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static main.constants.Constants.PLACEHOLDER_RENT;
 
 /**
  * Use case for initializing tiles in the game.

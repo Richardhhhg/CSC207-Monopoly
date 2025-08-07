@@ -1,25 +1,31 @@
 package main.view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.SwingUtilities;
+
 import main.constants.Constants;
 import main.entity.Game;
 import main.entity.players.Player;
 import main.interface_adapter.PlayerStats.PlayerStatsController;
 import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
 import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.use_case.Game.GameMoveCurrentPlayer;
-import main.use_case.Game.GameNextTurn;
 import main.use_case.PlayerStats.PlayerStatsInteractor;
+import main.use_case.game.GameMoveCurrentPlayer;
+import main.use_case.game.GameNextTurn;
 import main.view.stock.StockMarketView;
-
-import java.util.List;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * This Class displays the entire game view.
  */
-public class GameView extends JFrame{
+public class GameView extends JFrame {
     private Game game;
     private JLayeredPane layeredPane;
     private DiceAnimator diceAnimator;
@@ -74,13 +80,13 @@ public class GameView extends JFrame{
     }
 
     private void drawDice() {
-        int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
-        int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
+        final int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+        final int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
-        DiceView diceView = new DiceView(diceAnimator, tileSize);
+        final DiceView diceView = new DiceView(diceAnimator, tileSize);
 
-        int viewWidth = diceView.getWidth();
-        int viewHeight = diceView.getHeight();
+        final int viewWidth = diceView.getWidth();
+        final int viewHeight = diceView.getHeight();
         diceView.setBounds(centerX - viewWidth / 2, centerY - viewHeight / 2, viewWidth, viewHeight);
 
         layeredPane.add(diceView, Integer.valueOf(2));
@@ -88,7 +94,7 @@ public class GameView extends JFrame{
     }
 
     private void drawButtonPanel() {
-        ButtonPanelView buttonPanelView = new ButtonPanelView(game,
+        final ButtonPanelView buttonPanelView = new ButtonPanelView(game,
                 () -> {
                     handleRollDice();
                     repaint();
@@ -113,35 +119,35 @@ public class GameView extends JFrame{
     }
 
     private void setTileSize() {
-        int tilesPerSide = (game.getTiles().size() - 4) / 4 + 2;
+        final int tilesPerSide = (game.getTiles().size() - Constants.BOARD_SIDES) / 4 + 2;
         this.tileSize = Constants.BOARD_SIZE / tilesPerSide;
     }
 
     private void drawPlayerPortrait() {
-        Component[] components = layeredPane.getComponentsInLayer(2);
+        final Component[] components = layeredPane.getComponentsInLayer(2);
         for (Component c : components) {
             if (c instanceof PlayerPortraitView) {
                 layeredPane.remove(c);
             }
         }
 
-        Player currentPlayer = game.getCurrentPlayer();
+        final Player currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
-            int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
-            int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
+            final int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
+            final int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
-            int portraitSize = tileSize;
-            PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
+            final int portraitSize = tileSize;
+            final PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(),
+                    "Current Player:", portraitSize);
 
-            int x = centerX - tileSize - 10 + 80;
-            int y = centerY - tileSize / 2 - 150;
+            final int x = centerX - Constants.PORTRAIT_X_ADJ;
+            final int y = centerY - Constants.PORTRAIT_Y_ADJ;
 
-            portraitView.setBounds(x, y, portraitSize, portraitSize + 30);
+            portraitView.setBounds(x, y, portraitSize, portraitSize + Constants.PORTRAIT_PADDING);
             layeredPane.add(portraitView, Integer.valueOf(2));
             layeredPane.repaint();
         }
     }
-
 
     private void drawStatsPanel() {
         this.playerStatsViewModel = new PlayerStatsViewModel();
@@ -150,29 +156,30 @@ public class GameView extends JFrame{
         this.playerStatsController = new PlayerStatsController(playerStatsInputBoundary);
         this.statsPanel = new PlayerStatsView(playerStatsViewModel, playerStatsController);
         this.statsPanel.refreshFrom(this.game);
-        this.statsPanel.setBounds(Constants.GAME_WIDTH/2, 0, 600, Constants.GAME_HEIGHT);
-        layeredPane.add(statsPanel, Integer.valueOf(3));
+        this.statsPanel.setBounds(Constants.GAME_WIDTH / 2, 0, Constants.STATS_PANEL_WIDTH, Constants.GAME_HEIGHT);
+        layeredPane.add(statsPanel, Integer.valueOf(Constants.STATS_PANEL_LAYER));
         layeredPane.repaint();
     }
 
     private void drawPlayers() {
-        Component[] components = layeredPane.getComponentsInLayer(1);
+        final Component[] components = layeredPane.getComponentsInLayer(1);
         for (Component c : components) {
             if (c instanceof PlayerView) {
                 layeredPane.remove(c);
             }
         }
 
-        List<Player> players = game.getPlayers();
+        final List<Player> players = game.getPlayers();
 
         for (Player player : players) {
             if (player.isBankrupt()) {
                 continue;
             }
-            PlayerView playerView = new PlayerView(player.getColor());
-            Point pos = game.getTilePosition(player.getPosition(), Constants.START_X, Constants.START_Y, tileSize);
-            int offsetX = (players.indexOf(player) % 2) * 20;
-            int offsetY = (players.indexOf(player) / 2) * 20;
+            final PlayerView playerView = new PlayerView(player.getColor());
+            final Point pos = game.getTilePosition(player.getPosition(), Constants.START_X,
+                    Constants.START_Y, tileSize);
+            final int offsetX = (players.indexOf(player) % 2) * 20;
+            final int offsetY = (players.indexOf(player) / 2) * 20;
             playerView.setBounds(pos.x + offsetX, pos.y + offsetY, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE);
             layeredPane.add(playerView, Integer.valueOf(1));
         }
@@ -181,7 +188,7 @@ public class GameView extends JFrame{
     }
 
     private void displayStockMarket() {
-        StockMarketView stockMarketView = new StockMarketView(game.getCurrentPlayer(), false);
+        final StockMarketView stockMarketView = new StockMarketView(game.getCurrentPlayer(), false);
         stockMarketView.setVisible(true);
     }
 
@@ -190,13 +197,13 @@ public class GameView extends JFrame{
 
         diceAnimator.startDiceAnimation(
                 this::drawDice,
-                this::onDiceRollComplete // Completion callback
+                this::onDiceRollComplete
         );
     }
 
     private void onDiceRollComplete() {
-        Player currentPlayer = game.getCurrentPlayer();
-        int diceSum = diceAnimator.getLastDiceSum();
+        final Player currentPlayer = game.getCurrentPlayer();
+        final int diceSum = diceAnimator.getLastDiceSum();
 
         gameMoveCurrentPlayer.execute(diceSum);
 
@@ -212,7 +219,7 @@ public class GameView extends JFrame{
     }
 
     private void resetBoardView() {
-        Component[] components = layeredPane.getComponentsInLayer(0);
+        final Component[] components = layeredPane.getComponentsInLayer(0);
         for (Component c : components) {
             if (c instanceof BoardView) {
                 layeredPane.remove(c);
@@ -233,7 +240,6 @@ public class GameView extends JFrame{
         new GameNextTurn(game).execute();
         if (game.isGameOver()) {
             showEndScreen();
-            return;
         }
 
         ButtonPanelView.updateStatus(
