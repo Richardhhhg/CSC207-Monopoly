@@ -242,13 +242,14 @@ public class Game {
         }
     }
 
-    public void setPlayersFromOutputData(List<PlayerOutputData> dataList) {
-        this.players = new ArrayList<>();
-        for (PlayerOutputData data : dataList) {
+    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+        List<Player> result = new ArrayList<>();
+        for (PlayerOutputData data : players) {
             if (data != null && !"None".equals(data.getType())) {
                 Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
-                this.players.add(player);
+                result.add(player);
             }
         }
+        this.setPlayers(result);
     }
 }

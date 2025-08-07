@@ -13,6 +13,7 @@ public class CharacterSelectionScreenController {
     public void selectPlayer(int index, String name, String type) {
         CharacterSelectionInputData inputData = new CharacterSelectionInputData(index, name, type);
         interactor.selectPlayer(inputData);
+
     }
 
     public void confirmSelection() {

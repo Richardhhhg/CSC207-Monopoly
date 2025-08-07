@@ -21,6 +21,7 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
 
     @Override
     public void preparePlayer(PlayerOutputData data, int index) {
+
         viewModel.setPlayerData(index, data);
     }
 

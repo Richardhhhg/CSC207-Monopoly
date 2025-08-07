@@ -2,8 +2,6 @@ package main.view;
 
 import main.app.GameHolder;
 import main.entity.Game;
-import main.entity.players.CharacterFactory;
-import main.entity.players.Player;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenViewModel;
@@ -15,6 +13,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CharacterSelectionScreen extends JFrame {
 
@@ -59,10 +58,9 @@ public class CharacterSelectionScreen extends JFrame {
             characterDropdown.setMaximumSize(new Dimension(150, 25));
             characterDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            controller.selectPlayer(idx, "Player " + (idx + 1), "None");
-            PlayerOutputData data = viewModel.getPlayerData(idx);
-            if (data != null && data.getPortrait() != null) {
-                portraitLabel.setIcon(new ImageIcon(data.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
+            Image defaultPortrait = PortraitProvider.getDefaultPortrait();
+            if (defaultPortrait != null) {
+                portraitLabel.setIcon(new ImageIcon(defaultPortrait.getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
             }
 
             selections.add(new PlayerSelection(nameField, characterDropdown, portraitLabel));
@@ -90,26 +88,24 @@ public class CharacterSelectionScreen extends JFrame {
 
         JButton startGame = new JButton("Play!");
         startGame.addActionListener(e -> {
-            List<Player> finalPlayers = new ArrayList<>();
-            for (int i = 0; i < selections.size(); i++) {
-                PlayerOutputData data = viewModel.getPlayerData(i);
-                if (data != null && !"None".equals(data.getType())) {
-                    Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
-                    finalPlayers.add(player);
-                }
+            List<PlayerOutputData> validPlayers = viewModel.getAllPlayers()
+                    .stream()
+                    .filter(p -> p != null && !"None".equals(p.getType()))
+                    .collect(Collectors.toList());
+
+            if (!this.controller.canStartGame()){
+                JOptionPane.showMessageDialog(this, "Please select at least 2 characters.");
+                return;
             }
 
-            if (controller.canStartGame()) {
-                controller.confirmSelection();
-                Game game = new Game();
-                game.setPlayersFromOutputData(viewModel.getAllPlayers());
-                game.initializeGame();
-                GameHolder.setGame(game);
-                dispose();
-                new GameView().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Please select at least 2 characters.");
-            }
+            controller.confirmSelection();
+
+            Game game = new Game();
+            game.setPlayersFromOutputData(validPlayers);
+            game.initializeGame();
+            GameHolder.setGame(game);
+            dispose();
+            new GameView().setVisible(true);
         });
 
         add(playerPanel, BorderLayout.CENTER);
@@ -123,16 +119,14 @@ public class CharacterSelectionScreen extends JFrame {
         controller.selectPlayer(index, name, type);
 
         PlayerOutputData data = viewModel.getPlayerData(index);
-        if (data != null && data.getPortrait() != null) {
-            portraitLabel.setIcon(new ImageIcon(data.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
-        } else {
-            portraitLabel.setIcon(null);
+        if (data != null) {
+            Image portrait = PortraitProvider.getPortrait(data.getType());
+            if (portrait != null) {
+                portraitLabel.setIcon(new ImageIcon(portrait.getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
+            } else {
+                portraitLabel.setIcon(null);
+            }
         }
-    }
-
-    private Color getDefaultColor(int index) {
-        Color[] defaultColors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
-        return defaultColors[index % defaultColors.length];
     }
 
     private static class PlayerSelection {
