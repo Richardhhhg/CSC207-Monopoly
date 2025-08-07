@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import main.Constants.Constants;
 import main.interface_adapter.dice.DiceController;
 import main.interface_adapter.dice.DicePresenter;
 import main.interface_adapter.dice.DiceViewModel;
@@ -16,12 +17,12 @@ import main.use_case.dice.RollDice;
  * <p>Delegates business logic to controllers and use cases.</p>
  */
 public class DiceAnimator {
-    private static final int SIDES = 6;
-    private static final int ICON_COUNT = SIDES + 1;
-    private static final int FRAME_LIMIT = 9;
-    private static final int DELAY_MS = 100;
-    private static final int MIN_SUM = 2;
-    private static final int DEFAULT_FACE = 1;
+    private static final int SIDES = Constants.DICE_SIDES;
+    private static final int ICON_COUNT = Constants.DICE_ICON_COUNT;
+    private static final int FRAME_LIMIT = Constants.DICE_FRAME_LIMIT;
+    private static final int DELAY_MS = Constants.DICE_DELAY_MS;
+    private static final int MIN_SUM = Constants.DICE_MIN_SUM;
+    private static final int DEFAULT_FACE = Constants.DICE_DEFAULT_FACE;
 
     private final ImageIcon[] diceIcons = new ImageIcon[ICON_COUNT];
     private final DiceController diceController;
