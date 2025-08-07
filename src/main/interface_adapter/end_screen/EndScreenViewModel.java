@@ -76,14 +76,36 @@ public class EndScreenViewModel {
             this.statusText = statusText;
         }
 
-        public Player getPlayer() { return player; }
-        public int getRank() { return rank; }
-        public String getMoneyText() { return moneyText; }
-        public String getPropertiesCountText() { return propertiesCountText; }
-        public String getPropertyValueText() { return propertyValueText; }
-        public String getStockValueText() { return stockValueText; }
-        public String getNetWorthText() { return netWorthText; }
-        public String getStatusText() { return statusText; }
-        public String getRankText() { return "#" + rank + " - " + player.getName(); }
+        public Player getPlayer() {
+            return player;
+        }
+
+        public String getMoneyText() {
+            return moneyText;
+        }
+
+        public String getPropertiesCountText() {
+            return propertiesCountText;
+        }
+
+        public String getPropertyValueText() {
+            return propertyValueText;
+        }
+
+        public String getStockValueText() {
+            return stockValueText;
+        }
+
+        public String getNetWorthText() {
+            return netWorthText;
+        }
+
+        public String getStatusText() {
+            return statusText;
+        }
+
+        public String getRankText() {
+            return "#" + rank + " - " + player.getName();
+        }
     }
 }

@@ -3,7 +3,7 @@ package main.interface_adapter.end_screen;
 import java.util.List;
 
 import main.entity.players.Player;
-import main.use_case.EndScreen.EndGame;
+import main.use_case.end_screen.EndGame;
 
 /**
  * Controller for the end-screen use case.

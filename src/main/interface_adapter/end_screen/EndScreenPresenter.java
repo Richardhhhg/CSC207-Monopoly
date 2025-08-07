@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import main.Constants.Constants;
-import main.use_case.EndScreen.EndGame;
+import main.use_case.end_screen.EndGame;
 
 /**
  * Presenter for the end screen.

@@ -1,12 +1,11 @@
-package main.use_case.EndScreen;
+package main.use_case.end_screen;
 
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
-import main.entity.Stocks.Stock;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

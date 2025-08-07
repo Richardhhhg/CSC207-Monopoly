@@ -4,7 +4,7 @@ import main.entity.players.Player;
 import main.interface_adapter.end_screen.EndScreenController;
 import main.interface_adapter.end_screen.EndScreenPresenter;
 import main.interface_adapter.end_screen.EndScreenViewModel;
-import main.use_case.EndScreen.EndGame;
+import main.use_case.end_screen.EndGame;
 
 import javax.swing.*;
 import java.awt.*;
