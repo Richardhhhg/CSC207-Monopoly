@@ -59,7 +59,6 @@ public class CharacterSelectionScreen extends JFrame {
             characterDropdown.setMaximumSize(new Dimension(150, 25));
             characterDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            // Set initial portrait
             Player defaultPlayer = CharacterFactory.createPlayer(nameField.getText(), "None", getDefaultColor(idx));
             portraitLabel.setIcon(new ImageIcon(defaultPlayer.getPortrait().getScaledInstance(180, 180, Image.SCALE_SMOOTH)));
 
@@ -97,9 +96,10 @@ public class CharacterSelectionScreen extends JFrame {
                 }
             }
 
-            if (finalPlayers.size() >= 2) {
+            if (controller.canStartGame()) {
+                controller.confirmSelection();
                 Game game = new Game();
-                game.setPlayers(finalPlayers);
+                game.setPlayersFromOutputData(viewModel.getAllPlayers());
                 game.initializeGame();
                 GameHolder.setGame(game);
                 dispose();

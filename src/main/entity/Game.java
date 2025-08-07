@@ -1,12 +1,15 @@
 package main.entity;
 
 import main.entity.Stocks.Stock;
+import main.entity.players.CharacterFactory;
 import main.entity.tiles.PropertyTile;
+import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
@@ -236,6 +239,16 @@ public class Game {
             this.stocks = stocks;
         } else {
             throw new IllegalArgumentException("Stocks list cannot be null or empty");
+        }
+    }
+
+    public void setPlayersFromOutputData(List<PlayerOutputData> dataList) {
+        this.players = new ArrayList<>();
+        for (PlayerOutputData data : dataList) {
+            if (data != null && !"None".equals(data.getType())) {
+                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                this.players.add(player);
+            }
         }
     }
 }

@@ -68,6 +68,6 @@ public class Constants {
     public static final String NP_POR= "CharacterPortrait/default portrait.png";
 
     //CHARSELSCR CONST
-    public static final int MAX_NP_BAR = 3;
+    public static final int MAX_NP_BAR = 2;
 
 }

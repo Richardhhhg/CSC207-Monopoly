@@ -48,11 +48,13 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
     @Override
     public boolean canStartGame() {
-        int nullCount = 0;
+        int count = 0;
         for (Player p : selectedPlayers) {
-            if (p.isNullPlayer()) nullCount++;
+            if (!p.isNullPlayer() && !(p instanceof NullPlayer)) {
+                count++;
+            }
         }
-        return nullCount < MAX_NP_BAR;
+        return count >= MAX_NP_BAR;
     }
 
     @Override
@@ -65,6 +67,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         Color color = colors[index];
 
         Player player = CharacterFactory.createPlayer(name, type, color);
+        selectedPlayers.set(index, player);
         PlayerOutputData output = new PlayerOutputData(name, type, color);
         presenter.preparePlayer(output, index);
     }
