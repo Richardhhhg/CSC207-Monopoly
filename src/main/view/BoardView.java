@@ -1,9 +1,11 @@
 package main.view;
 
 import main.entity.players.Player;
+import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
 import main.Constants.Constants;
+import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
 
 import java.util.HashMap;
@@ -13,10 +15,12 @@ import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyPurchaseController;
 import main.interface_adapter.Property.PropertyViewModel;
 import main.interface_adapter.Property.RentPaymentController;
+import main.interface_adapter.Tile.GoTileViewModel;
 import main.use_case.Tiles.OnLandingController;
 import main.use_case.Tiles.OnLandingUseCase;
 import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
 import main.use_case.Tiles.Property.RentPaymentUseCase;
+import main.view.Tile.GoTileView;
 import main.view.Tile.TileView;
 import main.view.Tile.PropertyTileView;
 import main.view.Tile.StockMarketTileView;
@@ -81,6 +85,7 @@ public class BoardView extends JPanel {
         int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
         List<Tile> tiles = game.getTiles();
+
         for (int i = 0; i < game.getTileCount(); i++) {
             Point pos = game.getTilePosition(i, startX, startY, tileSize);
             TileView tileView = drawTile(tiles, i);
@@ -107,9 +112,12 @@ public class BoardView extends JPanel {
                     property.isOwned() ? property.getOwner().getColor() : Color.WHITE
             );
             tileView = new PropertyTileView(viewModel);
-        } else {
+        } else if (tile instanceof StockMarketTile) {
             StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
             tileView = new StockMarketTileView(viewModel);
+        } else {
+            GoTileViewModel viewModel = new GoTileViewModel();
+            tileView = new GoTileView(viewModel);
         }
         return tileView;
     }
