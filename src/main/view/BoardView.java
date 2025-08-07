@@ -208,7 +208,6 @@ public class BoardView extends JPanel {
     }
 
     private PropertyTile findPropertyByName(String name) {
-        return (PropertyTile) game.getTiles().stream()
         return game.getTiles().stream()
                 .filter(tile -> tile.getName().equals(name) && tile instanceof PropertyTile)
                 .map(tile -> (PropertyTile) tile)
