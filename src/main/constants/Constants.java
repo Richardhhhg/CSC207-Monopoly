@@ -17,6 +17,9 @@ public class Constants {
     public static final int PORTRAIT_X_ADJ = 60;
     public static final int PORTRAIT_Y_ADJ = 200;
     public static final int PORTRAIT_PADDING = 30;
+    public static final int BUTTON_PANEL_PADDING = 10;
+    public static final int BUTTON_PANEL_VERTICAL_PADDING = 20;
+    public static final int BUTTON_FONT_SIZE = 16;
 
     // GamePlay related constants
     public static final int MAX_ROUNDS = 20;
