@@ -1,4 +1,4 @@
-package main.use_case.CharacterSelectionScreen;
+package main.interface_adapter.CharacterSelectionScreen;
 
 import java.awt.*;
 
@@ -13,15 +13,7 @@ public class PlayerOutputData {
         this.color = color;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Color getColor() {
-        return color;
-    }
+    public String getName() { return name; }
+    public String getType() { return type; }
+    public Color getColor() { return color; }
 }

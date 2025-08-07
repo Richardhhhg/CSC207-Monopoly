@@ -1,15 +1,27 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
-import main.entity.Game;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharacterSelectionScreenViewModel {
-    private final Game game;
 
-    public CharacterSelectionScreenViewModel(Game game) {
-        this.game = game;
+    private final List<PlayerOutputData> selectedPlayers = new ArrayList<>(4);
+
+    public CharacterSelectionScreenViewModel() {
+        for (int i = 0; i < 4; i++) {
+            selectedPlayers.add(null);
+        }
     }
 
-    public Game getGame() {
-        return game;
+    public void setPlayerData(int index, PlayerOutputData data) {
+        selectedPlayers.set(index, data);
+    }
+
+    public PlayerOutputData getPlayerData(int index) {
+        return selectedPlayers.get(index);
+    }
+
+    public List<PlayerOutputData> getAllPlayers() {
+        return selectedPlayers;
     }
 }

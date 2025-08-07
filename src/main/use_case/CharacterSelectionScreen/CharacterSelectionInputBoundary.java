@@ -3,8 +3,8 @@ package main.use_case.CharacterSelectionScreen;
 import main.entity.players.Player;
 
 public interface CharacterSelectionInputBoundary {
-    void selectPlayer(int index, Player player);
+    void execute(CharacterSelectionInputData inputData);
     void confirmSelection();
     boolean canStartGame();
-    Player selectPlayer(int index, String name, String type);
+    void selectPlayer(CharacterSelectionInputData inputData);
 }

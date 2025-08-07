@@ -1,30 +1,29 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
+import main.data_access.StockMarket.InMemoryCharacterDataAccess;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
+import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenInteractor;
-import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenOutputBoundary;
 
 public class CharacterSelectionScreenAdapter {
+    public final CharacterSelectionScreenController controller;
+    public final CharacterSelectionScreenViewModel viewModel;
 
-    private final CharacterSelectionScreenController controller;
-    private final CharacterSelectionScreenPresenter presenter;
-
-    public CharacterSelectionScreenAdapter() {
-        this.presenter = new CharacterSelectionScreenPresenter();
-        CharacterSelectionScreenOutputBoundary outputBoundary = presenter;
-        CharacterSelectionInputBoundary interactor = new CharacterSelectionScreenInteractor(outputBoundary);
-        this.controller = new CharacterSelectionScreenController(interactor);
+    public CharacterSelectionScreenAdapter(CharacterSelectionScreenController controller, CharacterSelectionScreenViewModel viewModel) {
+        this.controller = controller;
+        this.viewModel = viewModel;
     }
 
-    public CharacterSelectionScreenController getController() {
-        return controller;
+    public static CharacterSelectionScreenAdapterBundle inject() {
+        CharacterSelectionScreenViewModel viewModel = new CharacterSelectionScreenViewModel();
+        CharacterSelectionScreenPresenter presenter = new CharacterSelectionScreenPresenter(viewModel);
+        CharacterSelectionScreenDataAccessInterface dao = new InMemoryCharacterDataAccess();
+        CharacterSelectionInputBoundary interactor = new CharacterSelectionScreenInteractor(presenter, dao);
+        CharacterSelectionScreenController controller = new CharacterSelectionScreenController(interactor);
+
+        return new CharacterSelectionScreenAdapterBundle(controller, viewModel);
     }
 
-    public CharacterSelectionScreenPresenter getPresenter() {
-        return presenter;
-    }
-
-    public static CharacterSelectionScreenAdapter inject() {
-        return new CharacterSelectionScreenAdapter();
-    }
 }
+
+

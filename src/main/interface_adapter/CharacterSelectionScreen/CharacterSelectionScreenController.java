@@ -1,7 +1,7 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
-import main.entity.players.Player;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
+import main.use_case.CharacterSelectionScreen.CharacterSelectionInputData;
 
 public class CharacterSelectionScreenController {
     private final CharacterSelectionInputBoundary interactor;
@@ -10,8 +10,9 @@ public class CharacterSelectionScreenController {
         this.interactor = interactor;
     }
 
-    public void selectPlayer(int index, Player player) {
-        this.interactor.selectPlayer(index, player);
+    public void selectPlayer(int index, String name, String type) {
+        CharacterSelectionInputData inputData = new CharacterSelectionInputData(index, name, type);
+        interactor.selectPlayer(inputData);
     }
 
     public void confirmSelection() {
@@ -20,10 +21,6 @@ public class CharacterSelectionScreenController {
 
     public boolean canStartGame() {
         return this.interactor.canStartGame();
-    }
-
-    public Player selectPlayer(int index, String name, String type) {
-        return interactor.selectPlayer(index, name, type);
     }
 
 }

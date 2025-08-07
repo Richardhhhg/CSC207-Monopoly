@@ -1,4 +1,4 @@
-package main.interface_adapter.CharacterSelectionScreen;
+package main.use_case.CharacterSelectionScreen;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ public class GameLaunchOutputData {
     private final List<String> playerTypes;
     private final List<String> playerColors;
 
-    public GameLaunchOutputData(List<String> names, List<String> types, List<String> colors) {
-        this.playerNames = names;
-        this.playerTypes = types;
-        this.playerColors = colors;
+    public GameLaunchOutputData(List<String> playerNames, List<String> playerTypes, List<String> playerColors) {
+        this.playerNames = playerNames;
+        this.playerTypes = playerTypes;
+        this.playerColors = playerColors;
     }
 
     public List<String> getPlayerNames() {

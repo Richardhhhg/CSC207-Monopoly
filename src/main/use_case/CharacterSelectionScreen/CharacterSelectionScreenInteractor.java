@@ -1,6 +1,7 @@
 package main.use_case.CharacterSelectionScreen;
 
 import main.entity.players.*;
+import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,58 +10,62 @@ import java.util.List;
 
 import static main.Constants.Constants.MAX_NP_BAR;
 
-public class CharacterSelectionScreenInteractor implements CharacterSelectionInputBoundary{
+public class CharacterSelectionScreenInteractor implements CharacterSelectionInputBoundary {
     private final CharacterSelectionScreenOutputBoundary presenter;
-    private final List<Player> selectPlayers = new ArrayList<>(Arrays.asList(new NullPlayer(),
-            new NullPlayer(),
-            new NullPlayer(),
-            new NullPlayer()));
+    private final CharacterSelectionScreenDataAccessInterface dao;
 
-    public CharacterSelectionScreenInteractor(CharacterSelectionScreenOutputBoundary presenter) {
+    private final List<Player> selectedPlayers = new ArrayList<>(
+            Arrays.asList(new NullPlayer(), new NullPlayer(), new NullPlayer(), new NullPlayer()));
+
+    public CharacterSelectionScreenInteractor(CharacterSelectionScreenOutputBoundary presenter,
+                                        CharacterSelectionScreenDataAccessInterface dao) {
         this.presenter = presenter;
+        this.dao = dao;
     }
 
     @Override
-    public void selectPlayer(int index, Player player) {
-        this.selectPlayers.set(index, player);
+    public void execute(CharacterSelectionInputData inputData) {
+        int index = inputData.getIndex();
+        String name = inputData.getName();
+        String type = inputData.getType();
+        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
+        Color color = colors[index];
+
+        Player player = CharacterFactory.createPlayer(name, type, color);
+        selectedPlayers.set(index, player);
     }
 
     @Override
     public void confirmSelection() {
-        List<PlayerOutputData> outputDataList = new ArrayList<>();
-        for (Player p : selectPlayers) {
+        List<PlayerOutputData> outputList = new ArrayList<>();
+        for (Player p : selectedPlayers) {
             if (!p.isNullPlayer()) {
-                String name = p.getName();
-                String type = p.getClass().getSimpleName();
-                Color color = p.getColor();
-                outputDataList.add(new PlayerOutputData(name, type, color));
+                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(), p.getColor()));
             }
         }
-        presenter.prepareLaunchData(outputDataList);
+        presenter.prepareLaunchData(outputList);
     }
 
     @Override
     public boolean canStartGame() {
-        int numOfNullPlayers = 0;
-        for  (Player player : selectPlayers) {
-            if (player.isNullPlayer()) {
-                numOfNullPlayers++;
-            }
+        int nullCount = 0;
+        for (Player p : selectedPlayers) {
+            if (p.isNullPlayer()) nullCount++;
         }
-        return numOfNullPlayers < MAX_NP_BAR;
+        return nullCount < MAX_NP_BAR;
     }
 
     @Override
-    public Player selectPlayer(int index, String name, String type) {
+    public void selectPlayer(CharacterSelectionInputData inputData) {
+        int index = inputData.getIndex();
+        String name = inputData.getName();
+        String type = inputData.getType();
+
         Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
         Color color = colors[index];
-        return switch (type) {
-            case "Clerk" -> new Clerk(name, color);
-            case "Landlord" -> new Landlord(name, color);
-            case "Inheritor" -> new Inheritor(name, color);
-            case "College Student" -> new CollegeStudent(name, color);
-            case "Poor Man" -> new PoorMan(name, color);
-            default -> new NullPlayer();
-        };
+
+        Player player = CharacterFactory.createPlayer(name, type, color);
+        PlayerOutputData output = new PlayerOutputData(name, type, color);
+        presenter.preparePlayer(output, index);
     }
 }
