@@ -5,6 +5,10 @@ package main.Constants;
  */
 public class Constants {
     // Game Constants
+    public static final int SMALL_BOARD_SIZE = 20;
+    public static final int MEDIUM_BOARD_SIZE = 24;
+    public static final int LARGE_BOARD_SIZE = 28;
+
     // Game JFrame related main.Constants.main.Constants
     public static final String GAME_TITLE = "Very Epic and Cool Monopoly Game";
     public static final int GAME_WIDTH = 1920;

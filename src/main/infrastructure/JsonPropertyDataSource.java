@@ -19,10 +19,6 @@ public class JsonPropertyDataSource implements PropertyDataSource {
         this.resourcePath = "/properties.json"; // Default path
     }
 
-    public JsonPropertyDataSource(String resourcePath) {
-        this.resourcePath = resourcePath;
-    }
-
     @Override
     public List<PropertyInfo> getPropertyData() {
         try {

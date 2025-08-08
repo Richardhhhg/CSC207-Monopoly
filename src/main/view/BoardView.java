@@ -1,16 +1,13 @@
 package main.view;
 
 import main.entity.players.Player;
-import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
 import main.Constants.Constants;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
-
 import java.util.HashMap;
 import java.util.List;
-
 import main.interface_adapter.Property.PropertyPresenter;
 import main.interface_adapter.Property.PropertyPurchaseController;
 import main.interface_adapter.Property.PropertyViewModel;
@@ -27,8 +24,6 @@ import main.view.Tile.StockMarketTileView;
 import main.interface_adapter.Tile.PropertyTileViewModel;
 import main.interface_adapter.Tile.StockMarketTileViewModel;
 import org.jetbrains.annotations.NotNull;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
