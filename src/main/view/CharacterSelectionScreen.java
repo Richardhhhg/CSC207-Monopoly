@@ -12,10 +12,6 @@ import main.interface_adapter.CharacterSelectionScreen.BoardSizeViewModel;
 import main.interface_adapter.Game.GameCreationController;
 import main.use_case.BoardSizeSelection.BoardSizeSelection;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
-import main.use_case.Game.GameInitializeTiles;
-import main.infrastructure.JsonPropertyDataSource;
-import main.infrastructure.FallbackPropertyDataSource;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -47,19 +43,13 @@ public class CharacterSelectionScreen extends JFrame {
         BoardSizeSelection boardSizeSelection = new BoardSizeSelection();
         BoardSizePresenter boardSizePresenter = new BoardSizePresenter();
 
-        // Create GameInitializeTiles with both primary and fallback data sources
-        GameInitializeTiles gameInitializeTiles = new GameInitializeTiles(
-                new JsonPropertyDataSource(),
-                new FallbackPropertyDataSource()
-        );
-
         // Separate controllers for separate responsibilities
         this.boardSizeController = new BoardSizeController(
                 boardSizeSelection,
                 boardSizePresenter
         );
 
-        this.gameCreationController = new GameCreationController(gameInitializeTiles);
+        this.gameCreationController = new GameCreationController();
 
         this.boardSizeViewModel = boardSizePresenter.getViewModel();
 

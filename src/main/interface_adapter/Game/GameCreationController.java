@@ -1,9 +1,12 @@
 package main.interface_adapter.Game;
 
 import main.entity.Game;
+import main.infrastructure.FallbackPropertyDataSource;
+import main.infrastructure.JsonPropertyDataSource;
 import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
 import main.use_case.Game.GameInitializeTiles;
+import main.use_case.Game.PropertyDataSource;
 import java.util.List;
 
 /**
@@ -13,8 +16,13 @@ import java.util.List;
 public class GameCreationController {
     private final GameInitializeTiles gameInitializeTiles;
 
-    public GameCreationController(GameInitializeTiles gameInitializeTiles) {
-        this.gameInitializeTiles = gameInitializeTiles;
+    public GameCreationController() {
+        // Create composite data source with fallback
+        PropertyDataSource primaryDataSource = new JsonPropertyDataSource();
+        PropertyDataSource fallbackDataSource = new FallbackPropertyDataSource();
+        PropertyDataSource compositeDataSource = new CompositePropertyDataSource(primaryDataSource, fallbackDataSource);
+
+        this.gameInitializeTiles = new GameInitializeTiles(compositeDataSource, new FallbackPropertyDataSource());
     }
 
     /**
@@ -40,5 +48,23 @@ public class GameCreationController {
 
         return game;
     }
-}
 
+    /**
+     * Composite data source that handles fallback logic
+     */
+    private static class CompositePropertyDataSource implements PropertyDataSource {
+        private final PropertyDataSource primary;
+        private final PropertyDataSource fallback;
+
+        public CompositePropertyDataSource(PropertyDataSource primary, PropertyDataSource fallback) {
+            this.primary = primary;
+            this.fallback = fallback;
+        }
+
+        @Override
+        public List<PropertyInfo> getPropertyData() {
+            List<PropertyInfo> data = primary.getPropertyData();
+            return data != null && !data.isEmpty() ? data : fallback.getPropertyData();
+        }
+    }
+}

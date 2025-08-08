@@ -6,7 +6,6 @@ import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSizeSelectionRes
 
 /**
  * Controller for board size selection only.
- * Follows Single Responsibility Principle - only handles board size selection logic.
  */
 public class BoardSizeController {
     private final BoardSizeSelection boardSizeSelection;
