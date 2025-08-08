@@ -80,4 +80,14 @@ public class Constants {
     //CHARSELSCR CONST
     public static final int MAX_NP_BAR = 2;
 
+    // UI Start-Screen dimensions
+    public static final int START_SCREEN_WIDTH = 600;
+    public static final int START_SCREEN_HEIGHT = 400;
+
+    // Shared font settings
+    public static final String UI_FONT_FAMILY = "Arial";
+    public static final int TITLE_FONT_SIZE = 30;
+    public static final int START_BUTTON_FONT_SIZE = 20;
+    public static final int RULES_BUTTON_FONT_SIZE = 16;
+
 }

@@ -1,4 +1,4 @@
-package main.interface_adapter.StartScreen;
+package main.interface_adapter.start_screen;
 
 public class StartScreenViewModel {
     private final String welcomeMessage;
@@ -14,8 +14,19 @@ public class StartScreenViewModel {
         this.rulesButtonText = rulesButtonText;
     }
 
-    public String getWelcomeMessage() { return welcomeMessage; }
-    public String getRules() { return rules; }
-    public String getStartButtonText() { return startButtonText; }
-    public String getRulesButtonText() { return rulesButtonText; }
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    public String getRules() {
+        return rules;
+    }
+
+    public String getStartButtonText() {
+        return startButtonText;
+    }
+
+    public String getRulesButtonText() {
+        return rulesButtonText;
+    }
 }
