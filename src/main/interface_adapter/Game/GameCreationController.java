@@ -6,6 +6,7 @@ import main.infrastructure.JsonPropertyDataSource;
 import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
 import main.use_case.Game.GameInitializeTiles;
+import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.PropertyDataSource;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class GameCreationController {
         Game game = new Game();
         game.setPlayersFromOutputData(players);
 
-        // Use injected tile initializer
+        // Initialize tiles
         switch (boardSize) {
             case SMALL:
                 game.setTiles(gameInitializeTiles.executeSmallBoard());
@@ -45,6 +46,10 @@ public class GameCreationController {
                 game.setTiles(gameInitializeTiles.executeLargeBoard());
                 break;
         }
+
+        // Initialize stocks
+        GameInitializeStocks stockInitializer = new GameInitializeStocks(game);
+        stockInitializer.execute();
 
         return game;
     }
