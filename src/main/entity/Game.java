@@ -2,16 +2,9 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.entity.tiles.PropertyTile;
 import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
-import main.use_case.Game.GameInitializeStocks;
-import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
-
-import main.infrastructure.JsonPropertyDataSource;
-import main.infrastructure.FallbackPropertyDataSource;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
@@ -20,6 +13,7 @@ import static main.Constants.Constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
+ * Fixed to follow Clean Architecture - no direct dependency on use cases
  */
 public class Game {
     private List<Tile> tiles;
@@ -36,20 +30,6 @@ public class Game {
 
     public Game() {
         //initializeGame();
-    }
-
-    /**
-     * Initializes Properties and Players
-     */
-    public void initializeGame() {
-        new GameInitializeTiles(
-            this,
-            new JsonPropertyDataSource("/Board/properties.json"),
-            new FallbackPropertyDataSource()
-        ).execute();
-        //new GameInitializePlayers(this).execute();
-        new GameInitializeStocks(this).execute();
-        //this.setPlayers(players);
     }
 
     public boolean isGameOver() {

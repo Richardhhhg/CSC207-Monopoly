@@ -6,6 +6,15 @@ import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenA
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenViewModel;
 import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
+import main.interface_adapter.CharacterSelectionScreen.BoardSizeController;
+import main.interface_adapter.CharacterSelectionScreen.BoardSizePresenter;
+import main.interface_adapter.CharacterSelectionScreen.BoardSizeViewModel;
+import main.interface_adapter.Game.GameCreationController;
+import main.use_case.BoardSizeSelection.BoardSizeSelection;
+import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
+import main.use_case.Game.GameInitializeTiles;
+import main.infrastructure.JsonPropertyDataSource;
+import main.infrastructure.FallbackPropertyDataSource;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,18 +28,50 @@ public class CharacterSelectionScreen extends JFrame {
 
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
+    private final BoardSizeController boardSizeController;
+    private final BoardSizeViewModel boardSizeViewModel;
+    private final GameCreationController gameCreationController;
     private final List<PlayerSelection> selections = new ArrayList<>();
+
+    // Board size selection buttons
+    private JButton smallButton;
+    private JButton mediumButton;
+    private JButton largeButton;
 
     public CharacterSelectionScreen() {
         var adapter = CharacterSelectionScreenAdapter.inject();
         this.controller = adapter.getController();
         this.viewModel = adapter.getViewModel();
+
+        // Composition root - wire up dependencies here
+        BoardSizeSelection boardSizeSelection = new BoardSizeSelection();
+        BoardSizePresenter boardSizePresenter = new BoardSizePresenter();
+
+        // Create GameInitializeTiles with both primary and fallback data sources
+        GameInitializeTiles gameInitializeTiles = new GameInitializeTiles(
+                new JsonPropertyDataSource(),
+                new FallbackPropertyDataSource()
+        );
+
+        // Separate controllers for separate responsibilities
+        this.boardSizeController = new BoardSizeController(
+                boardSizeSelection,
+                boardSizePresenter
+        );
+
+        this.gameCreationController = new GameCreationController(gameInitializeTiles);
+
+        this.boardSizeViewModel = boardSizePresenter.getViewModel();
+
+        // Initialize with default board size
+        boardSizeController.initializeDefaultBoardSize();
+
         initializeScreen();
     }
 
     private void initializeScreen() {
         setTitle("Select Your Characters");
-        setSize(900, 700);
+        setSize(900, 800); // Increased height to accommodate board size selection
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -86,6 +127,9 @@ public class CharacterSelectionScreen extends JFrame {
             playerPanel.add(playerSlot);
         }
 
+        // Create board size selection panel
+        JPanel boardSizePanel = createBoardSizePanel();
+
         JButton startGame = new JButton("Play!");
         startGame.addActionListener(e -> {
             List<PlayerOutputData> validPlayers = viewModel.getAllPlayers()
@@ -100,17 +144,93 @@ public class CharacterSelectionScreen extends JFrame {
 
             controller.confirmSelection();
 
-            Game game = new Game();
-            game.setPlayersFromOutputData(validPlayers);
-            game.initializeGame();
+            // Use GameCreationController for game creation (proper separation of concerns)
+            Game game = gameCreationController.createGameWithBoardSize(
+                validPlayers,
+                boardSizeViewModel.getSelectedBoardSize()
+            );
+
             GameHolder.setGame(game);
             dispose();
             new GameView().setVisible(true);
         });
 
-        add(playerPanel, BorderLayout.CENTER);
+        // Layout components
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.add(playerPanel, BorderLayout.CENTER);
+        centerPanel.add(boardSizePanel, BorderLayout.SOUTH);
+
+        add(centerPanel, BorderLayout.CENTER);
         add(startGame, BorderLayout.SOUTH);
         setVisible(true);
+    }
+
+    private JPanel createBoardSizePanel() {
+        JPanel boardSizePanel = new JPanel();
+        boardSizePanel.setLayout(new BoxLayout(boardSizePanel, BoxLayout.Y_AXIS));
+        boardSizePanel.setBorder(BorderFactory.createTitledBorder("Board Size"));
+
+        JLabel instructionLabel = new JLabel("Select board size:");
+        instructionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        boardSizePanel.add(instructionLabel);
+        boardSizePanel.add(Box.createVerticalStrut(10));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        smallButton = new JButton(boardSizeViewModel.getSmallButtonText());
+        mediumButton = new JButton(boardSizeViewModel.getMediumButtonText());
+        largeButton = new JButton(boardSizeViewModel.getLargeButtonText());
+
+        // Set initial selection (medium is default)
+        updateButtonSelection(BoardSize.MEDIUM);
+
+        smallButton.addActionListener(e -> {
+            boardSizeController.selectBoardSize(BoardSize.SMALL);
+            updateButtonSelection(BoardSize.SMALL);
+        });
+
+        mediumButton.addActionListener(e -> {
+            boardSizeController.selectBoardSize(BoardSize.MEDIUM);
+            updateButtonSelection(BoardSize.MEDIUM);
+        });
+
+        largeButton.addActionListener(e -> {
+            boardSizeController.selectBoardSize(BoardSize.LARGE);
+            updateButtonSelection(BoardSize.LARGE);
+        });
+
+        buttonPanel.add(smallButton);
+        buttonPanel.add(mediumButton);
+        buttonPanel.add(largeButton);
+
+        boardSizePanel.add(buttonPanel);
+        return boardSizePanel;
+    }
+
+    private void updateButtonSelection(BoardSize selectedSize) {
+        // Reset all buttons
+        smallButton.setBackground(null);
+        mediumButton.setBackground(null);
+        largeButton.setBackground(null);
+
+        // Highlight selected button
+        Color selectedColor = new Color(173, 216, 230); // Light blue
+        switch (selectedSize) {
+            case SMALL:
+                smallButton.setBackground(selectedColor);
+                break;
+            case MEDIUM:
+                mediumButton.setBackground(selectedColor);
+                break;
+            case LARGE:
+                largeButton.setBackground(selectedColor);
+                break;
+        }
+
+        // Make buttons opaque so background color shows
+        smallButton.setOpaque(true);
+        mediumButton.setOpaque(true);
+        largeButton.setOpaque(true);
     }
 
     private void updatePlayerSelection(int index, JTextField nameField, JComboBox<String> dropdown, JLabel portraitLabel) {
@@ -141,4 +261,3 @@ public class CharacterSelectionScreen extends JFrame {
         }
     }
 }
-

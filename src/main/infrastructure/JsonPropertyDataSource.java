@@ -14,6 +14,11 @@ import java.util.List;
 public class JsonPropertyDataSource implements PropertyDataSource {
     private final String resourcePath;
 
+    // Default constructor that Game class expects
+    public JsonPropertyDataSource() {
+        this.resourcePath = "/properties.json"; // Default path
+    }
+
     public JsonPropertyDataSource(String resourcePath) {
         this.resourcePath = resourcePath;
     }
@@ -23,7 +28,7 @@ public class JsonPropertyDataSource implements PropertyDataSource {
         try {
             InputStream inputStream = getClass().getResourceAsStream(resourcePath);
             if (inputStream == null) {
-                throw new RuntimeException("Could not find file: " + resourcePath);
+                return null; // Simple null return to trigger fallback
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -37,55 +42,53 @@ public class JsonPropertyDataSource implements PropertyDataSource {
             return parsePropertiesFromJson(jsonBuilder.toString());
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load property data from " + resourcePath, e);
+            return null; // Simple null return on any error
         }
     }
 
     private List<PropertyInfo> parsePropertiesFromJson(String jsonContent) {
         List<PropertyInfo> propertyData = new ArrayList<>();
 
-        // Find the properties array
+        // Simple parsing - if anything goes wrong, return null to trigger fallback
         int propertiesStart = jsonContent.indexOf("\"properties\":");
-        if (propertiesStart == -1) {
-            throw new RuntimeException("Properties array not found in JSON");
-        }
+        if (propertiesStart == -1) return null;
 
         int arrayStart = jsonContent.indexOf("[", propertiesStart);
         int arrayEnd = jsonContent.lastIndexOf("]");
+        if (arrayStart == -1 || arrayEnd == -1 || arrayStart >= arrayEnd) return null;
 
         String propertiesArray = jsonContent.substring(arrayStart + 1, arrayEnd);
         String[] propertyObjects = propertiesArray.split("\\},\\s*\\{");
 
         for (String propertyObj : propertyObjects) {
             propertyObj = propertyObj.replace("{", "").replace("}", "");
-            String name = extractJsonValue(propertyObj, "name");
-            int basePrice = Integer.parseInt(extractJsonValue(propertyObj, "basePrice"));
-            propertyData.add(new PropertyInfo(name, basePrice));
+
+            try {
+                String name = extractJsonValue(propertyObj, "name");
+                int basePrice = Integer.parseInt(extractJsonValue(propertyObj, "basePrice"));
+                propertyData.add(new PropertyInfo(name, basePrice));
+            } catch (Exception e) {
+                // Skip malformed entries, continue with others
+            }
         }
 
-        return propertyData;
+        return propertyData.isEmpty() ? null : propertyData;
     }
 
     private String extractJsonValue(String jsonObj, String key) {
         String searchKey = "\"" + key + "\":";
         int keyStart = jsonObj.indexOf(searchKey);
-        if (keyStart == -1) {
-            throw new RuntimeException("Key " + key + " not found");
-        }
+        if (keyStart == -1) return null;
 
         int valueStart = keyStart + searchKey.length();
         String remaining = jsonObj.substring(valueStart).trim();
 
         if (remaining.startsWith("\"")) {
             int endQuote = remaining.indexOf("\"", 1);
-            return remaining.substring(1, endQuote);
+            return endQuote == -1 ? null : remaining.substring(1, endQuote);
         } else {
             int endComma = remaining.indexOf(",");
-            if (endComma == -1) {
-                return remaining.trim();
-            } else {
-                return remaining.substring(0, endComma).trim();
-            }
+            return endComma == -1 ? remaining.trim() : remaining.substring(0, endComma).trim();
         }
     }
 }

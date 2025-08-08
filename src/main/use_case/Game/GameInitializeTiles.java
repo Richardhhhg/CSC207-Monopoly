@@ -1,13 +1,10 @@
 package main.use_case.Game;
 
 import main.Constants.Constants;
-import main.entity.Game;
 import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
-import main.infrastructure.FallbackPropertyDataSource;
-import main.infrastructure.JsonPropertyDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,46 +12,57 @@ import java.util.List;
 /**
  * Use case for initializing tiles in the game.
  * Follows Single Responsibility Principle - only handles tile creation logic.
- * Follows Dependency Inversion Principle - depends on PropertyDataSource abstraction.
+ * Fallback logic delegated to dedicated fallback data source.
  */
 public class GameInitializeTiles {
-    private final Game game;
-    private final PropertyDataSource propertyDataSource;
+    private final PropertyDataSource primaryDataSource;
     private final PropertyDataSource fallbackDataSource;
 
     // Board size configurations (must be multiples of 4)
     private static final int SMALL_BOARD_SIZE = 20;
     private static final int MEDIUM_BOARD_SIZE = 24;
     private static final int LARGE_BOARD_SIZE = 28;
-    private static final int DEFAULT_BOARD_SIZE = MEDIUM_BOARD_SIZE;
 
-    // Constructor for dependency injection (Open/Closed Principle)
-    public GameInitializeTiles(Game game, PropertyDataSource propertyDataSource, PropertyDataSource fallbackDataSource) {
-        this.game = game;
-        this.propertyDataSource = propertyDataSource;
+    public GameInitializeTiles(PropertyDataSource primaryDataSource, PropertyDataSource fallbackDataSource) {
+        this.primaryDataSource = primaryDataSource;
         this.fallbackDataSource = fallbackDataSource;
     }
 
     /**
-     * Initialize the game tiles with the default board size.
+     * Create a small board (20 tiles)
      */
-    public void execute() {
-        execute(DEFAULT_BOARD_SIZE);
+    public List<Tile> executeSmallBoard() {
+        return execute(SMALL_BOARD_SIZE);
     }
 
     /**
-     * Execute the tile initialization with the specified board size.
+     * Create a medium board (24 tiles) - default
      */
-    public void execute(int boardSize) {
-        List<PropertyDataSource.PropertyInfo> propertyData = getPropertyData();
-        List<Tile> tiles = createTiles(boardSize, propertyData);
-        game.setTiles(tiles);
+    public List<Tile> executeMediumBoard() {
+        return execute(MEDIUM_BOARD_SIZE);
     }
 
+    /**
+     * Create a large board (28 tiles)
+     */
+    public List<Tile> executeLargeBoard() {
+        return execute(LARGE_BOARD_SIZE);
+    }
+
+    private List<Tile> execute(int boardSize) {
+        List<PropertyDataSource.PropertyInfo> propertyData = getPropertyData();
+        return createTiles(boardSize, propertyData);
+    }
+
+    /**
+     * Fallback logic now properly delegates to fallback data source
+     */
     private List<PropertyDataSource.PropertyInfo> getPropertyData() {
         try {
-            return propertyDataSource.getPropertyData();
-        } catch (RuntimeException e) {
+            List<PropertyDataSource.PropertyInfo> data = primaryDataSource.getPropertyData();
+            return data != null && !data.isEmpty() ? data : fallbackDataSource.getPropertyData();
+        } catch (Exception e) {
+            // Any exception from primary data source triggers fallback
             return fallbackDataSource.getPropertyData();
         }
     }
@@ -110,26 +118,5 @@ public class GameInitializeTiles {
             int basePrice = 60 + (index - 1) * 20;
             return Math.min(basePrice, 400);
         }
-    }
-
-    /**
-     * Create a small board (20 tiles)
-     */
-    public void executeSmallBoard() {
-        execute(SMALL_BOARD_SIZE);
-    }
-
-    /**
-     * Create a medium board (24 tiles) - default
-     */
-    public void executeMediumBoard() {
-        execute(MEDIUM_BOARD_SIZE);
-    }
-
-    /**
-     * Create a large board (28 tiles)
-     */
-    public void executeLargeBoard() {
-        execute(LARGE_BOARD_SIZE);
     }
 }

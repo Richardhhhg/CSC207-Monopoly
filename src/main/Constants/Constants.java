@@ -15,6 +15,8 @@ public class Constants {
     // GamePlay related constants
     public static final int MAX_ROUNDS = 20;
     public static final int PLACEHOLDER_RENT = 50;
+    public static final int PROPERTY_BASE_PRICE = 60;
+    public static final int PROPERTY_PRICE_INCREMENT = 20;
 
     // Board JPanel Related main.Constants.main.Constants
     public static final int BOARD_SIZE = 780;
