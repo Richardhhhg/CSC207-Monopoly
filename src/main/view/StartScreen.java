@@ -70,11 +70,10 @@ public class StartScreen extends JFrame {
     private JPanel createButtonPanel() {
         final JButton startButton = new JButton(viewModel.getStartButtonText());
         startButton.setFont(
-                new Font(FONT_FAMILY, BUTTON_FONT_STYLE, START_BUTTON_FONT_SIZE)
-        );
+                new Font(FONT_FAMILY, BUTTON_FONT_STYLE, START_BUTTON_FONT_SIZE));
         startButton.addActionListener(actionEvent -> {
             dispose();
-            new Main().startGame();
+            new CharacterSelectionScreen();
         });
 
         final JButton rulesButton = new JButton(viewModel.getRulesButtonText());

@@ -4,7 +4,7 @@ import main.entity.Stocks.Stock;
 import main.entity.players.Player;
 
 public class StockPresenter {
-    public StockViewModel execute(Stock stock, Player player) {
-        return new StockViewModel(stock, player);
+    public StockViewModel execute(Stock stock, Player player, boolean allowBuy) {
+        return new StockViewModel(stock, player, allowBuy);
     }
 }

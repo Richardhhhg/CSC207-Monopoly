@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {"name": "Mediterranean Ave", "basePrice": 60},
+    {"name": "Baltic Ave", "basePrice": 80},
+    {"name": "Oriental Ave", "basePrice": 100},
+    {"name": "Vermont Ave", "basePrice": 120},
+    {"name": "Connecticut Ave", "basePrice": 140},
+    {"name": "St. James Place", "basePrice": 160},
+    {"name": "Tennessee Ave", "basePrice": 180},
+    {"name": "New York Ave", "basePrice": 200},
+    {"name": "Kentucky Ave", "basePrice": 220},
+    {"name": "Indiana Ave", "basePrice": 240},
+    {"name": "Illinois Ave", "basePrice": 260},
+    {"name": "Atlantic Ave", "basePrice": 280},
+    {"name": "Ventnor Ave", "basePrice": 300},
+    {"name": "Marvin Gardens", "basePrice": 320},
+    {"name": "Pacific Ave", "basePrice": 340},
+    {"name": "North Carolina Ave", "basePrice": 360},
+    {"name": "Pennsylvania Ave", "basePrice": 380},
+    {"name": "Park Place", "basePrice": 400},
+    {"name": "Boardwalk", "basePrice": 420},
+    {"name": "Short Line", "basePrice": 200},
+    {"name": "B&O Railroad", "basePrice": 200},
+    {"name": "Reading Railroad", "basePrice": 200},
+    {"name": "Pennsylvania Railroad", "basePrice": 200},
+    {"name": "Electric Company", "basePrice": 150},
+    {"name": "Water Works", "basePrice": 150},
+    {"name": "Luxury Estate", "basePrice": 450},
+    {"name": "Prime Location", "basePrice": 480},
+    {"name": "Golden Avenue", "basePrice": 500}
+  ]
+}
+

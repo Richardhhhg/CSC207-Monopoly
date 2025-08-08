@@ -1,11 +1,11 @@
 package main.interface_adapter.PlayerStats;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.use_case.PlayerStats.PlayerStatsOutput;
 import main.use_case.PlayerStats.PlayerStatsOutputBoundary;
 import main.use_case.PlayerStats.PlayerStatsOutputData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerStatsPresenter implements PlayerStatsOutputBoundary {
 
@@ -21,15 +21,15 @@ public class PlayerStatsPresenter implements PlayerStatsOutputBoundary {
 
         for (PlayerStatsOutput s : outputData.getPlayerStats()) {
             List<DisplayProperty> props = new ArrayList<>();
-            for (String name : s.propertyNames) {
+            for (String name : s.getPropertyNames()) {
                 props.add(new DisplayProperty(name));
             }
             players.add(new DisplayPlayer(
-                    s.name,
-                    s.money,
-                    s.bankrupt,
-                    s.color,
-                    s.portrait,
+                    s.getName(),
+                    s.getMoney(),
+                    s.isBankrupt(),
+                    s.getColor(),
+                    s.getPortrait(),
                     props
             ));
         }

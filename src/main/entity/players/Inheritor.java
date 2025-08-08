@@ -1,20 +1,21 @@
 package main.entity.players;
 
-import main.entity.tiles.PropertyTile;
 import main.entity.Stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.LANDLORD_INIT_MONEY;
+import static main.Constants.Constants.INHERITOR_INIT_MONEY;
+import static main.Constants.Constants.INH_POR;
 
 /**
- * A Player subclass representing a Landlord.
- * Landlords gain extra rent and can sell properties for more money.
+ * A special type of Player called "Inheritor".
+ * This character pays more for stocks but may later get passive bonuses.
+ * Starts with $1000.
  */
-public class landlord extends Player implements rentModifier, StockModifier {
-    public landlord(String name, Color color) {
-        super(name, LANDLORD_INIT_MONEY, color);
-        this.loadPortrait("main/Resources/landlord.png");
+public class Inheritor extends Player implements StockModifier{
+    public Inheritor(String name, Color color) {
+        super(name, INHERITOR_INIT_MONEY, color);
+        this.loadPortrait(INH_POR);
     }
 
     @Override
@@ -38,28 +39,24 @@ public class landlord extends Player implements rentModifier, StockModifier {
     }
 
     /**
-     * @param basePrice
-     * @return
+     * Inheritors pay 10% more than the base price when buying stocks.
+     *
+     * @param basePrice The base stock price.
+     * @return The adjusted stock buy price.
      */
     @Override
     public float adjustStockBuyPrice(float basePrice) {
-        return (float) (basePrice * 1.8);
+        return (float) (basePrice * 1.1); // Pays 10% more when buying
     }
 
     /**
-     * @param basePrice
-     * @return
+     * Inheritors receive no bonus when selling stocks (default 0 here; can be updated).
+     *
+     * @param basePrice The base stock price.
+     * @return The basePrice.
      */
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return (float) (basePrice * 0.8);
-    }
-    /**
-     * @param baseRent
-     * @return
-     */
-    @Override
-    public float adjustRent(float baseRent) {
-        return (float) (baseRent * 1.8);
+        return (float) (basePrice * 0.7);
     }
 }
