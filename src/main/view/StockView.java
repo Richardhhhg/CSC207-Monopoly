@@ -29,6 +29,10 @@ public class StockView extends JPanel {
 
         this.quantityInput = new JTextField(5);
         JButton buyButton = new JButton("Buy");
+        if (!stockViewModel.isAllowBuy()) {
+            buyButton.setEnabled(false);
+        }
+
         JButton sellButton = new JButton("Sell");
 
         add(tickerLabel);

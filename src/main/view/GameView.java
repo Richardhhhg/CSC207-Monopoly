@@ -180,7 +180,7 @@ public class GameView extends JFrame{
     }
 
     private void displayStockMarket() {
-        StockMarketView stockMarketView = new StockMarketView(game.getCurrentPlayer());
+        StockMarketView stockMarketView = new StockMarketView(game.getCurrentPlayer(), false);
         stockMarketView.setVisible(true);
     }
 

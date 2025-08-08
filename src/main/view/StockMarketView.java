@@ -24,8 +24,9 @@ public class StockMarketView extends JFrame {
      * Constructor for StockMarketView that initializes the view with a map of stocks and their owned quantities.
      *
      * @param player player to which the stock market view is unique to
+     * @param allowBuy boolean indicating if the player is allowed to buy stocks. Only true for landing on tiles.
      */
-    public StockMarketView(Player player) {
+    public StockMarketView(Player player, boolean allowBuy) {
         super("Stock Market");
         Map<Stock, Integer> stockQuantities = player.getStocks();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,7 +60,7 @@ public class StockMarketView extends JFrame {
         // TODO: This should create a presenter for the stock which then creates a StockViewModel - Richard
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
             Stock stock = entry.getKey();
-            StockViewModel stockViewModel = new StockPresenter().execute(stock, player);
+            StockViewModel stockViewModel = new StockPresenter().execute(stock, player, allowBuy);
             StockView stockview = new StockView(
                     stockViewModel
             );
@@ -68,25 +69,5 @@ public class StockMarketView extends JFrame {
         }
 
         setContentPane(mainPanel);
-    }
-
-    /**
-     * Main method to run the StockMarketView for testing purposes.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        Player player = new DefaultPlayer("Test Player", Color.RED);
-        java.util.List<Stock> stocks = new java.util.ArrayList<>();
-        DefaultStockInfoRepository stockInfoRepository = new DefaultStockInfoRepository();
-        for (int i = 0; i < 5; i++) {
-            StockInfoDataOutputObject info = stockInfoRepository.getStockInfo("TEST_" + i);
-            Stock stock = new Stock(info.ticker(), info.currentPrice(),
-                    info.meanDailyReturnPct(), info.standardDeviationPct());
-            stocks.add(stock);
-        }
-        player.initializeStocks(stocks);
-        StockMarketView marketView = new StockMarketView(player);
-        marketView.setVisible(true);
     }
 }
