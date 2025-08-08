@@ -28,7 +28,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         int index = inputData.getIndex();
         String name = inputData.getName();
         String type = inputData.getType();
-        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
+        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE};
         Color color = colors[index];
 
         Player player = CharacterFactory.createPlayer(name, type, color);
@@ -64,7 +64,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         String name = inputData.getName();
         String type = inputData.getType();
 
-        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
+        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE};
         Color color = colors[index];
 
         Player player = CharacterFactory.createPlayer(name, type, color);
