@@ -6,39 +6,65 @@ import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
+import main.infrastructure.FallbackPropertyDataSource;
+import main.infrastructure.JsonPropertyDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Use case for initializing tiles in the game.
- * Creates a mix of Go, Property, and Stock Market tiles with flexible board sizes.
+ * Follows Single Responsibility Principle - only handles tile creation logic.
+ * Follows Dependency Inversion Principle - depends on PropertyDataSource abstraction.
  */
 public class GameInitializeTiles {
-    private Game game;
+    private final Game game;
+    private final PropertyDataSource propertyDataSource;
+    private final PropertyDataSource fallbackDataSource;
 
     // Board size configurations (must be multiples of 4)
     private static final int SMALL_BOARD_SIZE = 20;
     private static final int MEDIUM_BOARD_SIZE = 24;
     private static final int LARGE_BOARD_SIZE = 28;
-
-    // Default board size
     private static final int DEFAULT_BOARD_SIZE = MEDIUM_BOARD_SIZE;
 
     public GameInitializeTiles(Game game) {
-        this.game = game;
+        this(game, new JsonPropertyDataSource("/Board/properties.json"), new FallbackPropertyDataSource());
     }
 
+    // Constructor for dependency injection (Open/Closed Principle)
+    public GameInitializeTiles(Game game, PropertyDataSource propertyDataSource, PropertyDataSource fallbackDataSource) {
+        this.game = game;
+        this.propertyDataSource = propertyDataSource;
+        this.fallbackDataSource = fallbackDataSource;
+    }
+
+    /**
+     * Initialize the game tiles with the default board size.
+     */
     public void execute() {
         execute(DEFAULT_BOARD_SIZE);
     }
 
+    /**
+     * Execute the tile initialization with the specified board size.
+     */
     public void execute(int boardSize) {
-        // Ensure board size is a multiple of 4
-        if (boardSize % 4 != 0) {
-            throw new IllegalArgumentException("Board size must be a multiple of 4, got: " + boardSize);
-        }
+        List<PropertyDataSource.PropertyInfo> propertyData = getPropertyData();
+        List<Tile> tiles = createTiles(boardSize, propertyData);
+        game.setTiles(tiles);
+    }
 
+    private List<PropertyDataSource.PropertyInfo> getPropertyData() {
+        try {
+            return propertyDataSource.getPropertyData();
+        } catch (Exception e) {
+            System.err.println("Primary data source failed, using fallback: " + e.getMessage());
+            return fallbackDataSource.getPropertyData();
+        }
+    }
+
+    private List<Tile> createTiles(int boardSize, List<PropertyDataSource.PropertyInfo> propertyData) {
         List<Tile> tiles = new ArrayList<>();
 
         // Always start with Go tile at position 0
@@ -46,15 +72,13 @@ public class GameInitializeTiles {
 
         // Calculate how many tiles we need to fill
         int remainingTiles = boardSize - 1;
-
-        // Distribute remaining tiles: 70% Properties, 30% Stock Market
-        int stockMarketTiles = Math.max(1, remainingTiles * 3 / 10); // At least 1 stock market tile
+        int stockMarketTiles = Math.max(1, remainingTiles * 3 / 10);
         int propertyTiles = remainingTiles - stockMarketTiles;
 
         // Add property tiles
         for (int i = 0; i < propertyTiles; i++) {
-            String propertyName = generatePropertyName(i + 1);
-            int price = generatePropertyPrice(i + 1);
+            String propertyName = generatePropertyName(i + 1, propertyData);
+            int price = generatePropertyPrice(i + 1, propertyData);
             tiles.add(new PropertyTile(propertyName, price, Constants.PLACEHOLDER_RENT));
         }
 
@@ -65,42 +89,32 @@ public class GameInitializeTiles {
             tiles.add(insertPosition, new StockMarketTile());
         }
 
-        game.setTiles(tiles);
+        return tiles;
     }
 
-    /**
-     * Generate property names based on position
-     */
-    private String generatePropertyName(int index) {
-        String[] propertyNames = {
-            "Mediterranean Ave", "Baltic Ave", "Oriental Ave", "Vermont Ave",
-            "Connecticut Ave", "St. James Place", "Tennessee Ave", "New York Ave",
-            "Kentucky Ave", "Indiana Ave", "Illinois Ave", "Atlantic Ave",
-            "Ventnor Ave", "Marvin Gardens", "Pacific Ave", "North Carolina Ave",
-            "Pennsylvania Ave", "Boardwalk", "Park Place", "Luxury Tax",
-            "Short Line", "B&O Railroad", "Reading Railroad", "Pennsylvania Railroad"
-        };
-
-        if (index <= propertyNames.length) {
-            return propertyNames[index - 1];
+    private String generatePropertyName(int index, List<PropertyDataSource.PropertyInfo> propertyData) {
+        if (index <= propertyData.size()) {
+            return propertyData.get(index - 1).getName();
         } else {
             return "Property " + index;
         }
     }
 
-    /**
-     * Generate property prices based on position (higher index = higher price)
-     */
-    private int generatePropertyPrice(int index) {
-        // Base price increases with position
-        int basePrice = 60 + (index - 1) * 20;
+    private int generatePropertyPrice(int index, List<PropertyDataSource.PropertyInfo> propertyData) {
+        if (index <= propertyData.size()) {
+            int basePrice = propertyData.get(index - 1).getBasePrice();
 
-        // Add some variation for realism
-        if (index % 5 == 0) {
-            basePrice += 40; // Premium properties
+            // Add some variation for realism
+            if (index % 5 == 0) {
+                basePrice += 40; // Premium properties
+            }
+
+            return basePrice;
+        } else {
+            // Fallback for properties beyond data
+            int basePrice = 60 + (index - 1) * 20;
+            return Math.min(basePrice, 400);
         }
-
-        return Math.min(basePrice, 400); // Cap at $400
     }
 
     /**
