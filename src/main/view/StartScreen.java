@@ -1,6 +1,5 @@
 package main.view;
 
-import main.app.Main;
 import main.interface_adapter.StartScreen.StartScreenController;
 import main.interface_adapter.StartScreen.StartScreenPresenter;
 import main.interface_adapter.StartScreen.StartScreenViewModel;
@@ -46,8 +45,8 @@ public class StartScreen extends JFrame {
         JButton startButton = new JButton(viewModel.getStartButtonText());
         startButton.setFont(new Font("Arial", Font.PLAIN, 20));
         startButton.addActionListener(e -> {
-            dispose(); // close start screen
-            new Main().startGame(); // start actual game
+            dispose();
+            new CharacterSelectionScreen();
         });
 
         JButton rulesButton = new JButton(viewModel.getRulesButtonText());

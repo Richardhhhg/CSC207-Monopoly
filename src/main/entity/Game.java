@@ -1,13 +1,15 @@
 package main.entity;
 
 import main.entity.Stocks.Stock;
+import main.entity.players.CharacterFactory;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Game.GameInitializePlayers;
+import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
@@ -30,7 +32,7 @@ public class Game {
     private String gameEndReason = "";
 
     public Game() {
-        initializeGame();
+        //initializeGame();
     }
 
     /**
@@ -38,8 +40,9 @@ public class Game {
      */
     public void initializeGame() {
         new GameInitializeTiles(this).execute();
-        new GameInitializePlayers(this).execute();
+        //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
+        //this.setPlayers(players);
     }
 
     public boolean isGameOver() {
@@ -237,5 +240,16 @@ public class Game {
         } else {
             throw new IllegalArgumentException("Stocks list cannot be null or empty");
         }
+    }
+
+    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+        List<Player> result = new ArrayList<>();
+        for (PlayerOutputData data : players) {
+            if (data != null && !"None".equals(data.getType())) {
+                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                result.add(player);
+            }
+        }
+        this.setPlayers(result);
     }
 }

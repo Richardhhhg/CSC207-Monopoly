@@ -5,12 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/GameHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/GameHolder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +44,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="finishing_stocks" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,7 +81,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "996b4463-4bb6-4344-8d71-fd060cb98fce"
+    "accountId": "5f9bc3f0-f956-404f-9b13-0cdd8d583502"
   },
   "recentNewPullRequestHead": {
     "server": {
@@ -99,33 +112,58 @@
     "Application.PlayerView.executor": "Run",
     "Application.PropertyTileView.executor": "Run",
     "Application.TileView.executor": "Run",
+    "JUnit.CharacterSelectionScreenInteractorTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "Cleaning",
+    "git-widget-placeholder": "#103 on david-character-sele-screen",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "org.infernus.idea.checkstyle.CheckStyleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wdebg\OneDrive\Desktop\dfrgthy\src\main\Resources\DicePicture" />
+      <recent name="C:\Users\wdebg\OneDrive\Desktop\dfrgthy\src\main\Resources\CharacterPortrait" />
       <recent name="$PROJECT_DIR$/src/main/Resources" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="CharacterSelectionScreenInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.CharacterSelectScreen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.CharacterSelectScreen" />
+      <option name="MAIN_CLASS_NAME" value="use_case.CharacterSelectScreen.CharacterSelectionScreenInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CharacterSelectionScreenInteractorTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -144,6 +182,7 @@
       <workItem from="1753308904677" duration="5497000" />
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
+      <workItem from="1754592541463" duration="4596000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />
@@ -209,7 +248,31 @@
       <option name="project" value="LOCAL" />
       <updated>1753990384291</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="css now compatable with the rest">
+      <option name="closed" value="true" />
+      <created>1754518875035</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754518875035</updated>
+    </task>
+    <task id="LOCAL-00010" summary="updated now clean architecture">
+      <option name="closed" value="true" />
+      <created>1754565244721</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1754565244721</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated now clean architecture">
+      <option name="closed" value="true" />
+      <created>1754567115566</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1754567115566</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +298,8 @@
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
     <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
+    <MESSAGE value="css now compatable with the rest" />
+    <MESSAGE value="updated now clean architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated now clean architecture" />
   </component>
 </project>
