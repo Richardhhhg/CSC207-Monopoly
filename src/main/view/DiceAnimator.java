@@ -45,8 +45,8 @@ public class DiceAnimator {
     }
 
     private void loadDiceIcons() {
-        for (int i = 1; i <= SIDES; i++) {
-            diceIcons[i] = new ImageIcon(getClass().getResource("/dice" + i + ".png"));
+        for (int i = 1; i <= 6; i++) {
+            diceIcons[i] = new ImageIcon(getClass().getResource("/DicePicture/dice" + i + ".png"));
         }
     }
 

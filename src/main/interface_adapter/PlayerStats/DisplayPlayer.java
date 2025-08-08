@@ -28,10 +28,51 @@ public class DisplayPlayer {
         this.properties = new ArrayList<>(properties);
     }
 
-    public boolean isBankrupt() { return bankrupt; }
-    public Color getColor() { return color; }
-    public String getName() { return name; }
-    public float getMoney() { return money; }
-    public List<DisplayProperty> getProperties() { return Collections.unmodifiableList(properties); }
-    public Image getPortrait() { return portrait; }
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return bankrupt
+     */
+    public boolean isBankrupt() {
+        return bankrupt;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return color
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return money
+     */
+    public float getMoney() {
+        return money;
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return Collections.unmodifiableList(properties);
+     */
+    public List<DisplayProperty> getProperties() {
+        return Collections.unmodifiableList(properties);
+    }
+
+    /**
+     * This class is a placeholder for constants used throughout the application.
+     * @return portrait.
+     */
+    public Image getPortrait() {
+        return portrait;
+    }
 }

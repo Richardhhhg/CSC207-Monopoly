@@ -1,11 +1,11 @@
 package main.use_case.PlayerStats;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.entity.Game;
 import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerStatsInteractor implements PlayerStatsInputBoundary {
     private final PlayerStatsOutputBoundary presenter;
@@ -13,7 +13,6 @@ public class PlayerStatsInteractor implements PlayerStatsInputBoundary {
     public PlayerStatsInteractor(PlayerStatsOutputBoundary presenter) {
         this.presenter = presenter;
     }
-
 
     @Override
     public void execute(Game game) {
@@ -40,6 +39,4 @@ public class PlayerStatsInteractor implements PlayerStatsInputBoundary {
 
         presenter.presentPlayerStats(output);
     }
-
-
 }

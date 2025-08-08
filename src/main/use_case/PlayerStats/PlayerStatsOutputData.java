@@ -7,10 +7,18 @@ import java.util.List;
 public class PlayerStatsOutputData {
     private final List<PlayerStatsOutput> playerStats = new ArrayList<>();
 
+    /**
+     * Get output name.
+     * @param stat .
+     */
     public void add(PlayerStatsOutput stat) {
         playerStats.add(stat);
     }
 
+    /**
+     * Get output name.
+     * @return  a list of PlayerStatsOutput.
+     */
     public List<PlayerStatsOutput> getPlayerStats() {
         return Collections.unmodifiableList(playerStats);
     }

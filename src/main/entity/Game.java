@@ -1,24 +1,25 @@
 package main.entity;
 
 import main.entity.Stocks.Stock;
+import main.entity.players.CharacterFactory;
 import main.entity.tiles.PropertyTile;
-import main.use_case.Game.GameInitializePlayers;
+import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
-import main.use_case.Tile;
+import main.entity.tiles.Tile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.FINISH_LINE_BONUS;
 import static main.Constants.Constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
  */
 public class Game {
-    private List<PropertyTile> tiles;
+    private List<Tile> tiles;
     private List<Player> players;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
@@ -31,7 +32,7 @@ public class Game {
     private String gameEndReason = "";
 
     public Game() {
-        initializeGame();
+        //initializeGame();
     }
 
     /**
@@ -39,8 +40,9 @@ public class Game {
      */
     public void initializeGame() {
         new GameInitializeTiles(this).execute();
-        new GameInitializePlayers(this).execute();
+        //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
+        //this.setPlayers(players);
     }
 
     public boolean isGameOver() {
@@ -120,7 +122,7 @@ public class Game {
         return null;
     }
 
-    public List<PropertyTile> getTiles() {
+    public List<Tile> getTiles() {
         return tiles;
     }
 
@@ -215,7 +217,7 @@ public class Game {
         this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
     }
 
-    public void setTiles(List<PropertyTile> tiles) {
+    public void setTiles(List<Tile> tiles) {
         if (tiles != null && !tiles.isEmpty()) {
             this.tiles = tiles;
             this.tileCount = tiles.size();
@@ -232,19 +234,22 @@ public class Game {
         }
     }
 
-    public void setTileCount(int tileCount) {
-        if (tileCount > 0) {
-            this.tileCount = tileCount;
-        } else {
-            throw new IllegalArgumentException("Tile count must be greater than zero");
-        }
-    }
-
     public void setStocks(List<Stock> stocks) {
         if (stocks != null && !stocks.isEmpty()) {
             this.stocks = stocks;
         } else {
             throw new IllegalArgumentException("Stocks list cannot be null or empty");
         }
+    }
+
+    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+        List<Player> result = new ArrayList<>();
+        for (PlayerOutputData data : players) {
+            if (data != null && !"None".equals(data.getType())) {
+                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                result.add(player);
+            }
+        }
+        this.setPlayers(result);
     }
 }
