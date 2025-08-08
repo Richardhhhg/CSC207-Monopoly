@@ -1,4 +1,4 @@
-package main.interface_adapter.Dice;
+package main.interface_adapter.dice;
 
 public class DiceViewModel {
     private final int dice1;
@@ -11,9 +11,17 @@ public class DiceViewModel {
         this.sum = sum;
     }
 
-    public int getDice1() { return dice1; }
-    public int getDice2() { return dice2; }
-    public int getSum() { return sum; }
+    public int getDice1() {
+        return dice1;
+    }
+
+    public int getDice2() {
+        return dice2;
+    }
+
+    public int getSum() {
+        return sum;
+    }
 
     public String getSumText() {
         return "Sum: " + sum;

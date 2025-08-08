@@ -38,6 +38,14 @@ public class Constants {
     public static final String STOCK_API_URL = "https://www.alphavantage.co/query";
     public static final int YEARS_OF_DATA = 5;
 
+    // Dice Constants
+    public static final int DICE_SIDES = 6;
+    public static final int DICE_ICON_COUNT = DICE_SIDES + 1;
+    public static final int DICE_FRAME_LIMIT = 9;
+    public static final int DICE_DELAY_MS = 100;
+    public static final int DICE_MIN_SUM = 2;
+    public static final int DICE_DEFAULT_FACE = 1;
+
     // Math
     public static final double PERCENTAGE_MULTIPLIER = 100.0;
 
