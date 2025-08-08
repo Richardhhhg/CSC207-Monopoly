@@ -28,10 +28,6 @@ public class GameInitializeTiles {
     private static final int LARGE_BOARD_SIZE = 28;
     private static final int DEFAULT_BOARD_SIZE = MEDIUM_BOARD_SIZE;
 
-    public GameInitializeTiles(Game game) {
-        this(game, new JsonPropertyDataSource("/Board/properties.json"), new FallbackPropertyDataSource());
-    }
-
     // Constructor for dependency injection (Open/Closed Principle)
     public GameInitializeTiles(Game game, PropertyDataSource propertyDataSource, PropertyDataSource fallbackDataSource) {
         this.game = game;
@@ -59,7 +55,6 @@ public class GameInitializeTiles {
         try {
             return propertyDataSource.getPropertyData();
         } catch (Exception e) {
-            System.err.println("Primary data source failed, using fallback: " + e.getMessage());
             return fallbackDataSource.getPropertyData();
         }
     }
@@ -118,21 +113,21 @@ public class GameInitializeTiles {
     }
 
     /**
-     * Create a small board (16 tiles)
+     * Create a small board (20 tiles)
      */
     public void executeSmallBoard() {
         execute(SMALL_BOARD_SIZE);
     }
 
     /**
-     * Create a medium board (20 tiles) - default
+     * Create a medium board (24 tiles) - default
      */
     public void executeMediumBoard() {
         execute(MEDIUM_BOARD_SIZE);
     }
 
     /**
-     * Create a large board (24 tiles)
+     * Create a large board (28 tiles)
      */
     public void executeLargeBoard() {
         execute(LARGE_BOARD_SIZE);
