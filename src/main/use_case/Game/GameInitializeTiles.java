@@ -54,7 +54,7 @@ public class GameInitializeTiles {
     private List<PropertyDataSource.PropertyInfo> getPropertyData() {
         try {
             return propertyDataSource.getPropertyData();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return fallbackDataSource.getPropertyData();
         }
     }
