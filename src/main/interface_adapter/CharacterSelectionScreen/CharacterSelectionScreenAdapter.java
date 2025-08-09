@@ -1,6 +1,6 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
-import main.data_access.StockMarket.InMemoryCharacterDataAccess;
+import main.data_access.Player.InMemoryCharacterDataAccess;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenInteractor;

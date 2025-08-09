@@ -2,18 +2,19 @@ package main.interface_adapter.StockMarket;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.Player;
-import main.use_case.Stocks.BuyStock;
+import main.use_case.Stocks.BuyStockInputBoundary;
+import main.use_case.Stocks.BuyStockInputData;
+import main.use_case.Stocks.BuyStockInteractor;
 
 public class StockBuyController {
-    public void execute(Player player, Stock stock, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than 0");
-        }
-        if (player.getMoney() < stock.getCurrentPrice() * quantity) {
-            throw new IllegalArgumentException("Insufficient funds to buy stocks");
-        }
+    private final BuyStockInputBoundary buyStockInteractor;
 
-        BuyStock BuyStock = new BuyStock();
-        BuyStock.execute(player, stock, quantity);
+    public StockBuyController(BuyStockInteractor buyStockInteractor) {
+        this.buyStockInteractor = buyStockInteractor;
+    }
+
+    public void execute(Player player, Stock stock, int quantity) {
+        final BuyStockInputData inputData = new BuyStockInputData(player, stock, quantity);
+        buyStockInteractor.execute(inputData);
     }
 }
