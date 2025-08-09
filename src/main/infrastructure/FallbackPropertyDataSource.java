@@ -3,6 +3,7 @@ package main.infrastructure;
 import main.use_case.Game.PropertyDataSource;
 import java.util.ArrayList;
 import java.util.List;
+import main.Constants.Constants;
 
 /**
  * Fallback implementation that provides hardcoded property data.
@@ -23,7 +24,7 @@ public class FallbackPropertyDataSource implements PropertyDataSource {
         };
 
         for (int i = 0; i < fallbackNames.length; i++) {
-            int price = 60 + i * 20;
+            int price = Constants.PROPERTY_BASE_PRICE + i * Constants.PROPERTY_PRICE_INCREMENT;
             propertyData.add(new PropertyInfo(fallbackNames[i], Math.min(price, 400)));
         }
 
