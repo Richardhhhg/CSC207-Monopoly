@@ -8,7 +8,6 @@ public class StockState {
     private String ticker;
     private float price;
     private float change;
-    private int quantity;
 
     public boolean isAllowBuy() {
         return allowBuy;
@@ -40,9 +39,5 @@ public class StockState {
 
     public void setChange(float change) {
         this.change = change;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }

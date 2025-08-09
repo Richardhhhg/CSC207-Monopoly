@@ -4,7 +4,6 @@ import main.entity.Stocks.Stock;
 import main.entity.players.Player;
 import main.use_case.Stocks.SellStockInputBoundary;
 import main.use_case.Stocks.SellStockInputData;
-import main.use_case.Stocks.SellStockInteractor;
 
 public class StockSellController {
     private final SellStockInputBoundary sellStockInteractor;

@@ -1,7 +1,6 @@
 package main.interface_adapter.StockMarket;
 
-import interface_adapter.ViewModel;
-import main.entity.players.Player;
+import main.interface_adapter.ViewModel;
 
 public class StockPlayerViewModel extends ViewModel<StockPlayerState> {
     public StockPlayerViewModel(StockState stockstate) {
