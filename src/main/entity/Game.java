@@ -2,7 +2,6 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.entity.tiles.PropertyTile;
 import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
 import main.use_case.Game.GameInitializeStocks;
 import main.use_case.Game.GameInitializeTiles;
@@ -49,9 +48,7 @@ public class Game {
         return gameEnded;
     }
 
-    public String getGameEndReason() {
-        return gameEndReason;
-    }
+    public String getGameEndReason() { return gameEndReason; }
 
     /**
      * Get the current round number (1-based)
