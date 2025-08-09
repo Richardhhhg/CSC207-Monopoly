@@ -9,6 +9,9 @@ import main.use_case.Game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 
+import main.infrastructure.JsonPropertyDataSource;
+import main.infrastructure.FallbackPropertyDataSource;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
@@ -39,7 +42,11 @@ public class Game {
      * Initializes Properties and Players
      */
     public void initializeGame() {
-        new GameInitializeTiles(this).execute();
+        new GameInitializeTiles(
+            this,
+            new JsonPropertyDataSource("/Board/properties.json"),
+            new FallbackPropertyDataSource()
+        ).execute();
         //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
         //this.setPlayers(players);

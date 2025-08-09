@@ -25,4 +25,3 @@ public interface PropertyDataSource {
         public int getBasePrice() { return basePrice; }
     }
 }
-
