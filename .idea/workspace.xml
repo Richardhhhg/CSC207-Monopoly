@@ -5,10 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionPlayerViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterTraitsText.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/CharacterTraitsDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/view/PlayerSelection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapterBundle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapterBundle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/PlayerOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/PlayerOutputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/GameLaunchOutputData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +79,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "cf33d0b6-5c3c-49d7-8853-912a102d2451"
+    "accountId": "5f9bc3f0-f956-404f-9b13-0cdd8d583502"
   },
   "recentNewPullRequestHead": {
     "server": {
@@ -98,7 +112,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#90 on break-up-property-use-cases",
+    "git-widget-placeholder": "David-Refactor-CheckStyle",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -158,6 +172,7 @@
       <workItem from="1753308904677" duration="5497000" />
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
+      <workItem from="1754867190389" duration="862000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />

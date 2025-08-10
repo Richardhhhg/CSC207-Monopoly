@@ -2,8 +2,6 @@ package main.use_case.CharacterSelectionScreen;
 
 import java.util.List;
 
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
-
 public interface CharacterSelectionScreenOutputBoundary {
     /**
      * A preparedatalauch.

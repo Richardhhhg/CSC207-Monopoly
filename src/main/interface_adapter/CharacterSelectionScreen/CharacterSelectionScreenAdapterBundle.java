@@ -1,9 +1,19 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
+/**
+ * A bundle class that holds the controller and view model needed for character selection screen injection.
+ * Used to facilitate dependency injection for the CharacterSelectionScreen.
+ */
 public class CharacterSelectionScreenAdapterBundle {
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
 
+    /**
+     * Constructs a CharacterSelectionScreenAdapterBundle.
+     *
+     * @param controller The controller for the character selection screen.
+     * @param viewModel  The view model for the character selection screen.
+     */
     public CharacterSelectionScreenAdapterBundle(CharacterSelectionScreenController controller,
                                                  CharacterSelectionScreenViewModel viewModel) {
         this.controller = controller;
@@ -11,16 +21,18 @@ public class CharacterSelectionScreenAdapterBundle {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
-     * @return CharacterSelectionScreenController.
+     * Returns the controller for the character selection screen.
+     *
+     * @return The CharacterSelectionScreenController.
      */
     public CharacterSelectionScreenController getController() {
         return this.controller;
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
-     * @return CharacterSelectionScreenViewModel.
+     * Returns the view model for the character selection screen.
+     *
+     * @return The CharacterSelectionScreenViewModel.
      */
     public CharacterSelectionScreenViewModel getViewModel() {
         return viewModel;

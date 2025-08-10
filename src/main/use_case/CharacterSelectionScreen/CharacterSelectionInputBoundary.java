@@ -28,12 +28,4 @@ public interface CharacterSelectionInputBoundary {
      * @return {@code true} if the game can start, otherwise {@code false}.
      */
     boolean canStartGame();
-
-    /**
-     * Sets a player into the selection list and notifies the presenter
-     * to update the UI with the selected player's data.
-     *
-     * @param inputData the character's index, name, and type.
-     */
-    void selectPlayer(CharacterSelectionInputData inputData);
 }

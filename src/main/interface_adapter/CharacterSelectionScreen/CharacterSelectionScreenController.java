@@ -2,39 +2,56 @@ package main.interface_adapter.CharacterSelectionScreen;
 
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
 import main.use_case.CharacterSelectionScreen.CharacterSelectionInputData;
+import main.use_case.CharacterSelectionScreen.CharacterTraitsText;
 
+/**
+ * The controller for the CharacterSelectionScreen.
+ * Handles user input and coordinates with the interactor.
+ */
 public class CharacterSelectionScreenController {
     private final CharacterSelectionInputBoundary interactor;
+    private final CharacterTraitsText lore;
 
+    /**
+     * Constructs the controller with the given interactor.
+     *
+     * @param interactor The input boundary for character selection use case.
+     */
     public CharacterSelectionScreenController(CharacterSelectionInputBoundary interactor) {
         this.interactor = interactor;
+        this.lore = new CharacterTraitsText();
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
-     * @param index index.
-     * @param name name.
-     * @param type type.
+     * Requests a player selection update.
+     *
+     * @param index The player slot index.
+     * @param name  The player's name.
+     * @param type  The character type.
      */
     public void selectPlayer(int index, String name, String type) {
-        CharacterSelectionInputData inputData = new CharacterSelectionInputData(index, name, type);
-        interactor.selectPlayer(inputData);
+        final CharacterSelectionInputData inputData = new CharacterSelectionInputData(index, name, type);
+        interactor.execute(inputData);
 
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Confirms the current player selections.
      */
     public void confirmSelection() {
         this.interactor.confirmSelection();
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
-     * @return stuff
+     * Checks if the game can be started based on current selections.
+     * @return true if enough valid players have been selected, false otherwise.
      */
     public boolean canStartGame() {
         return this.interactor.canStartGame();
+    }
+
+    public String getCharacterTraitsText() {
+        return lore.getText();
     }
 
 }

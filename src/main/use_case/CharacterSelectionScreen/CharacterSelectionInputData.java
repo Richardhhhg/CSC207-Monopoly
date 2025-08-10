@@ -22,6 +22,7 @@ public class CharacterSelectionInputData {
     }
 
     /**
+     * Get index.
      * @return the index of the player slot.
      */
     public int getIndex() {
@@ -29,6 +30,7 @@ public class CharacterSelectionInputData {
     }
 
     /**
+     * Retyrn Name.
      * @return the name assigned to the player.
      */
     public String getName() {
@@ -36,6 +38,7 @@ public class CharacterSelectionInputData {
     }
 
     /**
+     * Return Type.
      * @return the selected character type.
      */
     public String getType() {
