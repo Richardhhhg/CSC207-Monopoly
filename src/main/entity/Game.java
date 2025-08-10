@@ -41,7 +41,7 @@ public class Game {
         new GameInitializeTiles(this).execute();
         //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
-        //this.setPlayers(players);
+        //this.setPlayers(players);k
     }
 
     public boolean isGameOver() {
