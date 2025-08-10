@@ -4,25 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
-      <change afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionPlayerViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterTraitsText.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/CharacterTraitsDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/view/PlayerSelection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapterBundle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapterBundle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/PlayerOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/PlayerOutputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/GameLaunchOutputData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/CharacterSelectionScreen.java" afterDir="false" />
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="CheckStyle, Refactoring. added text for character description">
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/DisplayPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/DisplayPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/DisplayProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/DisplayProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/PlayerStatsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/PlayerStatsView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +167,7 @@
       <workItem from="1753308904677" duration="5497000" />
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
-      <workItem from="1754867190389" duration="862000" />
+      <workItem from="1754867190389" duration="1563000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />
@@ -238,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753990384291</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="CheckStyle, Refactoring. added text for character description">
+      <option name="closed" value="true" />
+      <created>1754868145977</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754868145977</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,6 +267,7 @@
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
     <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
+    <MESSAGE value="CheckStyle, Refactoring. added text for character description" />
+    <option name="LAST_COMMIT_MESSAGE" value="CheckStyle, Refactoring. added text for character description" />
   </component>
 </project>

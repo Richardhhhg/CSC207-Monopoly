@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Player data ready for display.
+ */
 public class DisplayPlayer {
     private final String name;
     private final float money;
@@ -29,7 +32,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns player is bankruped or not.
      * @return bankrupt
      */
     public boolean isBankrupt() {
@@ -37,7 +40,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns player color.
      * @return color
      */
     public Color getColor() {
@@ -45,7 +48,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns player name.
      * @return name
      */
     public String getName() {
@@ -53,7 +56,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns player money worth.
      * @return money
      */
     public float getMoney() {
@@ -61,7 +64,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns a list of player's property.
      * @return Collections.unmodifiableList(properties);
      */
     public List<DisplayProperty> getProperties() {
@@ -69,7 +72,7 @@ public class DisplayPlayer {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Returns player's portrait.
      * @return portrait.
      */
     public Image getPortrait() {

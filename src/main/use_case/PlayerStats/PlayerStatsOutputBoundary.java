@@ -1,9 +1,13 @@
 package main.use_case.PlayerStats;
 
+/**
+ * Output for the Player Stats use case.
+ * The interactor calls this to send results to the presenter.
+ */
 public interface PlayerStatsOutputBoundary {
     /**
-     * Get output name.
-     * @param outputData .
+     * Sends player stats to presenter to be shown on screen.
+     * @param outputData the player stats to show
      */
     void presentPlayerStats(PlayerStatsOutputData outputData);
 }

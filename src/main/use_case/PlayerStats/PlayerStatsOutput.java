@@ -1,8 +1,13 @@
 package main.use_case.PlayerStats;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Image;
 import java.util.List;
 
+/**
+ * Stats for one player.
+ * Includes name, money, bankruptcy status, color, portrait, and owned property names.
+ */
 public class PlayerStatsOutput {
     private final String name;
     private final float money;

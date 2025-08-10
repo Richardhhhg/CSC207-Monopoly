@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Holds a list of player stats created by the interactor.
+ * Sent to the presenter to prepare for display.
+ */
 public class PlayerStatsOutputData {
     private final List<PlayerStatsOutput> playerStats = new ArrayList<>();
 

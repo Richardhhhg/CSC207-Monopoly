@@ -3,11 +3,14 @@ package main.interface_adapter.PlayerStats;
 import main.entity.Game;
 import main.use_case.PlayerStats.PlayerStatsInputBoundary;
 
+/**
+ * Passes requests from the view to the Player Stats use case.
+ */
 public class PlayerStatsController {
     private final PlayerStatsInputBoundary inputBoundary;
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Initialize a controller.
      * @param inputBoundary  propertyName.
      */
     public PlayerStatsController(PlayerStatsInputBoundary inputBoundary) {
@@ -15,7 +18,7 @@ public class PlayerStatsController {
     }
 
     /**
-     * This class is a placeholder for constants used throughout the application.
+     * Makes the interactor excecute game.
      * @param game  propertyName.
      */
     public void execute(Game game) {

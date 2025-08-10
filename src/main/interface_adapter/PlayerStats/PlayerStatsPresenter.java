@@ -7,6 +7,9 @@ import main.use_case.PlayerStats.PlayerStatsOutput;
 import main.use_case.PlayerStats.PlayerStatsOutputBoundary;
 import main.use_case.PlayerStats.PlayerStatsOutputData;
 
+/**
+ * Turns use case data into display objects for view.
+ */
 public class PlayerStatsPresenter implements PlayerStatsOutputBoundary {
 
     private final PlayerStatsViewModel viewModel;
@@ -17,10 +20,10 @@ public class PlayerStatsPresenter implements PlayerStatsOutputBoundary {
 
     @Override
     public void presentPlayerStats(PlayerStatsOutputData outputData) {
-        List<DisplayPlayer> players = new ArrayList<>();
+        final List<DisplayPlayer> players = new ArrayList<>();
 
         for (PlayerStatsOutput s : outputData.getPlayerStats()) {
-            List<DisplayProperty> props = new ArrayList<>();
+            final List<DisplayProperty> props = new ArrayList<>();
             for (String name : s.getPropertyNames()) {
                 props.add(new DisplayProperty(name));
             }
