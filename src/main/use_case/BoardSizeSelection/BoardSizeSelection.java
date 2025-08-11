@@ -1,48 +1,32 @@
 package main.use_case.BoardSizeSelection;
 
+import main.constants.Constants;
+
 /**
  * Use case for handling board size selection.
  */
 public class BoardSizeSelection implements BoardSizeInputBoundary {
+    private final BoardSizeOutputBoundary outputBoundary;
 
-    public enum BoardSize {
-        SMALL(20, "Small"),
-        MEDIUM(24, "Medium"),
-        LARGE(28, "Large");
-
-        private final int tileCount;
-        private final String displayName;
-
-        BoardSize(int tileCount, String displayName) {
-            this.tileCount = tileCount;
-            this.displayName = displayName;
-        }
-
-        public int getTileCount() {
-            return tileCount;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
+    public BoardSizeSelection(BoardSizeOutputBoundary outputBoundary) {
+        this.outputBoundary = outputBoundary;
     }
 
-    public static class BoardSizeSelectionResult {
-        private final BoardSize selectedSize;
+    public enum BoardSize {
+        SMALL, MEDIUM, LARGE;
 
-        public BoardSizeSelectionResult(BoardSize selectedSize) {
-            this.selectedSize = selectedSize;
-
+        public int getTileCount() {
+            return switch (this) {
+                case SMALL -> Constants.SMALL_BOARD_SIZE;
+                case MEDIUM -> Constants.MEDIUM_BOARD_SIZE;
+                case LARGE -> Constants.LARGE_BOARD_SIZE;
+            };
         }
 
-        public BoardSize getSelectedSize() {
-            return selectedSize;
-        }
     }
 
     @Override
-    public BoardSizeSelectionResult selectBoardSize(BoardSize size) {
-        return new BoardSizeSelectionResult(size);
+    public void selectBoardSize(BoardSize size) {
+        outputBoundary.presentBoardSizeSelection(size);
     }
-
 }

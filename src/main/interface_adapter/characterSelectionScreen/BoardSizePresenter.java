@@ -1,10 +1,10 @@
 package main.interface_adapter.characterSelectionScreen;
 
 import main.use_case.BoardSizeSelection.BoardSizeOutputBoundary;
-import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSizeSelectionResult;
+import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
 
 /**
- * Presenter for board size selection that implements the output boundary interface.
+ * Presenter for board size selection.
  */
 public class BoardSizePresenter implements BoardSizeOutputBoundary {
     private final BoardSizeViewModel viewModel;
@@ -14,8 +14,8 @@ public class BoardSizePresenter implements BoardSizeOutputBoundary {
     }
 
     @Override
-    public void presentBoardSizeSelection(BoardSizeSelectionResult result) {
-        viewModel.setSelectedBoardSize(result.getSelectedSize());
+    public void presentBoardSizeSelection(BoardSize boardSize) {
+        viewModel.setSelectedBoardSize(boardSize);
     }
 
     public BoardSizeViewModel getViewModel() {

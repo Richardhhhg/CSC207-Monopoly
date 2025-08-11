@@ -69,19 +69,18 @@ public class CharacterSelectionScreen extends JFrame {
         this.controller = adapter.getController();
         this.viewModel = adapter.getViewModel();
 
-        // Composition root - wire up dependencies here
-        BoardSizeSelection boardSizeSelection = new BoardSizeSelection();
         BoardSizePresenter boardSizePresenter = new BoardSizePresenter();
+        BoardSizeSelection boardSizeSelection = new BoardSizeSelection(boardSizePresenter);
 
-        // Separate controllers for separate responsibilities
         this.boardSizeController = new BoardSizeController(
-                boardSizeSelection,
-                boardSizePresenter
+                boardSizeSelection
         );
 
         this.gameCreationController = new GameCreationController();
 
         this.boardSizeViewModel = boardSizePresenter.getViewModel();
+
+        boardSizeViewModel.setSelectedBoardSize(BoardSize.MEDIUM);
 
         initializeScreen();
     }
