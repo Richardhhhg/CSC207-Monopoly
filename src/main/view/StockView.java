@@ -1,6 +1,6 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.interface_adapter.StockMarket.*;
 import main.use_case.Stocks.BuyStockInteractor;
 import main.use_case.Stocks.SellStockInteractor;

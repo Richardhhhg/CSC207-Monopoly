@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/PropertyPurchaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/Property/RentPaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/view/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/BoardView.java" afterDir="false" />
-    </list>
+    <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,22 +57,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "cf33d0b6-5c3c-49d7-8853-912a102d2451"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
+    &quot;accountId&quot;: &quot;5f9bc3f0-f956-404f-9b13-0cdd8d583502&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Richardhhhg",
-    "repository": "CSC207-Monopoly"
+    &quot;owner&quot;: &quot;Richardhhhg&quot;,
+    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -86,29 +81,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.BoardView.executor": "Run",
-    "Application.GameView.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MonopolyGame.executor": "Run",
-    "Application.TileView.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#90 on break-up-property-use-cases",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BoardView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GameView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MonopolyGame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TileView.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#123 on David-Refactor-CheckStyle&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.infernus.idea.checkstyle.CheckStyleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/Resources" />
@@ -158,6 +153,8 @@
       <workItem from="1753308904677" duration="5497000" />
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
+      <workItem from="1754867190389" duration="1888000" />
+      <workItem from="1754920529600" duration="5559000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />
@@ -223,7 +220,63 @@
       <option name="project" value="LOCAL" />
       <updated>1753990384291</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="CheckStyle, Refactoring. added text for character description">
+      <option name="closed" value="true" />
+      <created>1754868145977</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754868145977</updated>
+    </task>
+    <task id="LOCAL-00010" summary="CheckStyle, Refactoring. added text for Player Stats Vie2w">
+      <option name="closed" value="true" />
+      <created>1754868982235</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1754868982235</updated>
+    </task>
+    <task id="LOCAL-00011" summary="CheckStyle, Refactoring. added text for Player Stats Vie2w">
+      <option name="closed" value="true" />
+      <created>1754869033791</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1754869033791</updated>
+    </task>
+    <task id="LOCAL-00012" summary="more fixes">
+      <option name="closed" value="true" />
+      <created>1754923235353</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1754923235354</updated>
+    </task>
+    <task id="LOCAL-00013" summary="more fixes">
+      <option name="closed" value="true" />
+      <created>1754924737846</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1754924737846</updated>
+    </task>
+    <task id="LOCAL-00014" summary="changed all package names into lower-case">
+      <option name="closed" value="true" />
+      <created>1754930296800</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1754930296800</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Created Output Boundary Interfaces for Clean Architecture">
+      <option name="closed" value="true" />
+      <created>1754935886048</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1754935886048</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,6 +301,10 @@
     <MESSAGE value="refactored the player" />
     <MESSAGE value="Created PropertyTileView and modified PropertyPresenter to create specific viewmodels" />
     <MESSAGE value="Created PropertyPurchaseUseCase and RentPaymentUseCase as well as corresponding controllers" />
+    <MESSAGE value="CheckStyle, Refactoring. added text for character description" />
+    <MESSAGE value="CheckStyle, Refactoring. added text for Player Stats Vie2w" />
+    <MESSAGE value="more fixes" />
+    <MESSAGE value="changed all package names into lower-case" />
     <MESSAGE value="Created Output Boundary Interfaces for Clean Architecture" />
     <option name="LAST_COMMIT_MESSAGE" value="Created Output Boundary Interfaces for Clean Architecture" />
   </component>

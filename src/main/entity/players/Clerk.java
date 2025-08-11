@@ -1,8 +1,8 @@
 package main.entity.players;
 
-import java.awt.*;   //fix
+import static main.constants.Constants.*;
 
-import static main.Constants.Constants.*;
+import java.awt.*;
 
 public class Clerk extends Player implements applyAfterEffects {
     public Clerk(String name, Color color) {
@@ -11,7 +11,7 @@ public class Clerk extends Player implements applyAfterEffects {
     }
 
     /**
-     * apply turn effect
+     * Apply turn effect. Clerk Earns 50$ per round
      */
     @Override
     public void applyTurnEffects() {

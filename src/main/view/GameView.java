@@ -1,15 +1,15 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.app.GameHolder;
 import main.entity.Game;
 import main.entity.players.Player;
-import main.interface_adapter.PlayerStats.PlayerStatsController;
-import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
-import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.use_case.Game.GameMoveCurrentPlayer;
-import main.use_case.Game.GameNextTurn;
-import main.use_case.PlayerStats.PlayerStatsInteractor;
+import main.interface_adapter.playerStats.PlayerStatsController;
+import main.interface_adapter.playerStats.PlayerStatsPresenter;
+import main.interface_adapter.playerStats.PlayerStatsViewModel;
+import main.use_case.game.GameMoveCurrentPlayer;
+import main.use_case.game.GameNextTurn;
+import main.use_case.playerStats.PlayerStatsInteractor;
 
 import java.util.List;
 

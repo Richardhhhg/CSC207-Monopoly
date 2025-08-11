@@ -2,10 +2,9 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.entity.tiles.PropertyTile;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
-import main.use_case.Game.GameInitializeStocks;
-import main.use_case.Game.GameInitializeTiles;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.use_case.game.GameInitializeStocks;
+import main.use_case.game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import static main.constants.Constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
@@ -32,7 +31,6 @@ public class Game {
     private String gameEndReason = "";
 
     public Game() {
-        //initializeGame();
     }
 
     /**
@@ -40,9 +38,7 @@ public class Game {
      */
     public void initializeGame() {
         new GameInitializeTiles(this).execute();
-        //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
-        //this.setPlayers(players);
     }
 
     public boolean isGameOver() {
@@ -242,14 +238,19 @@ public class Game {
         }
     }
 
-    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+    public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> players) {
         List<Player> result = new ArrayList<>();
-        for (PlayerOutputData data : players) {
+        for (CharacterSelectionPlayerViewModel data : players) {
             if (data != null && !"None".equals(data.getType())) {
-                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                Player player = CharacterFactory.createPlayer(
+                        data.getName(),
+                        data.getType(),
+                        data.getColor()
+                );
                 result.add(player);
             }
         }
         this.setPlayers(result);
     }
+
 }

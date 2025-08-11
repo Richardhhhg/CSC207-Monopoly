@@ -1,6 +1,6 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.entity.players.Player;
 import main.entity.Stocks.Stock;
 import main.interface_adapter.StockMarket.StockPlayerViewModel;
