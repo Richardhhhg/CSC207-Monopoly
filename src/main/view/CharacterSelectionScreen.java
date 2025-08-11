@@ -27,10 +27,10 @@ import javax.swing.event.DocumentListener;
 
 import main.app.GameHolder;
 import main.entity.Game;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenViewModel;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenAdapter;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
 
 /**
  * The CharacterSelectionScreen class provides a GUI for players to select their
@@ -40,16 +40,16 @@ import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenV
  */
 public class CharacterSelectionScreen extends JFrame {
 
-    private static final int SCREEN_WIDTH  = 900;
-    private static final int SCREEN_HEIGHT  = 700;
+    private static final int SCREEN_WIDTH = 900;
+    private static final int SCREEN_HEIGHT = 700;
     private static final int MAX_PLAYERS = 4;
-    private static final int NAME_FIELD_WIDTH  = 150;
-    private static final int NAME_FIELD_HEIGHT  = 25;
-    private static final int PORTRAIT_LABEL_SIZE  = 100;
-    private static final int DROPDOWN_WIDTH  = 150;
-    private static final int DROPDOWN_HEIGHT  = 25;
-    private static final int PORTRAIT_IMAGE_SIZE  = 180;
-    private static final int VERTICAL_SPACING  = 10;
+    private static final int NAME_FIELD_WIDTH = 150;
+    private static final int NAME_FIELD_HEIGHT = 25;
+    private static final int PORTRAIT_LABEL_SIZE = 100;
+    private static final int DROPDOWN_WIDTH = 150;
+    private static final int DROPDOWN_HEIGHT = 25;
+    private static final int PORTRAIT_IMAGE_SIZE = 180;
+    private static final int VERTICAL_SPACING = 10;
 
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;

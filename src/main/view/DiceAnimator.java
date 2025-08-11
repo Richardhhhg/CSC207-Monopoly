@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.interface_adapter.dice.DiceController;
 import main.interface_adapter.dice.DicePresenter;
 import main.interface_adapter.dice.DiceViewModel;

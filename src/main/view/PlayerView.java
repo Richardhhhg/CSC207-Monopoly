@@ -1,6 +1,6 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 
 import javax.swing.*;
 import java.awt.*;

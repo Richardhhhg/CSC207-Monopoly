@@ -2,7 +2,7 @@ package main.use_case.dice;
 
 import java.util.Random;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 
 /**
  * Use case that performs a roll of two dice.

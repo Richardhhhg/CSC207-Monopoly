@@ -1,6 +1,6 @@
 package main.entity.players;
 
-import static main.Constants.Constants.*;
+import static main.constants.Constants.*;
 
 import java.awt.*;
 

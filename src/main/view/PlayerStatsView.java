@@ -9,10 +9,10 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import main.entity.Game;
-import main.interface_adapter.PlayerStats.DisplayPlayer;
-import main.interface_adapter.PlayerStats.DisplayProperty;
-import main.interface_adapter.PlayerStats.PlayerStatsController;
-import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
+import main.interface_adapter.playerStats.DisplayPlayer;
+import main.interface_adapter.playerStats.DisplayProperty;
+import main.interface_adapter.playerStats.PlayerStatsController;
+import main.interface_adapter.playerStats.PlayerStatsViewModel;
 
 /**
  * Shows player stats on the screen.

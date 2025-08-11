@@ -1,10 +1,10 @@
 package main.entity;
 
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.use_case.Game.GameInitializeStocks;
-import main.use_case.Game.GameInitializeTiles;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.use_case.game.GameInitializeStocks;
+import main.use_case.game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import static main.constants.Constants.MAX_ROUNDS;
 
 /**
  * GameBoard manages the game state and logic, separate from UI concerns.
