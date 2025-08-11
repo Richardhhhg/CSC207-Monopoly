@@ -30,7 +30,6 @@ class SellStockUseCaseTest {
         stock = new Stock("TEST", 100.0, 0.1, 1.0);
         presenter = new TestStockPresenter();
         interactor = new SellStockInteractor(presenter);
-        // Give player some stocks to sell
         player.buyStock(stock, 5);
     }
 
@@ -44,6 +43,7 @@ class SellStockUseCaseTest {
         assertEquals(initialMoney + stock.getCurrentPrice() * quantity, player.getMoney(), 0.01);
         assertNotNull(presenter.lastOutput);
         assertTrue(presenter.lastOutput.isAllowBuy());
+        assertEquals(stock, presenter.lastOutput.getStock());
     }
 
     @Test
@@ -62,5 +62,33 @@ class SellStockUseCaseTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> interactor.execute(inputData));
         assertEquals("Quantity must be greater than 0", exception.getMessage());
         assertEquals(5, player.getStockQuantity(stock));
+    }
+
+    @Test
+    void testSellStockControllerAndPresenterUpdateViewModel() {
+        player.getStocks().put(stock, 5);
+
+        main.interface_adapter.StockMarket.StockState stockState = new main.interface_adapter.StockMarket.StockState();
+        stockState.setTicker(stock.getTicker());
+        stockState.setPrice(stock.getCurrentPrice());
+        stockState.setChange(stock.getChange());
+        stockState.setAllowBuy(true);
+        main.interface_adapter.StockMarket.StockPlayerViewModel viewModel = new main.interface_adapter.StockMarket.StockPlayerViewModel(stockState);
+        viewModel.getState().setPlayer(player);
+        viewModel.getState().setStock(stock);
+        viewModel.getState().setQuantity(5);
+
+        main.interface_adapter.StockMarket.StockPresenter presenter = new main.interface_adapter.StockMarket.StockPresenter(viewModel);
+        SellStockInteractor interactor = new SellStockInteractor(presenter);
+        main.interface_adapter.StockMarket.StockSellController controller = new main.interface_adapter.StockMarket.StockSellController(interactor);
+
+        controller.execute(player, stock, 2);
+
+        assertEquals(3, player.getStockQuantity(stock));
+        assertEquals(3, viewModel.getState().getQuantity());
+        assertEquals(player, viewModel.getState().getPlayer());
+        assertEquals(stock.getTicker(), viewModel.getState().getStock().getTicker());
+        assertEquals(stock, viewModel.getState().getStock());
+        assertTrue(viewModel.getState().getStockState().isAllowBuy());
     }
 }
