@@ -1,15 +1,16 @@
 package main.entity;
 
-import main.entity.Stocks.Stock;
-import main.entity.players.CharacterFactory;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.entity.players.Player;
-import main.entity.tiles.Tile;
+import static main.constants.Constants.MAX_ROUNDS;
+
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 
-import static main.constants.Constants.MAX_ROUNDS;
+import main.entity.Stocks.Stock;
+import main.entity.players.CharacterFactory;
+import main.entity.players.Player;
+import main.entity.tiles.Tile;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
 
 public class Game {
@@ -29,9 +30,7 @@ public class Game {
         return gameEnded;
     }
 
-    public String getGameEndReason() {
-        return gameEndReason;
-    }
+    public String getGameEndReason() { return gameEndReason; }
 
     /**
      * Get the current round number (1-based)
