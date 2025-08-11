@@ -1,7 +1,6 @@
 package main.use_case.game;
 
 import main.constants.Constants;
-import main.entity.Game;
 import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
@@ -18,6 +17,9 @@ public class GameInitializeTiles {
     private final PropertyDataSource dataSource;
 
     public GameInitializeTiles(PropertyDataSource dataSource) {
+        if (dataSource == null) {
+            throw new IllegalArgumentException("PropertyDataSource cannot be null");
+        }
         this.dataSource = dataSource;
     }
 
@@ -34,17 +36,13 @@ public class GameInitializeTiles {
     }
 
     private List<Tile> createTiles(int boardSize) {
-        List<PropertyDataSource.PropertyInfo> propertyData;
+        // Use the injected data source - fallback should be handled at injection time
+        List<PropertyDataSource.PropertyInfo> propertyData = dataSource.getPropertyData();
 
-        try {
-            propertyData = dataSource.getPropertyData();
-        } catch (RuntimeException e) {
-            // If JSON fails, fall back to using FallbackPropertyDataSource
-            PropertyDataSource fallback = new main.infrastructure.FallbackPropertyDataSource();
-            propertyData = fallback.getPropertyData();
+        if (propertyData == null || propertyData.isEmpty()) {
+            throw new IllegalStateException("Property data source returned no data");
         }
 
-        // Actually call the tile creation method instead of returning empty list
         return createTiles(boardSize, propertyData);
     }
 

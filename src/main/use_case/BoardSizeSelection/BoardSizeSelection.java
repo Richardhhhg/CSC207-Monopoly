@@ -2,9 +2,8 @@ package main.use_case.BoardSizeSelection;
 
 /**
  * Use case for handling board size selection.
- * Follows Single Responsibility Principle - only handles board size logic.
  */
-public class BoardSizeSelection {
+public class BoardSizeSelection implements BoardSizeInputBoundary {
 
     public enum BoardSize {
         SMALL(20, "Small"),
@@ -52,14 +51,14 @@ public class BoardSizeSelection {
         }
     }
 
+    @Override
     public BoardSizeSelectionResult selectBoardSize(BoardSize size) {
-
         return new BoardSizeSelectionResult(size, true,
             "Board size selected: " + size.getDisplayName() + " (" + size.getTileCount() + " tiles)");
     }
 
+    @Override
     public BoardSizeSelectionResult getDefaultBoardSize() {
         return new BoardSizeSelectionResult(BoardSize.MEDIUM, true, "Default board size selected");
     }
 }
-

@@ -44,7 +44,6 @@ public class GameCreationController {
                 case SMALL -> gameInitializeTiles.executeSmallBoard();
                 case MEDIUM -> gameInitializeTiles.executeMediumBoard();
                 case LARGE -> gameInitializeTiles.executeLargeBoard();
-                default -> gameInitializeTiles.executeMediumBoard();
             };
         } catch (Exception e) {
             throw new IllegalStateException("Failed to initialize tiles for board size: " + boardSize + ". Error: " + e.getMessage(), e);
