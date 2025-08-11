@@ -1,4 +1,4 @@
-package main.interface_adapter.CharacterSelectionScreen;
+package main.interface_adapter.characterSelectionScreen;
 
 import java.util.ArrayList;
 import java.util.List;

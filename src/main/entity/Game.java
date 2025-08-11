@@ -2,7 +2,7 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 import main.use_case.game.GameInitializeStocks;
 import main.use_case.game.GameInitializeTiles;
 import main.entity.players.Player;

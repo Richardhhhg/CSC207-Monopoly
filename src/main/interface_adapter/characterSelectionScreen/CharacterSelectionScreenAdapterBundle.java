@@ -1,4 +1,4 @@
-package main.interface_adapter.CharacterSelectionScreen;
+package main.interface_adapter.characterSelectionScreen;
 
 /**
  * A bundle class that holds the controller and view model needed for character selection screen injection.
