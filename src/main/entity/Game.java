@@ -2,14 +2,16 @@ package main.entity;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.use_case.game.GameInitializeStocks;
+import main.use_case.game.GameInitializeTiles;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import static main.constants.Constants.MAX_ROUNDS;
 
 
 public class Game {
@@ -24,6 +26,17 @@ public class Game {
     private int roundStartPlayerIndex = 0; // Track which player started the current round
     private boolean gameEnded = false;
     private String gameEndReason = "";
+
+    public Game() {
+    }
+
+    /**
+     * Initializes Properties and Players
+     */
+    public void initializeGame() {
+        new GameInitializeTiles(this).execute();
+        new GameInitializeStocks(this).execute();
+    }
 
     public boolean isGameOver() {
         return gameEnded;
@@ -222,14 +235,19 @@ public class Game {
         }
     }
 
-    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+    public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> players) {
         List<Player> result = new ArrayList<>();
-        for (PlayerOutputData data : players) {
+        for (CharacterSelectionPlayerViewModel data : players) {
             if (data != null && !"None".equals(data.getType())) {
-                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                Player player = CharacterFactory.createPlayer(
+                        data.getName(),
+                        data.getType(),
+                        data.getColor()
+                );
                 result.add(player);
             }
         }
         this.setPlayers(result);
     }
+
 }

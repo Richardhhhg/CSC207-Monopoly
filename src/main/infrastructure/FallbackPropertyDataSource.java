@@ -1,6 +1,6 @@
 package main.infrastructure;
 
-import main.use_case.Game.PropertyDataSource;
+import main.use_case.game.PropertyDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import main.Constants.Constants;

@@ -4,8 +4,8 @@ import main.entity.Stocks.Stock;
 
 import java.awt.*;
 
-import static main.Constants.Constants.INHERITOR_INIT_MONEY;
-import static main.Constants.Constants.INH_POR;
+import static main.constants.Constants.INHERITOR_INIT_MONEY;
+import static main.constants.Constants.INH_POR;
 
 /**
  * A special type of Player called "Inheritor".

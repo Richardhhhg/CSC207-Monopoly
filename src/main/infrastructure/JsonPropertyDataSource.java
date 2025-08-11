@@ -1,6 +1,6 @@
 package main.infrastructure;
 
-import main.use_case.Game.PropertyDataSource;
+import main.use_case.game.PropertyDataSource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
