@@ -31,7 +31,6 @@ public class Game {
     private String gameEndReason = "";
 
     public Game() {
-        //initializeGame();
     }
 
     /**
@@ -39,9 +38,7 @@ public class Game {
      */
     public void initializeGame() {
         new GameInitializeTiles(this).execute();
-        //new GameInitializePlayers(this).execute();
         new GameInitializeStocks(this).execute();
-        //this.setPlayers(players);k
     }
 
     public boolean isGameOver() {

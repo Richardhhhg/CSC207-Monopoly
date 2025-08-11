@@ -11,7 +11,7 @@ public class Clerk extends Player implements applyAfterEffects {
     }
 
     /**
-     * Apply turn effect.
+     * Apply turn effect. Clerk Earns 50$ per round
      */
     @Override
     public void applyTurnEffects() {

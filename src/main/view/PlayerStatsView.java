@@ -20,12 +20,12 @@ import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
  */
 public class PlayerStatsView extends JPanel {
 
-    private static final int TWTY = 20;
-    private static final int SWTN = 17;
-    private static final int TEN = 10;
-    private static final int IOOO = 180;
-    private static final int SO = 50;
-    private static final int OO0 = 80;
+    private static final int PLAYER_INFO_SPACING_Y = 20;
+    private static final int FONT_SIZE = 17;
+    private static final int TEXT_START_X = 0;
+    private static final int NET_WORTH_XPOS = 180;
+    private static final int PORTRAIT_SPACING_AFTER = 50;
+    private static final int NO_PORTRAIT_SPACING_AFTER = 80;
 
     private final PlayerStatsViewModel viewModel;
     private final PlayerStatsController controller;
@@ -56,12 +56,12 @@ public class PlayerStatsView extends JPanel {
         }
 
         final Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("ok", Font.PLAIN, SWTN));
+        g2.setFont(new Font("ok", Font.PLAIN, FONT_SIZE ));
 
         final FontMetrics fm = g2.getFontMetrics();
         final int lineH = fm.getHeight();
 
-        int y = TWTY;
+        int y = PLAYER_INFO_SPACING_Y;
 
         for (DisplayPlayer player : players) {
             if (player.isBankrupt()) {
@@ -70,9 +70,9 @@ public class PlayerStatsView extends JPanel {
 
             g2.setColor(player.getColor());
             final String info = player.getName() + " Information:";
-            g2.drawString(info, TEN, y);
+            g2.drawString(info, TEXT_START_X  , y);
             final String networth = "Networth: " + player.getMoney() + "$";
-            g2.drawString(networth, IOOO, y + TWTY);
+            g2.drawString(networth, NET_WORTH_XPOS , y + FONT_SIZE );
 
             g2.setColor(player.getColor());
             final int labelX = 180;
@@ -110,10 +110,10 @@ public class PlayerStatsView extends JPanel {
                 final int portraitY = y + 10;
 
                 g2.drawImage(player.getPortrait(), portraitX, portraitY, portraitSize, portraitSize, null);
-                y += portraitSize + SO;
+                y += portraitSize + PORTRAIT_SPACING_AFTER ;
             }
             else {
-                y += OO0;
+                y += NO_PORTRAIT_SPACING_AFTER ;
             }
         }
     }

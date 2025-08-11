@@ -40,16 +40,16 @@ import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenV
  */
 public class CharacterSelectionScreen extends JFrame {
 
-    private static final int CSCW = 900;
-    private static final int CSCL = 700;
-    private static final int MAXPLY = 4;
-    private static final int NFW = 150;
-    private static final int NFH = 25;
-    private static final int PORTRALAB = 100;
-    private static final int CDDSW = 150;
-    private static final int CDDSH = 25;
-    private static final int PORTRAITLAB = 180;
-    private static final int TEN = 10;
+    private static final int SCREEN_WIDTH  = 900;
+    private static final int SCREEN_HEIGHT  = 700;
+    private static final int MAX_PLAYERS = 4;
+    private static final int NAME_FIELD_WIDTH  = 150;
+    private static final int NAME_FIELD_HEIGHT  = 25;
+    private static final int PORTRAIT_LABEL_SIZE  = 100;
+    private static final int DROPDOWN_WIDTH  = 150;
+    private static final int DROPDOWN_HEIGHT  = 25;
+    private static final int PORTRAIT_IMAGE_SIZE  = 180;
+    private static final int VERTICAL_SPACING  = 10;
 
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
@@ -64,7 +64,7 @@ public class CharacterSelectionScreen extends JFrame {
 
     private void initializeScreen() {
         setTitle("Select Your Characters");
-        setSize(CSCW, CSCL);
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -72,7 +72,7 @@ public class CharacterSelectionScreen extends JFrame {
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
-        for (int i = 0; i < MAXPLY; i++) {
+        for (int i = 0; i < MAX_PLAYERS; i++) {
             final int idx = i;
 
             final JPanel playerSlot = new JPanel();
@@ -80,26 +80,27 @@ public class CharacterSelectionScreen extends JFrame {
             playerSlot.setBorder(BorderFactory.createTitledBorder("Player " + (idx + 1)));
 
             final JTextField nameField = new JTextField("Player " + (idx + 1));
-            nameField.setMaximumSize(new Dimension(NFW, NFH));
+            nameField.setMaximumSize(new Dimension(NAME_FIELD_WIDTH, NAME_FIELD_HEIGHT));
             nameField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             final JLabel portraitLabel = new JLabel();
-            portraitLabel.setPreferredSize(new Dimension(PORTRALAB, PORTRALAB));
+            portraitLabel.setPreferredSize(new Dimension(PORTRAIT_LABEL_SIZE, PORTRAIT_LABEL_SIZE));
             portraitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             portraitLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-            final JComboBox<String> characterDropdown = new JComboBox<>(new String[]{"None",
+            final JComboBox<String> characterDropdown = new JComboBox<>(new String[]{
+                    "None",
                     "Clerk",
                     "Landlord",
                     "Inheritor",
                     "College Student",
                     "Poor Man"});
-            characterDropdown.setMaximumSize(new Dimension(CDDSW, CDDSH));
+            characterDropdown.setMaximumSize(new Dimension(DROPDOWN_WIDTH, DROPDOWN_HEIGHT));
             characterDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             final Image defaultPortrait = PortraitProvider.getDefaultPortrait();
             if (defaultPortrait != null) {
-                portraitLabel.setIcon(new ImageIcon(defaultPortrait.getScaledInstance(PORTRAITLAB, PORTRAITLAB,
+                portraitLabel.setIcon(new ImageIcon(defaultPortrait.getScaledInstance(PORTRAIT_IMAGE_SIZE, PORTRAIT_IMAGE_SIZE,
                         Image.SCALE_SMOOTH)));
             }
 
@@ -127,11 +128,11 @@ public class CharacterSelectionScreen extends JFrame {
             });
 
             playerSlot.add(portraitLabel);
-            playerSlot.add(Box.createVerticalStrut(TEN));
+            playerSlot.add(Box.createVerticalStrut(VERTICAL_SPACING));
             playerSlot.add(characterDropdown);
-            playerSlot.add(Box.createVerticalStrut(TEN));
+            playerSlot.add(Box.createVerticalStrut(VERTICAL_SPACING));
             playerSlot.add(nameField);
-            playerSlot.add(Box.createVerticalStrut(TEN));
+            playerSlot.add(Box.createVerticalStrut(VERTICAL_SPACING));
             playerPanel.add(playerSlot);
         }
 
@@ -178,7 +179,7 @@ public class CharacterSelectionScreen extends JFrame {
             final Image portrait = data.getPortrait();
             if (portrait != null) {
                 portraitLabel.setIcon(new ImageIcon(
-                        portrait.getScaledInstance(PORTRAITLAB, PORTRAITLAB, Image.SCALE_SMOOTH)));
+                        portrait.getScaledInstance(PORTRAIT_IMAGE_SIZE, PORTRAIT_IMAGE_SIZE, Image.SCALE_SMOOTH)));
             }
             else {
                 portraitLabel.setIcon(null);

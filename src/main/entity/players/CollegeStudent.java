@@ -34,7 +34,7 @@ public class CollegeStudent extends Player implements applyAfterEffects, StockMo
 
 
     /**
-     * College Student has to pay his school tuition every turn.
+     * College Student has to pay his school tuition 100$ every turn.
      */
     @Override
     public void applyTurnEffects() {

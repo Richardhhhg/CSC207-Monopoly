@@ -30,7 +30,7 @@ public class CharacterSelectionInputData {
     }
 
     /**
-     * Retyrn Name.
+     * Return Name.
      * @return the name assigned to the player.
      */
     public String getName() {
