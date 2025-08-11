@@ -56,7 +56,7 @@ public class PlayerStatsView extends JPanel {
         }
 
         final Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("ok", Font.PLAIN, FONT_SIZE ));
+        g2.setFont(new Font("ok", Font.PLAIN, FONT_SIZE));
 
         final FontMetrics fm = g2.getFontMetrics();
         final int lineH = fm.getHeight();
@@ -70,9 +70,9 @@ public class PlayerStatsView extends JPanel {
 
             g2.setColor(player.getColor());
             final String info = player.getName() + " Information:";
-            g2.drawString(info, TEXT_START_X  , y);
+            g2.drawString(info, TEXT_START_X, y);
             final String networth = "Networth: " + player.getMoney() + "$";
-            g2.drawString(networth, NET_WORTH_XPOS , y + FONT_SIZE );
+            g2.drawString(networth, NET_WORTH_XPOS, y + FONT_SIZE);
 
             g2.setColor(player.getColor());
             final int labelX = 180;
@@ -110,10 +110,10 @@ public class PlayerStatsView extends JPanel {
                 final int portraitY = y + 10;
 
                 g2.drawImage(player.getPortrait(), portraitX, portraitY, portraitSize, portraitSize, null);
-                y += portraitSize + PORTRAIT_SPACING_AFTER ;
+                y += portraitSize + PORTRAIT_SPACING_AFTER;
             }
             else {
-                y += NO_PORTRAIT_SPACING_AFTER ;
+                y += NO_PORTRAIT_SPACING_AFTER;
             }
         }
     }
