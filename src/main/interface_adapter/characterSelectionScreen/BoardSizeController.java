@@ -6,8 +6,7 @@ import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSizeSelectionResult;
 
 /**
- * Controller for board size selection that depends on interfaces for better testability
- * and adherence to the Dependency Inversion Principle.
+ * Controller for board size selection
  */
 public class BoardSizeController {
     private final BoardSizeInputBoundary boardSizeInputBoundary;

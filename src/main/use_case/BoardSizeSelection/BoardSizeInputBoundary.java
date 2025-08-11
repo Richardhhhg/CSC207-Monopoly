@@ -8,6 +8,5 @@ import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSizeSelectionRes
  */
 public interface BoardSizeInputBoundary {
     BoardSizeSelectionResult selectBoardSize(BoardSize size);
-    BoardSizeSelectionResult getDefaultBoardSize();
 }
 

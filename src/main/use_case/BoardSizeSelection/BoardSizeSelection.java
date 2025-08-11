@@ -29,36 +29,20 @@ public class BoardSizeSelection implements BoardSizeInputBoundary {
 
     public static class BoardSizeSelectionResult {
         private final BoardSize selectedSize;
-        private final boolean isValid;
-        private final String message;
 
-        public BoardSizeSelectionResult(BoardSize selectedSize, boolean isValid, String message) {
+        public BoardSizeSelectionResult(BoardSize selectedSize) {
             this.selectedSize = selectedSize;
-            this.isValid = isValid;
-            this.message = message;
+
         }
 
         public BoardSize getSelectedSize() {
             return selectedSize;
         }
-
-        public boolean isValid() {
-            return isValid;
-        }
-
-        public String getMessage() {
-            return message;
-        }
     }
 
     @Override
     public BoardSizeSelectionResult selectBoardSize(BoardSize size) {
-        return new BoardSizeSelectionResult(size, true,
-            "Board size selected: " + size.getDisplayName() + " (" + size.getTileCount() + " tiles)");
+        return new BoardSizeSelectionResult(size);
     }
 
-    @Override
-    public BoardSizeSelectionResult getDefaultBoardSize() {
-        return new BoardSizeSelectionResult(BoardSize.MEDIUM, true, "Default board size selected");
-    }
 }
