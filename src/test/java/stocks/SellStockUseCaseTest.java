@@ -10,13 +10,13 @@ import java.awt.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BuyStockUseCaseTest {
+class SellStockUseCaseTest {
     private Player player;
     private Stock stock;
-    private BuyStockInteractor interactor;
-    private MockStockPresenter presenter;
+    private SellStockInteractor interactor;
+    private TestStockPresenter presenter;
 
-    static class MockStockPresenter implements StockOutputBoundary {
+    static class TestStockPresenter implements StockOutputBoundary {
         StockOutputData lastOutput;
         @Override
         public void execute(StockOutputData outputData) {
@@ -28,37 +28,39 @@ class BuyStockUseCaseTest {
     void setUp() {
         player = new DefaultPlayer("TestPlayer", Color.BLUE);
         stock = new Stock("TEST", 100.0, 0.1, 1.0);
-        presenter = new MockStockPresenter();
-        interactor = new BuyStockInteractor(presenter);
+        presenter = new TestStockPresenter();
+        interactor = new SellStockInteractor(presenter);
+        // Give player some stocks to sell
+        player.buyStock(stock, 5);
     }
 
     @Test
-    void testBuyStockSuccess() {
-        int quantity = 2;
+    void testSellStockSuccess() {
+        int quantity = 3;
         float initialMoney = player.getMoney();
-        BuyStockInputData inputData = new BuyStockInputData(player, stock, quantity);
+        SellStockInputData inputData = new SellStockInputData(player, stock, quantity);
         interactor.execute(inputData);
-        assertEquals(quantity, player.getStockQuantity(stock));
-        assertEquals(initialMoney - stock.getCurrentPrice() * quantity, player.getMoney(), 0.01);
+        assertEquals(2, player.getStockQuantity(stock));
+        assertEquals(initialMoney + stock.getCurrentPrice() * quantity, player.getMoney(), 0.01);
         assertNotNull(presenter.lastOutput);
         assertTrue(presenter.lastOutput.isAllowBuy());
     }
 
     @Test
-    void testBuyStockInsufficientFunds() {
-        int quantity = 10000;
-        BuyStockInputData inputData = new BuyStockInputData(player, stock, quantity);
+    void testSellStockNotEnoughOwned() {
+        int quantity = 10; // More than owned
+        SellStockInputData inputData = new SellStockInputData(player, stock, quantity);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> interactor.execute(inputData));
-        assertEquals("Insufficient funds to buy stocks", exception.getMessage());
-        assertEquals(0, player.getStockQuantity(stock));
+        assertEquals("Not enough stock to sell", exception.getMessage());
+        assertEquals(5, player.getStockQuantity(stock));
     }
 
     @Test
-    void testBuyStockInvalidQuantity() {
+    void testSellStockInvalidQuantity() {
         int quantity = 0;
-        BuyStockInputData inputData = new BuyStockInputData(player, stock, quantity);
+        SellStockInputData inputData = new SellStockInputData(player, stock, quantity);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> interactor.execute(inputData));
         assertEquals("Quantity must be greater than 0", exception.getMessage());
-        assertEquals(0, player.getStockQuantity(stock));
+        assertEquals(5, player.getStockQuantity(stock));
     }
 }
