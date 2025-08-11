@@ -33,7 +33,15 @@ public class GameInitializeTiles {
     }
 
     private List<Tile> createTiles(int boardSize) {
-        List<PropertyDataSource.PropertyInfo> propertyData = dataSource.getPropertyData();
+        List<PropertyDataSource.PropertyInfo> propertyData;
+
+        try {
+            propertyData = dataSource.getPropertyData();
+        } catch (RuntimeException e) {
+            // If JSON fails, fall back to using FallbackPropertyDataSource
+            PropertyDataSource fallback = new main.infrastructure.FallbackPropertyDataSource();
+            propertyData = fallback.getPropertyData();
+        }
         List<Tile> tiles = new ArrayList<>();
 
         // Always start with Go tile
