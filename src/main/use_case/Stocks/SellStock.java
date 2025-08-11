@@ -1,6 +1,6 @@
-package main.use_case.stocks;
+package main.use_case.Stocks;
 
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
 
 public class SellStock {

@@ -1,6 +1,6 @@
 package main.entity;
 
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
 import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionPlayerViewModel;
 import main.use_case.game.GameInitializeStocks;

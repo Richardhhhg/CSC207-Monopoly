@@ -1,4 +1,4 @@
-package main.entity.stocks;
+package main.entity.Stocks;
 
 import main.constants.Constants;
 import org.apache.commons.math3.distribution.NormalDistribution;

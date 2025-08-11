@@ -1,10 +1,9 @@
-package main.interface_adapter.stockMarket;
+package main.use_case.Stocks;
 
-import main.entity.stocks.Stock;
 import main.entity.players.Player;
-import main.use_case.stocks.BuyStock;
+import main.entity.Stocks.Stock;
 
-public class StockBuyController {
+public class BuyStock {
     public void execute(Player player, Stock stock, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
@@ -13,7 +12,6 @@ public class StockBuyController {
             throw new IllegalArgumentException("Insufficient funds to buy stocks");
         }
 
-        BuyStock BuyStock = new BuyStock();
-        BuyStock.execute(player, stock, quantity);
+        player.buyStock(stock, quantity);
     }
 }

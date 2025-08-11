@@ -1,6 +1,6 @@
-package main.interface_adapter.stockMarket;
+package main.interface_adapter.StockMarket;
 
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
 
 /**

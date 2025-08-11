@@ -5,9 +5,9 @@ import main.constants.Constants;
 import main.data_access.StockMarket.DefaultStockInfoRepository;
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 import main.entity.Game;
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.data_access.StockMarket.APIStockInfoRepository;
-import main.interface_adapter.stockMarket.StockFactory;
+import main.interface_adapter.StockMarket.StockFactory;
 import main.entity.players.Player;
 
 import java.util.ArrayList;

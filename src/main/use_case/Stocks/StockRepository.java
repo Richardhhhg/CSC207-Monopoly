@@ -1,4 +1,4 @@
-package main.use_case.stocks;
+package main.use_case.Stocks;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
 

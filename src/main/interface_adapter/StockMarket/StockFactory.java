@@ -1,7 +1,7 @@
-package main.interface_adapter.stockMarket;
+package main.interface_adapter.StockMarket;
 
 import main.data_access.StockMarket.StockInfoDataOutputObject;
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 
 public class StockFactory {
     public Stock execute(StockInfoDataOutputObject stockInfoDataOutputObject) {

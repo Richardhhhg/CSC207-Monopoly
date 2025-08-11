@@ -2,9 +2,9 @@ package main.view;
 
 import main.constants.Constants;
 import main.entity.players.Player;
-import main.entity.stocks.Stock;
-import main.interface_adapter.stockMarket.StockViewModel;
-import main.interface_adapter.stockMarket.StockPresenter;
+import main.entity.Stocks.Stock;
+import main.interface_adapter.StockMarket.StockViewModel;
+import main.interface_adapter.StockMarket.StockPresenter;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

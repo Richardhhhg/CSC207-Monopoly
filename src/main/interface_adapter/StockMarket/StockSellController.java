@@ -1,8 +1,8 @@
-package main.interface_adapter.stockMarket;
+package main.interface_adapter.StockMarket;
 
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
-import main.use_case.stocks.SellStock;
+import main.use_case.Stocks.SellStock;
 
 public class StockSellController {
     public void execute(Player player, Stock stock, int quantity) {

@@ -1,6 +1,6 @@
 package main.data_access.StockMarket;
 
-import main.use_case.stocks.StockRepository;
+import main.use_case.Stocks.StockRepository;
 
 public class DefaultStockInfoRepository implements StockRepository {
     /**

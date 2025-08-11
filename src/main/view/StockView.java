@@ -1,9 +1,9 @@
 package main.view;
 
 import main.constants.Constants;
-import main.interface_adapter.stockMarket.StockBuyController;
-import main.interface_adapter.stockMarket.StockSellController;
-import main.interface_adapter.stockMarket.StockViewModel;
+import main.interface_adapter.StockMarket.StockBuyController;
+import main.interface_adapter.StockMarket.StockSellController;
+import main.interface_adapter.StockMarket.StockViewModel;
 
 import javax.swing.*;
 import java.awt.*;

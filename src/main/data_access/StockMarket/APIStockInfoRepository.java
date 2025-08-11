@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import main.constants.Config;
 import main.constants.Constants;
-import main.use_case.stocks.StockRepository;
+import main.use_case.Stocks.StockRepository;
 
 import java.io.FileReader;
 import java.io.IOException;
