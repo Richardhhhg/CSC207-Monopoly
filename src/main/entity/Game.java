@@ -11,10 +11,7 @@ import java.awt.*;
 
 import static main.Constants.Constants.MAX_ROUNDS;
 
-/**
- * GameBoard manages the game state and logic, separate from UI concerns.
- * Fixed to follow Clean Architecture - no direct dependency on use cases
- */
+
 public class Game {
     private List<Tile> tiles;
     private List<Player> players;
@@ -27,10 +24,6 @@ public class Game {
     private int roundStartPlayerIndex = 0; // Track which player started the current round
     private boolean gameEnded = false;
     private String gameEndReason = "";
-
-    public Game() {
-        //initializeGame();
-    }
 
     public boolean isGameOver() {
         return gameEnded;

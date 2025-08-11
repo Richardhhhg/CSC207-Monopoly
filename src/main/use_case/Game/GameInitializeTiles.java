@@ -5,7 +5,6 @@ import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
-import main.infrastructure.FallbackPropertyDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class GameInitializeTiles {
     private final PropertyDataSource dataSource;
 
-    public GameInitializeTiles(PropertyDataSource dataSource, FallbackPropertyDataSource fallbackPropertyDataSource) {
+    public GameInitializeTiles(PropertyDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

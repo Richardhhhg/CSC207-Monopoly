@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Infrastructure implementation for reading property data from JSON files.
- * Follows Single Responsibility Principle - only handles JSON file reading.
  */
 public class JsonPropertyDataSource implements PropertyDataSource {
     private final String resourcePath;
@@ -38,14 +37,13 @@ public class JsonPropertyDataSource implements PropertyDataSource {
             return parsePropertiesFromJson(jsonBuilder.toString());
 
         } catch (Exception e) {
-            return null; // Simple null return on any error
+            return null;
         }
     }
 
     private List<PropertyInfo> parsePropertiesFromJson(String jsonContent) {
         List<PropertyInfo> propertyData = new ArrayList<>();
 
-        // Simple parsing - if anything goes wrong, return null to trigger fallback
         int propertiesStart = jsonContent.indexOf("\"properties\":");
         if (propertiesStart == -1) return null;
 
@@ -54,7 +52,7 @@ public class JsonPropertyDataSource implements PropertyDataSource {
         if (arrayStart == -1 || arrayEnd == -1 || arrayStart >= arrayEnd) return null;
 
         String propertiesArray = jsonContent.substring(arrayStart + 1, arrayEnd);
-        String[] propertyObjects = propertiesArray.split("\\},\\s*\\{");
+        String[] propertyObjects = propertiesArray.split("},\\s*\\{");
 
         for (String propertyObj : propertyObjects) {
             propertyObj = propertyObj.replace("{", "").replace("}", "");
