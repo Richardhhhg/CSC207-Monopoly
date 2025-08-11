@@ -1,4 +1,4 @@
-package main.interface_adapter.CharacterSelectionScreen;
+package main.interface_adapter.characterSelectionScreen;
 
 import main.use_case.BoardSizeSelection.BoardSizeSelection;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
@@ -19,11 +19,6 @@ public class BoardSizeController {
 
     public void selectBoardSize(BoardSize size) {
         BoardSizeSelectionResult result = boardSizeSelection.selectBoardSize(size);
-        presenter.presentBoardSizeSelection(result);
-    }
-
-    public void initializeDefaultBoardSize() {
-        BoardSizeSelectionResult result = boardSizeSelection.getDefaultBoardSize();
         presenter.presentBoardSizeSelection(result);
     }
 }

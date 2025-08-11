@@ -53,9 +53,6 @@ public class BoardSizeSelection {
     }
 
     public BoardSizeSelectionResult selectBoardSize(BoardSize size) {
-        if (size == null) {
-            return new BoardSizeSelectionResult(BoardSize.MEDIUM, false, "Invalid board size selected");
-        }
 
         return new BoardSizeSelectionResult(size, true,
             "Board size selected: " + size.getDisplayName() + " (" + size.getTileCount() + " tiles)");

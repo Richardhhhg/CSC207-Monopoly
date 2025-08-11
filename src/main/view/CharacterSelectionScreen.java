@@ -8,17 +8,11 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import main.app.GameHolder;
 import main.entity.Game;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenViewModel;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
-import main.interface_adapter.CharacterSelectionScreen.BoardSizeController;
-import main.interface_adapter.CharacterSelectionScreen.BoardSizePresenter;
-import main.interface_adapter.CharacterSelectionScreen.BoardSizeViewModel;
-import main.interface_adapter.Game.GameCreationController;
+import main.interface_adapter.characterSelectionScreen.*;
+import main.interface_adapter.game.GameCreationController;
 import main.use_case.BoardSizeSelection.BoardSizeSelection;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
-import javax.swing.*;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -38,15 +32,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import main.app.GameHolder;
-import main.entity.Game;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
 
 /**
  * The CharacterSelectionScreen class provides a GUI for players to select their
@@ -97,9 +82,6 @@ public class CharacterSelectionScreen extends JFrame {
         this.gameCreationController = new GameCreationController();
 
         this.boardSizeViewModel = boardSizePresenter.getViewModel();
-
-        // Initialize with default board size
-        boardSizeController.initializeDefaultBoardSize();
 
         initializeScreen();
     }
@@ -211,9 +193,16 @@ public class CharacterSelectionScreen extends JFrame {
         });
 
         add(playerPanel, BorderLayout.CENTER);
+
+        // Create a panel to hold both board size selection and buttons
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(boardSizePanel);
         buttonPanel.add(startGame);
         buttonPanel.add(charLore);
-        add(buttonPanel, BorderLayout.SOUTH);
+        bottomPanel.add(buttonPanel);
+
+        add(bottomPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
 

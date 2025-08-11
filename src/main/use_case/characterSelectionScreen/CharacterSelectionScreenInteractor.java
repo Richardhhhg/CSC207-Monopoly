@@ -39,10 +39,10 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
      */
     @Override
     public void confirmSelection() {
-        final List<PlayerOutputData> outputList = new ArrayList<>();
+        final List<CharacterSelectionPlayerViewModel> outputList = new ArrayList<>();
         for (Player p : selectedPlayers) {
             if (!p.isNullPlayer()) {
-                outputList.add(new PlayerOutputData(p.getName(), p.getClass().getSimpleName(),
+                outputList.add(new CharacterSelectionPlayerViewModel(p.getName(), p.getClass().getSimpleName(),
                         p.getColor(), p.getPortrait()));
             }
         }
@@ -81,7 +81,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
         final Player player = CharacterFactory.createPlayer(name, type, color);
         selectedPlayers.set(index, player);
-        final PlayerOutputData output = new PlayerOutputData(name, type, color, player.getPortrait());
+        final CharacterSelectionPlayerViewModel output = new CharacterSelectionPlayerViewModel(name, type, color, player.getPortrait());
         presenter.preparePlayer(output, index);
     }
 }

@@ -7,7 +7,7 @@ import java.awt.Image;
  * A data class representing the output information for a player during character selection.
  * This class is used to transfer player selection data from the use case layer to the view model and view.
  */
-public class PlayerOutputData {
+public class CharacterSelectionPlayerViewModel {
     private final String name;
     private final String type;
     private final Color color;
@@ -21,7 +21,7 @@ public class PlayerOutputData {
      * @param color    The color assigned to the player.
      * @param portrait The portrait image for the player.
      */
-    public PlayerOutputData(String name, String type, Color color, Image portrait) {
+    public CharacterSelectionPlayerViewModel(String name, String type, Color color, Image portrait) {
         this.name = name;
         this.type = type;
         this.color = color;

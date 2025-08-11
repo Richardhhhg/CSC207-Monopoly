@@ -1,12 +1,13 @@
-package main.interface_adapter.Game;
+package main.interface_adapter.game;
 
 import main.entity.Game;
 import main.infrastructure.FallbackPropertyDataSource;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
+import main.infrastructure.JsonPropertyDataSource;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
-import main.use_case.Game.GameInitializeTiles;
-import main.use_case.Game.GameInitializeStocks;
-import main.use_case.Game.PropertyDataSource;
+import main.use_case.game.GameInitializeTiles;
+import main.use_case.game.GameInitializeStocks;
+import main.use_case.game.PropertyDataSource;
 import java.util.List;
 
 /**
@@ -16,30 +17,45 @@ public class GameCreationController {
     private final GameInitializeTiles gameInitializeTiles;
 
     public GameCreationController() {
-        // Use simple fallback data source - composition should be handled elsewhere
-        PropertyDataSource dataSource = new FallbackPropertyDataSource();
+        // Try JSON first, fallback to hardcoded data if it fails
+        PropertyDataSource dataSource;
+        try {
+            dataSource = new JsonPropertyDataSource();
+            // Test if it works by calling getPropertyData
+            dataSource.getPropertyData();
+        } catch (Exception e) {
+            System.out.println("JSON data source failed, using fallback: " + e.getMessage());
+            dataSource = new FallbackPropertyDataSource();
+        }
         this.gameInitializeTiles = new GameInitializeTiles(dataSource);
     }
 
     /**
      * Create a game with the specified board size and players.
      */
-    public Game createGameWithBoardSize(List<PlayerOutputData> players, BoardSize boardSize) {
+    public Game createGameWithBoardSize(List<CharacterSelectionPlayerViewModel> players, BoardSize boardSize) {
         Game game = new Game();
         game.setPlayersFromOutputData(players);
 
-        // Initialize tiles
-        switch (boardSize) {
-            case SMALL:
-                game.setTiles(gameInitializeTiles.executeSmallBoard());
-                break;
-            case MEDIUM:
-                game.setTiles(gameInitializeTiles.executeMediumBoard());
-                break;
-            case LARGE:
-                game.setTiles(gameInitializeTiles.executeLargeBoard());
-                break;
+        // Initialize tiles with proper error handling
+        List<main.entity.tiles.Tile> tiles;
+        try {
+            tiles = switch (boardSize) {
+                case SMALL -> gameInitializeTiles.executeSmallBoard();
+                case MEDIUM -> gameInitializeTiles.executeMediumBoard();
+                case LARGE -> gameInitializeTiles.executeLargeBoard();
+                default -> gameInitializeTiles.executeMediumBoard();
+            };
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to initialize tiles for board size: " + boardSize + ". Error: " + e.getMessage(), e);
         }
+
+        // Validate tiles before setting
+        if (tiles == null || tiles.isEmpty()) {
+            throw new IllegalStateException("Failed to initialize tiles for board size: " + boardSize);
+        }
+
+        game.setTiles(tiles);
 
         // Initialize stocks
         GameInitializeStocks stockInitializer = new GameInitializeStocks(game);

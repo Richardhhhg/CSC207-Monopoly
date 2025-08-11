@@ -3,7 +3,7 @@ package main.infrastructure;
 import main.use_case.game.PropertyDataSource;
 import java.util.ArrayList;
 import java.util.List;
-import main.Constants.Constants;
+import main.constants.Constants;
 
 /**
  * Fallback implementation that provides hardcoded property data.

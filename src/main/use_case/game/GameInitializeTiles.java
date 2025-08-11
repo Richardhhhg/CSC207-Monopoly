@@ -43,6 +43,9 @@ public class GameInitializeTiles {
             PropertyDataSource fallback = new main.infrastructure.FallbackPropertyDataSource();
             propertyData = fallback.getPropertyData();
         }
+
+        // Actually call the tile creation method instead of returning empty list
+        return createTiles(boardSize, propertyData);
     }
 
     private List<Tile> createTiles(int boardSize, List<PropertyDataSource.PropertyInfo> propertyData) {
