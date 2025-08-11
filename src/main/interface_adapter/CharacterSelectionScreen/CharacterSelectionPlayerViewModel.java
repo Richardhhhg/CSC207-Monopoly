@@ -1,4 +1,4 @@
-package main.interface_adapter.characterSelectionScreen;
+package main.interface_adapter.CharacterSelectionScreen;
 
 import java.awt.Color;
 import java.awt.Image;

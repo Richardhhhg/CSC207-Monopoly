@@ -1,4 +1,4 @@
-package main.interface_adapter.characterSelectionScreen;
+package main.interface_adapter.CharacterSelectionScreen;
 
 import main.use_case.characterSelectionScreen.CharacterSelectionInputBoundary;
 import main.use_case.characterSelectionScreen.CharacterSelectionInputData;

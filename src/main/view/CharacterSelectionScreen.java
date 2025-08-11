@@ -27,10 +27,10 @@ import javax.swing.event.DocumentListener;
 
 import main.app.GameHolder;
 import main.entity.Game;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
+import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenAdapter;
+import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenController;
+import main.interface_adapter.CharacterSelectionScreen.CharacterSelectionScreenViewModel;
 
 /**
  * The CharacterSelectionScreen class provides a GUI for players to select their
