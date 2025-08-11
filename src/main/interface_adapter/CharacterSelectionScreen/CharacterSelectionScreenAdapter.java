@@ -1,6 +1,10 @@
 package main.interface_adapter.CharacterSelectionScreen;
 
 import main.data_access.Player.InMemoryCharacterDataAccess;
+import main.use_case.CharacterSelectionScreen.CharacterSelectionInputBoundary;
+import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
+import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenInteractor;
+import main.data_access.Player.InMemoryCharacterDataAccess;
 import main.use_case.characterSelectionScreen.CharacterSelectionInputBoundary;
 import main.use_case.characterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
 import main.use_case.characterSelectionScreen.CharacterSelectionScreenInteractor;

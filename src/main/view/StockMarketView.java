@@ -1,10 +1,10 @@
 package main.view;
 
-import main.constants.Constants;
+import main.Constants.Constants;
 import main.entity.players.Player;
 import main.entity.Stocks.Stock;
-import main.interface_adapter.StockMarket.StockViewModel;
-import main.interface_adapter.StockMarket.StockPresenter;
+import main.interface_adapter.StockMarket.StockPlayerViewModel;
+import main.interface_adapter.StockMarket.StockState;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -52,13 +52,20 @@ public class StockMarketView extends JFrame {
         mainPanel.add(headerPanel);
         mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
 
-        // TODO: This should create a presenter for the stock which then creates a StockViewModel - Richard
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
             Stock stock = entry.getKey();
-            StockViewModel stockViewModel = new StockPresenter().execute(stock, player, allowBuy);
-            StockView stockview = new StockView(
-                    stockViewModel
-            );
+            int quantity = entry.getValue();
+            StockState stockState = new StockState();
+            stockState.setTicker(stock.getTicker());
+            stockState.setPrice(stock.getCurrentPrice());
+            stockState.setChange(stock.getChange());
+            stockState.setAllowBuy(allowBuy);
+
+            StockPlayerViewModel stockPlayerViewModel = new StockPlayerViewModel(stockState);
+            stockPlayerViewModel.getState().setPlayer(player);
+            stockPlayerViewModel.getState().setStock(stock);
+            stockPlayerViewModel.getState().setQuantity(quantity);
+            StockView stockview = new StockView(stockPlayerViewModel);
             mainPanel.add(stockview);
             mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
         }

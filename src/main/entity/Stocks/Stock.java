@@ -34,16 +34,16 @@ public class Stock {
         this.percentChange = percent_change;
     }
 
-    public Double getCurrentPrice() {
-        return currentPrice;
+    public float getCurrentPrice() {
+        return (float) currentPrice;
     }
 
     public String getTicker() {
         return symbol;
     }
 
-    public double getChange() {
-        return percentChange;
+    public float getChange() {
+        return (float) percentChange;
     }
 
     // For debugging

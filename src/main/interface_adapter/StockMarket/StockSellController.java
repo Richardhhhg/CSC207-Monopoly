@@ -2,18 +2,18 @@ package main.interface_adapter.StockMarket;
 
 import main.entity.Stocks.Stock;
 import main.entity.players.Player;
-import main.use_case.Stocks.SellStock;
+import main.use_case.Stocks.SellStockInputBoundary;
+import main.use_case.Stocks.SellStockInputData;
 
 public class StockSellController {
-    public void execute(Player player, Stock stock, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than 0");
-        }
-        if (player.getStockQuantity(stock) < quantity) {
-            throw new IllegalArgumentException("Insufficient stocks to sell");
-        }
+    private final SellStockInputBoundary sellStockInteractor;
 
-        SellStock sellStock = new SellStock();
-        sellStock.execute(player, stock, quantity);
+    public StockSellController(SellStockInputBoundary sellStockInteractor) {
+        this.sellStockInteractor = sellStockInteractor;
+    }
+
+    public void execute(Player player, Stock stock, int quantity) {
+        final SellStockInputData inputData = new SellStockInputData(player, stock, quantity);
+        sellStockInteractor.execute(inputData);
     }
 }
