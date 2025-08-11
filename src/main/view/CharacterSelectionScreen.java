@@ -6,6 +6,18 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import main.app.GameHolder;
+import main.entity.Game;
+import main.interface_adapter.boardSizeSelection.BoardSizeController;
+import main.interface_adapter.boardSizeSelection.BoardSizePresenter;
+import main.interface_adapter.boardSizeSelection.BoardSizeViewModel;
+import main.interface_adapter.characterSelectionScreen.*;
+import main.interface_adapter.game.GameCreationController;
+import main.use_case.boardSizeSelection.BoardSizeSelection;
+import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,15 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import main.app.GameHolder;
-import main.entity.Game;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
 
 /**
  * The CharacterSelectionScreen class provides a GUI for players to select their
@@ -53,12 +56,28 @@ public class CharacterSelectionScreen extends JFrame {
 
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
+    private final BoardSizeSelectionPanelView boardSizePanel;
+    private final GameCreationController gameCreationController;
     private final List<PlayerSelection> selections = new ArrayList<>();
 
     public CharacterSelectionScreen() {
         final var adapter = CharacterSelectionScreenAdapter.inject();
         this.controller = adapter.getController();
         this.viewModel = adapter.getViewModel();
+
+        // Set up board size selection dependencies
+        BoardSizePresenter boardSizePresenter = new BoardSizePresenter();
+        BoardSizeSelection boardSizeSelection = new BoardSizeSelection(boardSizePresenter);
+        BoardSizeController boardSizeController = new BoardSizeController(boardSizeSelection);
+        BoardSizeViewModel boardSizeViewModel = boardSizePresenter.getViewModel();
+
+        // Initialize with default board size
+        boardSizeViewModel.setSelectedBoardSize(BoardSize.MEDIUM);
+
+        // Create the board size panel as a separate component
+        this.boardSizePanel = new BoardSizeSelectionPanelView(boardSizeController, boardSizeViewModel);
+        this.gameCreationController = new GameCreationController();
+
         initializeScreen();
     }
 
@@ -136,7 +155,7 @@ public class CharacterSelectionScreen extends JFrame {
             playerPanel.add(playerSlot);
         }
 
-        final JButton startGame = new JButton("Play!");
+        JButton startGame = new JButton("Play!");
         startGame.addActionListener(e -> {
             final List<CharacterSelectionPlayerViewModel> validPlayers = viewModel.getAllPlayers()
                     .stream()
@@ -147,9 +166,13 @@ public class CharacterSelectionScreen extends JFrame {
                 return;
             }
             controller.confirmSelection();
-            final Game game = new Game();
-            game.setPlayersFromOutputData(validPlayers);
-            game.initializeGame();
+
+            // Use the board size panel to get the selected board size
+            Game game = gameCreationController.createGameWithBoardSize(
+                validPlayers,
+                boardSizePanel.getSelectedBoardSize()
+            );
+
             GameHolder.setGame(game);
             dispose();
             new GameView().setVisible(true);
@@ -162,16 +185,23 @@ public class CharacterSelectionScreen extends JFrame {
         });
 
         add(playerPanel, BorderLayout.CENTER);
+
+        // Create a panel to hold both board size selection and buttons
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(boardSizePanel); // Use the separate panel
         buttonPanel.add(startGame);
         buttonPanel.add(charLore);
-        add(buttonPanel, BorderLayout.SOUTH);
+        bottomPanel.add(buttonPanel);
+
+        add(bottomPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
 
-    private void updatePlayerSelection(int index, JTextField nameField,
-                                       JComboBox<String> dropdown, JLabel portraitLabel) {
-        final String name = nameField.getText();
-        final String type = (String) dropdown.getSelectedItem();
+
+    private void updatePlayerSelection(int index, JTextField nameField, JComboBox<String> dropdown, JLabel portraitLabel) {
+        String name = nameField.getText();
+        String type = (String) dropdown.getSelectedItem();
         controller.selectPlayer(index, name, type);
 
         final CharacterSelectionPlayerViewModel data = viewModel.getPlayervm(index);

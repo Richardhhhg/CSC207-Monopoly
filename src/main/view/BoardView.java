@@ -6,7 +6,6 @@ import main.entity.*;
 import main.constants.Constants;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,8 +25,6 @@ import main.view.tile.StockMarketTileView;
 import main.interface_adapter.tile.PropertyTileViewModel;
 import main.interface_adapter.tile.StockMarketTileViewModel;
 import org.jetbrains.annotations.NotNull;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;

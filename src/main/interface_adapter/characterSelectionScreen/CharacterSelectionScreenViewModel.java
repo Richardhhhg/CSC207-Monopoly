@@ -3,7 +3,7 @@ package main.interface_adapter.characterSelectionScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.use_case.characterSelectionScreen.PlayerOutputData;
+import main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
 /**
  * The ViewModel for the CharacterSelectionScreen.
@@ -11,7 +11,7 @@ import main.use_case.characterSelectionScreen.PlayerOutputData;
  */
 public class CharacterSelectionScreenViewModel {
     private static final int MAX_AMT_PLAYER = 4;
-    private final List<PlayerOutputData> selectedPlayers = new ArrayList<>(4);
+    private final List<CharacterSelectionPlayerViewModel> selectedPlayers = new ArrayList<>(4);
 
     /**
      * Constructs the ViewModel and initializes player slots.
@@ -28,7 +28,7 @@ public class CharacterSelectionScreenViewModel {
      * @param index The player slot index.
      * @param data  The output data for the player.
      */
-    public void setPlayerData(int index, PlayerOutputData data) {
+    public void setPlayerData(int index, CharacterSelectionPlayerViewModel data) {
         selectedPlayers.set(index, data);
     }
 
@@ -38,7 +38,7 @@ public class CharacterSelectionScreenViewModel {
      * @param index The player slot index.
      * @return The PlayerOutputData for that slot.
      */
-    public PlayerOutputData getPlayerData(int index) {
+    public CharacterSelectionPlayerViewModel getPlayerData(int index) {
         return selectedPlayers.get(index);
     }
 
@@ -47,14 +47,14 @@ public class CharacterSelectionScreenViewModel {
      *
      * @return A list of CharacterSelectionPlayerViewModel.
      */
-    public List<CharacterSelectionPlayerViewModel> getAllPlayers() {
-        final List<CharacterSelectionPlayerViewModel> result = new ArrayList<>(MAX_AMT_PLAYER);
-        for (PlayerOutputData d : selectedPlayers) {
+    public List<main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel> getAllPlayers() {
+        final List<main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel> result = new ArrayList<>(MAX_AMT_PLAYER);
+        for (CharacterSelectionPlayerViewModel d : selectedPlayers) {
             if (d == null) {
                 result.add(null);
             }
             else {
-                result.add(new CharacterSelectionPlayerViewModel(
+                result.add(new main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel(
                         d.getName(),
                         d.getType(),
                         d.getColor(),
@@ -76,13 +76,13 @@ public class CharacterSelectionScreenViewModel {
      *         name, type, color, and portrait, or null if no player
      *         is set at that index
      */
-    public CharacterSelectionPlayerViewModel getPlayervm(int index) {
-        final PlayerOutputData d = selectedPlayers.get(index);
+    public main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel getPlayervm(int index) {
+        final CharacterSelectionPlayerViewModel d = selectedPlayers.get(index);
         if (d == null) {
             return null;
         }
         else {
-            return new CharacterSelectionPlayerViewModel(
+            return new main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel(
                     d.getName(),
                     d.getType(),
                     d.getColor(),

@@ -2,6 +2,7 @@ package main.infrastructure;
 
 import main.use_case.game.PropertyDataSource;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -9,84 +10,63 @@ import java.util.List;
 
 /**
  * Infrastructure implementation for reading property data from JSON files.
- * Follows Single Responsibility Principle - only handles JSON file reading.
+ * Assumes well-formed JSON - throws exceptions for any parsing issues.
  */
 public class JsonPropertyDataSource implements PropertyDataSource {
     private final String resourcePath;
 
-    public JsonPropertyDataSource(String resourcePath) {
-        this.resourcePath = resourcePath;
+    public JsonPropertyDataSource() {
+        this.resourcePath = "/properties.json";
     }
 
     @Override
     public List<PropertyInfo> getPropertyData() {
         try {
-            InputStream inputStream = getClass().getResourceAsStream(resourcePath);
-            if (inputStream == null) {
-                throw new RuntimeException("Could not find file: " + resourcePath);
-            }
+            String jsonContent = readJsonFile();
+            return parsePropertiesFromJson(jsonContent);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load property data from JSON", e);
+        }
+    }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    private String readJsonFile() throws IOException {
+        InputStream inputStream = getClass().getResourceAsStream(resourcePath);
+        if (inputStream == null) {
+            throw new IOException("JSON resource not found: " + resourcePath);
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             StringBuilder jsonBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 jsonBuilder.append(line);
             }
-            reader.close();
-
-            return parsePropertiesFromJson(jsonBuilder.toString());
-
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load property data from " + resourcePath, e);
+            return jsonBuilder.toString();
         }
     }
 
     private List<PropertyInfo> parsePropertiesFromJson(String jsonContent) {
         List<PropertyInfo> propertyData = new ArrayList<>();
 
-        // Find the properties array
-        int propertiesStart = jsonContent.indexOf("\"properties\":");
-        if (propertiesStart == -1) {
-            throw new RuntimeException("Properties array not found in JSON");
-        }
+        // Simple string-based parsing for well-formed JSON
+        String[] propertyBlocks = jsonContent.split("\\{");
 
-        int arrayStart = jsonContent.indexOf("[", propertiesStart);
-        int arrayEnd = jsonContent.lastIndexOf("]");
-
-        String propertiesArray = jsonContent.substring(arrayStart + 1, arrayEnd);
-        String[] propertyObjects = propertiesArray.split("\\},\\s*\\{");
-
-        for (String propertyObj : propertyObjects) {
-            propertyObj = propertyObj.replace("{", "").replace("}", "");
-            String name = extractJsonValue(propertyObj, "name");
-            int basePrice = Integer.parseInt(extractJsonValue(propertyObj, "basePrice"));
-            propertyData.add(new PropertyInfo(name, basePrice));
+        for (String block : propertyBlocks) {
+            if (block.contains("name") && block.contains("basePrice")) {
+                String name = extractValue(block, "name");
+                String priceStr = extractValue(block, "basePrice");
+                int price = Integer.parseInt(priceStr);
+                propertyData.add(new PropertyInfo(name, price));
+            }
         }
 
         return propertyData;
     }
 
-    private String extractJsonValue(String jsonObj, String key) {
-        String searchKey = "\"" + key + "\":";
-        int keyStart = jsonObj.indexOf(searchKey);
-        if (keyStart == -1) {
-            throw new RuntimeException("Key " + key + " not found");
-        }
-
-        int valueStart = keyStart + searchKey.length();
-        String remaining = jsonObj.substring(valueStart).trim();
-
-        if (remaining.startsWith("\"")) {
-            int endQuote = remaining.indexOf("\"", 1);
-            return remaining.substring(1, endQuote);
-        } else {
-            int endComma = remaining.indexOf(",");
-            if (endComma == -1) {
-                return remaining.trim();
-            } else {
-                return remaining.substring(0, endComma).trim();
-            }
-        }
+    private String extractValue(String block, String key) {
+        String searchPattern = "\"" + key + "\":\"";
+        int start = block.indexOf(searchPattern) + searchPattern.length();
+        int end = block.indexOf("\"", start);
+        return block.substring(start, end);
     }
 }
-

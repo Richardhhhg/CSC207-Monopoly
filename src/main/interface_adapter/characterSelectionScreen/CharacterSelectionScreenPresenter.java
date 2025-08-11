@@ -3,7 +3,7 @@ package main.interface_adapter.characterSelectionScreen;
 import java.util.List;
 
 import main.use_case.characterSelectionScreen.CharacterSelectionScreenOutputBoundary;
-import main.use_case.characterSelectionScreen.PlayerOutputData;
+import main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
 /**
  * Presenter for CharacterSelectionScreen.
@@ -27,7 +27,7 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
      * @param players The list of all selected players.
      */
     @Override
-    public void prepareLaunchData(List<PlayerOutputData> players) {
+    public void prepareLaunchData(List<CharacterSelectionPlayerViewModel> players) {
         for (int i = 0; i < players.size(); i++) {
             viewModel.setPlayerData(i, players.get(i));
         }
@@ -40,7 +40,7 @@ public class CharacterSelectionScreenPresenter implements CharacterSelectionScre
      * @param index The player slot index.
      */
     @Override
-    public void preparePlayer(PlayerOutputData data, int index) {
+    public void preparePlayer(CharacterSelectionPlayerViewModel data, int index) {
 
         viewModel.setPlayerData(index, data);
     }
