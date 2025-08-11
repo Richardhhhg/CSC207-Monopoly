@@ -1,34 +1,30 @@
 package main.view;
 
 import main.entity.players.Player;
-import main.entity.tiles.GoTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
-
 import java.util.HashMap;
 import java.util.List;
 
-import main.interface_adapter.Property.PropertyPresenter;
-import main.interface_adapter.Property.PropertyPurchaseController;
-import main.interface_adapter.Property.PropertyViewModel;
-import main.interface_adapter.Property.RentPaymentController;
-import main.interface_adapter.Tile.GoTileViewModel;
-import main.use_case.Tiles.OnLandingController;
-import main.use_case.Tiles.OnLandingUseCase;
-import main.use_case.Tiles.Property.PropertyPurchaseUseCase;
-import main.use_case.Tiles.Property.RentPaymentUseCase;
-import main.view.Tile.GoTileView;
-import main.view.Tile.TileView;
-import main.view.Tile.PropertyTileView;
-import main.view.Tile.StockMarketTileView;
-import main.interface_adapter.Tile.PropertyTileViewModel;
-import main.interface_adapter.Tile.StockMarketTileViewModel;
+import main.interface_adapter.property.PropertyPresenter;
+import main.interface_adapter.property.PropertyPurchaseController;
+import main.interface_adapter.property.PropertyViewModel;
+import main.interface_adapter.property.RentPaymentController;
+import main.interface_adapter.tile.GoTileViewModel;
+import main.use_case.tiles.OnLandingController;
+import main.use_case.tiles.OnLandingUseCase;
+import main.use_case.tiles.property.PropertyPurchaseUseCase;
+import main.use_case.tiles.property.RentPaymentUseCase;
+import main.view.tile.GoTileView;
+import main.view.tile.TileView;
+import main.view.tile.PropertyTileView;
+import main.view.tile.StockMarketTileView;
+import main.interface_adapter.tile.PropertyTileViewModel;
+import main.interface_adapter.tile.StockMarketTileViewModel;
 import org.jetbrains.annotations.NotNull;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;

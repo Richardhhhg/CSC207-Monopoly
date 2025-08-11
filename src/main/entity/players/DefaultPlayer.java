@@ -2,8 +2,8 @@ package main.entity.players;
 
 import java.awt.*;
 
-import static main.Constants.Constants.DEFAULT_INIT_MONEY;
-import static main.Constants.Constants.NP_POR;
+import static main.constants.Constants.DEFAULT_INIT_MONEY;
+import static main.constants.Constants.NP_POR;
 
 public class DefaultPlayer extends Player {
 

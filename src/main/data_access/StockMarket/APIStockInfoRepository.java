@@ -5,8 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import main.Constants.Config;
-import main.Constants.Constants;
+import main.constants.Config;
+import main.constants.Constants;
 import main.use_case.Stocks.StockRepository;
 
 import java.io.FileReader;

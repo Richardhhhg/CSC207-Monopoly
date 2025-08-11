@@ -1,6 +1,0 @@
-package main.data_access.StockMarket;
-
-import main.use_case.CharacterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
-
-public class InMemoryCharacterDataAccess implements CharacterSelectionScreenDataAccessInterface {
-}

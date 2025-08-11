@@ -1,6 +1,6 @@
 package main.entity.Stocks;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,16 +34,16 @@ public class Stock {
         this.percentChange = percent_change;
     }
 
-    public Double getCurrentPrice() {
-        return currentPrice;
+    public float getCurrentPrice() {
+        return (float) currentPrice;
     }
 
     public String getTicker() {
         return symbol;
     }
 
-    public double getChange() {
-        return percentChange;
+    public float getChange() {
+        return (float) percentChange;
     }
 
     // For debugging

@@ -1,10 +1,10 @@
 package main.view;
 
 import main.entity.players.Player;
-import main.interface_adapter.EndScreen.EndScreenController;
-import main.interface_adapter.EndScreen.EndScreenPresenter;
-import main.interface_adapter.EndScreen.EndScreenViewModel;
-import main.use_case.EndScreen.EndGame;
+import main.interface_adapter.endScreen.EndScreenController;
+import main.interface_adapter.endScreen.EndScreenPresenter;
+import main.interface_adapter.endScreen.EndScreenViewModel;
+import main.use_case.endScreen.EndGame;
 
 import javax.swing.*;
 import java.awt.*;
