@@ -1,4 +1,4 @@
-package main.use_case.BoardSizeSelection;
+package main.use_case.boardSizeSelection;
 
 import main.constants.Constants;
 

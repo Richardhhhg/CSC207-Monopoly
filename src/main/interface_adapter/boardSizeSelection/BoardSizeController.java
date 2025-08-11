@@ -1,7 +1,7 @@
-package main.interface_adapter.characterSelectionScreen;
+package main.interface_adapter.boardSizeSelection;
 
-import main.use_case.BoardSizeSelection.BoardSizeInputBoundary;
-import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
+import main.use_case.boardSizeSelection.BoardSizeInputBoundary;
+import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
 
 /**
  * Controller for board size selection.

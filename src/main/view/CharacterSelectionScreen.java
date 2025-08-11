@@ -8,14 +8,16 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import main.app.GameHolder;
 import main.entity.Game;
+import main.interface_adapter.boardSizeSelection.BoardSizeController;
+import main.interface_adapter.boardSizeSelection.BoardSizePresenter;
+import main.interface_adapter.boardSizeSelection.BoardSizeViewModel;
 import main.interface_adapter.characterSelectionScreen.*;
 import main.interface_adapter.game.GameCreationController;
-import main.use_case.BoardSizeSelection.BoardSizeSelection;
-import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
+import main.use_case.boardSizeSelection.BoardSizeSelection;
+import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,33 +56,27 @@ public class CharacterSelectionScreen extends JFrame {
 
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
-    private final BoardSizeController boardSizeController;
-    private final BoardSizeViewModel boardSizeViewModel;
+    private final BoardSizeSelectionPanelView boardSizePanel;
     private final GameCreationController gameCreationController;
     private final List<PlayerSelection> selections = new ArrayList<>();
-
-    // Board size selection buttons
-    private JButton smallButton;
-    private JButton mediumButton;
-    private JButton largeButton;
 
     public CharacterSelectionScreen() {
         final var adapter = CharacterSelectionScreenAdapter.inject();
         this.controller = adapter.getController();
         this.viewModel = adapter.getViewModel();
 
+        // Set up board size selection dependencies
         BoardSizePresenter boardSizePresenter = new BoardSizePresenter();
         BoardSizeSelection boardSizeSelection = new BoardSizeSelection(boardSizePresenter);
+        BoardSizeController boardSizeController = new BoardSizeController(boardSizeSelection);
+        BoardSizeViewModel boardSizeViewModel = boardSizePresenter.getViewModel();
 
-        this.boardSizeController = new BoardSizeController(
-                boardSizeSelection
-        );
-
-        this.gameCreationController = new GameCreationController();
-
-        this.boardSizeViewModel = boardSizePresenter.getViewModel();
-
+        // Initialize with default board size
         boardSizeViewModel.setSelectedBoardSize(BoardSize.MEDIUM);
+
+        // Create the board size panel as a separate component
+        this.boardSizePanel = new BoardSizeSelectionPanelView(boardSizeController, boardSizeViewModel);
+        this.gameCreationController = new GameCreationController();
 
         initializeScreen();
     }
@@ -159,9 +155,6 @@ public class CharacterSelectionScreen extends JFrame {
             playerPanel.add(playerSlot);
         }
 
-        // Create board size selection panel
-        JPanel boardSizePanel = createBoardSizePanel();
-
         JButton startGame = new JButton("Play!");
         startGame.addActionListener(e -> {
             final List<CharacterSelectionPlayerViewModel> validPlayers = viewModel.getAllPlayers()
@@ -174,10 +167,10 @@ public class CharacterSelectionScreen extends JFrame {
             }
             controller.confirmSelection();
 
-            // Use GameCreationController for game creation (proper separation of concerns)
+            // Use the board size panel to get the selected board size
             Game game = gameCreationController.createGameWithBoardSize(
                 validPlayers,
-                boardSizeViewModel.getSelectedBoardSize()
+                boardSizePanel.getSelectedBoardSize()
             );
 
             GameHolder.setGame(game);
@@ -196,7 +189,7 @@ public class CharacterSelectionScreen extends JFrame {
         // Create a panel to hold both board size selection and buttons
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.add(boardSizePanel);
+        bottomPanel.add(boardSizePanel); // Use the separate panel
         buttonPanel.add(startGame);
         buttonPanel.add(charLore);
         bottomPanel.add(buttonPanel);
@@ -205,73 +198,6 @@ public class CharacterSelectionScreen extends JFrame {
         setVisible(true);
     }
 
-    private JPanel createBoardSizePanel() {
-        JPanel boardSizePanel = new JPanel();
-        boardSizePanel.setLayout(new BoxLayout(boardSizePanel, BoxLayout.Y_AXIS));
-        boardSizePanel.setBorder(BorderFactory.createTitledBorder("Board Size"));
-
-        JLabel instructionLabel = new JLabel("Select board size:");
-        instructionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boardSizePanel.add(instructionLabel);
-        boardSizePanel.add(Box.createVerticalStrut(10));
-
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-
-        smallButton = new JButton(boardSizeViewModel.getSmallButtonText());
-        mediumButton = new JButton(boardSizeViewModel.getMediumButtonText());
-        largeButton = new JButton(boardSizeViewModel.getLargeButtonText());
-
-        // Set initial selection (medium is default)
-        updateButtonSelection(BoardSize.MEDIUM);
-
-        smallButton.addActionListener(e -> {
-            boardSizeController.selectBoardSize(BoardSize.SMALL);
-            updateButtonSelection(BoardSize.SMALL);
-        });
-
-        mediumButton.addActionListener(e -> {
-            boardSizeController.selectBoardSize(BoardSize.MEDIUM);
-            updateButtonSelection(BoardSize.MEDIUM);
-        });
-
-        largeButton.addActionListener(e -> {
-            boardSizeController.selectBoardSize(BoardSize.LARGE);
-            updateButtonSelection(BoardSize.LARGE);
-        });
-
-        buttonPanel.add(smallButton);
-        buttonPanel.add(mediumButton);
-        buttonPanel.add(largeButton);
-
-        boardSizePanel.add(buttonPanel);
-        return boardSizePanel;
-    }
-
-    private void updateButtonSelection(BoardSize selectedSize) {
-        // Reset all buttons
-        smallButton.setBackground(null);
-        mediumButton.setBackground(null);
-        largeButton.setBackground(null);
-
-        // Highlight selected button
-        Color selectedColor = new Color(173, 216, 230); // Light blue
-        switch (selectedSize) {
-            case SMALL:
-                smallButton.setBackground(selectedColor);
-                break;
-            case MEDIUM:
-                mediumButton.setBackground(selectedColor);
-                break;
-            case LARGE:
-                largeButton.setBackground(selectedColor);
-                break;
-        }
-
-        // Make buttons opaque so background color shows
-        smallButton.setOpaque(true);
-        mediumButton.setOpaque(true);
-        largeButton.setOpaque(true);
-    }
 
     private void updatePlayerSelection(int index, JTextField nameField, JComboBox<String> dropdown, JLabel portraitLabel) {
         String name = nameField.getText();

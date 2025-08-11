@@ -4,7 +4,7 @@ import main.entity.Game;
 import main.infrastructure.FallbackPropertyDataSource;
 import main.infrastructure.JsonPropertyDataSource;
 import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.use_case.BoardSizeSelection.BoardSizeSelection.BoardSize;
+import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
 import main.use_case.game.GameInitializeTiles;
 import main.use_case.game.GameInitializeStocks;
 import main.use_case.game.PropertyDataSource;
@@ -37,7 +37,6 @@ public class GameCreationController {
         Game game = new Game();
         game.setPlayersFromOutputData(players);
 
-        // Initialize tiles with proper error handling
         List<main.entity.tiles.Tile> tiles;
         try {
             tiles = switch (boardSize) {
