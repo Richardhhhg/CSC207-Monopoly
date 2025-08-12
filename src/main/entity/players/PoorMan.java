@@ -1,6 +1,6 @@
 package main.entity.players;
 
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 
 import java.awt.*;
 
