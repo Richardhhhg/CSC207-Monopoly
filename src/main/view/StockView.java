@@ -1,15 +1,26 @@
 package main.view;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import main.constants.Constants;
-import main.interface_adapter.StockMarket.*;
-import main.use_case.Stocks.BuyStockInteractor;
-import main.use_case.Stocks.SellStockInteractor;
-import main.use_case.Stocks.StockOutputBoundary;
+import main.interface_adapter.stock_market.StockBuyController;
+import main.interface_adapter.stock_market.StockPlayerViewModel;
+import main.interface_adapter.stock_market.StockPresenter;
+import main.interface_adapter.stock_market.StockSellController;
+import main.interface_adapter.stock_market.StockState;
+import main.use_case.stocks.BuyStockInteractor;
+import main.use_case.stocks.SellStockInteractor;
+import main.use_case.stocks.StockOutputBoundary;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class StockView extends JPanel{
+public class StockView extends JPanel {
     private final JTextField quantityInput;
     private final JLabel quantityOwnedLabel;
 
@@ -23,26 +34,27 @@ public class StockView extends JPanel{
         this.stockPlayerViewModel = stockPlayerViewModel;
         this.stockState = stockPlayerViewModel.getState().getStockState();
 
-        StockOutputBoundary stockPresenter = new StockPresenter(stockPlayerViewModel);
+        final StockOutputBoundary stockPresenter = new StockPresenter(stockPlayerViewModel);
         this.stockBuyController = new StockBuyController(new BuyStockInteractor(stockPresenter));
         this.stockSellController = new StockSellController(new SellStockInteractor(stockPresenter));
 
         setPreferredSize(new Dimension(Constants.STOCK_WIDTH, Constants.STOCK_HEIGHT));
-        setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS, Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
+        setLayout(new GridLayout(Constants.STOCK_VIEW_ROWS, Constants.STOCK_VIEW_COLUMNS,
+                Constants.STOCK_VIEW_PADDING_H, Constants.STOCK_VIEW_PADDING_V));
         setBorder(BorderFactory.createLineBorder(Color.black));
 
-        JLabel tickerLabel = new JLabel(stockState.getTicker());
-        JLabel priceLabel = new JLabel("$" + String.format("%.2f", stockState.getPrice()));
-        JLabel percentChangeLabel = new JLabel(String.format("%.2f", stockState.getChange()) + "%");
+        final JLabel tickerLabel = new JLabel(stockState.getTicker());
+        final JLabel priceLabel = new JLabel("$" + String.format("%.2f", stockState.getPrice()));
+        final JLabel percentChangeLabel = new JLabel(String.format("%.2f", stockState.getChange()) + "%");
         this.quantityOwnedLabel = new JLabel(String.valueOf(stockPlayerViewModel.getState().getQuantity()));
 
-        this.quantityInput = new JTextField(5);
-        JButton buyButton = new JButton("Buy");
+        this.quantityInput = new JTextField(Constants.STOCK_QUANTITY_WIDTH);
+        final JButton buyButton = new JButton("Buy");
         if (!stockState.isAllowBuy()) {
             buyButton.setEnabled(false);
         }
 
-        JButton sellButton = new JButton("Sell");
+        final JButton sellButton = new JButton("Sell");
 
         add(tickerLabel);
         add(priceLabel);
@@ -52,8 +64,8 @@ public class StockView extends JPanel{
         add(sellButton);
         add(quantityInput);
 
-        buyButton.addActionListener(e -> buyStock());
-        sellButton.addActionListener(e -> sellStock());
+        buyButton.addActionListener(event -> buyStock());
+        sellButton.addActionListener(event -> sellStock());
     }
 
     private void refreshView() {
@@ -63,11 +75,15 @@ public class StockView extends JPanel{
         repaint();
     }
 
-    private void buyStock() {
-        String quantityText = quantityInput.getText();
+    /**
+     * Buys stock based on user input from the quantityInput JTextField.
+     *
+     * @throws NumberFormatException when quantityInput is empty or not a valid integer.
+     */
+    private void buyStock() throws NumberFormatException {
+        final String quantityText = quantityInput.getText();
         if (quantityText.isEmpty() || !quantityText.matches("\\d+")) {
-            System.out.println("Invalid Input: Please enter a valid quantity.");
-            return;
+            throw new NumberFormatException("Invalid Input: Please enter a valid quantity.");
         }
         stockBuyController.execute(
                 stockPlayerViewModel.getState().getPlayer(),
@@ -78,11 +94,15 @@ public class StockView extends JPanel{
         refreshView();
     }
 
-    private void sellStock() {
-        String quantityText = quantityInput.getText();
+    /**
+     * Sells stock based on user input from the quantityInput JTextField.
+     *
+     * @throws NumberFormatException when quantityInput is empty or not a valid integer.
+     */
+    private void sellStock() throws NumberFormatException {
+        final String quantityText = quantityInput.getText();
         if (quantityText.isEmpty() || !quantityText.matches("\\d+")) {
-            System.out.println("Invalid Input: Please enter a valid quantity.");
-            return;
+            throw new NumberFormatException("Invalid Input: Please enter a valid quantity.");
         }
         stockSellController.execute(
                 stockPlayerViewModel.getState().getPlayer(),

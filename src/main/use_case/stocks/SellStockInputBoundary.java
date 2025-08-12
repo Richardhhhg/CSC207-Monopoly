@@ -1,4 +1,4 @@
-package main.use_case.Stocks;
+package main.use_case.stocks;
 
 public interface SellStockInputBoundary {
     /**
