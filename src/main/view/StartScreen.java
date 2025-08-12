@@ -11,8 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import main.Constants.Constants;
-import main.app.Main;
+import main.constants.Constants;
 import main.interface_adapter.start_screen.StartScreenController;
 import main.interface_adapter.start_screen.StartScreenPresenter;
 import main.interface_adapter.start_screen.StartScreenViewModel;

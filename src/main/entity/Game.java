@@ -1,23 +1,18 @@
 package main.entity;
 
-import main.entity.Stocks.Stock;
-import main.entity.players.CharacterFactory;
-import main.entity.tiles.PropertyTile;
-import main.interface_adapter.CharacterSelectionScreen.PlayerOutputData;
-import main.use_case.Game.GameInitializeStocks;
-import main.use_case.Game.GameInitializeTiles;
-import main.entity.players.Player;
-import main.entity.tiles.Tile;
+import static main.constants.Constants.MAX_ROUNDS;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 
-import static main.Constants.Constants.MAX_ROUNDS;
+import main.entity.stocks.Stock;
+import main.entity.players.CharacterFactory;
+import main.entity.players.Player;
+import main.entity.tiles.Tile;
+import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
-/**
- * GameBoard manages the game state and logic, separate from UI concerns.
- */
+
 public class Game {
     private List<Tile> tiles;
     private List<Player> players;
@@ -31,27 +26,11 @@ public class Game {
     private boolean gameEnded = false;
     private String gameEndReason = "";
 
-    public Game() {
-        //initializeGame();
-    }
-
-    /**
-     * Initializes Properties and Players
-     */
-    public void initializeGame() {
-        new GameInitializeTiles(this).execute();
-        //new GameInitializePlayers(this).execute();
-        new GameInitializeStocks(this).execute();
-        //this.setPlayers(players);
-    }
-
     public boolean isGameOver() {
         return gameEnded;
     }
 
-    public String getGameEndReason() {
-        return gameEndReason;
-    }
+    public String getGameEndReason() { return gameEndReason; }
 
     /**
      * Get the current round number (1-based)
@@ -242,11 +221,15 @@ public class Game {
         }
     }
 
-    public void setPlayersFromOutputData(List<PlayerOutputData> players) {
+    public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> players) {
         List<Player> result = new ArrayList<>();
-        for (PlayerOutputData data : players) {
+        for (CharacterSelectionPlayerViewModel data : players) {
             if (data != null && !"None".equals(data.getType())) {
-                Player player = CharacterFactory.createPlayer(data.getName(), data.getType(), data.getColor());
+                Player player = CharacterFactory.createPlayer(
+                        data.getName(),
+                        data.getType(),
+                        data.getColor()
+                );
                 result.add(player);
             }
         }

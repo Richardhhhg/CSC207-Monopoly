@@ -1,15 +1,15 @@
 package main.view;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.app.GameHolder;
 import main.entity.Game;
 import main.entity.players.Player;
-import main.interface_adapter.PlayerStats.PlayerStatsController;
-import main.interface_adapter.PlayerStats.PlayerStatsPresenter;
-import main.interface_adapter.PlayerStats.PlayerStatsViewModel;
-import main.use_case.Game.GameMoveCurrentPlayer;
-import main.use_case.Game.GameNextTurn;
-import main.use_case.PlayerStats.PlayerStatsInteractor;
+import main.interface_adapter.playerStats.PlayerStatsController;
+import main.interface_adapter.playerStats.PlayerStatsPresenter;
+import main.interface_adapter.playerStats.PlayerStatsViewModel;
+import main.use_case.game.GameMoveCurrentPlayer;
+import main.use_case.game.GameNextTurn;
+import main.use_case.playerStats.PlayerStatsInteractor;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ public class GameView extends JFrame{
     private PlayerStatsView statsPanel;
 
     private BoardView boardView;
+    private ButtonPanelView buttonPanelView;
     private int tileSize;
 
     // TODO: There is a ton of coupling here, fix it
@@ -91,7 +92,7 @@ public class GameView extends JFrame{
     }
 
     private void drawButtonPanel() {
-        ButtonPanelView buttonPanelView = new ButtonPanelView(game,
+        buttonPanelView = new ButtonPanelView(game,
                 () -> {
                     handleRollDice();
                     repaint();
@@ -189,7 +190,7 @@ public class GameView extends JFrame{
     }
 
     private void handleRollDice() {
-        ButtonPanelView.getRollDiceButton().setEnabled(false);
+        this.buttonPanelView.getRollDiceButton().setEnabled(false);
 
         diceAnimator.startDiceAnimation(
                 this::drawDice,
@@ -239,14 +240,14 @@ public class GameView extends JFrame{
             return;
         }
 
-        ButtonPanelView.updateStatus(
+        this.buttonPanelView.updateStatus(
                 game.getCurrentRound(),
                 game.getCurrentPlayer().getName()
         );
         refreshStats();
         drawPlayerPortrait();
 
-        ButtonPanelView.getRollDiceButton().setEnabled(true);
+        this.buttonPanelView.getRollDiceButton().setEnabled(true);
         resetBoardView();
         drawPlayers();
         repaint();

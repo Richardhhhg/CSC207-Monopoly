@@ -1,6 +1,6 @@
 package main.entity.players;
 
-import static main.Constants.Constants.NP_POR;
+import static main.constants.Constants.NP_POR;
 
 public class NullPlayer extends Player {
     public NullPlayer() {

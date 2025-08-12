@@ -1,6 +1,6 @@
 package main.entity.players;
 
-import java.awt.*; //fix
+import java.awt.Color;
 
 public class CharacterFactory {
 

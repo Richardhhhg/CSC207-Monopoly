@@ -6,12 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ButtonPanelView extends JPanel {
-    private static final JLabel roundLabel = new JLabel("Round: 1");
-    private static final JLabel turnLabel = new JLabel("Turn: Player 1");
+    private final JLabel roundLabel = new JLabel("Round: 1");
+    private final JLabel turnLabel = new JLabel("Turn: Player 1");
 
-    private static final JButton rollDiceButton = new JButton("Roll Dice");
-    private static final JButton endTurnButton = new JButton("End Turn");
-    private static final JButton stockMarketButton = new JButton("Stock Market");
+    private final JButton rollDiceButton = new JButton("Roll Dice");
+    private final JButton endTurnButton = new JButton("End Turn");
+    private final JButton stockMarketButton = new JButton("Stock Market");
 
     public ButtonPanelView(Game game, Runnable onRollDice, Runnable onEndTurn, Runnable onStockMarket) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -34,20 +34,20 @@ public class ButtonPanelView extends JPanel {
         stockMarketButton.addActionListener(e -> onStockMarket.run());
     }
 
-    public static void updateStatus(int round, String currentPlayerName) {
+    public void updateStatus(int round, String currentPlayerName) {
         roundLabel.setText("Round: " + round);
         turnLabel.setText("Turn: " + currentPlayerName);
     }
 
-    public static JButton getRollDiceButton() {
+    public JButton getRollDiceButton() {
         return rollDiceButton;
     }
 
-    public static JButton getEndTurnButton() {
+    public JButton getEndTurnButton() {
         return endTurnButton;
     }
 
-    public static JButton getStockMarketButton() {
+    public JButton getStockMarketButton() {
         return stockMarketButton;
     }
 }

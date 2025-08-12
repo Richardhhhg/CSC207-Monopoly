@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import main.Constants.Constants;
+import main.constants.Constants;
 import main.interface_adapter.dice.DiceController;
 import main.interface_adapter.dice.DicePresenter;
 import main.interface_adapter.dice.DiceViewModel;
@@ -45,7 +45,7 @@ public class DiceAnimator {
     }
 
     private void loadDiceIcons() {
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= SIDES; i++) {
             diceIcons[i] = new ImageIcon(getClass().getResource("/DicePicture/dice" + i + ".png"));
         }
     }
