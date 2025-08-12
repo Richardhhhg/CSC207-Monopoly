@@ -107,7 +107,7 @@ public class PlayerStatsInteractorTest {
     }
 
     /**
-     * Tiny PropertyTile subclass that only supplies a name.
+     * Tiny Fake PropertyTile subclass that only supplies a name.
      */
     private static class NamedPropertyTile extends PropertyTile {
         private final String name;

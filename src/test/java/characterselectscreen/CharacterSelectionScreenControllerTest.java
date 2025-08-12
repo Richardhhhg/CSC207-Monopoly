@@ -66,9 +66,6 @@ class CharacterSelectionScreenControllerTest {
         assertEquals(fromTraits, fromController, "Controller should return CharacterTraitsText content");
     }
 
-    /**
-     * Simple stub for the interactor to capture calls and control return values.
-     */
     private static class StubInteractor implements CharacterSelectionInputBoundary {
         CharacterSelectionInputData lastInputData;
         boolean executeCalled = false;

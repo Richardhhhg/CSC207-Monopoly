@@ -15,14 +15,14 @@ class PlayerStatsViewModelTest {
     @Test
     void testSetAndGetState() {
         PlayerStatsViewModel vm = new PlayerStatsViewModel();
-        DisplayPlayer player = new DisplayPlayer("Eve", 300f, false, null, null, Arrays.asList(new DisplayProperty("Foo")));
+        DisplayPlayer player = new DisplayPlayer("Fake1", 300f, false, null, null, Arrays.asList(new DisplayProperty("Foo2")));
         PlayerStatsState state = new PlayerStatsState(Arrays.asList(player));
 
         vm.setState(state);
         PlayerStatsState result = vm.getState();
 
         assertEquals(1, result.getPlayers().size());
-        assertEquals("Eve", result.getPlayers().get(0).getName());
-        assertEquals("Foo", result.getPlayers().get(0).getProperties().get(0).getPropertyName());
+        assertEquals("Fake1", result.getPlayers().get(0).getName());
+        assertEquals("Foo2", result.getPlayers().get(0).getProperties().get(0).getPropertyName());
     }
 }

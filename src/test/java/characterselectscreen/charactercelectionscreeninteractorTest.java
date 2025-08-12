@@ -111,7 +111,7 @@ public class charactercelectionscreeninteractorTest {
 
     @Test
     public void testCanStartGameTrueWhenEnoughPlayers() {
-        interactor.execute(new CharacterSelectionInputData(0, "Alice", "Clerk"));
+        interactor.execute(new CharacterSelectionInputData(0, "Alice", "College Student"));
         interactor.execute(new CharacterSelectionInputData(1, "Bob", "Landlord"));
         assertTrue(interactor.canStartGame());
     }

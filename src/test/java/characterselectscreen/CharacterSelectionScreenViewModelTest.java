@@ -13,7 +13,6 @@ class CharacterSelectionScreenViewModelTest {
     @Test
     void testSetAndGetPlayerData() {
         CharacterSelectionScreenViewModel vm = new CharacterSelectionScreenViewModel();
-        // Use the use case version for input
         main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel player =
                 new main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel("Alice", "Landlord", Color.RED, null);
 
@@ -55,7 +54,7 @@ class CharacterSelectionScreenViewModelTest {
         vm.setPlayerData(2, player);
 
         main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel copy = vm.getPlayervm(2);
-        assertNotSame(player, copy); // should be a new object (adapter type)
+        assertNotSame(player, copy);
         assertEquals("Carol", copy.getName());
         assertEquals("Merchant", copy.getType());
         assertEquals(Color.GREEN, copy.getColor());
