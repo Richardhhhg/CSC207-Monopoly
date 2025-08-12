@@ -1,4 +1,4 @@
-package main.interface_adapter.StockMarket;
+package main.interface_adapter.stock_market;
 
 /**
  * Viewmodel for Individual Stock held by a player.

@@ -30,10 +30,17 @@ public class Constants {
     public static final int BOARD_PANEL_HEIGHT = 900;
 
     // Stock Market and Stock Related
+    // Stock Gameplay
+    public static final double DEFAULT_STOCK_PRICE = 100.0;
+    public static final double DEFAULT_MEAN_RETURN = 10.0;
+    public static final double DEFAULT_STD_DEV = 30.0;
+
+    // View Related
     public static final String STOCK_NAME_FILE = "src/main/Resources/StockData/stock_names.json";
     public static final int STOCK_MARKET_WIDTH = 800;
     public static final int STOCK_MARKET_HEIGHT = 400;
     public static final int STOCK_MKT_PADDING = 10;
+    public static final int STOCK_MKT_COLUMNS = 7;
 
     public static final int STOCK_WIDTH = 1600;
     public static final int STOCK_HEIGHT = 200;
@@ -41,6 +48,7 @@ public class Constants {
     public static final int STOCK_VIEW_COLUMNS = 5;
     public static final int STOCK_VIEW_PADDING_H = 5;
     public static final int STOCK_VIEW_PADDING_V = 5;
+    public static final int STOCK_QUANTITY_WIDTH = 5;
 
     // API Constants
     public static final String STOCK_API_URL = "https://www.alphavantage.co/query";
