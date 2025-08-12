@@ -1,32 +1,32 @@
 package main.use_case.endScreen;
 
-import main.entity.players.Player;
-import main.entity.tiles.PropertyTile;
-import main.entity.Stocks.Stock;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import main.entity.Stocks.Stock;
+import main.entity.players.Player;
+import main.entity.tiles.PropertyTile;
+
 public class EndGame {
     public EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
-        List<PlayerResult> playerResults = new ArrayList<>();
+        final List<PlayerResult> playerResults = new ArrayList<>();
 
         // Sort players by total net worth (cash + properties + current stock values) for ranking
-        List<Player> sortedPlayers = new ArrayList<>(players);
+        final List<Player> sortedPlayers = new ArrayList<>(players);
         sortedPlayers.sort(Comparator.comparingDouble(this::calculateNetWorth).reversed());
 
         for (int i = 0; i < sortedPlayers.size(); i++) {
-            Player player = sortedPlayers.get(i);
-            float finalCash = player.getMoney(); // Just the liquid cash (no liquidation)
-            float totalPropertyValue = calculateTotalPropertyValue(player);
-            float stockValue = calculateTotalStockValue(player); // Current stock value
-            float netWorth = finalCash + totalPropertyValue + stockValue; // All three components
+            final Player player = sortedPlayers.get(i);
+            final float finalCash = player.getMoney();
+            final float totalPropertyValue = calculateTotalPropertyValue(player);
+            final float stockValue = calculateTotalStockValue(player);
+            final float netWorth = finalCash + totalPropertyValue + stockValue;
 
             playerResults.add(new PlayerResult(
                     player,
-                    i + 1, // rank
+                    i + 1,
                     finalCash,
                     totalPropertyValue,
                     stockValue,
@@ -34,7 +34,7 @@ public class EndGame {
             ));
         }
 
-        Player winner = determineWinner(players);
+        final Player winner = determineWinner(players);
 
         return new EndGameResult(
                 playerResults,
@@ -45,7 +45,7 @@ public class EndGame {
     }
 
     /**
-     * Calculate total net worth including cash, properties, and current stock values
+     * Calculate total net worth including cash, properties, and current stock values.
      */
     private double calculateNetWorth(Player player) {
         return player.getMoney() + calculateTotalPropertyValue(player) + calculateTotalStockValue(player);
@@ -60,16 +60,16 @@ public class EndGame {
     }
 
     /**
-     * Calculate total value of stocks owned by player
+     * Calculate total value of stocks owned by player.
      */
     private float calculateTotalStockValue(Player player) {
         float total = 0;
-        Map<Stock, Integer> stocks = player.getStocks();
+        final Map<Stock, Integer> stocks = player.getStocks();
 
         for (Map.Entry<Stock, Integer> entry : stocks.entrySet()) {
-            Stock stock = entry.getKey();
-            int quantity = entry.getValue();
-            total += (float)(stock.getCurrentPrice() * quantity);
+            final Stock stock = entry.getKey();
+            final int quantity = entry.getValue();
+            total += stock.getCurrentPrice() * quantity;
         }
 
         return total;
@@ -77,20 +77,21 @@ public class EndGame {
 
     private Player determineWinner(List<Player> players) {
         // Filter out bankrupt players
-        List<Player> solventPlayers = players.stream()
+        final List<Player> solventPlayers = players.stream()
                 .filter(p -> !p.isBankrupt())
                 .toList();
 
         if (solventPlayers.size() == 1) {
             return solventPlayers.get(0);
-        } else if (solventPlayers.size() > 1) {
+        }
+        else if (solventPlayers.size() > 1) {
             // Find player with highest net worth (cash + properties + stock values)
             return solventPlayers.stream()
                     .max(Comparator.comparingDouble(this::calculateNetWorth))
                     .orElse(null);
         }
 
-        return null; // No winner if all bankrupt
+        return null;
     }
 
     public static class EndGameResult {
@@ -107,10 +108,22 @@ public class EndGame {
             this.winner = winner;
         }
 
-        public List<PlayerResult> getPlayerResults() { return playerResults; }
-        public String getGameEndReason() { return gameEndReason; }
-        public int getTotalRounds() { return totalRounds; }
-        public Player getWinner() { return winner; }
+        public List<PlayerResult> getPlayerResults() {
+            return playerResults;
+        }
+
+        public String getGameEndReason() {
+            return gameEndReason;
+        }
+
+        public int getTotalRounds() {
+            return totalRounds;
+        }
+
+        public Player getWinner() {
+            return winner;
+        }
+
     }
 
     public static class PlayerResult {
@@ -131,11 +144,28 @@ public class EndGame {
             this.netWorth = netWorth;
         }
 
-        public Player getPlayer() { return player; }
-        public int getRank() { return rank; }
-        public float getFinalCash() { return finalCash; }
-        public float getTotalPropertyValue() { return totalPropertyValue; }
-        public float getTotalStockValue() { return totalStockValue; }
-        public float getNetWorth() { return netWorth; }
+        public Player getPlayer() {
+            return player;
+        }
+
+        public int getRank() {
+            return rank;
+        }
+
+        public float getFinalCash() {
+            return finalCash;
+        }
+
+        public float getTotalPropertyValue() {
+            return totalPropertyValue;
+        }
+
+        public float getTotalStockValue() {
+            return totalStockValue;
+        }
+
+        public float getNetWorth() {
+            return netWorth;
+        }
     }
 }
