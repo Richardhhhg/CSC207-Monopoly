@@ -1,5 +1,7 @@
 package main.constants;
 
+import java.awt.Color;
+
 /**
  * This class is a placeholder for constants used throughout the application.
  */
@@ -75,15 +77,15 @@ public class Constants {
 
     public static final int CLERK_ADD_MONEY = 50;
 
-    //Portrait Path
+    // Portrait Path
     public static final String CLERK_POR = "CharacterPortrait/clerk.jpg";
     public static final String CS_POR = "CharacterPortrait/Computer-nerd.jpg";
     public static final String LL_POR = "CharacterPortrait/landlord.png";
     public static final String INH_POR = "CharacterPortrait/inheritor.jpg";
     public static final String PP_POR = "CharacterPortrait/poorman.png";
-    public static final String NP_POR= "CharacterPortrait/default portrait.png";
+    public static final String NP_POR = "CharacterPortrait/default portrait.png";
 
-    //CHARSELSCR CONST
+    // CHARSELSCR CONST
     public static final int MAX_NP_BAR = 2;
 
     // UI Start-Screen dimensions
@@ -95,5 +97,48 @@ public class Constants {
     public static final int TITLE_FONT_SIZE = 30;
     public static final int START_BUTTON_FONT_SIZE = 20;
     public static final int RULES_BUTTON_FONT_SIZE = 16;
+    public static final String TWO_DECIMALS = "%.2f";
 
+    // End-screen constants
+    // Window sizes
+    public static final int END_SCREEN_WIDTH = 800;
+    public static final int END_SCREEN_HEIGHT = 600;
+
+    // Scroll area sizes
+    public static final int END_SCROLL_WIDTH = 750;
+    public static final int END_SCROLL_HEIGHT = 400;
+
+    // Common spacing/padding
+    public static final int PAD_LARGE = 20;
+    public static final int PAD_MEDIUM = 15;
+    public static final int GAP_SMALL = 5;
+    public static final int GAP_MEDIUM = 10;
+    public static final int GAP_LARGE = 15;
+
+    // Fonts
+    public static final int WINNER_FONT_SIZE = 24;
+    public static final int GAME_OVER_FONT_SIZE = 36;
+    public static final int REASON_FONT_SIZE = 18;
+    public static final int ROUNDS_FONT_SIZE = 16;
+    public static final int MONEY_LABEL_FONT_SIZE = 14;
+    public static final int STATUS_FONT_SIZE = 14;
+    public static final int NET_WORTH_FONT_SIZE = 16;
+    public static final int PROPERTY_LABEL_FONT_SIZE = 12;
+    public static final int RANK_FONT_SIZE = MONEY_LABEL_FONT_SIZE + 6;
+
+    // Colors
+    public static final Color BG_LIGHT = new Color(240, 240, 240);
+    public static final Color TITLE_BG = new Color(220, 220, 220);
+    public static final Color WINNER_GREEN = new Color(0, 150, 0);
+    public static final Color NET_GREEN = new Color(0, 120, 0);
+    public static final Color TITLE_RED = new Color(150, 0, 0);
+
+    // Component sizes
+    public static final int PORTRAIT_SIZE_PX = 80;
+    public static final int BORDER_THICKNESS = 3;
+    public static final int PROPERTIES_PANEL_WIDTH = 200;
+    public static final int PROPERTIES_PANEL_HEIGHT = 120;
+
+    // Strings
+    public static final String CURRENCY_PREFIX = "$";
 }
