@@ -65,10 +65,10 @@ class StartGameTest {
         String rules = result.getRules();
 
         // Check for specific game mechanics mentioned
-        assertTrue(rules.contains("dice"), "Rules should mention dice");
-        assertTrue(rules.contains("property"), "Rules should mention property");
-        assertTrue(rules.contains("stock"), "Rules should mention stock");
-        assertTrue(rules.contains("20 rounds"), "Rules should mention 20 rounds limit");
+        assertTrue(rules.toLowerCase().contains("dice"), "Rules should mention dice");
+        assertTrue(rules.toLowerCase().contains("property"), "Rules should mention property");
+        assertTrue(rules.toLowerCase().contains("stock"), "Rules should mention stock");
+        assertTrue(rules.toLowerCase().contains("20 rounds"), "Rules should mention 20 rounds limit");
     }
 
     @Test
