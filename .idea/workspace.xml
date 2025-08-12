@@ -5,25 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7b308d3-29c1-431e-9c6d-76e5d7a2b191" name="Changes" comment="Created Output Boundary Interfaces for Clean Architecture">
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/characterselectscreen/CharacterSelectionScreenControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/characterselectscreen/CharacterSelectionScreenPresenterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/characterselectscreen/CharacterSelectionScreenViewModelTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/characterselectscreen/charactercelectionscreeninteractorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/playerstatsview/PlayerStatsControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/playerstatsview/PlayerStatsInteractorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/playerstatsview/PlayerStatsPresenterTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/GameHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/GameHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/CharacterFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Clerk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/CharacterSelectionScreen/CharacterSelectionScreenAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/interface_adapter/PlayerStats/PlayerStatsPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionInputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenDataAccessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/CharacterSelectionScreen/CharacterSelectionScreenOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/use_case/PlayerStats/PlayerStatsOutputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly-java-csc207.iml" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly-java-csc207.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/entity/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/entity/players/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,22 +70,22 @@
     }
   ]
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Richardhhhg/CSC207-Monopoly.git",
-    "accountId": "5f9bc3f0-f956-404f-9b13-0cdd8d583502"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Richardhhhg/CSC207-Monopoly.git&quot;,
+    &quot;accountId&quot;: &quot;5f9bc3f0-f956-404f-9b13-0cdd8d583502&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Richardhhhg",
-    "repository": "CSC207-Monopoly"
+    &quot;owner&quot;: &quot;Richardhhhg&quot;,
+    &quot;repository&quot;: &quot;CSC207-Monopoly&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -112,13 +104,21 @@
     "Application.PlayerView.executor": "Run",
     "Application.PropertyTileView.executor": "Run",
     "Application.TileView.executor": "Run",
+    "JUnit.CharacterSelectionScreenControllerTest.executor": "Run",
+    "JUnit.CharacterSelectionScreenInteractorTest (1).executor": "Run",
+    "JUnit.CharacterSelectionScreenInteractorTest (2).executor": "Run",
     "JUnit.CharacterSelectionScreenInteractorTest.executor": "Run",
+    "JUnit.CharacterSelectionScreenPresenterTest.executor": "Run",
+    "JUnit.CharacterSelectionScreenViewModelTest.executor": "Run",
+    "JUnit.PlayerStatsControllerTest.executor": "Run",
+    "JUnit.PlayerStatsInteractorTest.executor": "Run",
+    "JUnit.charactercelectionscreeninteractorTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#103 on david-character-sele-screen",
+    "git-widget-placeholder": "chr-sel-tes",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -138,16 +138,76 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="CharacterSelectionScreenInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CharacterSelectionScreenControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="monopoly-java-csc207" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="use_case.CharacterSelectScreen.*" />
+          <option name="PATTERN" value="characterselectscreen.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="use_case.CharacterSelectScreen" />
-      <option name="MAIN_CLASS_NAME" value="use_case.CharacterSelectScreen.CharacterSelectionScreenInteractorTest" />
+      <option name="PACKAGE_NAME" value="characterselectscreen" />
+      <option name="MAIN_CLASS_NAME" value="characterselectscreen.CharacterSelectionScreenControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharacterSelectionScreenInteractorTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="characterselectscreen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="characterselectscreen" />
+      <option name="MAIN_CLASS_NAME" value="characterselectscreen.CharacterSelectionScreenInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CharacterSelectionScreenInteractorTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="playerstatsview.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="playerstatsview" />
+      <option name="MAIN_CLASS_NAME" value="playerstatsview.CharacterSelectionScreenInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlayerStatsInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="playerstatsview.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="playerstatsview" />
+      <option name="MAIN_CLASS_NAME" value="playerstatsview.PlayerStatsInteractorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="charactercelectionscreeninteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="monopoly-java-csc207" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="characterselectscreen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="characterselectscreen" />
+      <option name="MAIN_CLASS_NAME" value="characterselectscreen.charactercelectionscreeninteractorTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -155,7 +215,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CharacterSelectionScreenInteractorTest" />
+        <item itemvalue="JUnit.PlayerStatsInteractorTest" />
+        <item itemvalue="JUnit.charactercelectionscreeninteractorTest" />
+        <item itemvalue="JUnit.CharacterSelectionScreenInteractorTest (2)" />
+        <item itemvalue="JUnit.CharacterSelectionScreenControllerTest" />
+        <item itemvalue="JUnit.CharacterSelectionScreenInteractorTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -183,6 +247,7 @@
       <workItem from="1753794843328" duration="11801000" />
       <workItem from="1753833950328" duration="1245000" />
       <workItem from="1754592541463" duration="4596000" />
+      <workItem from="1755024235311" duration="9611000" />
     </task>
     <task id="LOCAL-00001" summary="added &quot;teleportation movement of players&quot;">
       <option name="closed" value="true" />

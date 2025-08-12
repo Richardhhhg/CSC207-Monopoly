@@ -1,6 +1,3 @@
-/*
-TODO: IMPLEMENT THIS.
- */
 package main.entity.players;
 import main.entity.Stocks.Stock;
 import main.entity.tiles.PropertyTile;
