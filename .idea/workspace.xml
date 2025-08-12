@@ -35,32 +35,32 @@
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;history&quot;: [
+    &quot;history&quot;: [
     {
-      &quot;state&quot;: &quot;OPEN&quot;
-    }
-  ],
-  &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
+    }
+    ],
+    &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+    }
+    }</component>
   <component name="GitHubPullRequestState">{
-  &quot;prStates&quot;: [
+    &quot;prStates&quot;: [
     {
-      &quot;id&quot;: {
-        &quot;id&quot;: &quot;PR_kwDOPKf49c6gYayq&quot;,
-        &quot;number&quot;: 47
-      },
-      &quot;lastSeen&quot;: 1753393943033
+    &quot;id&quot;: {
+    &quot;id&quot;: &quot;PR_kwDOPKf49c6gYayq&quot;,
+    &quot;number&quot;: 47
+    },
+    &quot;lastSeen&quot;: 1753393943033
     },
     {
-      &quot;id&quot;: {
-        &quot;id&quot;: &quot;PR_kwDOPKf49c6hcvxy&quot;,
-        &quot;number&quot;: 82
-      },
-      &quot;lastSeen&quot;: 1753933397482
+    &quot;id&quot;: {
+    &quot;id&quot;: &quot;PR_kwDOPKf49c6hcvxy&quot;,
+    &quot;number&quot;: 82
+    },
+    &quot;lastSeen&quot;: 1753933397482
     }
-  ]
+
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
@@ -79,8 +79,8 @@
   }
 }</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
+    &quot;associatedIndex&quot;: 8
+    }</component>
   <component name="ProjectId" id="2zvk6xs047kCmYL5eIsVaUDv5l8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
