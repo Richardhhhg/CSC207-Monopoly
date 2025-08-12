@@ -124,12 +124,14 @@ public class Constants {
     public static final int STATUS_FONT_SIZE = 14;
     public static final int NET_WORTH_FONT_SIZE = 16;
     public static final int PROPERTY_LABEL_FONT_SIZE = 12;
+    public static final int RANK_FONT_SIZE = MONEY_LABEL_FONT_SIZE + 6;
 
     // Colors
     public static final Color BG_LIGHT = new Color(240, 240, 240);
     public static final Color TITLE_BG = new Color(220, 220, 220);
     public static final Color WINNER_GREEN = new Color(0, 150, 0);
     public static final Color NET_GREEN = new Color(0, 120, 0);
+    public static final Color TITLE_RED = new Color(150, 0, 0);
 
     // Component sizes
     public static final int PORTRAIT_SIZE_PX = 80;
