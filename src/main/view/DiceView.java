@@ -44,7 +44,7 @@ public class DiceView extends JComponent {
         // Draw the sum text
         final String sumText = "Sum: " + diceAnimator.getLastDiceSum();
         final Font oldFont = g2d.getFont();
-        g2d.setFont(new Font("Arial", Font.BOLD, textSize));
+        g2d.setFont(new Font("Arial", Font.BOLD, 6));
         final FontMetrics fm = g2d.getFontMetrics();
         final int textX = (getWidth() - fm.stringWidth(sumText)) / 2;
         final int textY = tileSize + fm.getAscent() + 5;
