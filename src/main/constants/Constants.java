@@ -75,15 +75,15 @@ public class Constants {
 
     public static final int CLERK_ADD_MONEY = 50;
 
-    //Portrait Path
+    // Portrait Path
     public static final String CLERK_POR = "CharacterPortrait/clerk.jpg";
     public static final String CS_POR = "CharacterPortrait/Computer-nerd.jpg";
     public static final String LL_POR = "CharacterPortrait/landlord.png";
     public static final String INH_POR = "CharacterPortrait/inheritor.jpg";
     public static final String PP_POR = "CharacterPortrait/poorman.png";
-    public static final String NP_POR= "CharacterPortrait/default portrait.png";
+    public static final String NP_POR = "CharacterPortrait/default portrait.png";
 
-    //CHARSELSCR CONST
+    // CHARSELSCR CONST
     public static final int MAX_NP_BAR = 2;
 
     // UI Start-Screen dimensions
