@@ -95,5 +95,6 @@ public class Constants {
     public static final int TITLE_FONT_SIZE = 30;
     public static final int START_BUTTON_FONT_SIZE = 20;
     public static final int RULES_BUTTON_FONT_SIZE = 16;
+    public static final String TWO_DECIMALS = "%.2f";
 
 }
