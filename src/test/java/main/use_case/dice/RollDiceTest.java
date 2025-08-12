@@ -12,6 +12,7 @@ class RollDiceTest {
         rollDice = new RollDice();
     }
 
+    // Tests for RollDice class
     @Test
     void testExecuteReturnsDiceResult() {
         RollDice.DiceResult result = rollDice.execute();
@@ -23,43 +24,60 @@ class RollDiceTest {
         RollDice.DiceResult result = rollDice.execute();
 
         assertTrue(result.getDice1() >= 1 && result.getDice1() <= 6,
-                "Dice 1 should be between 1 and 6, got: " + result.getDice1());
+                "Dice 1 should be between 1 and 6");
         assertTrue(result.getDice2() >= 1 && result.getDice2() <= 6,
-                "Dice 2 should be between 1 and 6, got: " + result.getDice2());
+                "Dice 2 should be between 1 and 6");
     }
 
     @Test
     void testSumIsCorrect() {
         RollDice.DiceResult result = rollDice.execute();
-        int expectedSum = result.getDice1() + result.getDice2();
-        assertEquals(expectedSum, result.getSum(),
+        assertEquals(result.getDice1() + result.getDice2(), result.getSum(),
                 "Sum should equal dice1 + dice2");
     }
 
     @Test
-    void testSumIsWithinValidRange() {
-        RollDice.DiceResult result = rollDice.execute();
-        assertTrue(result.getSum() >= 2 && result.getSum() <= 12,
-                "Sum should be between 2 and 12, got: " + result.getSum());
-    }
-
-    @Test
-    void testMultipleRolls() {
-        // Test multiple rolls to ensure randomness works
+    void testMultipleRollsProduceDifferentResults() {
         boolean foundDifferentResults = false;
         RollDice.DiceResult firstResult = rollDice.execute();
 
-        // Try up to 20 rolls to find a different result
         for (int i = 0; i < 20; i++) {
             RollDice.DiceResult currentResult = rollDice.execute();
-            if (currentResult.getDice1() != firstResult.getDice1() ||
-                    currentResult.getDice2() != firstResult.getDice2()) {
+            if (currentResult.getSum() != firstResult.getSum()) {
                 foundDifferentResults = true;
                 break;
             }
         }
 
         assertTrue(foundDifferentResults,
-                "Should get different results across multiple rolls (randomness check)");
+                "Multiple rolls should produce different results (randomness check)");
+    }
+
+    // Tests for DiceResult inner class
+    @Test
+    void testDiceResultCreation() {
+        RollDice.DiceResult result = new RollDice.DiceResult(3, 5, 8);
+
+        assertEquals(3, result.getDice1(), "Dice1 should be 3");
+        assertEquals(5, result.getDice2(), "Dice2 should be 5");
+        assertEquals(8, result.getSum(), "Sum should be 8");
+    }
+
+    @Test
+    void testDiceResultWithMinValues() {
+        RollDice.DiceResult result = new RollDice.DiceResult(1, 1, 2);
+
+        assertEquals(1, result.getDice1());
+        assertEquals(1, result.getDice2());
+        assertEquals(2, result.getSum());
+    }
+
+    @Test
+    void testDiceResultWithMaxValues() {
+        RollDice.DiceResult result = new RollDice.DiceResult(6, 6, 12);
+
+        assertEquals(6, result.getDice1());
+        assertEquals(6, result.getDice2());
+        assertEquals(12, result.getSum());
     }
 }
