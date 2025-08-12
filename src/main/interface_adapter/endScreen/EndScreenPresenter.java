@@ -53,7 +53,6 @@ public class EndScreenPresenter {
      */
     private EndScreenViewModel.PlayerDisplayData toDisplayData(EndGame.PlayerResult playerResult) {
         final String finalCash = String.format(FORMAT_TWO_DECIMALS, playerResult.getFinalCash());
-        final String propertiesCount = String.valueOf(playerResult.getPlayer().getProperties().size());
         final String totalPropertyValue = String.format(FORMAT_TWO_DECIMALS, playerResult.getTotalPropertyValue());
         final String totalStockValue = String.format(FORMAT_TWO_DECIMALS, playerResult.getTotalStockValue());
         final String netWorth = String.format(FORMAT_TWO_DECIMALS, playerResult.getNetWorth());
@@ -70,7 +69,7 @@ public class EndScreenPresenter {
                 playerResult.getPlayer(),
                 playerResult.getRank(),
                 finalCash,
-                propertiesCount,
+                // propertiesCount,
                 totalPropertyValue,
                 totalStockValue,
                 netWorth,

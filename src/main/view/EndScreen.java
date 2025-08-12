@@ -156,10 +156,6 @@ public class EndScreen extends JFrame {
         moneyLabel.setToolTipText("Liquid cash (same as shown during game)");
         statsPanel.add(moneyLabel);
 
-        // Properties count
-        statsPanel.add(new JLabel(" Properties Owned:"));
-        statsPanel.add(new JLabel(playerData.getPropertiesCountText()));
-
         // Property value
         statsPanel.add(new JLabel(" Property Value:"));
         statsPanel.add(new JLabel("$" + playerData.getPropertyValueText()));
