@@ -1,20 +1,30 @@
 package main.interface_adapter.dice;
 
-import main.use_case.dice.RollDice;
+import java.util.function.Consumer;
 
-public class DicePresenter {
+import main.use_case.dice.DiceOutputBoundary;
+import main.use_case.dice.DiceOutputData;
 
-    /**
-     * Transforms the given dice roll result into a view model.
-     *
-     * @param diceResult the result of a dice roll, must not be null
-     * @return a {@link DiceViewModel} populated with the two dice values and their sum
-     */
-    public DiceViewModel execute(RollDice.DiceResult diceResult) {
-        return new DiceViewModel(
-                diceResult.getDice1(),
-                diceResult.getDice2(),
-                diceResult.getSum()
+/**
+ * Presenter transforms use-case output into a DiceViewModel
+ * and pushes it to the UI layer via a callback.
+ */
+public class DicePresenter implements DiceOutputBoundary {
+
+    private final Consumer<DiceViewModel> viewCallback;
+
+    public DicePresenter(Consumer<DiceViewModel> viewCallback) {
+        this.viewCallback = viewCallback;
+    }
+
+    @Override
+    public void presentDiceResult(DiceOutputData outputData) {
+        final DiceViewModel viewModel = new DiceViewModel(
+                outputData.getDice1(),
+                outputData.getDice2(),
+                outputData.getSum()
         );
+        // Send the prepared view model to whoever is listening (e.g., DiceAnimator)
+        viewCallback.accept(viewModel);
     }
 }
