@@ -13,6 +13,11 @@ public class BoardSizeController {
         this.boardSizeInputBoundary = boardSizeInputBoundary;
     }
 
+    /**
+     * Select the board size.
+     *
+     * @param size the selected board size
+     */
     public void selectBoardSize(BoardSize size) {
         boardSizeInputBoundary.selectBoardSize(size);
     }
