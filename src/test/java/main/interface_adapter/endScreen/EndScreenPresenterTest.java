@@ -4,7 +4,7 @@ import main.entity.players.Player;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.tiles.PropertyTile;
-import main.entity.Stocks.Stock;
+import main.entity.stocks.Stock;
 import main.use_case.endScreen.EndGame;
 import org.junit.Before;
 import org.junit.Test;
