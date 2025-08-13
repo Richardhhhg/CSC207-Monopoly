@@ -10,6 +10,7 @@ import main.interface_adapter.playerStats.PlayerStatsViewModel;
 import main.use_case.game.GameMoveCurrentPlayer;
 import main.use_case.game.GameNextTurn;
 import main.use_case.playerStats.PlayerStatsInteractor;
+import main.view.stock.StockMarketView;
 
 import java.util.List;
 

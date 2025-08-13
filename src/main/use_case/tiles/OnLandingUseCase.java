@@ -6,7 +6,7 @@ import main.entity.tiles.StockMarketTile;
 import main.entity.tiles.Tile;
 import main.use_case.tiles.property.PropertyPurchaseUseCase;
 import main.use_case.tiles.property.RentPaymentUseCase;
-import main.view.StockMarketView;
+import main.view.stock.StockMarketView;
 
 public class OnLandingUseCase {
     private final PropertyPurchaseUseCase propertyPurchaseUseCase;
