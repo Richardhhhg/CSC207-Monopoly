@@ -1,7 +1,7 @@
-package main.use_case.stocks;
+package main.use_case.Stocks;
 
 import main.entity.players.Player;
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 
 public class BuyStockInteractor implements BuyStockInputBoundary {
     private final StockOutputBoundary stockPresenter;
@@ -10,16 +10,10 @@ public class BuyStockInteractor implements BuyStockInputBoundary {
         this.stockPresenter = stockPresenter;
     }
 
-    /**
-     * Executes the stock buying use case.
-     *
-     * @param inputData The data required to perform the stock purchase.
-     * @throws IllegalArgumentException if quantity is invalid or if the player has insufficient funds.
-     */
     public void execute(BuyStockInputData inputData) throws IllegalArgumentException {
-        final int quantity = inputData.getQuantity();
-        final Player player = inputData.getPlayer();
-        final Stock stock = inputData.getStock();
+        int quantity = inputData.getQuantity();
+        Player player = inputData.getPlayer();
+        Stock stock = inputData.getStock();
 
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
@@ -29,7 +23,7 @@ public class BuyStockInteractor implements BuyStockInputBoundary {
         }
 
         player.buyStock(stock, quantity);
-        final AbstractStockOutputData outputData = new BuyAbstractStockOutputData(player, stock, true);
+        StockOutputData outputData = new BuyStockOutputData(player, stock, true);
         stockPresenter.execute(outputData);
     }
 }

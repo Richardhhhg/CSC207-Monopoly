@@ -1,4 +1,4 @@
-package main.interface_adapter.stock_market;
+package main.interface_adapter.StockMarket;
 
 import main.interface_adapter.ViewModel;
 

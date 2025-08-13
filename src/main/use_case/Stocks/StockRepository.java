@@ -1,8 +1,8 @@
-package main.use_case.stocks;
+package main.use_case.Stocks;
+
+import main.data_access.StockMarket.StockInfoDataOutputObject;
 
 import java.io.IOException;
-
-import main.data_access.stock_market.StockInfoDataOutputObject;
 
 public interface StockRepository {
     /**
