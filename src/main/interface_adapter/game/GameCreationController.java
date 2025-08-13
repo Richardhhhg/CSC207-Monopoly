@@ -26,7 +26,7 @@ public class GameCreationController {
             // Test if it works by calling getPropertyData
             dataSource.getPropertyData();
         }
-        catch (RuntimeException exception) {
+        catch (IllegalArgumentException | IllegalStateException exception) {
             System.out.println("JSON data source failed, using fallback: " + exception.getMessage());
             dataSource = new FallbackPropertyDataSource();
         }

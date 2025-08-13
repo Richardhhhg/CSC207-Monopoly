@@ -11,14 +11,11 @@ import main.use_case.game.PropertyDataSource;
 
 /**
  * Infrastructure implementation for reading property data from JSON files.
- * Assumes well-formed JSON - throws exceptions for any parsing issues.
+ * Assumes well-formed JSON with known structure.
  */
 public class JsonPropertyDataSource implements PropertyDataSource {
-    private final String resourcePath;
-
-    public JsonPropertyDataSource() {
-        this.resourcePath = "/properties.json";
-    }
+    private static final String RESOURCE_PATH = "/Board/properties.json";
+    private static final String QUOTE = "\"";
 
     @Override
     public List<PropertyInfo> getPropertyData() {
@@ -32,9 +29,9 @@ public class JsonPropertyDataSource implements PropertyDataSource {
     }
 
     private String readJsonFile() throws IOException {
-        final InputStream inputStream = getClass().getResourceAsStream(resourcePath);
+        final InputStream inputStream = getClass().getResourceAsStream(RESOURCE_PATH);
         if (inputStream == null) {
-            throw new IOException("JSON resource not found: " + resourcePath);
+            throw new IOException("JSON resource not found: " + RESOURCE_PATH);
         }
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -50,25 +47,42 @@ public class JsonPropertyDataSource implements PropertyDataSource {
     private List<PropertyInfo> parsePropertiesFromJson(String jsonContent) {
         final List<PropertyInfo> propertyData = new ArrayList<>();
 
-        // Simple string-based parsing for well-formed JSON
-        final String[] propertyBlocks = jsonContent.split("\\{");
+        // Find start and end of properties array
+        final int arrayStart = jsonContent.indexOf("\"properties\": [") + 15;
+        final int arrayEnd = jsonContent.lastIndexOf("]");
+        final String propertiesContent = jsonContent.substring(arrayStart, arrayEnd);
 
-        for (String block : propertyBlocks) {
-            if (block.contains("name") && block.contains("basePrice")) {
-                final String name = extractValue(block, "name");
-                final String priceStr = extractValue(block, "basePrice");
-                final int price = Integer.parseInt(priceStr);
-                propertyData.add(new PropertyInfo(name, price));
-            }
+        // Split by property objects
+        final String[] propertyBlocks = propertiesContent.split("},\\s*\\{");
+
+        for (int i = 0; i < propertyBlocks.length; i++) {
+            String block = propertyBlocks[i].trim();
+
+            // Clean up braces
+            block = block.replaceAll("^\\{|}$", "");
+
+            final String name = extractStringValue(block);
+            final int price = extractIntValue(block);
+            propertyData.add(new PropertyInfo(name, price));
         }
 
         return propertyData;
     }
 
-    private String extractValue(String block, String key) {
-        final String searchPattern = "\"" + key + "\":\"";
-        final int start = block.indexOf(searchPattern) + searchPattern.length();
-        final int end = block.indexOf("\"", start);
+    private String extractStringValue(String block) {
+        final String pattern = QUOTE + "name" + "\": " + QUOTE;
+        final int start = block.indexOf(pattern) + pattern.length();
+        final int end = block.indexOf(QUOTE, start);
         return block.substring(start, end);
+    }
+
+    private int extractIntValue(String block) {
+        final String pattern = QUOTE + "basePrice" + "\": ";
+        final int start = block.indexOf(pattern) + pattern.length();
+        int end = block.indexOf(",", start);
+        if (end == -1) {
+            end = block.length();
+        }
+        return Integer.parseInt(block.substring(start, end).trim());
     }
 }
