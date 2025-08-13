@@ -28,7 +28,7 @@ public class EndScreenPresenter {
 
         final String winnerText;
         if (result.getWinner() != null) {
-            winnerText = " WINNER: " + result.getWinner().getName();
+            winnerText = "WINNER: " + result.getWinner().getName();
         }
         else {
             winnerText = "";

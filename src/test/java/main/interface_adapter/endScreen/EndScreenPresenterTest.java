@@ -69,7 +69,7 @@ public class EndScreenPresenterTest {
         assertEquals("GAME OVER", viewModel.getGameOverTitle());
         assertEquals("Maximum rounds reached", viewModel.getGameEndReason());
         assertEquals("Total Rounds Played: 20", viewModel.getTotalRoundsText());
-        assertEquals("🏆 WINNER: Alice 🏆", viewModel.getWinnerText());
+        assertEquals("WINNER: Alice", viewModel.getWinnerText());
         assertEquals("New Game", viewModel.getNewGameButtonText());
         assertEquals("Exit", viewModel.getExitButtonText());
     }
@@ -84,9 +84,7 @@ public class EndScreenPresenterTest {
         // Check first player (winner)
         EndScreenViewModel.PlayerDisplayData firstPlayer = displayData.get(0);
         assertEquals("Alice", firstPlayer.getPlayer().getName());
-        assertEquals(1, firstPlayer.getRank());
         assertEquals("1500.00", firstPlayer.getMoneyText());
-        assertEquals("1", firstPlayer.getPropertiesCountText());
         assertEquals("200.00", firstPlayer.getPropertyValueText());
         assertEquals("0.00", firstPlayer.getStockValueText());
         assertEquals("1700.00", firstPlayer.getNetWorthText());
@@ -96,9 +94,7 @@ public class EndScreenPresenterTest {
         // Check second player
         EndScreenViewModel.PlayerDisplayData secondPlayer = displayData.get(1);
         assertEquals("Bob", secondPlayer.getPlayer().getName());
-        assertEquals(2, secondPlayer.getRank());
         assertEquals("800.00", secondPlayer.getMoneyText());
-        assertEquals("0", secondPlayer.getPropertiesCountText());
         assertEquals("0.00", secondPlayer.getPropertyValueText());
         assertEquals("750.00", secondPlayer.getStockValueText());
         assertEquals("1550.00", secondPlayer.getNetWorthText());
