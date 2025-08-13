@@ -1,7 +1,7 @@
-package main.interface_adapter.stock_market;
+package main.interface_adapter.StockMarket;
 
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
-import main.entity.stocks.Stock;
 
 public class StockPlayerState {
     private final StockState stockstate;

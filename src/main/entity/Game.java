@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.entity.stocks.Stock;
+import main.entity.Stocks.Stock;
 import main.entity.players.CharacterFactory;
 import main.entity.players.Player;
 import main.entity.tiles.Tile;

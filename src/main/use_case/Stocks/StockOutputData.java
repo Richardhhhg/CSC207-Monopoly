@@ -1,14 +1,14 @@
-package main.use_case.stocks;
+package main.use_case.Stocks;
 
+import main.entity.Stocks.Stock;
 import main.entity.players.Player;
-import main.entity.stocks.Stock;
 
-public abstract class AbstractStockOutputData {
+public abstract class StockOutputData {
     private final Player player;
     private final Stock stock;
     private final boolean allowBuy;
 
-    public AbstractStockOutputData(Player player, Stock stock, boolean allowBuy) {
+    public StockOutputData(Player player, Stock stock, boolean allowBuy) {
         this.player = player;
         this.stock = stock;
         this.allowBuy = allowBuy;
