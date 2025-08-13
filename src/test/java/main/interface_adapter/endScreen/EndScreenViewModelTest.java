@@ -1,6 +1,6 @@
 package main.interface_adapter.endScreen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class EndScreenViewModelTest {
 
     @Before
     public void setUp() {
-        Player testPlayer = new Clerk("TestPlayer", Color.RED);
+        AbstractPlayer testPlayer = new Clerk("TestPlayer", Color.RED);
         EndScreenViewModel.PlayerDisplayData playerData =
                 new EndScreenViewModel.PlayerDisplayData(
                         testPlayer,
@@ -69,7 +69,7 @@ public class EndScreenViewModelTest {
 
     @Test
     public void testPlayerDisplayDataConstructor() {
-        Player player = new Clerk("Alice", Color.BLUE);
+        AbstractPlayer player = new Clerk("Alice", Color.BLUE);
         EndScreenViewModel.PlayerDisplayData data =
                 new EndScreenViewModel.PlayerDisplayData(
                         player,
@@ -101,7 +101,7 @@ public class EndScreenViewModelTest {
 
     @Test
     public void testViewModelWithNullSafetyChecks() {
-        Player nullColorPlayer = new Clerk("NullTest", null);
+        AbstractPlayer nullColorPlayer = new Clerk("NullTest", null);
         EndScreenViewModel.PlayerDisplayData nullData =
                 new EndScreenViewModel.PlayerDisplayData(
                         nullColorPlayer,

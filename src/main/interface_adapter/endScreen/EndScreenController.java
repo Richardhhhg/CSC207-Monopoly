@@ -2,7 +2,7 @@ package main.interface_adapter.endScreen;
 
 import java.util.List;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.use_case.endScreen.EndGame;
 
 public class EndScreenController {
@@ -23,7 +23,7 @@ public class EndScreenController {
      * @param totalRounds    the total number of rounds played
      * @return the result of the end game evaluation
      */
-    public EndGame.EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
+    public EndGame.EndGameResult execute(List<AbstractPlayer> players, String gameEndReason, int totalRounds) {
         return endGameUseCase.execute(players, gameEndReason, totalRounds);
     }
 }

@@ -3,7 +3,7 @@ package main.view;
 import main.constants.Constants;
 import main.app.GameHolder;
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.interface_adapter.playerStats.PlayerStatsController;
 import main.interface_adapter.playerStats.PlayerStatsPresenter;
 import main.interface_adapter.playerStats.PlayerStatsViewModel;
@@ -130,7 +130,7 @@ public class GameView extends JFrame{
             }
         }
 
-        Player currentPlayer = game.getCurrentPlayer();
+        AbstractPlayer currentPlayer = game.getCurrentPlayer();
         if (currentPlayer != null && currentPlayer.getPortrait() != null) {
             int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
             int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
@@ -168,9 +168,9 @@ public class GameView extends JFrame{
             }
         }
 
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> players = game.getPlayers();
 
-        for (Player player : players) {
+        for (AbstractPlayer player : players) {
             if (player.isBankrupt()) {
                 continue;
             }
@@ -200,7 +200,7 @@ public class GameView extends JFrame{
     }
 
     private void onDiceRollComplete() {
-        Player currentPlayer = game.getCurrentPlayer();
+        AbstractPlayer currentPlayer = game.getCurrentPlayer();
         int diceSum = diceAnimator.getLastDiceSum();
 
         gameMoveCurrentPlayer.execute(diceSum);

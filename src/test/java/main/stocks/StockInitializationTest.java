@@ -2,7 +2,7 @@ package main.stocks;
 
 import main.entity.Game;
 import main.entity.players.DefaultPlayer;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.use_case.game.GameInitializeStocks;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class StockInitializationTest {
     private Game game;
-    private List<Player> players;
+    private List<AbstractPlayer> players;
     private GameInitializeStocks gameInitializeStocks;
 
     @BeforeEach
@@ -49,7 +49,7 @@ public class StockInitializationTest {
     @Test
     void testPlayersHaveStocksInitialized() {
         gameInitializeStocks.execute();
-        for (Player player : game.getPlayers()) {
+        for (AbstractPlayer player : game.getPlayers()) {
             assertNotNull(player.getStocks(), "Player's stocks should be initialized");
             assertEquals(5, player.getStocks().size(), "Player should have 5 stocks initialized");
         }

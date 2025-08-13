@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import main.constants.Constants;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.interface_adapter.stock_market.StockPlayerViewModel;
 import main.interface_adapter.stock_market.StockState;
@@ -27,7 +27,7 @@ public class StockMarketView extends JFrame {
      * @param player player to which the stock market view is unique to
      * @param allowBuy boolean indicating if the player is allowed to buy stocks. Only true for landing on tiles.
      */
-    public StockMarketView(Player player, boolean allowBuy) {
+    public StockMarketView(AbstractPlayer player, boolean allowBuy) {
         super("Stock Market");
         final Map<Stock, Integer> stockQuantities = player.getStocks();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,7 +67,7 @@ public class StockMarketView extends JFrame {
         setContentPane(mainPanel);
     }
 
-    private StockView makeStockView(Map.Entry<Stock, Integer> entry, Player player, boolean allowBuy) {
+    private StockView makeStockView(Map.Entry<Stock, Integer> entry, AbstractPlayer player, boolean allowBuy) {
         final Stock stock = entry.getKey();
         final int quantity = entry.getValue();
         final StockState stockState = new StockState();

@@ -1,11 +1,10 @@
 package main.entity.players;
 
-import static main.constants.Constants.NP_POR;
+import main.constants.Constants;
 
-public class NullPlayer extends Player {
+public class NullPlayer extends AbstractPlayer {
     public NullPlayer() {
-        super();
-        this.loadPortrait(NP_POR);
+        this.loadPortrait(Constants.NP_POR);
     }
 }
 

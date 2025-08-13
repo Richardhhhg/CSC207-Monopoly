@@ -2,7 +2,7 @@ package main.stocks;
 
 import main.use_case.stocks.*;
 import main.entity.stocks.Stock;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.DefaultPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import main.interface_adapter.stock_market.StockState;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuyStockUseCaseTest {
-    private Player player;
+    private AbstractPlayer player;
     private Stock stock;
     private BuyStockInteractor interactor;
     private MockStockPresenter presenter;

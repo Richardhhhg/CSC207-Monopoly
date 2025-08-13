@@ -9,7 +9,7 @@ import java.util.List;
 
 import main.entity.players.CharacterFactory;
 import main.entity.players.NullPlayer;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 /**
  * Interactor for the character selection use case.
@@ -19,7 +19,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     private final CharacterSelectionScreenOutputBoundary presenter;
     private final CharacterSelectionScreenDataAccessInterface dao;
 
-    private final List<Player> selectedPlayers = new ArrayList<>(
+    private final List<AbstractPlayer> selectedPlayers = new ArrayList<>(
             Arrays.asList(new NullPlayer(), new NullPlayer(), new NullPlayer(), new NullPlayer()));
 
     /**
@@ -40,7 +40,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     @Override
     public void confirmSelection() {
         final List<CharacterSelectionPlayerViewModel> outputList = new ArrayList<>();
-        for (Player p : selectedPlayers) {
+        for (AbstractPlayer p : selectedPlayers) {
             if (!p.isNullPlayer()) {
                 outputList.add(new CharacterSelectionPlayerViewModel(p.getName(), p.getClass().getSimpleName(),
                         p.getColor(), p.getPortrait()));
@@ -57,7 +57,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     @Override
     public boolean canStartGame() {
         int count = 0;
-        for (Player p : selectedPlayers) {
+        for (AbstractPlayer p : selectedPlayers) {
             if (!p.isNullPlayer() && !(p instanceof NullPlayer)) {
                 count++;
             }
@@ -79,7 +79,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         final Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE};
         final Color color = colors[index];
 
-        final Player player = CharacterFactory.createPlayer(name, type, color);
+        final AbstractPlayer player = CharacterFactory.createPlayer(name, type, color);
         selectedPlayers.set(index, player);
         final CharacterSelectionPlayerViewModel output = new CharacterSelectionPlayerViewModel(name, type, color, player.getPortrait());
         presenter.preparePlayer(output, index);

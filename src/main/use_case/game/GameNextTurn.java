@@ -1,8 +1,8 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
-import main.entity.players.applyAfterEffects;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.ApplyAfterEffects;
 import main.use_case.player.ApplyTurnEffects;
 import main.use_case.player.DeclareBankruptcy;
 
@@ -23,14 +23,14 @@ public class GameNextTurn {
     }
 
     public void execute() {
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> players = game.getPlayers();
         if (game.getGameEnded()) return;
 
         int currentPlayerIndex = game.getCurrentPlayerIndex();
-        Player currentPlayer = players.get(currentPlayerIndex);
+        AbstractPlayer currentPlayer = players.get(currentPlayerIndex);
 
         // Apply turn effects for the current player
-        if (currentPlayer instanceof applyAfterEffects) {
+        if (currentPlayer instanceof ApplyAfterEffects) {
             this.applyTurnEffects.execute(currentPlayer);
         }
 

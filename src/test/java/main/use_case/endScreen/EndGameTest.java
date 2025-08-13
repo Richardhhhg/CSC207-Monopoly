@@ -1,6 +1,6 @@
 package main.use_case.endScreen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.tiles.PropertyTile;
@@ -19,16 +19,16 @@ import static org.junit.Assert.*;
 public class EndGameTest {
 
     private EndGame endGame;
-    private List<Player> testPlayers;
+    private List<AbstractPlayer> testPlayers;
 
     @Before
     public void setUp() {
         endGame = new EndGame();
 
         // Create test players with different wealth levels
-        Player richPlayer = new Clerk("Rich", Color.RED);
-        Player poorPlayer = new CollegeStudent("Poor", Color.BLUE);
-        Player bankruptPlayer = new CollegeStudent("Bankrupt", Color.GREEN);
+        AbstractPlayer richPlayer = new Clerk("Rich", Color.RED);
+        AbstractPlayer poorPlayer = new CollegeStudent("Poor", Color.BLUE);
+        AbstractPlayer bankruptPlayer = new CollegeStudent("Bankrupt", Color.GREEN);
 
         richPlayer.addMoney(2000);
         poorPlayer.addMoney(500);
@@ -100,7 +100,7 @@ public class EndGameTest {
     @Test
     public void testWinnerDeterminationWithAllBankrupt() {
         // Make all players bankrupt
-        for (Player player : testPlayers) {
+        for (AbstractPlayer player : testPlayers) {
             player.deductMoney(player.getMoney() + 100);
         }
 
@@ -175,7 +175,7 @@ public class EndGameTest {
 
     @Test
     public void testEmptyPlayerList() {
-        List<Player> emptyPlayers = Arrays.asList();
+        List<AbstractPlayer> emptyPlayers = Arrays.asList();
         EndGame.EndGameResult result = endGame.execute(emptyPlayers, "No players", 0);
 
         assertNotNull(result);
@@ -187,9 +187,9 @@ public class EndGameTest {
 
     @Test
     public void testSinglePlayerGame() {
-        Player singlePlayer = new Clerk("Solo", Color.YELLOW);
+        AbstractPlayer singlePlayer = new Clerk("Solo", Color.YELLOW);
         singlePlayer.addMoney(1000);
-        List<Player> singlePlayerList = Arrays.asList(singlePlayer);
+        List<AbstractPlayer> singlePlayerList = Arrays.asList(singlePlayer);
 
         EndGame.EndGameResult result = endGame.execute(singlePlayerList, "Solo game", 5);
 
@@ -201,7 +201,7 @@ public class EndGameTest {
 
     @Test
     public void testPlayerResultGetters() {
-        Player testPlayer = new Clerk("Test", Color.BLACK);
+        AbstractPlayer testPlayer = new Clerk("Test", Color.BLACK);
         testPlayer.addMoney(1000);
 
         EndGame.PlayerResult playerResult = new EndGame.PlayerResult(
@@ -218,7 +218,7 @@ public class EndGameTest {
 
     @Test
     public void testEndGameResultGetters() {
-        Player winner = new Clerk("Winner", Color.RED);
+        AbstractPlayer winner = new Clerk("Winner", Color.RED);
         List<EndGame.PlayerResult> playerResults = Arrays.asList(
                 new EndGame.PlayerResult(winner, 1, 1000f, 0f, 0f, 1000f)
         );

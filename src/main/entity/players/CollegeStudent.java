@@ -1,54 +1,53 @@
 package main.entity.players;
 
+import java.awt.Color;
+
+import main.constants.Constants;
 import main.entity.stocks.Stock;
 
-import java.awt.*;
-
-import static main.constants.Constants.*;
-
-public class CollegeStudent extends Player implements applyAfterEffects, StockModifier{
+public class CollegeStudent extends AbstractPlayer implements ApplyAfterEffects, StockModifier {
     public CollegeStudent(String name, Color color) {
-        super(name, STUDENT_INIT_MONEY,color);
-        this.loadPortrait(CS_POR);
+        super(name, Constants.STUDENT_INIT_MONEY, color);
+        this.loadPortrait(Constants.CS_POR);
     }
 
     @Override
     public void buyStock(Stock stock, int quantity) {
-        double totalCost = stock.getCurrentPrice() * quantity;
-        double finalCost = adjustStockBuyPrice((float) totalCost);
-        if (this.money >= totalCost) {
+        final double totalCost = stock.getCurrentPrice() * quantity;
+        final double finalCost = adjustStockBuyPrice((float) totalCost);
+
+        if (this.getMoney() >= totalCost) {
             this.deductMoney((float) finalCost);
-            stocks.put(stock, stocks.getOrDefault(stock, 0) + quantity);
+            this.getStocks().put(stock, this.getStocks().getOrDefault(stock, 0) + quantity);
         }
     }
 
     @Override
     public void sellStock(Stock stock, int quantity) {
-        if (stocks.get(stock) >= quantity) {
-            double totalSale = stock.getCurrentPrice() * quantity;
-            double finalSale = adjustStockSellPrice((float) totalSale);
+        if (this.getStocks().get(stock) >= quantity) {
+            final double totalSale = stock.getCurrentPrice() * quantity;
+            final double finalSale = adjustStockSellPrice((float) totalSale);
             this.addMoney((float) finalSale);
-            stocks.put(stock, stocks.get(stock) - quantity);
+            this.getStocks().put(stock, this.getStocks().get(stock) - quantity);
         }
     }
-
 
     /**
      * College Student has to pay his school tuition 100$ every turn.
      */
     @Override
     public void applyTurnEffects() {
-        this.deductMoney(100);
+        this.deductMoney(Constants.COLLEGE_STUDENT_TUITION);
         System.out.println("ah man, the tuition goes up again!");
     }
 
     @Override
     public float adjustStockBuyPrice(float basePrice) {
-        return basePrice * 0.90f;
+        return basePrice * Constants.COLLEGE_STUDENT_STOCK_PRICE;
     }
 
     @Override
     public float adjustStockSellPrice(float basePrice) {
-        return basePrice * 1.3f;
+        return basePrice * Constants.COLLEGE_STUDENT_STOCK_SELL_PRICE;
     }
 }

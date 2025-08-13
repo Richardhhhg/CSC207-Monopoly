@@ -1,6 +1,6 @@
 package main.view;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
 import main.constants.Constants;
@@ -119,7 +119,7 @@ public class BoardView extends JPanel {
     }
 
     public void handleLandingOnTile() {
-        Player currentPlayer = game.getCurrentPlayer();
+        AbstractPlayer currentPlayer = game.getCurrentPlayer();
         int position = currentPlayer.getPosition();
         AbstractTile tile = game.getPropertyAt(position);
 
@@ -139,7 +139,7 @@ public class BoardView extends JPanel {
             final PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
 
             // Find the actual player and property objects
-            final Player player = findPlayerByName(purchaseDialog.getPlayerName());
+            final AbstractPlayer player = findPlayerByName(purchaseDialog.getPlayerName());
             final PropertyTile property = findPropertyByName(purchaseDialog.getPropertyName());
 
             propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, player, property, this);
@@ -196,7 +196,7 @@ public class BoardView extends JPanel {
     }
 
     // Helper methods for finding entities (needed for legacy popup interface)
-    private Player findPlayerByName(String name) {
+    private AbstractPlayer findPlayerByName(String name) {
         return game.getPlayers().stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()

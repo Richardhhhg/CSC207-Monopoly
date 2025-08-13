@@ -1,12 +1,12 @@
 package main.use_case.player;
 
-import main.entity.players.Player;
-import main.entity.players.applyAfterEffects;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.ApplyAfterEffects;
 
 public class ApplyTurnEffects {
-    public void execute(Player player) {
-        if (player instanceof applyAfterEffects) {
-            ((applyAfterEffects) player).applyTurnEffects();
+    public void execute(AbstractPlayer player) {
+        if (player instanceof ApplyAfterEffects) {
+            ((ApplyAfterEffects) player).applyTurnEffects();
         }
         if (player.isBankrupt()){
             DeclareBankruptcy declareBankruptcy = new DeclareBankruptcy();

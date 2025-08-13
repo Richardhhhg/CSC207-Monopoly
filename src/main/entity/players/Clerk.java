@@ -1,13 +1,13 @@
 package main.entity.players;
 
-import static main.constants.Constants.*;
+import java.awt.Color;
 
-import java.awt.*;
+import main.constants.Constants;
 
-public class Clerk extends Player implements applyAfterEffects {
+public class Clerk extends AbstractPlayer implements ApplyAfterEffects {
     public Clerk(String name, Color color) {
-        super(name, CLERK_INIT_MONEY, color);
-        this.loadPortrait(CLERK_POR);
+        super(name, Constants.CLERK_INIT_MONEY, color);
+        this.loadPortrait(Constants.CLERK_POR);
     }
 
     /**
@@ -15,7 +15,7 @@ public class Clerk extends Player implements applyAfterEffects {
      */
     @Override
     public void applyTurnEffects() {
-        this.addMoney(CLERK_ADD_MONEY);
+        this.addMoney(Constants.CLERK_ADD_MONEY);
         System.out.println("Just another day");
     }
 }

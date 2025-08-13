@@ -1,7 +1,7 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class GameCheckBankrupt {
      * A player is considered bankrupt if they have no money and no properties.
      */
     public void execute() {
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> players = game.getPlayers();
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         boolean foundNext= false;
 

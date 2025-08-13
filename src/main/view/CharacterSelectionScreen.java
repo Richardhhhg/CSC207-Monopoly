@@ -209,7 +209,7 @@ public class CharacterSelectionScreen extends JFrame {
         String type = (String) dropdown.getSelectedItem();
         controller.selectPlayer(index, name, type);
 
-        final CharacterSelectionPlayerViewModel data = viewModel.getPlayervm(index);
+        final CharacterSelectionPlayerViewModel data = viewModel.getPlayerVm(index);
         if (data != null) {
             final Image portrait = data.getPortrait();
             if (portrait != null) {

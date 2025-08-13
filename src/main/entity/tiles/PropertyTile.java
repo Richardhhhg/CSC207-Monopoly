@@ -1,6 +1,6 @@
 package main.entity.tiles;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.RentModifier;
 
 /**
@@ -10,7 +10,7 @@ public class PropertyTile extends AbstractTile {
     private final int price;
     private final float rent;
     // null if not owned
-    private Player owner;
+    private AbstractPlayer owner;
 
     /**
      * Creates a new PropertyTile with specified name, price, and rent.
@@ -70,7 +70,7 @@ public class PropertyTile extends AbstractTile {
      *
      * @return the owning player, or null if unowned
      */
-    public Player getOwner() {
+    public AbstractPlayer getOwner() {
         return owner;
     }
 
@@ -80,7 +80,7 @@ public class PropertyTile extends AbstractTile {
      * @param player the player attempting to purchase
      * @return true if purchase was successful, false otherwise
      */
-    public boolean attemptPurchase(Player player) {
+    public boolean attemptPurchase(AbstractPlayer player) {
         final boolean canPurchase = !isOwned() && player.getMoney() >= price;
         if (canPurchase) {
             player.buyProperty(this);
@@ -95,7 +95,7 @@ public class PropertyTile extends AbstractTile {
      * @param owned ignored; ownership is determined by non-null owner
      * @param newOwner the new owner, or null to clear
      */
-    public void setOwned(boolean owned, Player newOwner) {
+    public void setOwned(boolean owned, AbstractPlayer newOwner) {
         this.owner = newOwner;
     }
 }

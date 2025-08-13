@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 
 /**
@@ -49,7 +49,7 @@ public class BuyPropertyPopup extends JDialog {
     private JLabel infoLabel;
     private JButton yesButton;
     private JButton noButton;
-    private final Player player;
+    private final AbstractPlayer player;
     private final PropertyTile property;
     private final PurchaseResultCallback callback;
 
@@ -63,7 +63,7 @@ public class BuyPropertyPopup extends JDialog {
      */
     public BuyPropertyPopup(
             Frame owner,
-            Player player,
+            AbstractPlayer player,
             PropertyTile property,
             PurchaseResultCallback callback
     ) {
@@ -224,7 +224,7 @@ public class BuyPropertyPopup extends JDialog {
      * @param property the PropertyTile being purchased
      * @param callback callback to notify about purchase results
      */
-    public static void showPurchaseDialog(Frame parent, Player player, PropertyTile property,
+    public static void showPurchaseDialog(Frame parent, AbstractPlayer player, PropertyTile property,
                                           PurchaseResultCallback callback) {
         SwingUtilities.invokeLater(() -> {
             new BuyPropertyPopup(parent, player, property, callback);

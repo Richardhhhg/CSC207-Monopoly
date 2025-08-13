@@ -6,7 +6,7 @@ import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.use_case.tiles.property.RentPaymentUseCase;
 
@@ -34,7 +34,7 @@ public class RentPaymentController {
      * @param property   the property for which rent is being paid
      * @param rentAmount the amount of rent to pay
      */
-    public void execute(Player payer, Player owner, PropertyTile property, float rentAmount) {
+    public void execute(AbstractPlayer payer, AbstractPlayer owner, PropertyTile property, float rentAmount) {
         rentPaymentUseCase.execute(payer, owner, property, rentAmount);
     }
 
@@ -46,7 +46,7 @@ public class RentPaymentController {
      * @param property   the property for which rent is being paid
      * @param rentAmount the amount of rent to pay
      */
-    public void handleRentPayment(Player payer, Player owner, PropertyTile property, float rentAmount) {
+    public void handleRentPayment(AbstractPlayer payer, AbstractPlayer owner, PropertyTile property, float rentAmount) {
         execute(payer, owner, property, rentAmount);
     }
 

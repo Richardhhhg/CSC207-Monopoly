@@ -1,111 +1,114 @@
 package main.entity;
 
-import static main.constants.Constants.MAX_ROUNDS;
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.entity.stocks.Stock;
+import main.constants.Constants;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.CharacterFactory;
-import main.entity.players.Player;
+import main.entity.stocks.Stock;
 import main.entity.tiles.AbstractTile;
 import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
-
 public class Game {
+    private static final int ADJUST_THREE = 3;
+    private static final int ADJUST_TWO = 2;
+
     private List<AbstractTile> tiles;
-    private List<Player> players;
+    private List<AbstractPlayer> players;
     private List<Stock> stocks;
-    private int currentPlayerIndex = 0;
+    private int currentPlayerIndex;
     private int tileCount;
-    private int totalTurns = 0;
-    private int currentRound = 1;
-    private int turnsInCurrentRound = 0;
-    private int roundStartPlayerIndex = 0; // Track which player started the current round
-    private boolean gameEnded = false;
+    private int totalTurns;
+    private int currentRound;
+    private int turnsInCurrentRound;
+    private int roundStartPlayerIndex;
+    private boolean gameEnded;
     private String gameEndReason = "";
 
     public boolean isGameOver() {
         return gameEnded;
     }
 
-    public String getGameEndReason() { return gameEndReason; }
+    public String getGameEndReason() {
+        return gameEndReason;
+    }
 
     /**
-     * Get the current round number (1-based)
+     * Get the current round number (1-based).
+     *
+     * @return Current round number
      */
     public int getCurrentRound() {
         return currentRound;
     }
 
     /**
-     * Get the number of active (non-bankrupt) players
+     * Get current player.
+     *
+     * @return Current player or null if game has ended or no current player
+     * @throws IllegalStateException if there is no current player or the game has ended
      */
-    public int getActivePlayers() {
-        return (int) players.stream().filter(p -> !p.isBankrupt()).count();
-    }
-
-    /**
-     * Get turns completed in the current round
-     */
-    public int getTurnsInCurrentRound() {
-        return turnsInCurrentRound;
-    }
-
-    public int getTotalTurns() {
-        return totalTurns;
-    }
-
-    public Player getCurrentPlayer() {
-        if (currentPlayerIndex == -1 || gameEnded) return null;
+    public AbstractPlayer getCurrentPlayer() {
+        if (currentPlayerIndex == -1 || gameEnded) {
+            throw new IllegalStateException("No current player or game has ended");
+        }
         return players.get(currentPlayerIndex);
     }
 
     /**
-     * Helper function for getting the position of a tile on the board
-     * @param position
-     * @param startX
-     * @param startY
-     * @param tileSize
-     * @return
+     * Helper function for getting the position of a tile on the board.
+     *
+     * @param position The position of the tile (0-indexed)
+     * @param startX Start x position of the board
+     * @param startY Start y position of the board
+     * @param tileSize Size of each tile
+     * @return The (x, y) position of the tile
      */
     public Point getTilePosition(int position, int startX, int startY, int tileSize) {
-        int tilesPerSide = this.tileCount / 4;
-        int cool_number = tilesPerSide * tileSize;
+        final int tilesPerSide = this.tileCount / 4;
+        final int positionAdjust = tilesPerSide * tileSize;
+        final Point tilePosition;
 
         if (position >= 0 && position <= tilesPerSide) {
-            // Bottom row (left to right)
-            return new Point(startX + position * tileSize, startY + cool_number);
-        } else if (position >= (tilesPerSide+1) && position <= tilesPerSide*2) {
-            // Right column (bottom to top)
-            return new Point(startX + cool_number, startY + cool_number - (position - tilesPerSide) * tileSize);
-        } else if (position >= (tilesPerSide*2 + 1) && position <= tilesPerSide*3) {
-            // Top row (right to left)
-            return new Point(startX + cool_number - (position - tilesPerSide*2) * tileSize, startY);
-        } else {
-            // Left column (top to bottom)
-            return new Point(startX, startY + (position - tilesPerSide*3) * tileSize);
+            tilePosition = new Point(startX + position * tileSize, startY + positionAdjust);
         }
+        else if (position >= (tilesPerSide + 1) && position <= tilesPerSide * 2) {
+            tilePosition = new Point(startX + positionAdjust, startY
+                    + positionAdjust - (position - tilesPerSide) * tileSize);
+        }
+        else if (position >= (tilesPerSide * 2 + 1) && position <= tilesPerSide * ADJUST_THREE) {
+            // Top row (right to left)
+            tilePosition = new Point(startX + positionAdjust
+                    - (position - tilesPerSide * ADJUST_TWO) * tileSize, startY);
+        }
+        else {
+            // Left column (top to bottom)
+            tilePosition = new Point(startX, startY + (position - tilesPerSide * ADJUST_THREE) * tileSize);
+        }
+        return tilePosition;
     }
 
     /**
-     * Gets the property at a specific position
+     * Gets the property at a specific position.
+     *
      * @param position Board position
-     * @return The PropertyTile at that position
+     * @return The PropertyTile at that position\
+     * @throws IndexOutOfBoundsException if the position is invalid
      */
     public AbstractTile getPropertyAt(int position) {
         if (position >= 0 && position < tiles.size()) {
             return tiles.get(position);
         }
-        return null;
+        throw new IndexOutOfBoundsException("Invalid tile position: " + position);
     }
 
     public List<AbstractTile> getTiles() {
         return tiles;
     }
 
-    public List<Player> getPlayers() {
+    public List<AbstractPlayer> getPlayers() {
         return players;
     }
 
@@ -121,16 +124,12 @@ public class Game {
         return stocks;
     }
 
-    public int getRoundStartPlayerIndex() {
-        return roundStartPlayerIndex;
-    }
-
     public boolean getGameEnded() {
         return gameEnded;
     }
 
     /**
-     * Increment total turns and track turns in current round
+     * Increment total turns and track turns in current round.
      */
     public void increaseTurn() {
         totalTurns++;
@@ -138,13 +137,15 @@ public class Game {
     }
 
     /**
-     * Start a new round - reset turn counter, increment round number, and set new round start player
+     * Start a new round - reset turn counter, increment round number, and set new round start player.
+     *
+     * @param newRoundStartPlayerIndex The index of the player who will start the new round
+     * @throws IllegalArgumentException if the newRoundStartPlayerIndex is invalid
      */
     public void startNewRound(int newRoundStartPlayerIndex) {
         // Check if we've reached the maximum number of rounds BEFORE incrementing
-        if (currentRound >= MAX_ROUNDS) {
-            endGame("Maximum " + MAX_ROUNDS + " rounds reached");
-            return;
+        if (currentRound >= Constants.MAX_ROUNDS) {
+            endGame("Maximum " + Constants.MAX_ROUNDS + " rounds reached");
         }
 
         currentRound++;
@@ -153,79 +154,127 @@ public class Game {
     }
 
     /**
-     * Check if the current round is complete
+     * Check if the current round is complete.
      * A round is complete when we've cycled back to the player who started the round
      * and all active players have had at least one turn
+     *
+     * @param nextPlayerIndex The index of the next player to take a turn
+     * @return true if the round is complete, false otherwise
      */
     public boolean isRoundComplete(int nextPlayerIndex) {
         // Round is complete when:
         // 1. We have at least one turn in this round
         // 2. The next player would be the one who started the round (or the next active player after them if they died)
-        if (turnsInCurrentRound == 0) {
-            return false;
-        }
 
         // Find the next active player from the round start position
-        int expectedRoundStartPlayer = findNextActivePlayerFrom(roundStartPlayerIndex - 1);
+        final int expectedRoundStartPlayer = findNextActivePlayerFrom(roundStartPlayerIndex - 1);
         return nextPlayerIndex == expectedRoundStartPlayer;
     }
 
     /**
-     * Find the next active player starting from a given index
+     * Find the next active player starting from a given index.
+     *
+     * @param startIndex The index to start searching from
+     * @return The index of the next active player, or -1 if no active players are found
+     * @throws IllegalStateException if no active players are found
      */
     public int findNextActivePlayerFrom(int startIndex) {
         for (int i = 1; i <= players.size(); i++) {
-            int candidateIndex = (startIndex + i) % players.size();
+            final int candidateIndex = (startIndex + i) % players.size();
             if (!players.get(candidateIndex).isBankrupt()) {
                 return candidateIndex;
             }
         }
-        return -1; // No active players found
+        throw new IllegalStateException("No active players found in the game");
     }
 
+    /**
+     * Set the current player index.
+     *
+     * @param index The index of the player to set as current
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
     public void setCurrentPlayerIndex(int index) {
         if (index >= 0 && index < players.size()) {
             this.currentPlayerIndex = index;
-        } else {
+        }
+        else {
             throw new IndexOutOfBoundsException("Invalid player index: " + index);
         }
     }
 
+    /**
+     * End the game with an optional message.
+     *
+     * @param message The reason for ending the game, or null for default message
+     */
     public void endGame(String message) {
         this.gameEnded = true;
-        this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
+        if (message == null || message.isEmpty()) {
+            this.gameEndReason = "Game Over";
+        }
+        else {
+            this.gameEndReason = message.trim();
+        }
     }
 
+    /**
+     * Set the tiles, ensuring the list is not null or empty.
+     *
+     * @param tiles List of AbstractTile objects to set
+     * @throws IllegalArgumentException if the tiles list is null or empty
+     */
     public void setTiles(List<AbstractTile> tiles) {
         if (tiles != null && !tiles.isEmpty()) {
             this.tiles = tiles;
             this.tileCount = tiles.size();
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Tiles list cannot be null or empty");
         }
     }
 
-    public void setPlayers(List<Player> players) {
+    /**
+     * Set the players, ensuring the list is not null or empty.
+     *
+     * @param players List of AbstractPlayer objects to set
+     * @throws IllegalArgumentException if the players list is null or empty
+     */
+    public void setPlayers(List<AbstractPlayer> players) {
         if (players != null && !players.isEmpty()) {
             this.players = players;
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Players list cannot be null or empty");
         }
     }
 
+    /**
+     * Set the stocks, ensuring the list is not null or empty.
+     *
+     * @param stocks List of Stock objects to set
+     * @throws IllegalArgumentException if the stocks list is null or empty
+     */
     public void setStocks(List<Stock> stocks) {
         if (stocks != null && !stocks.isEmpty()) {
             this.stocks = stocks;
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Stocks list cannot be null or empty");
         }
     }
 
-    public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> players) {
-        List<Player> result = new ArrayList<>();
-        for (CharacterSelectionPlayerViewModel data : players) {
+    /**
+     * Set players from a list of CharacterSelectionPlayerViewModel objects.
+     * This method creates AbstractPlayer instances based on the view model data.
+     *
+     * @param playersList List of CharacterSelectionPlayerViewModel objects
+     */
+    public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> playersList) {
+        final List<AbstractPlayer> result = new ArrayList<>();
+        for (CharacterSelectionPlayerViewModel data : playersList) {
             if (data != null && !"None".equals(data.getType())) {
-                Player player = CharacterFactory.createPlayer(
+                final AbstractPlayer player = CharacterFactory.createPlayer(
                         data.getName(),
                         data.getType(),
                         data.getColor()

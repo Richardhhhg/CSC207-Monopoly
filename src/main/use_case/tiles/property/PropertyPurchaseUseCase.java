@@ -1,6 +1,6 @@
 package main.use_case.tiles.property;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 
 public class PropertyPurchaseUseCase {
@@ -16,7 +16,7 @@ public class PropertyPurchaseUseCase {
      * @param player   the player attempting to purchase
      * @param property the property being purchased
      */
-    public void execute(Player player, PropertyTile property) {
+    public void execute(AbstractPlayer player, PropertyTile property) {
         if (!property.isOwned()) {
             final PropertyPurchaseData purchaseData = new PropertyPurchaseData(
                 player.getName(),
@@ -32,7 +32,7 @@ public class PropertyPurchaseUseCase {
         }
     }
 
-    private void handlePurchaseResult(boolean success, Player player, PropertyTile property) {
+    private void handlePurchaseResult(boolean success, AbstractPlayer player, PropertyTile property) {
         if (success) {
             final boolean purchaseSuccessful = property.attemptPurchase(player);
             if (purchaseSuccessful) {

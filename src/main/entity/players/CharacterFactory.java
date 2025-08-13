@@ -4,7 +4,15 @@ import java.awt.Color;
 
 public class CharacterFactory {
 
-    public static Player createPlayer(String name, String type, Color color) {
+    /**
+     * Creates a player based on the given name, type, and color.
+     *
+     * @param name name of the player
+     * @param type type of the player (e.g., "Clerk", "Landlord", "Inheritor", "College Student",
+     * @param color color of the player
+     * @return a Player object of the specified type, or a NullPlayer if the type is invalid
+     */
+    public static AbstractPlayer createPlayer(String name, String type, Color color) {
         return switch (type) {
             case "Clerk" -> new Clerk(name, color);
             case "Landlord" -> new Landlord(name, color);

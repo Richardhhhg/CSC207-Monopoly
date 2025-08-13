@@ -1,6 +1,6 @@
 package main.interface_adapter.endScreen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.tiles.PropertyTile;
@@ -21,15 +21,15 @@ public class EndScreenPresenterTest {
 
     private EndScreenPresenter presenter;
     private EndGame.EndGameResult testResult;
-    private List<Player> testPlayers;
+    private List<AbstractPlayer> testPlayers;
 
     @Before
     public void setUp() {
         presenter = new EndScreenPresenter();
 
         // Create test players with different financial situations
-        Player player1 = new Clerk("Alice", Color.RED);
-        Player player2 = new CollegeStudent("Bob", Color.BLUE);
+        AbstractPlayer player1 = new Clerk("Alice", Color.RED);
+        AbstractPlayer player2 = new CollegeStudent("Bob", Color.BLUE);
 
         player1.addMoney(1500);
         player2.addMoney(800);
@@ -104,7 +104,7 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testExecuteWithBankruptPlayer() {
-        Player bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
+        AbstractPlayer bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
         bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
 
         List<EndGame.PlayerResult> playerResults = Arrays.asList(
@@ -155,7 +155,7 @@ public class EndScreenPresenterTest {
     @Test
     public void testExecuteFormatsNumbersCorrectly() {
         // Test with unusual numbers to verify formatting
-        Player testPlayer = new Clerk("Test", Color.BLACK);
+        AbstractPlayer testPlayer = new Clerk("Test", Color.BLACK);
         testPlayer.addMoney(1234.567f);
 
         List<EndGame.PlayerResult> playerResults = Arrays.asList(

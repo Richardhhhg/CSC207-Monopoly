@@ -1,4 +1,4 @@
-package main.data_access.Player;
+package main.data_access.player;
 
 import main.use_case.characterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
 

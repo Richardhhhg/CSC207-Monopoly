@@ -86,6 +86,14 @@ public class Constants {
     public static final int POORMAN_INIT_MONEY = 200;
 
     public static final int CLERK_ADD_MONEY = 50;
+    public static final int COLLEGE_STUDENT_TUITION = 100;
+    public static final float COLLEGE_STUDENT_STOCK_PRICE = 0.90f;
+    public static final float COLLEGE_STUDENT_STOCK_SELL_PRICE = 1.3f;
+    public static final float INHERITOR_STOCK_BUY_PRICE = 1.1f;
+    public static final float INHERITOR_STOCK_SELL_PRICE = 0.70f;
+    public static final float LANDLORD_STOCK_BUY_PRICE = 1.8f;
+    public static final float LANDLORD_STOCK_SELL_PRICE = 0.80f;
+    public static final float LANDLORD_RENT_MULTIPLIER = 1.8f;
 
     // Portrait Path
     public static final String CLERK_POR = "CharacterPortrait/clerk.jpg";

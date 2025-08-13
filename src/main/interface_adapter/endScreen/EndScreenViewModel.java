@@ -2,7 +2,7 @@ package main.interface_adapter.endScreen;
 
 import java.util.List;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 public class EndScreenViewModel {
     private final String gameOverTitle;
@@ -54,7 +54,7 @@ public class EndScreenViewModel {
     }
 
     public static class PlayerDisplayData {
-        private final Player player;
+        private final AbstractPlayer player;
         private final int rank;
         private final String moneyText;
         private final String propertyValueText;
@@ -62,7 +62,7 @@ public class EndScreenViewModel {
         private final String netWorthText;
         private final String statusText;
 
-        public PlayerDisplayData(Player player, int rank, String moneyText,
+        public PlayerDisplayData(AbstractPlayer player, int rank, String moneyText,
                                  String propertyValueText, String stockValueText, String netWorthText,
                                  String statusText) {
             this.player = player;
@@ -74,7 +74,7 @@ public class EndScreenViewModel {
             this.statusText = statusText;
         }
 
-        public Player getPlayer() {
+        public AbstractPlayer getPlayer() {
             return player;
         }
 

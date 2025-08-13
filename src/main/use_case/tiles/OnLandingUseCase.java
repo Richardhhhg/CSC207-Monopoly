@@ -1,6 +1,6 @@
 package main.use_case.tiles;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.AbstractTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
@@ -33,7 +33,7 @@ public class OnLandingUseCase {
      * @param player the player who landed on the tile
      * @param tile   the tile the player landed on
      */
-    public void execute(Player player, AbstractTile tile) {
+    public void execute(AbstractPlayer player, AbstractTile tile) {
         if (tile instanceof PropertyTile) {
             final PropertyTile property = (PropertyTile) tile;
             handlePropertyLanding(player, property);
@@ -43,7 +43,7 @@ public class OnLandingUseCase {
         }
     }
 
-    private void handlePropertyLanding(Player player, PropertyTile property) {
+    private void handlePropertyLanding(AbstractPlayer player, PropertyTile property) {
         if (!property.isOwned()) {
             // Property is unowned - trigger purchase flow
             propertyPurchaseUseCase.execute(player, property);
@@ -58,7 +58,7 @@ public class OnLandingUseCase {
         // If player owns the property, nothing happens
     }
 
-    private void handleStockMarketTileLanding(Player player) {
+    private void handleStockMarketTileLanding(AbstractPlayer player) {
         final StockMarketView stockMarketView = new StockMarketView(player, true);
         stockMarketView.setVisible(true);
     }
