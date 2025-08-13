@@ -1,10 +1,23 @@
 package main.view;
 
-import main.entity.tiles.PropertyTile;
-import main.entity.players.Player;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Frame;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
+import main.entity.players.Player;
+import main.entity.tiles.PropertyTile;
 
 /**
  * Modal dialog prompting the user to buy an unowned PropertyTile.
@@ -12,12 +25,26 @@ import java.awt.*;
  */
 public class BuyPropertyPopup extends JDialog {
 
-    /**
-     * Callback interface for communicating purchase results back to the caller
-     */
-    public interface PurchaseResultCallback {
-        void onPurchaseCompleted(boolean success, String message);
-    }
+    private static final String FONT_NAME = "Arial";
+    private static final int SMALL_PADDING = 10;
+    private static final int MEDIUM_PADDING = 15;
+    private static final int LARGE_PADDING = 20;
+    private static final int MESSAGE_WIDTH = 280;
+    private static final int STANDARD_FONT_SIZE = 14;
+    private static final int LARGE_FONT_SIZE = 16;
+    private static final int DIALOG_WIDTH = 320;
+    private static final int MESSAGE_HEIGHT = 180;
+    private static final int INFO_HEIGHT = 80;
+    private static final int BUTTON_SIZE = 100;
+    private static final int BUTTON_HEIGHT = 40;
+    private static final int MIN_DIALOG_SIZE = 400;
+    private static final int MIN_DIALOG_HEIGHT = 390;
+    private static final int SUCCESS_COLOR_GREEN = 120;
+    private static final int RED = 255;
+    private static final int LIGHT_COLOR_VALUE = 230;
+    private static final int BORDER_WIDTH = 2;
+    private static final int ERROR_DELAY = 4000;
+    private static final int SUCCESS_DELAY = 2000;
 
     private JLabel infoLabel;
     private JButton yesButton;
@@ -27,6 +54,8 @@ public class BuyPropertyPopup extends JDialog {
     private final PurchaseResultCallback callback;
 
     /**
+     * Constructor for creating a BuyPropertyPopup dialog.
+     *
      * @param owner      parent frame for centering
      * @param player     the current player attempting purchase
      * @param property   the PropertyTile being purchased
@@ -43,7 +72,7 @@ public class BuyPropertyPopup extends JDialog {
         this.property = property;
         this.callback = callback;
 
-        initializeUI();
+        initializeUserInterface();
         setupEventHandlers();
 
         pack();
@@ -52,53 +81,53 @@ public class BuyPropertyPopup extends JDialog {
         setVisible(true);
     }
 
-    private void initializeUI() {
-        setLayout(new BorderLayout(15, 15));
+    /**
+     * Initializes the user interface components.
+     */
+    private void initializeUserInterface() {
+        setLayout(new BorderLayout(MEDIUM_PADDING, MEDIUM_PADDING));
 
-        // Add padding around the entire dialog
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        final JPanel mainPanel = new JPanel(new BorderLayout(SMALL_PADDING, SMALL_PADDING));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(
+                LARGE_PADDING, LARGE_PADDING, LARGE_PADDING, LARGE_PADDING));
 
-        // Main message with better spacing
-        JLabel messageLabel = new JLabel(
-                "<html><center>" +
-                        "<div style='width: 280px; text-align: center;'>" +
-                        "Would you like to buy<br><br>" +
-                        "<b style='font-size: 16px;'>" + property.getName() + "</b><br><br>" +
-                        "for <b style='font-size: 14px; color: #006600;'>$" + (int)property.getPrice() + "</b>?<br><br>" +
-                        "<hr><br>" +
-                        "Your current balance: <b>$" + (int)player.getMoney() + "</b>" +
-                        "</div>" +
-                        "</center></html>",
+        final JLabel messageLabel = new JLabel(
+                "<html><center>"
+                        + "<div style='width: " + MESSAGE_WIDTH + "px; text-align: center;'>"
+                        + "Would you like to buy<br><br>"
+                        + "<b style='font-size: " + LARGE_FONT_SIZE + "px;'>" + property.getName() + "</b><br><br>"
+                        + "for <b style='font-size: " + STANDARD_FONT_SIZE + "px; color: #006600;'>$"
+                        + property.getPrice() + "</b>?<br><br>"
+                        + "<hr><br>"
+                        + "Your current balance: <b>$" + (int) player.getMoney() + "</b>"
+                        + "</div>"
+                        + "</center></html>",
                 SwingConstants.CENTER
         );
-        messageLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        messageLabel.setPreferredSize(new Dimension(320, 180));
+        messageLabel.setFont(new Font(FONT_NAME, Font.PLAIN, STANDARD_FONT_SIZE));
+        messageLabel.setPreferredSize(new Dimension(DIALOG_WIDTH, MESSAGE_HEIGHT));
         mainPanel.add(messageLabel, BorderLayout.NORTH);
 
-        // Status label for feedback - make it very visible
         infoLabel = new JLabel(" ");
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        infoLabel.setPreferredSize(new Dimension(320, 60));
+        infoLabel.setFont(new Font(FONT_NAME, Font.BOLD, LARGE_FONT_SIZE));
+        infoLabel.setPreferredSize(new Dimension(DIALOG_WIDTH, INFO_HEIGHT));
         infoLabel.setOpaque(true);
         infoLabel.setBackground(Color.WHITE);
         infoLabel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 2),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                BorderFactory.createLineBorder(Color.GRAY, BORDER_WIDTH),
+                BorderFactory.createEmptyBorder(SMALL_PADDING, SMALL_PADDING, SMALL_PADDING, SMALL_PADDING)
         ));
         mainPanel.add(infoLabel, BorderLayout.CENTER);
 
-        // Button panel with better spacing
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
+        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, LARGE_PADDING, MEDIUM_PADDING));
         yesButton = new JButton("Yes");
         noButton = new JButton("No");
 
-        // Make buttons larger and more appealing
-        yesButton.setPreferredSize(new Dimension(100, 40));
-        noButton.setPreferredSize(new Dimension(100, 40));
-        yesButton.setFont(new Font("Arial", Font.BOLD, 16));
-        noButton.setFont(new Font("Arial", Font.BOLD, 16));
+        yesButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_HEIGHT));
+        noButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_HEIGHT));
+        yesButton.setFont(new Font(FONT_NAME, Font.BOLD, LARGE_FONT_SIZE));
+        noButton.setFont(new Font(FONT_NAME, Font.BOLD, LARGE_FONT_SIZE));
 
         buttonPanel.add(yesButton);
         buttonPanel.add(noButton);
@@ -106,15 +135,14 @@ public class BuyPropertyPopup extends JDialog {
 
         add(mainPanel, BorderLayout.CENTER);
 
-        // Set minimum size for the dialog
-        setMinimumSize(new Dimension(400, 370));
-        setPreferredSize(new Dimension(400, 370));
+        setMinimumSize(new Dimension(MIN_DIALOG_SIZE, MIN_DIALOG_HEIGHT));
+        setPreferredSize(new Dimension(MIN_DIALOG_SIZE, MIN_DIALOG_HEIGHT));
     }
 
     private void setupEventHandlers() {
-        yesButton.addActionListener(e -> handlePurchaseAttempt());
+        yesButton.addActionListener(actionEvent -> handlePurchaseAttempt());
 
-        noButton.addActionListener(e -> {
+        noButton.addActionListener(actionEvent -> {
             if (callback != null) {
                 callback.onPurchaseCompleted(false, "Purchase declined by player");
             }
@@ -123,55 +151,52 @@ public class BuyPropertyPopup extends JDialog {
     }
 
     private void handlePurchaseAttempt() {
-        // Validate purchase conditions
-
         if (player.getMoney() < property.getPrice()) {
-            float needed = property.getPrice() - player.getMoney();
-            showMessage("<html><center>Insufficient funds!<br>You need $" + (int)needed + " more.</center></html>", Color.RED, true);
-            return;
+            final float needed = property.getPrice() - player.getMoney();
+            showMessage("<html><center>Insufficient funds!<br>You need $"
+                    + (int) needed + " more.</center></html>", Color.RED, true);
         }
-
-        // Attempt the purchase
-        boolean success = property.attemptPurchase(player);
-        if (success) {
-            showMessage("Purchase successful!", new Color(0, 120, 0), false);
-            if (callback != null) {
-                callback.onPurchaseCompleted(true,
-                        player.getName() + " purchased " + property.getName() + " for $" + (int)property.getPrice());
+        else {
+            final boolean success = property.attemptPurchase(player);
+            if (success) {
+                showMessage("Purchase successful!", new Color(0, SUCCESS_COLOR_GREEN, 0), false);
+                if (callback != null) {
+                    callback.onPurchaseCompleted(true,
+                            player.getName() + " purchased " + property.getName() + " for $"
+                                    + property.getPrice());
+                }
             }
-        } else {
-            showMessage("Purchase failed!", Color.RED, true);
-            if (callback != null) {
-                callback.onPurchaseCompleted(false, "Purchase failed due to unknown error");
+            else {
+                showMessage("Purchase failed!", Color.RED, true);
+                if (callback != null) {
+                    callback.onPurchaseCompleted(false, "Purchase failed due to unknown error");
+                }
             }
         }
     }
 
     private void showMessage(String message, Color textColor, boolean isError) {
-        // Set the message and color
         infoLabel.setText(message);
         infoLabel.setForeground(textColor);
 
-        // Set background color based on message type
         if (isError) {
-            infoLabel.setBackground(new Color(255, 230, 230)); // Light red
+            infoLabel.setBackground(new Color(RED, LIGHT_COLOR_VALUE, LIGHT_COLOR_VALUE));
             infoLabel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.RED, 2),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                    BorderFactory.createLineBorder(Color.RED, BORDER_WIDTH),
+                    BorderFactory.createEmptyBorder(SMALL_PADDING, SMALL_PADDING, SMALL_PADDING, SMALL_PADDING)
             ));
-        } else {
-            infoLabel.setBackground(new Color(230, 255, 230)); // Light green
+        }
+        else {
+            infoLabel.setBackground(new Color(LIGHT_COLOR_VALUE, RED, LIGHT_COLOR_VALUE));
             infoLabel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(0, 120, 0), 2),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                    BorderFactory.createLineBorder(new Color(0, SUCCESS_COLOR_GREEN, 0), BORDER_WIDTH),
+                    BorderFactory.createEmptyBorder(SMALL_PADDING, SMALL_PADDING, SMALL_PADDING, SMALL_PADDING)
             ));
         }
 
-        // Disable buttons
         yesButton.setEnabled(false);
         noButton.setEnabled(false);
 
-        // Force immediate update - use multiple approaches to ensure visibility
         SwingUtilities.invokeLater(() -> {
             infoLabel.revalidate();
             infoLabel.repaint();
@@ -179,20 +204,44 @@ public class BuyPropertyPopup extends JDialog {
             this.repaint();
         });
 
-        // Schedule dialog close
-        int delay = isError ? 4000 : 2000; // Error messages stay longer
-        Timer closeTimer = new Timer(delay, e -> dispose());
+        final int delay;
+        if (isError) {
+            delay = ERROR_DELAY;
+        }
+        else {
+            delay = SUCCESS_DELAY;
+        }
+        final Timer closeTimer = new Timer(delay, timerEvent -> dispose());
         closeTimer.setRepeats(false);
         closeTimer.start();
     }
 
     /**
-     * Static factory method for creating purchase dialogs
+     * Static factory method for creating purchase dialogs.
+     *
+     * @param parent   the parent frame for centering
+     * @param player   the current player attempting purchase
+     * @param property the PropertyTile being purchased
+     * @param callback callback to notify about purchase results
      */
     public static void showPurchaseDialog(Frame parent, Player player, PropertyTile property,
                                           PurchaseResultCallback callback) {
-        SwingUtilities.invokeLater(() ->
-                new BuyPropertyPopup(parent, player, property, callback));
+        SwingUtilities.invokeLater(() -> {
+            new BuyPropertyPopup(parent, player, property, callback);
+        });
     }
 
+    /**
+     * Callback interface for communicating purchase results back to the caller.
+     */
+    public interface PurchaseResultCallback {
+
+        /**
+         * Called when the purchase attempt is completed.
+         *
+         * @param success true if the purchase was successful, false otherwise
+         * @param message a message providing additional context about the result
+         */
+        void onPurchaseCompleted(boolean success, String message);
+    }
 }

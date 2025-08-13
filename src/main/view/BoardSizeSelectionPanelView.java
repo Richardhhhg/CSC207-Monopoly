@@ -19,12 +19,12 @@ import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
  * A panel for board size selection.
  */
 public class BoardSizeSelectionPanelView extends JPanel {
-
+    
     private static final int VERTICAL_SPACING = 10;
     private static final int RED = 173;
     private static final int GREEN = 216;
     private static final int BLUE = 230;
-
+    
     private final BoardSizeController controller;
     private final BoardSizeViewModel viewModel;
 

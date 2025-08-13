@@ -7,14 +7,13 @@ import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
  * Contains data needed by the view layer.
  */
 public class BoardSizeViewModel {
+
+    private static final String BUTTON_TEXT = " tiles)";
     private BoardSize selectedBoardSize;
-    private String message;
-    private boolean isValid;
 
     public BoardSizeViewModel() {
-        this.selectedBoardSize = BoardSize.MEDIUM; // Default
-        this.isValid = true;
-        this.message = "";
+        // Default board size is MEDIUM
+        this.selectedBoardSize = BoardSize.MEDIUM;
     }
 
     public BoardSize getSelectedBoardSize() {
@@ -25,34 +24,15 @@ public class BoardSizeViewModel {
         this.selectedBoardSize = selectedBoardSize;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
     public String getSmallButtonText() {
-        return "Small (" + BoardSize.SMALL.getTileCount() + " tiles)";
+        return "Small (" + BoardSize.SMALL.getTileCount() + BUTTON_TEXT;
     }
 
     public String getMediumButtonText() {
-        return "Medium (" + BoardSize.MEDIUM.getTileCount() + " tiles)";
+        return "Medium (" + BoardSize.MEDIUM.getTileCount() + BUTTON_TEXT;
     }
 
     public String getLargeButtonText() {
-        return "Large (" + BoardSize.LARGE.getTileCount() + " tiles)";
+        return "Large (" + BoardSize.LARGE.getTileCount() + BUTTON_TEXT;
     }
 }
-
-
-

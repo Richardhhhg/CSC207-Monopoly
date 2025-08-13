@@ -93,7 +93,7 @@ public class GameView extends JFrame{
     }
 
     private void drawButtonPanel() {
-        buttonPanelView = new ButtonPanelView(game,
+        buttonPanelView = new ButtonPanelView(
                 () -> {
                     handleRollDice();
                     repaint();
