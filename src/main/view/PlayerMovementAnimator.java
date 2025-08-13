@@ -1,12 +1,15 @@
 package main.view;
 
-import main.entity.players.Player;
 import javax.swing.Timer;
+
+import main.entity.players.Player;
 
 /**
  * PlayerMovementAnimator handles the animation of player movement across the board.
  */
 public class PlayerMovementAnimator {
+
+    private static final int MOVE_DELAY_MS = 300;
 
     /**
      * Animates player movement step by step.
@@ -18,23 +21,29 @@ public class PlayerMovementAnimator {
      */
     public void animatePlayerMovement(Player player, int steps, int tileCount,
                                       Runnable onMoveStep, Runnable onComplete) {
-        Timer moveTimer = new Timer(300, null);
+        final Timer moveTimer = new Timer(MOVE_DELAY_MS, null);
         final int[] movesLeft = {steps};
 
-        moveTimer.addActionListener(e -> {
-            if (movesLeft[0] > 0) {
-                int newPosition = (player.getPosition() + 1) % tileCount;
-                player.setPosition(newPosition);
-                movesLeft[0]--;
-
-                // Trigger repaint
-                onMoveStep.run();
-            } else {
-                ((Timer) e.getSource()).stop();
-                // Animation complete
-                onComplete.run();
-            }
+        moveTimer.addActionListener(actionEvent -> {
+            handleMovementStep(player, tileCount, onMoveStep, onComplete, moveTimer, movesLeft);
         });
         moveTimer.start();
+    }
+
+    private void handleMovementStep(Player player, int tileCount, Runnable onMoveStep,
+                                    Runnable onComplete, Timer moveTimer, int[] movesLeft) {
+        if (movesLeft[0] > 0) {
+            final int newPosition = (player.getPosition() + 1) % tileCount;
+            player.setPosition(newPosition);
+            movesLeft[0]--;
+
+            // Trigger repaint
+            onMoveStep.run();
+        }
+        else {
+            moveTimer.stop();
+            // Animation complete
+            onComplete.run();
+        }
     }
 }

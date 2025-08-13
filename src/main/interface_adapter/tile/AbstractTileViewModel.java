@@ -1,9 +1,9 @@
 package main.interface_adapter.tile;
 
-public abstract class TileViewModel {
-    protected String name;
+public abstract class AbstractTileViewModel {
+    private final String name;
 
-    public TileViewModel(String name) {
+    public AbstractTileViewModel(String name) {
         this.name = name;
     }
 

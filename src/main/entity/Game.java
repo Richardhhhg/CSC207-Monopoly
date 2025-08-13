@@ -9,12 +9,12 @@ import java.util.List;
 import main.entity.stocks.Stock;
 import main.entity.players.CharacterFactory;
 import main.entity.players.Player;
-import main.entity.tiles.Tile;
+import main.entity.tiles.AbstractTile;
 import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
 
 public class Game {
-    private List<Tile> tiles;
+    private List<AbstractTile> tiles;
     private List<Player> players;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
@@ -94,14 +94,14 @@ public class Game {
      * @param position Board position
      * @return The PropertyTile at that position
      */
-    public Tile getPropertyAt(int position) {
+    public AbstractTile getPropertyAt(int position) {
         if (position >= 0 && position < tiles.size()) {
             return tiles.get(position);
         }
         return null;
     }
 
-    public List<Tile> getTiles() {
+    public List<AbstractTile> getTiles() {
         return tiles;
     }
 
@@ -196,7 +196,7 @@ public class Game {
         this.gameEndReason = message != null && !message.isEmpty() ? message : "Game Over";
     }
 
-    public void setTiles(List<Tile> tiles) {
+    public void setTiles(List<AbstractTile> tiles) {
         if (tiles != null && !tiles.isEmpty()) {
             this.tiles = tiles;
             this.tileCount = tiles.size();

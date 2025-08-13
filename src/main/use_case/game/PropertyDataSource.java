@@ -7,10 +7,15 @@ import java.util.List;
  * Follows Dependency Inversion Principle - use case depends on abstraction, not concrete implementation.
  */
 public interface PropertyDataSource {
+    /**
+     * Retrieves the list of property data.
+     *
+     * @return list of PropertyInfo objects containing property details
+     */
     List<PropertyInfo> getPropertyData();
 
     /**
-     * Data structure for property information
+     * Data structure for property information.
      */
     class PropertyInfo {
         private final String name;
@@ -21,7 +26,12 @@ public interface PropertyDataSource {
             this.basePrice = basePrice;
         }
 
-        public String getName() { return name; }
-        public int getBasePrice() { return basePrice; }
+        public String getName() {
+            return name;
+        }
+
+        public int getBasePrice() {
+            return basePrice;
+        }
     }
 }
