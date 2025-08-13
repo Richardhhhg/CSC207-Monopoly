@@ -57,7 +57,7 @@ public class CharacterSelectionScreen extends JFrame {
     private final CharacterSelectionScreenController controller;
     private final CharacterSelectionScreenViewModel viewModel;
     private final BoardSizeSelectionPanelView boardSizePanel;
-    private final GameCreationController gameCreationController;
+    private GameCreationController gameCreationController; // Remove final and initialization
     private final List<PlayerSelection> selections = new ArrayList<>();
 
     public CharacterSelectionScreen() {
@@ -76,7 +76,7 @@ public class CharacterSelectionScreen extends JFrame {
 
         // Create the board size panel as a separate component
         this.boardSizePanel = new BoardSizeSelectionPanelView(boardSizeController, boardSizeViewModel);
-        this.gameCreationController = new GameCreationController();
+        // Remove early initialization of gameCreationController
 
         initializeScreen();
     }
@@ -166,6 +166,11 @@ public class CharacterSelectionScreen extends JFrame {
                 return;
             }
             controller.confirmSelection();
+
+            // Lazy initialization of gameCreationController
+            if (gameCreationController == null) {
+                gameCreationController = new GameCreationController();
+            }
 
             // Use the board size panel to get the selected board size
             Game game = gameCreationController.createGameWithBoardSize(

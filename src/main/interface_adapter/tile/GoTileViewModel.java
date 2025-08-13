@@ -1,6 +1,6 @@
 package main.interface_adapter.tile;
 
-public class GoTileViewModel extends TileViewModel {
+public class GoTileViewModel extends AbstractTileViewModel {
     public GoTileViewModel() {
         super("Go");
     }

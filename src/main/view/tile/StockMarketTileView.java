@@ -5,13 +5,13 @@ import main.interface_adapter.tile.StockMarketTileViewModel;
 import javax.swing.*;
 import java.awt.*;
 
-public class StockMarketTileView extends TileView {
+public class StockMarketTileView extends AbstractTileView {
     public StockMarketTileView(StockMarketTileViewModel viewModel) {
         super(viewModel);
         this.setBackground(new Color(29, 145, 56, 128));
         this.setLayout(new BorderLayout());
 
-        mainLabel = new JLabel(this.name, SwingConstants.CENTER);
+        final JLabel mainLabel = new JLabel(this.getName(), SwingConstants.CENTER);
         mainLabel.setFont(mainLabel.getFont().deriveFont(Font.BOLD, 14f));
         mainLabel.setForeground(Color.WHITE);
         this.add(mainLabel, BorderLayout.CENTER);

@@ -5,7 +5,7 @@ import main.entity.tiles.PropertyTile;
 import main.entity.*;
 import main.constants.Constants;
 import main.entity.tiles.StockMarketTile;
-import main.entity.tiles.Tile;
+import main.entity.tiles.AbstractTile;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import main.use_case.tiles.OnLandingUseCase;
 import main.use_case.tiles.property.PropertyPurchaseUseCase;
 import main.use_case.tiles.property.RentPaymentUseCase;
 import main.view.tile.GoTileView;
-import main.view.tile.TileView;
+import main.view.tile.AbstractTileView;
 import main.view.tile.PropertyTileView;
 import main.view.tile.StockMarketTileView;
 import main.interface_adapter.tile.PropertyTileViewModel;
@@ -30,7 +30,7 @@ import java.awt.*;
 import java.util.Map;
 
 /**
- * BoardView is a JPanel that represents the main.view of the game board.
+ * BoardView is a JPanel that represents the main view of the game board.
  * Note: THIS IS NOT THE ENTIRE WINDOW, just the board itself.
  */
 public class BoardView extends JPanel {
@@ -42,7 +42,7 @@ public class BoardView extends JPanel {
     private final RentPaymentController rentPaymentController;
     private final OnLandingController onLandingController;
 
-    private final Map<String, TileView> tileViewMap = new HashMap<>();
+    private final Map<String, AbstractTileView> tileViewMap = new HashMap<>();
 
     public BoardView(Game game) {
         this.game = game;
@@ -80,25 +80,25 @@ public class BoardView extends JPanel {
         int startY = 8;
         int tilesPerSide = (game.getTiles().size()-4) / 4 + 2;
         int tileSize = Constants.BOARD_SIZE / tilesPerSide;
-        List<Tile> tiles = game.getTiles();
+        List<AbstractTile> tiles = game.getTiles();
 
         for (int i = 0; i < game.getTileCount(); i++) {
             Point pos = game.getTilePosition(i, startX, startY, tileSize);
-            TileView tileView = drawTile(tiles, i);
+            AbstractTileView abstractTileView = drawTile(tiles, i);
 
-            tileView.setBounds(pos.x, pos.y, tileSize, tileSize);
-            boardPanel.add(tileView);
+            abstractTileView.setBounds(pos.x, pos.y, tileSize, tileSize);
+            boardPanel.add(abstractTileView);
 
-            tileViewMap.put(tiles.get(i).getName(), tileView);
+            tileViewMap.put(tiles.get(i).getName(), abstractTileView);
         }
 
         add(boardPanel, BorderLayout.WEST);
     }
 
     @NotNull
-    private static TileView drawTile(List<Tile> tiles, int index) {
-        TileView tileView;
-        Tile tile = tiles.get(index);
+    private static AbstractTileView drawTile(List<AbstractTile> tiles, int index) {
+        AbstractTileView abstractTileView;
+        AbstractTile tile = tiles.get(index);
         if (tile instanceof PropertyTile property) {
             PropertyTileViewModel viewModel = new PropertyTileViewModel(
                     property.getName(),
@@ -107,21 +107,21 @@ public class BoardView extends JPanel {
                     property.getRent(),
                     property.isOwned() ? property.getOwner().getColor() : Color.WHITE
             );
-            tileView = new PropertyTileView(viewModel);
+            abstractTileView = new PropertyTileView(viewModel);
         } else if (tile instanceof StockMarketTile) {
             StockMarketTileViewModel viewModel = new StockMarketTileViewModel();
-            tileView = new StockMarketTileView(viewModel);
+            abstractTileView = new StockMarketTileView(viewModel);
         } else {
             GoTileViewModel viewModel = new GoTileViewModel();
-            tileView = new GoTileView(viewModel);
+            abstractTileView = new GoTileView(viewModel);
         }
-        return tileView;
+        return abstractTileView;
     }
 
     public void handleLandingOnTile() {
         Player currentPlayer = game.getCurrentPlayer();
         int position = currentPlayer.getPosition();
-        Tile tile = game.getPropertyAt(position);
+        AbstractTile tile = game.getPropertyAt(position);
 
         if (tile != null) {
             // Use OnLandingController to handle all tile landing logic
@@ -134,13 +134,13 @@ public class BoardView extends JPanel {
 
     private void checkForPresenterUpdates() {
         // Check for purchase dialog
-        PropertyViewModel.PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
+        final PropertyViewModel.PurchaseDialogViewModel purchaseDialog = propertyPresenter.getPurchaseDialogViewModel();
         if (purchaseDialog != null) {
-            PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
+            final PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
 
             // Find the actual player and property objects
-            Player player = findPlayerByName(purchaseDialog.playerName);
-            PropertyTile property = findPropertyByName(purchaseDialog.propertyName);
+            final Player player = findPlayerByName(purchaseDialog.getPlayerName());
+            final PropertyTile property = findPropertyByName(purchaseDialog.getPropertyName());
 
             propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, player, property, this);
             propertyPresenter.clearPurchaseDialog();
@@ -164,15 +164,15 @@ public class BoardView extends JPanel {
 
     public void updateAfterPropertyPurchased(PropertyViewModel.PropertyPurchasedViewModel viewModel) {
         if (viewModel != null) {
-            String propertyName = viewModel.propertyName;
-            TileView oldTile = tileViewMap.get(propertyName);
+            String propertyName = viewModel.getPropertyName();
+            AbstractTileView oldTile = tileViewMap.get(propertyName);
 
             if (oldTile != null) {
                 this.remove(oldTile); // remove old one
                 int tilePosition = getTilePosition(propertyName);
-                Tile tile = game.getPropertyAt(tilePosition);
+                AbstractTile tile = game.getPropertyAt(tilePosition);
 
-                TileView newTile = drawTile(game.getTiles(), tilePosition); // regenerate based on new state
+                AbstractTileView newTile = drawTile(game.getTiles(), tilePosition); // regenerate based on new state
                 Point pos = game.getTilePosition(tilePosition, 50, 8, Constants.BOARD_SIZE / ((game.getTiles().size() - 4) / 4 + 2));
                 newTile.setBounds(pos.x, pos.y, oldTile.getWidth(), oldTile.getHeight());
 
@@ -188,7 +188,7 @@ public class BoardView extends JPanel {
     }
 
     private int getTilePosition(String propertyName) {
-        Tile tile = findPropertyByName(propertyName);
+        AbstractTile tile = findPropertyByName(propertyName);
         if (tile != null) {
             return game.getTiles().indexOf(tile);
         }
