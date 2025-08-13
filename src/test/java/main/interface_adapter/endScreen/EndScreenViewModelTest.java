@@ -19,9 +19,16 @@ public class EndScreenViewModelTest {
     @Before
     public void setUp() {
         Player testPlayer = new Clerk("TestPlayer", Color.RED);
-        EndScreenViewModel.PlayerDisplayData playerData = new EndScreenViewModel.PlayerDisplayData(
-                testPlayer, 1, "1000.00", "2", "400.00", "300.00", "1700.00", "SOLVENT"
-        );
+        EndScreenViewModel.PlayerDisplayData playerData =
+                new EndScreenViewModel.PlayerDisplayData(
+                        testPlayer,
+                        1,
+                        "1000.00",   // moneyText
+                        "400.00",    // propertyValueText
+                        "300.00",    // stockValueText
+                        "1700.00",   // netWorthText
+                        "SOLVENT"    // statusText
+                );
 
         testDisplayData = Arrays.asList(playerData);
 
@@ -29,7 +36,7 @@ public class EndScreenViewModelTest {
                 "GAME OVER",
                 "Test end reason",
                 "Total Rounds Played: 15",
-                "🏆 WINNER: TestPlayer 🏆",
+                "WINNER: TestPlayer",
                 testDisplayData,
                 "New Game",
                 "Exit"
@@ -41,7 +48,7 @@ public class EndScreenViewModelTest {
         assertEquals("GAME OVER", viewModel.getGameOverTitle());
         assertEquals("Test end reason", viewModel.getGameEndReason());
         assertEquals("Total Rounds Played: 15", viewModel.getTotalRoundsText());
-        assertEquals("🏆 WINNER: TestPlayer 🏆", viewModel.getWinnerText());
+        assertEquals("WINNER: TestPlayer", viewModel.getWinnerText());
         assertEquals("New Game", viewModel.getNewGameButtonText());
         assertEquals("Exit", viewModel.getExitButtonText());
         assertEquals(1, viewModel.getPlayerDisplayData().size());
@@ -52,9 +59,7 @@ public class EndScreenViewModelTest {
         EndScreenViewModel.PlayerDisplayData playerData = testDisplayData.get(0);
 
         assertEquals("TestPlayer", playerData.getPlayer().getName());
-        assertEquals(1, playerData.getRank());
         assertEquals("1000.00", playerData.getMoneyText());
-        assertEquals("2", playerData.getPropertiesCountText());
         assertEquals("400.00", playerData.getPropertyValueText());
         assertEquals("300.00", playerData.getStockValueText());
         assertEquals("1700.00", playerData.getNetWorthText());
@@ -65,14 +70,19 @@ public class EndScreenViewModelTest {
     @Test
     public void testPlayerDisplayDataConstructor() {
         Player player = new Clerk("Alice", Color.BLUE);
-        EndScreenViewModel.PlayerDisplayData data = new EndScreenViewModel.PlayerDisplayData(
-                player, 2, "500.00", "1", "100.00", "200.00", "800.00", "BANKRUPT"
-        );
+        EndScreenViewModel.PlayerDisplayData data =
+                new EndScreenViewModel.PlayerDisplayData(
+                        player,
+                        2,
+                        "500.00",   // moneyText
+                        "100.00",   // propertyValueText
+                        "200.00",   // stockValueText
+                        "800.00",   // netWorthText
+                        "BANKRUPT"  // statusText
+                );
 
         assertEquals(player, data.getPlayer());
-        assertEquals(2, data.getRank());
         assertEquals("500.00", data.getMoneyText());
-        assertEquals("1", data.getPropertiesCountText());
         assertEquals("100.00", data.getPropertyValueText());
         assertEquals("200.00", data.getStockValueText());
         assertEquals("800.00", data.getNetWorthText());
@@ -86,19 +96,23 @@ public class EndScreenViewModelTest {
                 "GAME OVER", "No winner", "Rounds: 10", "",
                 testDisplayData, "New Game", "Exit"
         );
-
         assertEquals("", emptyWinnerViewModel.getWinnerText());
     }
 
     @Test
     public void testViewModelWithNullSafetyChecks() {
-        // Test that the view model can handle edge cases
         Player nullColorPlayer = new Clerk("NullTest", null);
-        EndScreenViewModel.PlayerDisplayData nullData = new EndScreenViewModel.PlayerDisplayData(
-                nullColorPlayer, 1, "0.00", "0", "0.00", "0.00", "0.00", "BANKRUPT"
-        );
+        EndScreenViewModel.PlayerDisplayData nullData =
+                new EndScreenViewModel.PlayerDisplayData(
+                        nullColorPlayer,
+                        1,
+                        "0.00",
+                        "0.00",
+                        "0.00",
+                        "0.00",
+                        "BANKRUPT"
+                );
 
-        // Should not throw exceptions
         assertNotNull(nullData.getPlayer());
         assertEquals("NullTest", nullData.getPlayer().getName());
         assertEquals("#1 - NullTest", nullData.getRankText());
