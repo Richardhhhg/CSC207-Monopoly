@@ -1,80 +1,60 @@
 # Accessibility Report
 
 ## Principle 1: Equitable Use
-**Current Features:**  
-Our program provides a consistent visual interface that all users interact with in the same way, with clear color-coding for property ownership and player identification. The game mechanics are standardized across all players without requiring different interfaces for different abilities.
+Our game provides a consistent visual interface for all players, with clear color-coding for property ownership and player identification. Rules and mechanics are applied uniformly across the game, ensuring that no player receives an advantage through interface differences. This creates an equal playing experience for all participants regardless of ability.
 
-**Future Improvements:**  
-We could implement alternative input methods such as keyboard navigation for users who cannot use a mouse, and provide audio cues or screen reader compatibility for visually impaired users. Text-to-speech functionality could announce game events and current player status.
+In the future, we could add alternative input methods such as keyboard navigation for players who cannot use a mouse. Audio cues and screen reader compatibility, including text-to-speech announcements for game events and player statuses, would further expand accessibility for users with visual impairments.
 
 ---
 
 ## Principle 2: Flexibility in Use
-**Current Features:**  
-Players can choose from different character types with unique abilities, allowing for varied gameplay strategies. The stock market feature provides multiple paths to victory beyond traditional property acquisition. Players can sell properties and stocks at different times during their turns, accommodating different play styles.
+The game allows players to choose from different character types with unique abilities, enabling a variety of strategies. The inclusion of a stock market mechanic offers an alternative path to victory beyond property ownership. Players can also sell properties and stocks at different points during their turn, which accommodates diverse play styles.
 
-**Future Improvements:**  
-We could add difficulty settings, customizable game rules (such as adjustable turn limits or starting money), and the ability to save/load games to accommodate users with different time constraints or cognitive processing speeds.
+Future updates could include difficulty settings, customizable rules such as adjustable turn limits and starting money, and save/load functionality. These features would better accommodate players with different skill levels, available time, and cognitive processing speeds.
 
 ---
 
 ## Principle 3: Simple and Intuitive Use
-**Current Features:**  
-The interface follows familiar Monopoly conventions with a traditional board layout that users already understand. Clear button labels ("Roll Dice", "End Turn", "Stock Market") and visual feedback through color-coded property ownership make the interface intuitive. The game automatically handles complex calculations like rent payments and stock price updates.
+The game uses familiar Monopoly conventions, including a traditional board layout, recognizable property colors, and clear button labels like “Roll Dice” and “End Turn.” Automated systems handle calculations such as rent payments and stock price updates, making the interface easy to use. Visual feedback from color-coded ownership and popup messages further helps guide player actions.
 
-**Future Improvements:**  
-We could add tutorials, help tooltips, and context-sensitive guidance to make the game even more accessible to new players. Visual indicators showing available actions during each turn phase would reduce confusion.
+To improve accessibility, we could add tutorials, in-game help tooltips, and context-sensitive prompts for new players. Visual indicators of available actions at each stage of a turn would help reduce confusion for less experienced users.
 
 ---
 
 ## Principle 4: Perceptible Information
-**Current Features:**  
-The program uses multiple methods to convey information: visual colors for player identification, text labels for all interactive elements, and popup dialogs for important events like property purchases. Different tile types (Go, Property, Stock Market) have distinct visual appearances.
+Information is presented through multiple channels, including color-coded tile ownership, text labels for interactive elements, and popup dialogs for key events like property purchases. Different tile types such as Go, Property, and Stock Market have distinct visual designs to help players quickly identify them. These cues work together to make the game’s state clear at all times.
 
-**Future Improvements:**  
-We could implement high contrast mode, scalable font sizes, and audio announcements for game events. Visual indicators could be supplemented with text descriptions, and important information could be presented redundantly through multiple sensory channels.
+In the future, we could add a high-contrast mode, adjustable font sizes, and audio announcements for major events. Presenting key information redundantly through visual and auditory channels would help ensure all players can access it regardless of sensory limitations.
 
 ---
 
 ## Principle 5: Tolerance for Error
-**Current Features:**  
-The game prevents invalid moves automatically (e.g., cannot buy properties without sufficient funds, cannot sell stocks the player doesn't own). Confirmation dialogs appear for major decisions like property purchases, allowing users to reconsider before committing to actions.
+The game automatically blocks invalid actions, such as attempting to buy a property without sufficient funds or selling stocks a player does not own. Confirmation dialogs are displayed before major irreversible decisions, such as purchasing property, giving players a chance to reconsider. These safeguards help prevent accidental mistakes.
 
-**Future Improvements:**  
-We could add an undo function for recent actions, save game states automatically to prevent data loss, and provide clearer warnings when players are about to make potentially poor financial decisions.
+We could expand these features with an undo function for recent actions and automatic saving to protect progress. Clearer warnings for potentially harmful financial decisions could also help less experienced players avoid unintended setbacks.
 
 ---
 
 ## Principle 6: Low Physical Effort
-**Current Features:**  
-The game requires minimal physical input — primarily mouse clicks on clearly defined buttons and interface elements. Turn-based gameplay means users can take their time without pressure from real-time constraints.
+The game requires minimal physical effort, with most interactions consisting of single mouse clicks on large, clearly labeled buttons. Its turn-based nature allows players to proceed at their own pace without the pressure of real-time gameplay. This makes it accessible to users who may have limited stamina or slower reaction times.
 
-**Future Improvements:**  
-We could implement keyboard shortcuts, voice commands, and adjustable interface element sizes to reduce the precision required for interaction. Auto-save functionality would eliminate the need for manual saving actions.
+Future improvements could include keyboard shortcuts, voice command functionality, and resizable interface elements to further reduce interaction effort. Auto-save features would also help minimize repetitive tasks.
 
 ---
 
 ## Principle 7: Size and Space for Approach and Use
-**Current Features:**  
-The interface is designed for standard computer screens with clearly separated interface elements. Buttons and clickable areas are reasonably sized for mouse interaction.
+The interface is designed for standard laptop screens, with well-spaced buttons and distinct interface sections. This ensures that interactive elements are easy to locate and select. The current layout is optimized for mouse input and works well for most desktop and laptop users.
 
-**Future Improvements:**  
-We could implement responsive design for different screen sizes, adjustable UI scaling, and ensure the interface works well on tablets and larger displays. Touch-friendly button sizes and spacing could be implemented for touchscreen devices.
+Future work could include implementing responsive design to support tablets, large monitors, and other display sizes. Touch-friendly button sizes and layouts would make the game more usable on touchscreen devices.
 
 ---
 
 ## Target Market
-If we were to market this program, our primary target would be **casual gaming enthusiasts and families who enjoy strategic board games**. This includes parents looking for engaging games to play with children aged 10 and up, college students seeking entertainment during social gatherings, and adults who have fond memories of playing traditional Monopoly but want a more dynamic, modernized experience.  
-
-The stock market feature particularly appeals to users interested in learning basic financial concepts in a low-stakes, gamified environment. Secondary markets would include educators who could use the game to teach economic principles, and digital board game communities who appreciate the convenience of not needing physical game pieces and the added features like real-time stock price integration.
+If marketed, our program would primarily target casual gaming enthusiasts, families, and board game fans who enjoy strategic play. This includes parents looking for engaging games to play with children aged ten and older, college students seeking social entertainment, and adults nostalgic for traditional Monopoly but interested in a modernized version. The stock market mechanic also appeals to users who want to learn about basic economic principles in a low-pressure, gamified setting. Secondary audiences could include educators using the game for classroom demonstrations and online gaming communities interested in digital board game adaptations. The portability of the program makes it suitable for home, classroom, or casual group play.
 
 ---
 
 ## Demographic Accessibility Concerns
-Our program may be less accessible to certain demographics, particularly older adults who may be less comfortable with computer interfaces and users with visual or motor impairments.  
+Our program may be less accessible to certain demographics, such as older adults unfamiliar with digital interfaces, users with visual or motor impairments, and those without access to a laptop or mouse. Color-coded indicators may be challenging for colorblind players, and the absence of multilingual support limits the game’s reach to non-English speakers. Additionally, the stock market feature, while educational, may intimidate players without prior financial knowledge, creating a barrier to full engagement. Players from lower socioeconomic backgrounds may face accessibility challenges if they lack the required hardware or internet connection. To address these issues, future updates could include screen reader compatibility, keyboard navigation, color-blind friendly palettes, multilingual support, and simplified game modes for players less familiar with financial systems.
 
-The reliance on mouse-based interaction and visual color-coding creates barriers for users with mobility limitations or colorblindness. Additionally, the game assumes a certain level of computer literacy and familiarity with digital interfaces, which may exclude users from lower socioeconomic backgrounds who have had less exposure to computer technology.  
-
-The stock market feature, while educational, might be intimidating or confusing to users without basic financial knowledge, potentially creating an educational barrier. Furthermore, the game currently lacks multilingual support, limiting accessibility for non-English speakers.  
-
-To address these concerns, future development should prioritize implementing accessibility features such as screen reader compatibility, keyboard navigation, color-blind friendly design, and simplified interface options.
+---
