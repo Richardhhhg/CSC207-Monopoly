@@ -1,0 +1,83 @@
+package main.use_case.game;
+
+import main.entity.Game;
+import main.entity.players.Player;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class GameMoveCurrentPlayerTest {
+
+    static class TestPlayer extends Player {
+        private int position;
+        private float money;
+
+        public TestPlayer(int position, float money) {
+            this.position = position;
+            this.money = money;
+        }
+
+        @Override
+        public int getPosition() {
+            return position;
+        }
+
+        @Override
+        public void addMoney(float amount) {
+            money += amount;
+        }
+
+        @Override
+        public float getMoney() {
+            return money;
+        }
+    }
+
+    static class TestGame extends Game {
+        private boolean gameEnded = false;
+        private TestPlayer player;
+        private int tileCount;
+
+        public TestGame(TestPlayer player, int tileCount) {
+            this.player = player;
+            this.tileCount = tileCount;
+        }
+
+        @Override
+        public boolean getGameEnded() {
+            return gameEnded;
+        }
+
+        @Override
+        public Player getCurrentPlayer() {
+            return player;
+        }
+
+        @Override
+        public int getTileCount() {
+            return tileCount;
+        }
+    }
+
+    @Test
+    void testFinishLineBonusAwarded() {
+        TestPlayer player = new TestPlayer(9, 100.0f);
+        TestGame game = new TestGame(player, 10);
+
+        GameMoveCurrentPlayer useCase = new GameMoveCurrentPlayer(game);
+        useCase.execute(2);
+
+        assertTrue(player.getMoney() > 100.0f, "Player should receive FINISH_LINE_BONUS");
+    }
+
+    @Test
+    void testNoBonusIfNotCrossedFinishLine() {
+        TestPlayer player = new TestPlayer(5, 100.0f);
+        TestGame game = new TestGame(player, 10);
+
+        GameMoveCurrentPlayer useCase = new GameMoveCurrentPlayer(game);
+        useCase.execute(2);
+
+        assertEquals(100.0f, player.getMoney(), "Player should not receive FINISH_LINE_BONUS");
+    }
+}
