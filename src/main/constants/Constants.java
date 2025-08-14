@@ -23,7 +23,7 @@ public class Constants {
 
     // GamePlay related constants
     public static final int MAX_ROUNDS = 20;
-    public static final int PLACEHOLDER_RENT = 50;
+    public static final float RENT_MULTIPLIER = 0.25f; // 25% of property price
     public static final int PROPERTY_BASE_PRICE = 60;
     public static final int PROPERTY_PRICE_INCREMENT = 20;
 

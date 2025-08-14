@@ -235,7 +235,7 @@ class GameInitializeTilesTest {
     }
 
     @Test
-    void testPropertyTilesUsePlaceholderRent() {
+    void testPropertyTilesUseCalculatedRent() {
         // Act
         List<AbstractTile> tiles = gameInitializeTiles.executeSmallBoard();
 
@@ -247,9 +247,35 @@ class GameInitializeTilesTest {
 
         assertFalse(propertyTiles.isEmpty(), "Should have property tiles");
 
-        // Check that rent is set to placeholder value
+        // Check that rent is calculated as 25% of property price
         PropertyTile firstProperty = propertyTiles.get(0);
-        assertEquals(Constants.PLACEHOLDER_RENT, firstProperty.getRent());
+        float expectedRent = 110 * Constants.RENT_MULTIPLIER; // Property1 has basePrice 110
+        assertEquals(expectedRent, firstProperty.getRent(), 0.01f);
+    }
+
+    @Test
+    void testPropertyTilesRentCalculation_MultipleProperties() {
+        // Act
+        List<AbstractTile> tiles = gameInitializeTiles.executeSmallBoard();
+
+        // Assert
+        List<PropertyTile> propertyTiles = tiles.stream()
+                .filter(tile -> tile instanceof PropertyTile)
+                .map(tile -> (PropertyTile) tile)
+                .toList();
+
+        assertFalse(propertyTiles.isEmpty(), "Should have property tiles");
+
+        // Check rent calculation for multiple properties
+        for (int i = 0; i < Math.min(3, propertyTiles.size()); i++) {
+            PropertyTile property = propertyTiles.get(i);
+            // Property basePrice is 100 + ((i+1) * 10) = 110, 120, 130...
+            int expectedBasePrice = 100 + ((i + 1) * 10);
+            float expectedRent = expectedBasePrice * Constants.RENT_MULTIPLIER;
+
+            assertEquals(expectedRent, property.getRent(), 0.01f,
+                    "Property " + property.getName() + " should have rent as 25% of base price");
+        }
     }
 
     @Test
@@ -321,6 +347,6 @@ class GameInitializeTilesTest {
         // The actual board size might be smaller if there's insufficient property data
         int actualBoardSize = (int) (goCount + propertyCount + stockMarketCount);
         assertTrue(actualBoardSize <= Constants.SMALL_BOARD_SIZE,
-                  "Actual board size should not exceed expected size");
+                "Actual board size should not exceed expected size");
     }
 }

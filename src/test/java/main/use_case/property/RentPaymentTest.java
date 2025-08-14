@@ -1,5 +1,6 @@
 package main.use_case.property;
 
+import main.constants.Constants;
 import main.entity.players.AbstractPlayer;
 import main.entity.players.DefaultPlayer;
 import main.entity.tiles.PropertyTile;
@@ -31,7 +32,9 @@ class RentPaymentTest {
 
     @BeforeEach
     void setUp() {
-        property = new PropertyTile("TestProperty", 500, 50.0f);
+        // Use calculated rent: 500 * 0.25f = 125.0f
+        float calculatedRent = 500 * Constants.RENT_MULTIPLIER;
+        property = new PropertyTile("TestProperty", 500, calculatedRent);
         presenter = new MockRentPaymentPresenter();
         rentPaymentUseCase = new RentPaymentUseCase(presenter);
     }
