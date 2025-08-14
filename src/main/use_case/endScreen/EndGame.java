@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import main.entity.stocks.Stock;
 import main.entity.players.AbstractPlayer;
+import main.entity.stocks.Stock;
 import main.entity.tiles.PropertyTile;
 
 public class EndGame {

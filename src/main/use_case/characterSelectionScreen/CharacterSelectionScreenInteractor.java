@@ -1,15 +1,14 @@
 package main.use_case.characterSelectionScreen;
 
-import static main.constants.Constants.MAX_NP_BAR;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.constants.Constants;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.CharacterFactory;
 import main.entity.players.NullPlayer;
-import main.entity.players.AbstractPlayer;
 
 /**
  * Interactor for the character selection use case.
@@ -62,7 +61,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
                 count++;
             }
         }
-        return count >= MAX_NP_BAR;
+        return count >= Constants.MAX_NP_BAR;
     }
 
     /**
@@ -81,7 +80,8 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
 
         final AbstractPlayer player = CharacterFactory.createPlayer(name, type, color);
         selectedPlayers.set(index, player);
-        final CharacterSelectionPlayerViewModel output = new CharacterSelectionPlayerViewModel(name, type, color, player.getPortrait());
+        final CharacterSelectionPlayerViewModel output = new
+                CharacterSelectionPlayerViewModel(name, type, color, player.getPortrait());
         presenter.preparePlayer(output, index);
     }
 }

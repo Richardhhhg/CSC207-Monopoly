@@ -11,6 +11,7 @@ public class DefaultStockInfoRepository implements StockRepository {
      * @return a StockInfoDataOutputObject containing sample stock data
      */
     public StockInfoDataOutputObject getStockInfo(String ticker) {
-        return new StockInfoDataOutputObject(ticker, Constants.DEFAULT_STOCK_PRICE, Constants.DEFAULT_STOCK_RETURN, Constants.DEFAULT_STOCK_STD_DEV);
+        return new StockInfoDataOutputObject(ticker, Constants.DEFAULT_STOCK_PRICE, Constants.DEFAULT_STOCK_RETURN,
+                Constants.DEFAULT_STOCK_STD_DEV);
     }
 }

@@ -51,9 +51,6 @@ public class PlayerStatsView extends JPanel {
         super.paintComponent(g);
 
         final List<DisplayPlayer> players = viewModel.getState().getPlayers();
-        if (players == null) {
-            return;
-        }
 
         final Graphics2D g2 = (Graphics2D) g;
         g2.setFont(new Font("ok", Font.PLAIN, FONT_SIZE));

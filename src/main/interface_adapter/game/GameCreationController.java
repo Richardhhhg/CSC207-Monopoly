@@ -1,5 +1,6 @@
 package main.interface_adapter.game;
 
+import java.io.IOException;
 import java.util.List;
 
 import main.entity.Game;
@@ -67,7 +68,12 @@ public class GameCreationController {
 
         // Initialize stocks
         final GameInitializeStocks stockInitializer = new GameInitializeStocks(game);
-        stockInitializer.execute();
+        try {
+            stockInitializer.execute();
+        }
+        catch (IOException | InterruptedException exception) {
+            throw new IllegalStateException("Failed to initialize stocks. Error: " + exception.getMessage(), exception);
+        }
 
         return game;
     }

@@ -1,12 +1,12 @@
 package main.use_case.game;
 
+import java.util.List;
+
 import main.entity.Game;
 import main.entity.players.AbstractPlayer;
 import main.entity.players.ApplyAfterEffects;
 import main.use_case.player.ApplyTurnEffects;
 import main.use_case.player.DeclareBankruptcy;
-
-import java.util.List;
 
 /**
  * This is a use case of game for advancing to the next turn.
@@ -22,12 +22,21 @@ public class GameNextTurn {
         this.declareBankruptcy = new DeclareBankruptcy();
     }
 
+    /**
+     * Executes the logic for advancing to the next turn in the game.
+     * This includes applying turn effects, checking for bankruptcy,
+     * and determining the next active player.
+     *
+     * @throws IllegalStateException if the game has already ended.
+     */
     public void execute() {
-        List<AbstractPlayer> players = game.getPlayers();
-        if (game.getGameEnded()) return;
+        final List<AbstractPlayer> players = game.getPlayers();
+        if (game.getGameEnded()) {
+            throw new IllegalStateException("Game has already ended");
+        }
 
-        int currentPlayerIndex = game.getCurrentPlayerIndex();
-        AbstractPlayer currentPlayer = players.get(currentPlayerIndex);
+        final int currentPlayerIndex = game.getCurrentPlayerIndex();
+        final AbstractPlayer currentPlayer = players.get(currentPlayerIndex);
 
         // Apply turn effects for the current player
         if (currentPlayer instanceof ApplyAfterEffects) {
@@ -42,23 +51,16 @@ public class GameNextTurn {
         game.increaseTurn();
 
         // Find the next non-bankrupt player
-        int nextIndex = findNextActivePlayer(currentPlayerIndex);
-
-        if (nextIndex == -1) {
-            // All players are bankrupt
-            game.endGame("All players are bankrupt");
-            game.setCurrentPlayerIndex(-1);
-            return;
-        }
+        final int nextIndex = findNextActivePlayer(currentPlayerIndex);
 
         // Check if we've completed a full round BEFORE setting the next player
-        boolean roundComplete = game.isRoundComplete(nextIndex);
+        final boolean roundComplete = game.isRoundComplete(nextIndex);
 
         game.setCurrentPlayerIndex(nextIndex);
 
         // If round is complete, handle round transition
         if (roundComplete) {
-            GameNextRound nextRound = new GameNextRound(game);
+            final GameNextRound nextRound = new GameNextRound(game);
             nextRound.execute();
 
             // Start a new round with the current next player
@@ -66,12 +68,15 @@ public class GameNextTurn {
         }
 
         // Check for game-ending conditions
-        GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
+        final GameCheckBankrupt checkBankrupt = new GameCheckBankrupt(game);
         checkBankrupt.execute();
     }
 
     /**
-     * Find the next active (non-bankrupt) player in turn order
+     * Find the next active (non-bankrupt) player in turn order.
+     *
+     * @param currentPlayerIndex the index of the current player
+     * @return the index of the next active player, or -1 if no active players remain
      */
     private int findNextActivePlayer(int currentPlayerIndex) {
         return game.findNextActivePlayerFrom(currentPlayerIndex);
