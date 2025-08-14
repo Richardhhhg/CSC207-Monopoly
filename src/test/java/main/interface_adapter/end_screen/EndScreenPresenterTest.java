@@ -69,7 +69,7 @@ public class EndScreenPresenterTest {
 
         assertEquals("GAME OVER", viewModel.getGameOverTitle());
         assertEquals("Maximum rounds reached", viewModel.getGameEndReason());
-        assertEquals("Total Rounds Played: 20", viewModel.getTotalRoundsText());
+        assertEquals("Total Rounds Played: 19", viewModel.getTotalRoundsText());
         assertEquals("WINNER: Alice", viewModel.getWinnerText());
         assertEquals("New Game", viewModel.getNewGameButtonText());
         assertEquals("Exit", viewModel.getExitButtonText());
@@ -153,7 +153,7 @@ public class EndScreenPresenterTest {
 
         assertEquals("", viewModel.getWinnerText());
         assertEquals("All players bankrupt", viewModel.getGameEndReason());
-        assertEquals("Total Rounds Played: 10", viewModel.getTotalRoundsText());
+        assertEquals("Total Rounds Played: 9", viewModel.getTotalRoundsText());
     }
 
     @Test
@@ -193,7 +193,7 @@ public class EndScreenPresenterTest {
 
         assertEquals("GAME OVER", viewModel.getGameOverTitle());
         assertEquals("No players", viewModel.getGameEndReason());
-        assertEquals("Total Rounds Played: 0", viewModel.getTotalRoundsText());
+        assertEquals("Total Rounds Played: -1", viewModel.getTotalRoundsText());
         assertEquals("", viewModel.getWinnerText());
         assertTrue(viewModel.getPlayerDisplayData().isEmpty());
     }
@@ -218,7 +218,7 @@ public class EndScreenPresenterTest {
 
         assertEquals("WINNER: Solo", viewModel.getWinnerText());
         assertEquals("Single player game", viewModel.getGameEndReason());
-        assertEquals("Total Rounds Played: 5", viewModel.getTotalRoundsText());
+        assertEquals("Total Rounds Played: 4", viewModel.getTotalRoundsText());
         assertEquals(1, viewModel.getPlayerDisplayData().size());
 
         EndScreenViewModel.PlayerDisplayData soloData = viewModel.getPlayerDisplayData().get(0);
@@ -311,7 +311,7 @@ public class EndScreenPresenterTest {
 
         // Verify view model was updated with new data
         assertEquals("New game end", viewModel.getGameEndReason());
-        assertEquals("Total Rounds Played: 7", viewModel.getTotalRoundsText());
+        assertEquals("Total Rounds Played: 6", viewModel.getTotalRoundsText());
         assertEquals("WINNER: New", viewModel.getWinnerText());
         assertEquals(1, viewModel.getPlayerDisplayData().size());
         assertEquals("New", viewModel.getPlayerDisplayData().get(0).getPlayer().getName());

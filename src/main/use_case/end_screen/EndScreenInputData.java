@@ -50,6 +50,6 @@ public class EndScreenInputData {
      * @return the total rounds played
      */
     public int getTotalRounds() {
-        return totalRounds - 1;
+        return totalRounds;
     }
 }

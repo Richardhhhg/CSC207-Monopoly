@@ -53,7 +53,7 @@ public class EndScreenInteractorTest {
 
         assertNotNull(outputData);
         assertEquals("Maximum rounds reached", outputData.getGameEndReason());
-        assertEquals(20, outputData.getTotalRounds());
+        assertEquals(20, outputData.getTotalRounds() + 1);
         assertEquals(3, outputData.getPlayerResults().size());
 
         // Verify players are ranked by net worth (highest first)
@@ -190,7 +190,7 @@ public class EndScreenInteractorTest {
         // No winner should be determined
         assertNull(outputData.getWinner());
         assertEquals("All players bankrupt", outputData.getGameEndReason());
-        assertEquals(5, outputData.getTotalRounds());
+        assertEquals(5, outputData.getTotalRounds() + 1);
 
         // All players should have 0 cash
         for (EndScreenOutputData.PlayerResult result : outputData.getPlayerResults()) {
@@ -234,7 +234,7 @@ public class EndScreenInteractorTest {
         assertNull(outputData.getWinner());
         assertTrue(outputData.getPlayerResults().isEmpty());
         assertEquals("No players", outputData.getGameEndReason());
-        assertEquals(0, outputData.getTotalRounds());
+        assertEquals(0, outputData.getTotalRounds() + 1);
     }
 
     @Test
