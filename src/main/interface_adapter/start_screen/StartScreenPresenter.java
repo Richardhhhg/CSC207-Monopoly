@@ -1,21 +1,26 @@
 package main.interface_adapter.start_screen;
 
-import main.use_case.start_screen.StartGame;
+import main.use_case.start_screen.StartScreenOutputBoundary;
+import main.use_case.start_screen.StartScreenOutputData;
 
-public class StartScreenPresenter {
+public class StartScreenPresenter implements StartScreenOutputBoundary {
+    private StartScreenViewModel viewModel;
 
-    /**
-     * Transforms the game-start result into a view model.
-     *
-     * @param result the result of the start-game use case, must not be null
-     * @return a {@link StartScreenViewModel} populated with welcome message, rules, and button labels
-     */
-    public StartScreenViewModel execute(StartGame.StartGameResult result) {
-        return new StartScreenViewModel(
-                result.getWelcomeMessage(),
-                result.getRules(),
+    public StartScreenPresenter() {
+        // Initialize with default empty view model
+    }
+
+    @Override
+    public void presentStartScreenData(StartScreenOutputData outputData) {
+        this.viewModel = new StartScreenViewModel(
+                outputData.getWelcomeMessage(),
+                outputData.getRules(),
                 "Start Game",
                 "Rules"
         );
+    }
+
+    public StartScreenViewModel getViewModel() {
+        return viewModel;
     }
 }
