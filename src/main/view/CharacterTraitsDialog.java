@@ -29,7 +29,7 @@ public class CharacterTraitsDialog extends JDialog {
 
         final JPanel buttons = new JPanel();
         final JButton close = new JButton("Close");
-        close.addActionListener(e -> dispose());
+        close.addActionListener(event -> dispose());
         buttons.add(close);
 
         add(scroll, BorderLayout.CENTER);

@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import main.constants.Constants;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.interface_adapter.endScreen.EndScreenController;
 import main.interface_adapter.endScreen.EndScreenPresenter;
 import main.interface_adapter.endScreen.EndScreenViewModel;
@@ -32,12 +32,12 @@ public class EndScreen extends JFrame {
     private final EndScreenController controller;
     private EndScreenViewModel viewModel;
 
-    public EndScreen(List<Player> players, String gameEndReason, int totalRounds) {
+    public EndScreen(List<AbstractPlayer> players, String gameEndReason, int totalRounds) {
         this.controller = new EndScreenController();
         initializeEndScreen(players, gameEndReason, totalRounds);
     }
 
-    private void initializeEndScreen(List<Player> players, String gameEndReason, int totalRounds) {
+    private void initializeEndScreen(List<AbstractPlayer> players, String gameEndReason, int totalRounds) {
         final EndGame.EndGameResult result =
                 controller.execute(players, gameEndReason, totalRounds);
         final EndScreenPresenter presenter = new EndScreenPresenter();

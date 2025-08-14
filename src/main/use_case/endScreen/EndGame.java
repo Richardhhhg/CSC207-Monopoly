@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
-import main.entity.players.Player;
 import main.entity.tiles.PropertyTile;
 
 public class EndGame {
@@ -19,15 +19,15 @@ public class EndGame {
      * @param totalRounds   total rounds played
      * @return an {@link EndGameResult} containing per-player results and winner info
      */
-    public EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
+    public EndGameResult execute(List<AbstractPlayer> players, String gameEndReason, int totalRounds) {
         final List<PlayerResult> playerResults = new ArrayList<>();
 
         // Sort players by total net worth (cash + properties + current stock values) for ranking
-        final List<Player> sortedPlayers = new ArrayList<>(players);
+        final List<AbstractPlayer> sortedPlayers = new ArrayList<>(players);
         sortedPlayers.sort(Comparator.comparingDouble(this::calculateNetWorth).reversed());
 
         for (int i = 0; i < sortedPlayers.size(); i++) {
-            final Player player = sortedPlayers.get(i);
+            final AbstractPlayer player = sortedPlayers.get(i);
             final float finalCash = player.getMoney();
             final float totalPropertyValue = calculateTotalPropertyValue(player);
             final float stockValue = calculateTotalStockValue(player);
@@ -43,7 +43,7 @@ public class EndGame {
             ));
         }
 
-        final Player winner = determineWinner(players);
+        final AbstractPlayer winner = determineWinner(players);
 
         return new EndGameResult(
                 playerResults,
@@ -59,7 +59,7 @@ public class EndGame {
      * @param player the player whose net worth is calculated
      * @return the player's net worth as a double
      */
-    private double calculateNetWorth(Player player) {
+    private double calculateNetWorth(AbstractPlayer player) {
         return player.getMoney() + calculateTotalPropertyValue(player) + calculateTotalStockValue(player);
     }
 
@@ -69,7 +69,7 @@ public class EndGame {
      * @param player the player whose properties are summed
      * @return the total property value
      */
-    private float calculateTotalPropertyValue(Player player) {
+    private float calculateTotalPropertyValue(AbstractPlayer player) {
         float total = 0;
         for (PropertyTile property : player.getProperties()) {
             total += property.getPrice();
@@ -83,7 +83,7 @@ public class EndGame {
      * @param player the player whose stock holdings are valued
      * @return the total stock value
      */
-    private float calculateTotalStockValue(Player player) {
+    private float calculateTotalStockValue(AbstractPlayer player) {
         float total = 0;
         final Map<Stock, Integer> stocks = player.getStocks();
 
@@ -96,13 +96,13 @@ public class EndGame {
         return total;
     }
 
-    private Player determineWinner(List<Player> players) {
+    private AbstractPlayer determineWinner(List<AbstractPlayer> players) {
         // Filter out bankrupt players
-        final List<Player> solventPlayers = players.stream()
+        final List<AbstractPlayer> solventPlayers = players.stream()
                 .filter(player -> !player.isBankrupt())
                 .toList();
 
-        Player winner = null;
+        AbstractPlayer winner = null;
         if (solventPlayers.size() == 1) {
             winner = solventPlayers.get(0);
         }
@@ -119,10 +119,10 @@ public class EndGame {
         private final List<PlayerResult> playerResults;
         private final String gameEndReason;
         private final int totalRounds;
-        private final Player winner;
+        private final AbstractPlayer winner;
 
         public EndGameResult(List<PlayerResult> playerResults, String gameEndReason,
-                             int totalRounds, Player winner) {
+                             int totalRounds, AbstractPlayer winner) {
             this.playerResults = playerResults;
             this.gameEndReason = gameEndReason;
             this.totalRounds = totalRounds;
@@ -141,20 +141,20 @@ public class EndGame {
             return totalRounds;
         }
 
-        public Player getWinner() {
+        public AbstractPlayer getWinner() {
             return winner;
         }
     }
 
     public static class PlayerResult {
-        private final Player player;
+        private final AbstractPlayer player;
         private final int rank;
         private final float finalCash;
         private final float totalPropertyValue;
         private final float totalStockValue;
         private final float netWorth;
 
-        public PlayerResult(Player player, int rank, float finalCash,
+        public PlayerResult(AbstractPlayer player, int rank, float finalCash,
                             float totalPropertyValue, float totalStockValue, float netWorth) {
             this.player = player;
             this.rank = rank;
@@ -164,7 +164,7 @@ public class EndGame {
             this.netWorth = netWorth;
         }
 
-        public Player getPlayer() {
+        public AbstractPlayer getPlayer() {
             return player;
         }
 

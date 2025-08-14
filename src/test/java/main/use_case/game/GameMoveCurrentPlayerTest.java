@@ -1,14 +1,14 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameMoveCurrentPlayerTest {
 
-    static class TestPlayer extends Player {
+    static class TestPlayer extends AbstractPlayer {
         private int position;
         private float money;
 
@@ -49,7 +49,7 @@ class GameMoveCurrentPlayerTest {
         }
 
         @Override
-        public Player getCurrentPlayer() {
+        public AbstractPlayer getCurrentPlayer() {
             return player;
         }
 

@@ -1,8 +1,8 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
-import main.entity.players.applyAfterEffects;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.ApplyAfterEffects;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameNextTurnTest {
 
-    static class TestPlayer extends Player implements applyAfterEffects {
+    static class TestPlayer extends AbstractPlayer implements ApplyAfterEffects {
         private boolean turnEffectsApplied = false;
         private boolean bankrupt = false;
         private String name;
@@ -42,16 +42,16 @@ class GameNextTurnTest {
     static class TestGame extends Game {
         private boolean gameEnded = false;
         private int currentPlayerIndex = 0;
-        private List<Player> players = new ArrayList<>();
+        private List<AbstractPlayer> players = new ArrayList<>();
         private int turnCount = 0;
         private int nextPlayerIndex = 0;
 
-        public TestGame(List<Player> players) {
+        public TestGame(List<AbstractPlayer> players) {
             this.players = players;
         }
 
         @Override
-        public List<Player> getPlayers() { return players; }
+        public List<AbstractPlayer> getPlayers() { return players; }
 
         @Override
         public boolean getGameEnded() { return gameEnded; }
@@ -82,7 +82,7 @@ class GameNextTurnTest {
     void testTurnEffectsAppliedAndBankruptcyChecked() {
         TestPlayer player1 = new TestPlayer("Player1", false);
         TestPlayer player2 = new TestPlayer("Player2", true);
-        List<Player> players = new ArrayList<>();
+        List<AbstractPlayer> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
 
@@ -97,7 +97,7 @@ class GameNextTurnTest {
     void testAllPlayersBankruptEndsGame() {
         TestPlayer player1 = new TestPlayer("Player1", true);
         TestPlayer player2 = new TestPlayer("Player2", true);
-        List<Player> players = new ArrayList<>();
+        List<AbstractPlayer> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
 

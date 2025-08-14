@@ -2,7 +2,7 @@ package main.view;
 
 import javax.swing.Timer;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 /**
  * PlayerMovementAnimator handles the animation of player movement across the board.
@@ -19,7 +19,7 @@ public class PlayerMovementAnimator {
      * @param onMoveStep Callback for each movement step (for repainting)
      * @param onComplete Callback when animation is complete
      */
-    public void animatePlayerMovement(Player player, int steps, int tileCount,
+    public void animatePlayerMovement(AbstractPlayer player, int steps, int tileCount,
                                       Runnable onMoveStep, Runnable onComplete) {
         final Timer moveTimer = new Timer(MOVE_DELAY_MS, null);
         final int[] movesLeft = {steps};
@@ -30,7 +30,7 @@ public class PlayerMovementAnimator {
         moveTimer.start();
     }
 
-    private void handleMovementStep(Player player, int tileCount, Runnable onMoveStep,
+    private void handleMovementStep(AbstractPlayer player, int tileCount, Runnable onMoveStep,
                                     Runnable onComplete, Timer moveTimer, int[] movesLeft) {
         if (movesLeft[0] > 0) {
             final int newPosition = (player.getPosition() + 1) % tileCount;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 
 /**
@@ -20,7 +20,7 @@ public class PlayerStatsInteractor implements PlayerStatsInputBoundary {
     @Override
     public void execute(Game game) {
         final PlayerStatsOutputData output = new PlayerStatsOutputData();
-        for (Player p : game.getPlayers()) {
+        for (AbstractPlayer p : game.getPlayers()) {
             final List<String> propertyNames = new ArrayList<>();
             final List<PropertyTile> props = p.getProperties();
             if (props != null) {

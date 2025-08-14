@@ -2,8 +2,8 @@ package main.interface_adapter.characterSelectionScreen;
 
 import java.util.List;
 
-import main.use_case.characterSelectionScreen.CharacterSelectionScreenOutputBoundary;
 import main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.use_case.characterSelectionScreen.CharacterSelectionScreenOutputBoundary;
 
 /**
  * Presenter for CharacterSelectionScreen.

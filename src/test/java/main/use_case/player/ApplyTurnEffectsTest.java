@@ -1,7 +1,7 @@
 package main.use_case.player;
 
-import main.entity.players.Player;
-import main.entity.players.applyAfterEffects;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.ApplyAfterEffects;
 import main.entity.tiles.PropertyTile;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ApplyTurnEffectsTest {
 
-    static class TestPlayer extends Player implements applyAfterEffects {
+    static class TestPlayer extends AbstractPlayer implements ApplyAfterEffects {
         boolean effectsApplied = false;
         boolean bankrupt = false;
 
@@ -32,7 +32,7 @@ class ApplyTurnEffectsTest {
         }
     }
 
-    static class SimplePlayer extends Player {
+    static class SimplePlayer extends AbstractPlayer {
         boolean bankrupt = false;
 
         @Override

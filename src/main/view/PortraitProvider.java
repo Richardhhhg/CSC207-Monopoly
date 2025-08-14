@@ -1,44 +1,59 @@
 package main.view;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
+
 public class PortraitProvider {
+    /**
+     * Returns the portrait image based on the type of character.
+     *
+     * @param type The type of character (e.g., "Clerk", "Landlord", etc.)
+     * @return The corresponding portrait image, or a default image if the type is unknown.
+     */
     public static Image getPortrait(String type) {
+        final Image result;
         switch (type) {
             case "Clerk":
-                return loadImage("CharacterPortrait/clerk.jpg");
+                result = loadImage("CharacterPortrait/clerk.jpg");
+                break;
             case "Landlord":
-                return loadImage("CharacterPortrait/landlord.png");
+                result = loadImage("CharacterPortrait/landlord.png");
+                break;
             case "Inheritor":
-                return loadImage("CharacterPortrait/inheritor.jpg");
+                result = loadImage("CharacterPortrait/inheritor.png");
+                break;
             case "College Student":
-                return loadImage("CharacterPortrait/Computer-nerd.jpg");
+                result = loadImage("CharacterPortrait/Computer-nerd.jpg");
+                break;
             case "Poor Man":
-                return loadImage("CharacterPortrait/poorman.png");
+                result = loadImage("CharacterPortrait/poorman.png");
+                break;
             default:
-                return loadImage("CharacterPortrait/default portrait.png");
+                result = loadImage("CharacterPortrait/default portrait.png");
+                break;
         }
+        return result;
     }
 
     private static Image loadImage(String path) {
         try (InputStream is = PortraitProvider.class.getResourceAsStream("/" + path)) {
             if (is != null) {
                 return ImageIO.read(is);
-            } else {
+            }
+            else {
                 System.err.println("Image not found: " + path);
             }
-        } catch (IOException e) {
-            System.err.println("Error loading image: " + path);
-            e.printStackTrace();
         }
-        return null;
+        catch (IOException exception) {
+            System.err.println("Error loading image: " + path);
+            exception.printStackTrace();
+        }
     }
 
     public static Image getDefaultPortrait() {
         return loadImage("CharacterPortrait/default portrait.png");
     }
 }
-

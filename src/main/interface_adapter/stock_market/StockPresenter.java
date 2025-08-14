@@ -1,7 +1,7 @@
 package main.interface_adapter.stock_market;
 
-import main.use_case.stocks.StockOutputBoundary;
 import main.use_case.stocks.AbstractStockOutputData;
+import main.use_case.stocks.StockOutputBoundary;
 
 public class StockPresenter implements StockOutputBoundary {
     private final StockPlayerViewModel stockPlayerViewModel;

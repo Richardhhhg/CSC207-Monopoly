@@ -1,15 +1,21 @@
 package main.use_case.player;
 
-import main.entity.players.Player;
-import main.entity.players.applyAfterEffects;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.ApplyAfterEffects;
 
 public class ApplyTurnEffects {
-    public void execute(Player player) {
-        if (player instanceof applyAfterEffects) {
-            ((applyAfterEffects) player).applyTurnEffects();
+    /**
+     * Applies the turn effects for the given player.
+     * This includes applying any after effects and checking for bankruptcy.
+     *
+     * @param player the player whose turn effects are to be applied
+     */
+    public void execute(AbstractPlayer player) {
+        if (player instanceof ApplyAfterEffects) {
+            ((ApplyAfterEffects) player).applyTurnEffects();
         }
-        if (player.isBankrupt()){
-            DeclareBankruptcy declareBankruptcy = new DeclareBankruptcy();
+        if (player.isBankrupt()) {
+            final DeclareBankruptcy declareBankruptcy = new DeclareBankruptcy();
             declareBankruptcy.execute(player);
         }
     }

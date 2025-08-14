@@ -46,14 +46,14 @@ class CharacterSelectionScreenViewModelTest {
     }
 
     @Test
-    void testGetPlayervmReturnsNewInstance() {
+    void testGetPlayerVmReturnsNewInstance() {
         CharacterSelectionScreenViewModel vm = new CharacterSelectionScreenViewModel();
         main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel player =
                 new main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel("Carol", "Merchant", Color.GREEN, null);
 
         vm.setPlayerData(2, player);
 
-        main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel copy = vm.getPlayervm(2);
+        main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel copy = vm.getPlayerVm(2);
         assertNotSame(player, copy);
         assertEquals("Carol", copy.getName());
         assertEquals("Merchant", copy.getType());
@@ -61,8 +61,8 @@ class CharacterSelectionScreenViewModelTest {
     }
 
     @Test
-    void testGetPlayervmNullIfNoPlayer() {
+    void testGetPlayerVmNullIfNoPlayer() {
         CharacterSelectionScreenViewModel vm = new CharacterSelectionScreenViewModel();
-        assertNull(vm.getPlayervm(3));
+        assertNull(vm.getPlayerVm(3));
     }
 }

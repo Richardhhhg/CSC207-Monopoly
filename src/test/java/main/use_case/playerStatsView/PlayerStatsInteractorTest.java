@@ -1,7 +1,7 @@
 package main.use_case.playerStatsView;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.use_case.playerStats.PlayerStatsInteractor;
 import main.use_case.playerStats.PlayerStatsOutput;
@@ -41,7 +41,7 @@ public class PlayerStatsInteractorTest {
         alice.getProperties().add(p1Tile);
         alice.getProperties().add(p2Tile);
 
-        game.setPlayers(Arrays.<Player>asList(alice, bob));
+        game.setPlayers(Arrays.<AbstractPlayer>asList(alice, bob));
 
         interactor.execute(game);
 
@@ -67,7 +67,7 @@ public class PlayerStatsInteractorTest {
     @Test
     public void execute_NullProperties() {
         TestPlayer carol = new TestPlayer("Carol", 200f, false, Color.GREEN, true); // properties = null
-        game.setPlayers(Arrays.<Player>asList(carol));
+        game.setPlayers(Arrays.<AbstractPlayer>asList(carol));
 
         interactor.execute(game);
 
@@ -93,15 +93,15 @@ public class PlayerStatsInteractorTest {
     }
 
     /** Minimal concrete Player for testing. */
-    private static class TestPlayer extends Player {
+    private static class TestPlayer extends AbstractPlayer {
         TestPlayer(String name, float money, boolean bankrupt, Color color) {
             super(name, money, color);
-            this.bankrupt = bankrupt;
+            this.setBankrupt(bankrupt);
         }
         TestPlayer(String name, float money, boolean bankrupt, Color color, boolean makePropertiesNull) {
             this(name, money, bankrupt, color);
             if (makePropertiesNull) {
-                this.properties = null;
+                this.setProperties(null);
             }
         }
     }

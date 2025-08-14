@@ -48,7 +48,8 @@ public class CharacterSelectionScreenViewModel {
      * @return A list of CharacterSelectionPlayerViewModel.
      */
     public List<main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel> getAllPlayers() {
-        final List<main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel> result = new ArrayList<>(MAX_AMT_PLAYER);
+        final List<main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel> result =
+                new ArrayList<>(MAX_AMT_PLAYER);
         for (CharacterSelectionPlayerViewModel d : selectedPlayers) {
             if (d == null) {
                 result.add(null);
@@ -75,18 +76,19 @@ public class CharacterSelectionScreenViewModel {
      * @return a CharacterSelectionPlayerViewModel with the player's
      *         name, type, color, and portrait, or null if no player
      *         is set at that index
+     * @throws IllegalArgumentException if no player data is set for the index
      */
-    public main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel getPlayervm(int index) {
-        final CharacterSelectionPlayerViewModel d = selectedPlayers.get(index);
-        if (d == null) {
-            return null;
+    public main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel getPlayerVm(int index) {
+        final CharacterSelectionPlayerViewModel data = selectedPlayers.get(index);
+        if (data == null) {
+            throw new IllegalArgumentException("No player data set for index " + index);
         }
         else {
             return new main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel(
-                    d.getName(),
-                    d.getType(),
-                    d.getColor(),
-                    d.getPortrait()
+                    data.getName(),
+                    data.getType(),
+                    data.getColor(),
+                    data.getPortrait()
             );
         }
     }

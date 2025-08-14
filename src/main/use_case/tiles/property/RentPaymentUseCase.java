@@ -1,6 +1,6 @@
 package main.use_case.tiles.property;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 
 public class RentPaymentUseCase {
@@ -18,7 +18,7 @@ public class RentPaymentUseCase {
      * @param property   the property for which rent is being paid
      * @param rentAmount the amount of rent to pay
      */
-    public void execute(Player payer, Player owner, PropertyTile property, float rentAmount) {
+    public void execute(AbstractPlayer payer, AbstractPlayer owner, PropertyTile property, float rentAmount) {
         // Business logic: Perform the money transfer
         payer.deductMoney(rentAmount);
         owner.addMoney(rentAmount);

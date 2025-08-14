@@ -1,14 +1,13 @@
 package main.entity.players;
 
-import java.awt.*;
+import java.awt.Color;
 
-import static main.constants.Constants.DEFAULT_INIT_MONEY;
-import static main.constants.Constants.NP_POR;
+import main.constants.Constants;
 
-public class DefaultPlayer extends Player {
+public class DefaultPlayer extends AbstractPlayer {
 
     public DefaultPlayer(String name, Color color) {
-        super(name, DEFAULT_INIT_MONEY, color);
-        this.loadPortrait(NP_POR);
+        super(name, Constants.DEFAULT_INIT_MONEY, color);
+        this.loadPortrait(Constants.NP_POR);
     }
 }

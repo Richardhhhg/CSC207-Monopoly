@@ -1,6 +1,6 @@
 package main.use_case.tiles;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.AbstractTile;
 
 public class OnLandingController {
@@ -16,7 +16,7 @@ public class OnLandingController {
      * @param player the player who landed on the tile
      * @param tile   the tile that the player landed on
      */
-    public void handleLanding(Player player, AbstractTile tile) {
+    public void handleLanding(AbstractPlayer player, AbstractTile tile) {
         onLandingUseCase.execute(player, tile);
     }
 }

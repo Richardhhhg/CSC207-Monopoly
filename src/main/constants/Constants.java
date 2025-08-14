@@ -7,6 +7,7 @@ import java.awt.Color;
  */
 public class Constants {
     public static final boolean USE_STOCK_API = false;
+    public static final int NUM_STOCKS = 5;
 
     // Game Constants
     public static final int SMALL_BOARD_SIZE = 20;
@@ -43,6 +44,8 @@ public class Constants {
     public static final int STOCK_MARKET_HEIGHT = 400;
     public static final int STOCK_MKT_PADDING = 10;
     public static final int STOCK_MKT_COLUMNS = 7;
+    public static final Color STOCK_MKT_COLOR = new Color(29, 145, 56, 128);
+    public static final float STOCK_MKT_TILE_FONT_SIZE = 14.0f;
 
     public static final int STOCK_WIDTH = 1600;
     public static final int STOCK_HEIGHT = 200;
@@ -72,10 +75,16 @@ public class Constants {
 
     // Player Drawing
     public static final int PLAYER_SIZE = 25;
+    public static final int PORTRAIT_ADJUST_HEIGHT = 30;
+    public static final int PORTRAIT_LABEL_FONT_SIZE = 14;
+    public static final int PLAYER_X = 5;
+    public static final int PLAYER_Y = 5;
+    public static final int PLAYER_WIDTH = 15;
+    public static final int PLAYER_HEIGHT = 15;
 
     // PlayerStatsView
-    public static final int DIMENSION_DE_LA_PSV_H = 200;
-    public static final int DIMENSION_DE_LA_PSV_W = 200;
+    public static final int STATS_WIDTH = 600;
+    public static final int STATS_LAYER = 3;
 
     // Character Constants
     public static final int CLERK_INIT_MONEY = 1200;
@@ -86,6 +95,15 @@ public class Constants {
     public static final int POORMAN_INIT_MONEY = 200;
 
     public static final int CLERK_ADD_MONEY = 50;
+    public static final int POORMAN_TURN_EFFECTS_COST = 20;
+    public static final int COLLEGE_STUDENT_TUITION = 100;
+    public static final float COLLEGE_STUDENT_STOCK_PRICE = 0.90f;
+    public static final float COLLEGE_STUDENT_STOCK_SELL_PRICE = 1.3f;
+    public static final float INHERITOR_STOCK_BUY_PRICE = 1.1f;
+    public static final float INHERITOR_STOCK_SELL_PRICE = 0.70f;
+    public static final float LANDLORD_STOCK_BUY_PRICE = 1.8f;
+    public static final float LANDLORD_STOCK_SELL_PRICE = 0.80f;
+    public static final float LANDLORD_RENT_MULTIPLIER = 1.8f;
 
     // Portrait Path
     public static final String CLERK_POR = "CharacterPortrait/clerk.jpg";

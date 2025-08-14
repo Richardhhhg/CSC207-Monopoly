@@ -1,6 +1,6 @@
 package main.interface_adapter.endScreen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.use_case.endScreen.EndGame;
@@ -16,15 +16,15 @@ import static org.junit.Assert.*;
 public class EndScreenControllerTest {
 
     private EndScreenController controller;
-    private List<Player> testPlayers;
+    private List<AbstractPlayer> testPlayers;
 
     @Before
     public void setUp() {
         controller = new EndScreenController();
 
         // Create test players
-        Player player1 = new Clerk("Alice", Color.RED);
-        Player player2 = new CollegeStudent("Bob", Color.BLUE);
+        AbstractPlayer player1 = new Clerk("Alice", Color.RED);
+        AbstractPlayer player2 = new CollegeStudent("Bob", Color.BLUE);
         player1.addMoney(1000);
         player2.addMoney(500);
 
@@ -47,9 +47,9 @@ public class EndScreenControllerTest {
 
     @Test
     public void testExecuteWithBankruptPlayer() {
-        Player bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
+        AbstractPlayer bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
         bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
-        List<Player> playersWithBankrupt = Arrays.asList(testPlayers.get(0), testPlayers.get(1), bankruptPlayer);
+        List<AbstractPlayer> playersWithBankrupt = Arrays.asList(testPlayers.get(0), testPlayers.get(1), bankruptPlayer);
 
         EndGame.EndGameResult result = controller.execute(playersWithBankrupt, "Player bankruptcy", 15);
 
@@ -69,7 +69,7 @@ public class EndScreenControllerTest {
 
     @Test
     public void testExecuteWithEmptyPlayerList() {
-        List<Player> emptyPlayers = Arrays.asList();
+        List<AbstractPlayer> emptyPlayers = Arrays.asList();
 
         EndGame.EndGameResult result = controller.execute(emptyPlayers, "No players", 0);
 
@@ -80,9 +80,9 @@ public class EndScreenControllerTest {
 
     @Test
     public void testExecuteWithSinglePlayer() {
-        Player singlePlayer = new Clerk("Solo", Color.YELLOW);
+        AbstractPlayer singlePlayer = new Clerk("Solo", Color.YELLOW);
         singlePlayer.addMoney(2000);
-        List<Player> singlePlayerList = Arrays.asList(singlePlayer);
+        List<AbstractPlayer> singlePlayerList = Arrays.asList(singlePlayer);
 
         EndGame.EndGameResult result = controller.execute(singlePlayerList, "Single player game", 10);
 

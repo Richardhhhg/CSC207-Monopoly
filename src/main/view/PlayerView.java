@@ -1,9 +1,11 @@
 package main.view;
 
-import main.constants.Constants;
+import java.awt.Color;
+import java.awt.Graphics;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+
+import main.constants.Constants;
 
 public class PlayerView extends JComponent {
     private final Color color;
@@ -18,17 +20,8 @@ public class PlayerView extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(color);
-        g.fillOval(5, 5, 15, 15);
+        g.fillOval(Constants.PLAYER_X, Constants.PLAYER_Y, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
         g.setColor(Color.BLACK);
-        g.drawOval(5, 5, 15, 15);
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Player View Test");
-        PlayerView playerView = new PlayerView(Color.RED);
-        frame.add(playerView);
-        frame.setSize(200, 100);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        g.drawOval(Constants.PLAYER_X, Constants.PLAYER_Y, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
     }
 }
