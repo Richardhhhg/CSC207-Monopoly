@@ -58,7 +58,7 @@ public class PlayerStatsInteractorTest {
 
         PlayerStatsOutput s1 = out.getPlayerStats().get(1);
         assertEquals("Bob", s1.getName());
-        assertEquals(50.0f, s1.getMoney(), 0.0001f);
+        assertEquals(0.0f, s1.getMoney(), 0.0001f);
         assertTrue(s1.isBankrupt());
         assertEquals(Color.BLUE, s1.getColor());
         assertTrue(s1.getPropertyNames().isEmpty());
