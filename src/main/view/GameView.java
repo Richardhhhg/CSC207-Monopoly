@@ -15,12 +15,12 @@ import main.app.GameHolder;
 import main.constants.Constants;
 import main.entity.Game;
 import main.entity.players.AbstractPlayer;
-import main.interface_adapter.playerStats.PlayerStatsController;
-import main.interface_adapter.playerStats.PlayerStatsPresenter;
-import main.interface_adapter.playerStats.PlayerStatsViewModel;
+import main.interface_adapter.player_stats.PlayerStatsController;
+import main.interface_adapter.player_stats.PlayerStatsPresenter;
+import main.interface_adapter.player_stats.PlayerStatsViewModel;
 import main.use_case.game.GameMoveCurrentPlayer;
 import main.use_case.game.GameNextTurn;
-import main.use_case.playerStats.PlayerStatsInteractor;
+import main.use_case.player_stats.PlayerStatsInteractor;
 import main.view.stock.StockMarketView;
 
 /**

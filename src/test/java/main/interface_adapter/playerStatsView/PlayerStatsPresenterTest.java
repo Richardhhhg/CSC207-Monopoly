@@ -1,11 +1,11 @@
 package main.interface_adapter.playerStatsView;
 
-import main.interface_adapter.playerStats.DisplayPlayer;
-import main.interface_adapter.playerStats.PlayerStatsPresenter;
-import main.interface_adapter.playerStats.PlayerStatsState;
-import main.interface_adapter.playerStats.PlayerStatsViewModel;
-import main.use_case.playerStats.PlayerStatsOutput;
-import main.use_case.playerStats.PlayerStatsOutputData;
+import main.interface_adapter.player_stats.DisplayPlayer;
+import main.interface_adapter.player_stats.PlayerStatsPresenter;
+import main.interface_adapter.player_stats.PlayerStatsState;
+import main.interface_adapter.player_stats.PlayerStatsViewModel;
+import main.use_case.player_stats.PlayerStatsOutput;
+import main.use_case.player_stats.PlayerStatsOutputData;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;

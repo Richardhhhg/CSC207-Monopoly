@@ -1,6 +1,6 @@
 package main.data_access.player;
 
-import main.use_case.characterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
+import main.use_case.character_selection_screen.CharacterSelectionScreenDataAccessInterface;
 
 public class InMemoryCharacterDataAccess implements CharacterSelectionScreenDataAccessInterface {
 }

@@ -39,18 +39,15 @@ public class PortraitProvider {
     }
 
     private static Image loadImage(String path) {
+        Image image = null;
         try (InputStream is = PortraitProvider.class.getResourceAsStream("/" + path)) {
-            if (is != null) {
-                return ImageIO.read(is);
-            }
-            else {
-                System.err.println("Image not found: " + path);
-            }
+            image = ImageIO.read(is);
         }
         catch (IOException exception) {
             System.err.println("Error loading image: " + path);
             exception.printStackTrace();
         }
+        return image;
     }
 
     public static Image getDefaultPortrait() {

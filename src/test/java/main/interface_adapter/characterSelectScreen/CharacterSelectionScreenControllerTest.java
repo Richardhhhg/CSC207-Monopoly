@@ -1,9 +1,9 @@
 package main.interface_adapter.characterSelectScreen;
 
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
-import main.use_case.characterSelectionScreen.CharacterSelectionInputBoundary;
-import main.use_case.characterSelectionScreen.CharacterSelectionInputData;
-import main.use_case.characterSelectionScreen.CharacterTraitsText;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenController;
+import main.use_case.character_selection_screen.CharacterSelectionInputBoundary;
+import main.use_case.character_selection_screen.CharacterSelectionInputData;
+import main.use_case.character_selection_screen.CharacterTraitsText;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -9,7 +9,7 @@ import main.entity.players.AbstractPlayer;
 import main.entity.players.CharacterFactory;
 import main.entity.stocks.Stock;
 import main.entity.tiles.AbstractTile;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.character_selection_screen.CharacterSelectionPlayerViewModel;
 
 public class Game {
     private static final int ADJUST_THREE = 3;
@@ -21,7 +21,7 @@ public class Game {
     private int currentPlayerIndex;
     private int tileCount;
     private int totalTurns;
-    private int currentRound;
+    private int currentRound = 1;
     private int turnsInCurrentRound;
     private int roundStartPlayerIndex;
     private boolean gameEnded;

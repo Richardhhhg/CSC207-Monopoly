@@ -1,10 +1,10 @@
 package main.use_case.characterSelectScreen;
 
-import main.use_case.characterSelectionScreen.CharacterSelectionInputData;
-import main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.use_case.characterSelectionScreen.CharacterSelectionScreenDataAccessInterface;
-import main.use_case.characterSelectionScreen.CharacterSelectionScreenInteractor;
-import main.use_case.characterSelectionScreen.CharacterSelectionScreenOutputBoundary;
+import main.use_case.character_selection_screen.CharacterSelectionInputData;
+import main.use_case.character_selection_screen.CharacterSelectionPlayerViewModel;
+import main.use_case.character_selection_screen.CharacterSelectionScreenDataAccessInterface;
+import main.use_case.character_selection_screen.CharacterSelectionScreenInteractor;
+import main.use_case.character_selection_screen.CharacterSelectionScreenOutputBoundary;
 
 import org.junit.Before;
 import org.junit.Test;

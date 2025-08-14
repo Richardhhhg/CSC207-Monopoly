@@ -1,9 +1,9 @@
 package main.interface_adapter.playerStatsView;
 
-import main.interface_adapter.playerStats.DisplayPlayer;
-import main.interface_adapter.playerStats.DisplayProperty;
-import main.interface_adapter.playerStats.PlayerStatsState;
-import main.interface_adapter.playerStats.PlayerStatsViewModel;
+import main.interface_adapter.player_stats.DisplayPlayer;
+import main.interface_adapter.player_stats.DisplayProperty;
+import main.interface_adapter.player_stats.PlayerStatsState;
+import main.interface_adapter.player_stats.PlayerStatsViewModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
