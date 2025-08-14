@@ -64,8 +64,10 @@ class DeclareBankruptcyTest {
     }
 
     @Test
-    void testNullPlayerDoesNothing() {
+    void testNullPlayerDoesNothingIllegalArgumentException() {
         DeclareBankruptcy bankruptcy = new DeclareBankruptcy();
-        bankruptcy.execute(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            bankruptcy.execute(null);
+        });
     }
 }
