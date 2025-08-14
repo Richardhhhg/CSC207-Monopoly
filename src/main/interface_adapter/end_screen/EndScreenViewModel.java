@@ -4,15 +4,28 @@ import java.util.List;
 
 import main.entity.players.AbstractPlayer;
 
+/**
+ * Mutable ViewModel for the EndScreen.
+ * Allows the presenter to update the view state with processed data.
+ */
 public class EndScreenViewModel {
-    private final String gameOverTitle;
-    private final String gameEndReason;
-    private final String totalRoundsText;
-    private final String winnerText;
-    private final List<PlayerDisplayData> playerDisplayData;
-    private final String newGameButtonText;
-    private final String exitButtonText;
+    private String gameOverTitle = "";
+    private String gameEndReason = "";
+    private String totalRoundsText = "";
+    private String winnerText = "";
+    private List<PlayerDisplayData> playerDisplayData = null;
+    private String newGameButtonText = "New Game";
+    private String exitButtonText = "Exit";
 
+    /**
+     * Default constructor for mutable view model.
+     */
+    public EndScreenViewModel() {
+    }
+
+    /**
+     * Constructor with initial values (for backward compatibility).
+     */
     public EndScreenViewModel(String gameOverTitle, String gameEndReason, String totalRoundsText,
                               String winnerText, List<PlayerDisplayData> playerDisplayData,
                               String newGameButtonText, String exitButtonText) {
@@ -25,6 +38,7 @@ public class EndScreenViewModel {
         this.exitButtonText = exitButtonText;
     }
 
+    // Getters
     public String getGameOverTitle() {
         return gameOverTitle;
     }
@@ -53,8 +67,26 @@ public class EndScreenViewModel {
         return exitButtonText;
     }
 
+    /**
+     * Updates all view model data at once.
+     */
+    public void updateAllData(String gameOverTitle, String gameEndReason, String totalRoundsText,
+                              String winnerText, List<PlayerDisplayData> playerDisplayData,
+                              String newGameButtonText, String exitButtonText) {
+        this.gameOverTitle = gameOverTitle;
+        this.gameEndReason = gameEndReason;
+        this.totalRoundsText = totalRoundsText;
+        this.winnerText = winnerText;
+        this.playerDisplayData = playerDisplayData;
+        this.newGameButtonText = newGameButtonText;
+        this.exitButtonText = exitButtonText;
+    }
+
+    /**
+     * Data class representing display information for a single player.
+     */
     public static class PlayerDisplayData {
-        private final AbstractPlayer player;
+        private final AbstractPlayer abstractPlayer;
         private final int rank;
         private final String moneyText;
         private final String propertyValueText;
@@ -62,10 +94,10 @@ public class EndScreenViewModel {
         private final String netWorthText;
         private final String statusText;
 
-        public PlayerDisplayData(AbstractPlayer player, int rank, String moneyText,
+        public PlayerDisplayData(AbstractPlayer abstractPlayer, int rank, String moneyText,
                                  String propertyValueText, String stockValueText, String netWorthText,
                                  String statusText) {
-            this.player = player;
+            this.abstractPlayer = abstractPlayer;
             this.rank = rank;
             this.moneyText = moneyText;
             this.propertyValueText = propertyValueText;
@@ -75,7 +107,7 @@ public class EndScreenViewModel {
         }
 
         public AbstractPlayer getPlayer() {
-            return player;
+            return abstractPlayer;
         }
 
         public String getMoneyText() {
@@ -99,7 +131,7 @@ public class EndScreenViewModel {
         }
 
         public String getRankText() {
-            return "#" + rank + " - " + player.getName();
+            return "#" + rank + " - " + abstractPlayer.getName();
         }
     }
 }

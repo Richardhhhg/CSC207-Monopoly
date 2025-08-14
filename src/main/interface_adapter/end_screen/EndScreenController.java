@@ -3,27 +3,33 @@ package main.interface_adapter.end_screen;
 import java.util.List;
 
 import main.entity.players.AbstractPlayer;
-import main.use_case.end_screen.EndGame;
 
+/**
+ * Controller for the End Screen.
+ * Handles user input and coordinates with the interactor through the input boundary.
+ */
 public class EndScreenController {
-    private final EndGame endGameUseCase;
+    private final main.use_case.end_screen.EndScreenInputBoundary interactor;
 
     /**
-     * Creates an EndScreenController with a new EndGame use case.
+     * Constructs the controller with the given interactor.
+     *
+     * @param interactor The input boundary for the end screen use case.
      */
-    public EndScreenController() {
-        this.endGameUseCase = new EndGame();
+    public EndScreenController(main.use_case.end_screen.EndScreenInputBoundary interactor) {
+        this.interactor = interactor;
     }
 
     /**
      * Executes the end game use case to determine the result of the game.
      *
-     * @param players        the list of players participating in the game
+     * @param abstractPlayers        the list of players participating in the game
      * @param gameEndReason  the reason the game ended
      * @param totalRounds    the total number of rounds played
-     * @return the result of the end game evaluation
      */
-    public EndGame.EndGameResult execute(List<AbstractPlayer> players, String gameEndReason, int totalRounds) {
-        return endGameUseCase.execute(players, gameEndReason, totalRounds);
+    public void execute(List<AbstractPlayer> abstractPlayers, String gameEndReason, int totalRounds) {
+        final main.use_case.end_screen.EndScreenInputData inputData =
+                new main.use_case.end_screen.EndScreenInputData(abstractPlayers, gameEndReason, totalRounds);
+        interactor.execute(inputData);
     }
 }

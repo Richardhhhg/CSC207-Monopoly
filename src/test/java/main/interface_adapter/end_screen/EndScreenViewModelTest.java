@@ -18,10 +18,10 @@ public class EndScreenViewModelTest {
 
     @Before
     public void setUp() {
-        AbstractPlayer testPlayer = new Clerk("TestPlayer", Color.RED);
+        AbstractPlayer testAbstractPlayer = new Clerk("TestPlayer", Color.RED);
         EndScreenViewModel.PlayerDisplayData playerData =
                 new EndScreenViewModel.PlayerDisplayData(
-                        testPlayer,
+                        testAbstractPlayer,
                         1,
                         "1000.00",   // moneyText
                         "400.00",    // propertyValueText
@@ -69,10 +69,10 @@ public class EndScreenViewModelTest {
 
     @Test
     public void testPlayerDisplayDataConstructor() {
-        AbstractPlayer player = new Clerk("Alice", Color.BLUE);
+        AbstractPlayer abstractPlayer = new Clerk("Alice", Color.BLUE);
         EndScreenViewModel.PlayerDisplayData data =
                 new EndScreenViewModel.PlayerDisplayData(
-                        player,
+                        abstractPlayer,
                         2,
                         "500.00",   // moneyText
                         "100.00",   // propertyValueText
@@ -81,7 +81,7 @@ public class EndScreenViewModelTest {
                         "BANKRUPT"  // statusText
                 );
 
-        assertEquals(player, data.getPlayer());
+        assertEquals(abstractPlayer, data.getPlayer());
         assertEquals("500.00", data.getMoneyText());
         assertEquals("100.00", data.getPropertyValueText());
         assertEquals("200.00", data.getStockValueText());
@@ -101,10 +101,10 @@ public class EndScreenViewModelTest {
 
     @Test
     public void testViewModelWithNullSafetyChecks() {
-        AbstractPlayer nullColorPlayer = new Clerk("NullTest", null);
+        AbstractPlayer nullColorAbstractPlayer = new Clerk("NullTest", null);
         EndScreenViewModel.PlayerDisplayData nullData =
                 new EndScreenViewModel.PlayerDisplayData(
-                        nullColorPlayer,
+                        nullColorAbstractPlayer,
                         1,
                         "0.00",
                         "0.00",
