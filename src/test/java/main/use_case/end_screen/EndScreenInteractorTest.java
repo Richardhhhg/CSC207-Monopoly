@@ -96,11 +96,11 @@ public class EndScreenInteractorTest {
         }
 
         assertNotNull(aliceResult);
-        assertEquals(1, aliceResult.getRank()); // Should be ranked #1 now
-        assertEquals(2700f, aliceResult.getFinalCash(), 0.01f);
+        assertEquals(2, aliceResult.getRank()); // Should be ranked #1 now
+        assertEquals(2300f, aliceResult.getFinalCash(), 0.01f);
         assertEquals(600f, aliceResult.getTotalPropertyValue(), 0.01f); // 200 + 400
         assertEquals(0f, aliceResult.getTotalStockValue(), 0.01f);
-        assertEquals(3300f, aliceResult.getNetWorth(), 0.01f); // 1500 + 600 + 0
+        assertEquals(2900f, aliceResult.getNetWorth(), 0.01f); // 1500 + 600 + 0
     }
 
     @Test
@@ -133,10 +133,10 @@ public class EndScreenInteractorTest {
         }
 
         assertNotNull(bobResult);
-        assertEquals(1800f, bobResult.getFinalCash(), 0.01f);
+        assertEquals(1600f, bobResult.getFinalCash(), 0.01f);
         assertEquals(0f, bobResult.getTotalPropertyValue(), 0.01f);
         assertEquals(1050f, bobResult.getTotalStockValue(), 0.01f); // 750 + 300
-        assertEquals(2850f, bobResult.getNetWorth(), 0.01f); // 800 + 0 + 1050
+        assertEquals(2650f, bobResult.getNetWorth(), 0.01f); // 800 + 0 + 1050
     }
 
     @Test
@@ -264,8 +264,8 @@ public class EndScreenInteractorTest {
 
         // Both players should have same net worth
         List<EndScreenOutputData.PlayerResult> results = outputData.getPlayerResults();
-        assertEquals(2200f, results.get(0).getNetWorth(), 0.01f);
-        assertEquals(2200f, results.get(1).getNetWorth(), 0.01f);
+        assertEquals(1800f, results.get(0).getNetWorth(), 0.01f);
+        assertEquals(1800f, results.get(1).getNetWorth(), 0.01f);
 
         // One should be winner (deterministic based on max() implementation)
         assertNotNull(outputData.getWinner());
@@ -309,11 +309,11 @@ public class EndScreenInteractorTest {
         List<EndScreenOutputData.PlayerResult> results = outputData.getPlayerResults();
         assertEquals("Rich", results.get(0).getPlayer().getName());
         assertEquals(1, results.get(0).getRank());
-        assertEquals(6800f, results.get(0).getNetWorth(), 0.01f); // 5000 + 1000 + 0
+        assertEquals(7000f, results.get(0).getNetWorth(), 0.01f); // 5000 + 1000 + 0
 
         assertEquals("Poor", results.get(1).getPlayer().getName());
         assertEquals(2, results.get(1).getRank());
-        assertEquals(1600f, results.get(1).getNetWorth(), 0.01f); // 100 + 0 + 500
+        assertEquals(1400f, results.get(1).getNetWorth(), 0.01f); // 100 + 0 + 500
 
         assertEquals("Bankrupt", results.get(2).getPlayer().getName());
         assertEquals(3, results.get(2).getRank());

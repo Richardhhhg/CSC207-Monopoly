@@ -17,13 +17,13 @@ public class CharacterTraitsText {
     public String getText() {
         return String.join(NL,
                 "Inheritor:",
-                "  - A naive young man who inherited $1800 from a mysterious relative. "
-                        + "Pays 10% more when buying stocks and earns 30% less when selling. "
+                "  - A naive young man who inherited $1200 from a mysterious relative. "
+                        + "Pays 15% more when buying stocks and earns 15% less when selling. "
                         + "Easy money came fast--but can he keep it?",
                 "",
                 "Land Lord:",
-                "  - A greedy landlord who starts with $800. Gains 80% more rent, "
-                        + "but struggles with stocks--pays 80% more to buy and sells for 20% less. "
+                "  - A greedy landlord who starts with $1000. Gains 80% more rent, "
+                        + "but struggles with stocks--pays 80% more to buy and sells for 15% less. "
                         + "Built for real estate domination, not Wall Street.",
                 "",
                 "Poor Man:",
@@ -34,12 +34,12 @@ public class CharacterTraitsText {
                 "",
                 "Clerk:",
                 "  - An ordinary office worker living paycheck to paycheck. "
-                        + "Starts with $1200 and earns a steady income every turn. "
+                        + "Starts with $800 and earns a steady income of $20 every turn. "
                         + "No special perks or penalties--just consistency.",
                 "",
                 "College Student:",
                 "  - A college student drowning in tuition fees, "
-                        + "losing $100 every turn, but a genius with stocks--buys 10% cheaper and sells for 30% more."
+                        + "losing $20 every turn, but a genius with stocks--buys 15% cheaper and sells for 10% more."
         );
     }
 }
