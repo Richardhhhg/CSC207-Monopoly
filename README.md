@@ -3,12 +3,16 @@
 This repository contains the code for the final project of CSC207 for Group 20. Our goal was to improve on the popular game monopoly by adding new features in an java implementation. We chose to include a features of being able to select from different character types, each with special traits and a stock market. This makes our implementation unique and fun compared to the original monopoly while also preserving key aspects such as the interaction with properties and other players.
 
 ## 📋 Table of Contents
-- [Features](#🚀Features)
-- [Installation](#🛳️-How-to-Run)
-- [Usage Guide](#)
-- [License](#)
-- [Feedback](#)
-- [Contributing](#)
+- [Features](#-features)
+- [Installation](#-installation-and-usage-guide)
+  - [Running without Use Real world Stock Data](#running-without-use-real-world-stock-data)
+  - [Running with Real World Stock Data](#running-with-real-world-stock-data)
+  - [Common Issues in Installation](#common-issues-in-installation)
+  - [Compatibility](#-compatibility)
+  - [Dependencies](#-dependencies)
+- [Feedback](#-feedback)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 
 ## 🚀 Features
@@ -23,14 +27,14 @@ This repository contains the code for the final project of CSC207 for Group 20. 
   - At the end of 20 turns, the player with the most money wins.
 - The game will have a GUI that displays the board, players, and properties.
 - The game will have a stock market feature that allows players to buy and sell stocks.
-  - There will be 5 predertermined real world stocks available at baseline
+  - There will be 5 predetermined real world stocks available at baseline
   - Players should be able to sell stocks at any time during their turn
   - Players will only be able to buy stocks when they land on a stock market tile
   - The price of stocks fluctuate every round based on real world stock data
   - The prices of stocks when the game starts will be based on real world stock data
 - At the end of the game, an endscreen with show with the stats of players including their money (including stocks), their properties and their net value.
 
-## 🛳️ How to Run
+## 🛳️ Installation and Usage Guide
 ### Running without Use Real world Stock Data
 1. Clone the repository to your local machine. This can be done either through Git Clone or by simpling downloading the zip from the dropdown menu opened by "Code":
    <img width="415" height="336" alt="image" src="https://github.com/user-attachments/assets/f4154f4a-ffa7-4f20-b3fc-dfb766b65ee2" />
@@ -38,7 +42,7 @@ This repository contains the code for the final project of CSC207 for Group 20. 
 
 This will create a stock market using sample stocks that are not built using real world data.
 
-### Runnning with Real World Stock Data
+### Running with Real World Stock Data
 1. Clone the Repository follow step 1 in installing without using real stock data.
 2. Obtain an API key from Alpha Vantage here: https://www.alphavantage.co/
 3. Add the API key to your environment variables under the name "API_KEY". This may vary for different IDE's. Here is the process in IntelliJ:  
@@ -53,6 +57,9 @@ This will create a stock market using sample stocks that are not built using rea
 5. Launch the game normally by running the file `main`.
 
 This will build the game using stock market data sourced from real stocks. The stocks used in the game are set in the file `src/main/Resources/StockData/stock_names.json`.
+
+### Common Issues in Installation
+Currently there are not any known issues with installation. If you do run into any issues, please open an issue in the [Issues Tab](https://github.com/Richardhhhg/CSC207-Monopoly/issues)
 
 ### 💻 Compatibility
 Supported Operating Systems
@@ -73,7 +80,8 @@ Supported Operating Systems
 ## 🎍 Feedback
 We are open to feedback whether it be potential improvements or bugfixes. For bugfixes please use the [Issues Tab](https://github.com/Richardhhhg/CSC207-Monopoly/issues) and open a new issue with the label `Bug`. For improvements you are encouraged to use the [Discussions Tab](https://github.com/Richardhhhg/CSC207-Monopoly/discussions) and add any ideas you have. For a template of how to add meaning ideas to the discussion tab see the [following post](https://github.com/Richardhhhg/CSC207-Monopoly/discussions/121).
 
-## 🚙 Contributions
+## 🚙 Contributing
+### Contributions
 Contributors:  
 | Name         | Github      |
 |--------------|-------------|
@@ -96,3 +104,6 @@ In our pull requests we want a good non-technical summary of the changes impleme
 
 ### ✍️ Reviewing Contributions and Merging to Main
 Aside from the overall game logic to still work without any major bugs, we expect that all code that is to be merged into main adheres to the principles of Clean Architecture and SOLID or modifies existing code to follow the principles. Thus when reviewing code, we will be looking for violations of Clean Architecture and SOLID and making necessary comments. Until these requested changes are fixed, the pull request will not be merged into main.
+
+## 📜 License
+This project is under the Apache License 2.0. See the licence file for more details.
