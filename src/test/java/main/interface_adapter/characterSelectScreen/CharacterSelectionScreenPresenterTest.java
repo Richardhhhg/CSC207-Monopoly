@@ -1,8 +1,8 @@
 package main.interface_adapter.characterSelectScreen;
 
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenPresenter;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
-import main.use_case.characterSelectionScreen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenPresenter;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenViewModel;
+import main.use_case.character_selection_screen.CharacterSelectionPlayerViewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

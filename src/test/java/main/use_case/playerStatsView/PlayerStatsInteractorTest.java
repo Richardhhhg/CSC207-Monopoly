@@ -3,10 +3,10 @@ package main.use_case.playerStatsView;
 import main.entity.Game;
 import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
-import main.use_case.playerStats.PlayerStatsInteractor;
-import main.use_case.playerStats.PlayerStatsOutput;
-import main.use_case.playerStats.PlayerStatsOutputBoundary;
-import main.use_case.playerStats.PlayerStatsOutputData;
+import main.use_case.player_stats.PlayerStatsInteractor;
+import main.use_case.player_stats.PlayerStatsOutput;
+import main.use_case.player_stats.PlayerStatsOutputBoundary;
+import main.use_case.player_stats.PlayerStatsOutputData;
 
 import org.junit.Before;
 import org.junit.Test;

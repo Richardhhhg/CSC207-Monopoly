@@ -1,8 +1,8 @@
 package main.interface_adapter.playerStatsView;
 
 import main.entity.Game;
-import main.interface_adapter.playerStats.PlayerStatsController;
-import main.use_case.playerStats.PlayerStatsInputBoundary;
+import main.interface_adapter.player_stats.PlayerStatsController;
+import main.use_case.player_stats.PlayerStatsInputBoundary;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -27,16 +27,16 @@ import javax.swing.event.DocumentListener;
 
 import main.app.GameHolder;
 import main.entity.Game;
-import main.interface_adapter.boardSizeSelection.BoardSizeController;
-import main.interface_adapter.boardSizeSelection.BoardSizePresenter;
-import main.interface_adapter.boardSizeSelection.BoardSizeViewModel;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenAdapter;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenController;
-import main.interface_adapter.characterSelectionScreen.CharacterSelectionScreenViewModel;
+import main.interface_adapter.board_size_selection.BoardSizeController;
+import main.interface_adapter.board_size_selection.BoardSizePresenter;
+import main.interface_adapter.board_size_selection.BoardSizeViewModel;
+import main.interface_adapter.character_selection_screen.CharacterSelectionPlayerViewModel;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenAdapter;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenController;
+import main.interface_adapter.character_selection_screen.CharacterSelectionScreenViewModel;
 import main.interface_adapter.game.GameCreationController;
-import main.use_case.boardSizeSelection.BoardSizeSelection;
-import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
+import main.use_case.board_size_selection.BoardSizeSelection;
+import main.use_case.board_size_selection.BoardSizeSelection.BoardSize;
 
 /**
  * The CharacterSelectionScreen class provides a GUI for players to select their

@@ -23,10 +23,10 @@ import javax.swing.SwingConstants;
 
 import main.constants.Constants;
 import main.entity.players.AbstractPlayer;
-import main.interface_adapter.endScreen.EndScreenController;
-import main.interface_adapter.endScreen.EndScreenPresenter;
-import main.interface_adapter.endScreen.EndScreenViewModel;
-import main.use_case.endScreen.EndGame;
+import main.interface_adapter.end_screen.EndScreenController;
+import main.interface_adapter.end_screen.EndScreenPresenter;
+import main.interface_adapter.end_screen.EndScreenViewModel;
+import main.use_case.end_screen.EndGame;
 
 public class EndScreen extends JFrame {
     private final EndScreenController controller;

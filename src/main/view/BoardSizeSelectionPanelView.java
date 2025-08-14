@@ -11,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.interface_adapter.boardSizeSelection.BoardSizeController;
-import main.interface_adapter.boardSizeSelection.BoardSizeViewModel;
-import main.use_case.boardSizeSelection.BoardSizeSelection.BoardSize;
+import main.interface_adapter.board_size_selection.BoardSizeController;
+import main.interface_adapter.board_size_selection.BoardSizeViewModel;
+import main.use_case.board_size_selection.BoardSizeSelection.BoardSize;
 
 /**
  * A panel for board size selection.
