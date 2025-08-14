@@ -15,7 +15,7 @@ import main.constants.Constants;
 import main.interface_adapter.start_screen.StartScreenController;
 import main.interface_adapter.start_screen.StartScreenPresenter;
 import main.interface_adapter.start_screen.StartScreenViewModel;
-import main.use_case.start_screen.StartGame;
+import main.use_case.start_screen.StartScreenInteractor;
 
 /**
  * Main frame that displays the start screen for the Monopoly game.
@@ -31,20 +31,27 @@ public class StartScreen extends JFrame {
     private static final int RULES_BUTTON_FONT_SIZE = Constants.RULES_BUTTON_FONT_SIZE;
 
     private final StartScreenController controller;
+    private final StartScreenPresenter presenter;
     private StartScreenViewModel viewModel;
 
     /**
      * Constructs the start screen frame and initializes its contents.
      */
     public StartScreen() {
-        this.controller = new StartScreenController();
+        // Set up Clean Architecture dependency injection
+        this.presenter = new StartScreenPresenter();
+        final StartScreenInteractor interactor = new StartScreenInteractor(presenter);
+        this.controller = new StartScreenController(interactor);
+
         initializeScreen();
     }
 
     private void initializeScreen() {
-        final StartGame.StartGameResult result = controller.execute();
-        final StartScreenPresenter presenter = new StartScreenPresenter();
-        viewModel = presenter.execute(result);
+        // Execute the use case through the controller to populate the presenter
+        controller.execute();
+
+        // Get the view model from the presenter after execution
+        viewModel = presenter.getViewModel();
 
         setTitle("Monopoly Game - Start");
         setSize(WIDTH, HEIGHT);

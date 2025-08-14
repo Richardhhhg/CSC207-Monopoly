@@ -1,20 +1,18 @@
 package main.interface_adapter.start_screen;
 
-import main.use_case.start_screen.StartGame;
+import main.use_case.start_screen.StartScreenInputBoundary;
 
 public class StartScreenController {
-    private final StartGame startGameUseCase;
+    private final StartScreenInputBoundary startScreenInputBoundary;
 
-    public StartScreenController() {
-        this.startGameUseCase = new StartGame();
+    public StartScreenController(StartScreenInputBoundary startScreenInputBoundary) {
+        this.startScreenInputBoundary = startScreenInputBoundary;
     }
 
     /**
-     * Executes the start-game use case and returns the result.
-     *
-     * @return a {@link StartGame.StartGameResult} containing game initialization data
+     * Executes the start screen use case.
      */
-    public StartGame.StartGameResult execute() {
-        return startGameUseCase.execute();
+    public void execute() {
+        startScreenInputBoundary.execute();
     }
 }
