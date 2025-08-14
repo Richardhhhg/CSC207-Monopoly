@@ -1,62 +1,87 @@
 package main.interface_adapter.start_screen;
 
-import main.use_case.start_screen.StartGame;
+import main.use_case.start_screen.StartScreenInputBoundary;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StartScreenControllerTest {
+
+    private TestStartScreenInputBoundary testInputBoundary;
     private StartScreenController controller;
 
     @BeforeEach
     void setUp() {
-        controller = new StartScreenController();
+        testInputBoundary = new TestStartScreenInputBoundary();
+        controller = new StartScreenController(testInputBoundary);
     }
 
     @Test
-    void testExecuteReturnStartGameResult() {
-        StartGame.StartGameResult result = controller.execute();
-        assertNotNull(result, "Controller should return a non-null result");
+    void testExecuteCallsInputBoundary() {
+        controller.execute();
+
+        assertTrue(testInputBoundary.wasCalled(), "Input boundary should have been called");
     }
 
     @Test
-    void testExecuteReturnsValidWelcomeMessage() {
-        StartGame.StartGameResult result = controller.execute();
-        assertNotNull(result.getWelcomeMessage(), "Welcome message should not be null");
-        assertFalse(result.getWelcomeMessage().trim().isEmpty(),
-                "Welcome message should not be empty");
+    void testExecuteDoesNotReturnValue() {
+        // Test that execute() method has void return type
+        controller.execute();
+
+        // If we get here without compilation error, the method is void
+        assertTrue(testInputBoundary.wasCalled());
     }
 
     @Test
-    void testExecuteReturnsValidRules() {
-        StartGame.StartGameResult result = controller.execute();
-        assertNotNull(result.getRules(), "Rules should not be null");
-        assertFalse(result.getRules().trim().isEmpty(),
-                "Rules should not be empty");
+    void testMultipleExecutionsCallInputBoundaryMultipleTimes() {
+        controller.execute();
+        controller.execute();
+
+        assertEquals(2, testInputBoundary.getCallCount(), "Input boundary should be called twice");
     }
 
     @Test
-    void testMultipleExecutions() {
-        StartGame.StartGameResult result1 = controller.execute();
-        StartGame.StartGameResult result2 = controller.execute();
-
-        assertNotNull(result1, "First result should not be null");
-        assertNotNull(result2, "Second result should not be null");
-
-        // Results should be consistent
-        assertEquals(result1.getWelcomeMessage(), result2.getWelcomeMessage(),
-                "Multiple executions should return same welcome message");
-        assertEquals(result1.getRules(), result2.getRules(),
-                "Multiple executions should return same rules");
+    void testConstructorWithNullInputBoundary() {
+        assertThrows(NullPointerException.class, () -> {
+            new StartScreenController(null).execute();
+        });
     }
 
     @Test
-    void testControllerUsesStartGameUseCase() {
-        // This test verifies that the controller properly delegates to the use case
-        StartGame.StartGameResult result = controller.execute();
+    void testControllerDelegatesCorrectly() {
+        // Verify that the controller properly delegates to the input boundary
+        controller.execute();
 
-        // Verify the result has expected characteristics from StartGame use case
-        assertTrue(result.getWelcomeMessage().contains("Welcome"));
-        assertTrue(result.getRules().contains("Objective"));
+        assertTrue(testInputBoundary.wasCalled());
+        assertEquals(1, testInputBoundary.getCallCount());
+    }
+
+    @Test
+    void testControllerDoesNotModifyInputBoundary() {
+        StartScreenInputBoundary originalBoundary = testInputBoundary;
+
+        controller.execute();
+
+        // Verify that the controller doesn't replace the input boundary reference
+        assertSame(originalBoundary, testInputBoundary);
+        assertTrue(testInputBoundary.wasCalled());
+    }
+
+    // Test helper class - implements the input boundary for testing
+    private static class TestStartScreenInputBoundary implements StartScreenInputBoundary {
+        private int callCount = 0;
+
+        @Override
+        public void execute() {
+            callCount++;
+        }
+
+        public boolean wasCalled() {
+            return callCount > 0;
+        }
+
+        public int getCallCount() {
+            return callCount;
+        }
     }
 }

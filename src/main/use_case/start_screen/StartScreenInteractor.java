@@ -1,26 +1,21 @@
 package main.use_case.start_screen;
 
-/**
- * Use case for starting the game and returning initial information.
- */
-public class StartGame {
-    /**
-     * Executes the start‐game use case and returns the result.
-     *
-     * @return a {@link StartGameResult} containing the welcome message and rules text
-     */
-    public StartGameResult execute() {
-        return new StartGameResult(
-                "Welcome to our Monopoly!",
-                getRulesText()
-        );
+public class StartScreenInteractor implements StartScreenInputBoundary {
+    private final StartScreenOutputBoundary presenter;
+
+    public StartScreenInteractor(StartScreenOutputBoundary presenter) {
+        this.presenter = presenter;
     }
 
-    /**
-     * Generates the full game rules text.
-     *
-     * @return the rules as a multiline string
-     */
+    @Override
+    public void execute() {
+        final String welcomeMessage = "Welcome to our Monopoly!";
+        final String rules = getRulesText();
+
+        final StartScreenOutputData outputData = new StartScreenOutputData(welcomeMessage, rules);
+        presenter.presentStartScreenData(outputData);
+    }
+
     private String getRulesText() {
         return String.join(System.lineSeparator(),
                 "Objective",
@@ -51,26 +46,5 @@ public class StartGame {
                 "  - Instant Win: Last player standing.",
                 "  - Round 20: Highest cash total (properties/stocks excluded) wins."
         );
-    }
-
-    /**
-     * Value object holding the welcome message and rules.
-     */
-    public static class StartGameResult {
-        private final String welcomeMessage;
-        private final String rules;
-
-        public StartGameResult(String welcomeMessage, String rules) {
-            this.welcomeMessage = welcomeMessage;
-            this.rules = rules;
-        }
-
-        public String getWelcomeMessage() {
-            return welcomeMessage;
-        }
-        
-        public String getRules() {
-            return rules;
-        }
     }
 }

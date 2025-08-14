@@ -61,8 +61,11 @@ class CharacterSelectionScreenViewModelTest {
     }
 
     @Test
-    void testGetPlayerVmNullIfNoPlayer() {
+    void testGetPlayerVmThrowsIllegalArgumentExceptionIfNoPlayer() {
         CharacterSelectionScreenViewModel vm = new CharacterSelectionScreenViewModel();
-        assertNull(vm.getPlayerVm(3));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            vm.getPlayerVm(3);
+        });
     }
 }

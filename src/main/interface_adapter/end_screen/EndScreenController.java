@@ -3,6 +3,7 @@ package main.interface_adapter.end_screen;
 import java.util.List;
 
 import main.entity.players.AbstractPlayer;
+import main.use_case.end_screen.EndScreenInteractor;
 
 /**
  * Controller for the End Screen.
@@ -18,6 +19,19 @@ public class EndScreenController {
      */
     public EndScreenController(main.use_case.end_screen.EndScreenInputBoundary interactor) {
         this.interactor = interactor;
+    }
+
+    /**
+     * Creates a controller with a new interactor and presenter using the provided view model.
+     * This factory method handles the dependency wiring.
+     *
+     * @param viewModel The view model to be used by the presenter.
+     * @return A configured EndScreenController.
+     */
+    public static EndScreenController create(EndScreenViewModel viewModel) {
+        final EndScreenPresenter presenter = new EndScreenPresenter(viewModel);
+        final EndScreenInteractor interactor = new EndScreenInteractor(presenter);
+        return new EndScreenController(interactor);
     }
 
     /**
