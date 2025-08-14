@@ -38,46 +38,7 @@ public class RentPaymentUseCase {
     }
 
     // Data transfer object
-    public static class RentPaymentData {
-        private final String payerName;
-        private final String ownerName;
-        private final String propertyName;
-        private final float rentAmount;
-        private final float payerNewMoney;
-        private final float ownerNewMoney;
-
-        public RentPaymentData(String payerName, String ownerName, String propertyName,
-                             float rentAmount, float payerNewMoney, float ownerNewMoney) {
-            this.payerName = payerName;
-            this.ownerName = ownerName;
-            this.propertyName = propertyName;
-            this.rentAmount = rentAmount;
-            this.payerNewMoney = payerNewMoney;
-            this.ownerNewMoney = ownerNewMoney;
-        }
-
-        public String getPayerName() {
-            return payerName;
-        }
-
-        public String getOwnerName() {
-            return ownerName;
-        }
-
-        public String getPropertyName() {
-            return propertyName;
-        }
-
-        public float getRentAmount() {
-            return rentAmount;
-        }
-
-        public float getPayerNewMoney() {
-            return payerNewMoney;
-        }
-
-        public float getOwnerNewMoney() {
-            return ownerNewMoney;
-        }
+        public record RentPaymentData(String payerName, String ownerName, String propertyName, float rentAmount,
+                                      float payerNewMoney, float ownerNewMoney) {
     }
 }

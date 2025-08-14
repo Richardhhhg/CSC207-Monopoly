@@ -72,12 +72,12 @@ class RentPaymentTest {
 
         // Assert
         assertNotNull(presenter.lastRentData);
-        assertEquals("Payer", presenter.lastRentData.getPayerName());
-        assertEquals("Owner", presenter.lastRentData.getOwnerName());
-        assertEquals("TestProperty", presenter.lastRentData.getPropertyName());
-        assertEquals(100.0f, presenter.lastRentData.getRentAmount());
-        assertEquals(1600.0f, presenter.lastRentData.getPayerNewMoney()); // 1700 - 100
-        assertEquals(2300.0f, presenter.lastRentData.getOwnerNewMoney()); // 2200 + 100
+        assertEquals("Payer", presenter.lastRentData.payerName());
+        assertEquals("Owner", presenter.lastRentData.ownerName());
+        assertEquals("TestProperty", presenter.lastRentData.propertyName());
+        assertEquals(100.0f, presenter.lastRentData.rentAmount());
+        assertEquals(1600.0f, presenter.lastRentData.payerNewMoney()); // 1700 - 100
+        assertEquals(2300.0f, presenter.lastRentData.ownerNewMoney()); // 2200 + 100
     }
 
     @Test
@@ -96,7 +96,7 @@ class RentPaymentTest {
         assertEquals(1700.0f, payer.getMoney()); // No change
         assertEquals(2200.0f, owner.getMoney()); // No change
         assertNotNull(presenter.lastRentData);
-        assertEquals(0.0f, presenter.lastRentData.getRentAmount());
+        assertEquals(0.0f, presenter.lastRentData.rentAmount());
     }
 
     @Test
@@ -118,9 +118,9 @@ class RentPaymentTest {
         assertEquals(2700.0f, owner.getMoney()); // 2200 + 500
 
         assertNotNull(presenter.lastRentData);
-        assertEquals(500.0f, presenter.lastRentData.getRentAmount());
-        assertEquals(0.0f, presenter.lastRentData.getPayerNewMoney());
-        assertEquals(2700.0f, presenter.lastRentData.getOwnerNewMoney());
+        assertEquals(500.0f, presenter.lastRentData.rentAmount());
+        assertEquals(0.0f, presenter.lastRentData.payerNewMoney());
+        assertEquals(2700.0f, presenter.lastRentData.ownerNewMoney());
     }
 
     @Test
@@ -140,7 +140,7 @@ class RentPaymentTest {
         assertEquals(2190.0f, owner.getMoney()); // 2200 + (-10) = 2190
 
         assertNotNull(presenter.lastRentData);
-        assertEquals(-10.0f, presenter.lastRentData.getRentAmount());
+        assertEquals(-10.0f, presenter.lastRentData.rentAmount());
     }
 
     // Test data object
@@ -152,11 +152,11 @@ class RentPaymentTest {
         );
 
         // Assert
-        assertEquals("Payer1", data.getPayerName());
-        assertEquals("Owner1", data.getOwnerName());
-        assertEquals("Property1", data.getPropertyName());
-        assertEquals(150.0f, data.getRentAmount());
-        assertEquals(350.0f, data.getPayerNewMoney());
-        assertEquals(1150.0f, data.getOwnerNewMoney());
+        assertEquals("Payer1", data.payerName());
+        assertEquals("Owner1", data.ownerName());
+        assertEquals("Property1", data.propertyName());
+        assertEquals(150.0f, data.rentAmount());
+        assertEquals(350.0f, data.payerNewMoney());
+        assertEquals(1150.0f, data.ownerNewMoney());
     }
 }

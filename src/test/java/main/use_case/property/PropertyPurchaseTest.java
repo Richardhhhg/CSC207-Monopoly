@@ -98,11 +98,11 @@ class PropertyPurchaseTest {
 
         // Assert
         assertNotNull(presenter.lastPurchaseData);
-        assertEquals("TestPlayer", presenter.lastPurchaseData.getPlayerName());
-        assertEquals(2200.0f, presenter.lastPurchaseData.getPlayerMoney()); // 1200 + 1000
-        assertEquals("TestProperty", presenter.lastPurchaseData.getPropertyName());
-        assertEquals(500.0f, presenter.lastPurchaseData.getPropertyPrice());
-        assertTrue(presenter.lastPurchaseData.isCanAfford());
+        assertEquals("TestPlayer", presenter.lastPurchaseData.playerName());
+        assertEquals(2200.0f, presenter.lastPurchaseData.playerMoney()); // 1200 + 1000
+        assertEquals("TestProperty", presenter.lastPurchaseData.propertyName());
+        assertEquals(500.0f, presenter.lastPurchaseData.propertyPrice());
+        assertTrue(presenter.lastPurchaseData.canAfford());
         assertNotNull(presenter.lastCallback);
     }
 
@@ -119,7 +119,7 @@ class PropertyPurchaseTest {
 
         // Assert
         assertNotNull(presenter.lastPurchaseData);
-        assertFalse(presenter.lastPurchaseData.isCanAfford());
+        assertFalse(presenter.lastPurchaseData.canAfford());
     }
 
     @Test
@@ -147,9 +147,9 @@ class PropertyPurchaseTest {
 
         // Assert
         assertNotNull(presenter.lastOwnershipData);
-        assertEquals("TestProperty", presenter.lastOwnershipData.getPropertyName());
-        assertEquals("TestPlayer", presenter.lastOwnershipData.getOwnerName());
-        assertEquals(1700.0f, presenter.lastOwnershipData.getNewOwnerMoney()); // 2200 - 500
+        assertEquals("TestProperty", presenter.lastOwnershipData.propertyName());
+        assertEquals("TestPlayer", presenter.lastOwnershipData.ownerName());
+        assertEquals(1700.0f, presenter.lastOwnershipData.newOwnerMoney()); // 2200 - 500
         assertEquals(1700.0f, player.getMoney()); // 2200 - 500
     }
 
@@ -190,11 +190,11 @@ class PropertyPurchaseTest {
         );
 
         // Assert
-        assertEquals("Player1", data.getPlayerName());
-        assertEquals(1000.0f, data.getPlayerMoney());
-        assertEquals("Property1", data.getPropertyName());
-        assertEquals(500.0f, data.getPropertyPrice());
-        assertTrue(data.isCanAfford());
+        assertEquals("Player1", data.playerName());
+        assertEquals(1000.0f, data.playerMoney());
+        assertEquals("Property1", data.propertyName());
+        assertEquals(500.0f, data.propertyPrice());
+        assertTrue(data.canAfford());
     }
 
     @Test
@@ -205,8 +205,8 @@ class PropertyPurchaseTest {
         );
 
         // Assert
-        assertEquals("Property1", data.getPropertyName());
-        assertEquals("Owner1", data.getOwnerName());
-        assertEquals(500.0f, data.getNewOwnerMoney());
+        assertEquals("Property1", data.propertyName());
+        assertEquals("Owner1", data.ownerName());
+        assertEquals(500.0f, data.newOwnerMoney());
     }
 }
