@@ -68,8 +68,8 @@ public class PlayerStatsView extends JPanel {
             g2.setColor(player.getColor());
             final String info = player.getName() + " Information:";
             g2.drawString(info, TEXT_START_X, y);
-            final String networth = "Networth: " + player.getMoney() + "$";
-            g2.drawString(networth, NET_WORTH_XPOS, y + FONT_SIZE);
+            final String cash = "Cash: " + String.format("%.2f", player.getMoney()) + "$";
+            g2.drawString(cash, NET_WORTH_XPOS, y + FONT_SIZE);
 
             g2.setColor(player.getColor());
             final int labelX = 180;

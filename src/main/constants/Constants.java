@@ -6,7 +6,7 @@ import java.awt.Color;
  * This class is a placeholder for constants used throughout the application.
  */
 public class Constants {
-    public static final boolean USE_STOCK_API = false;
+    public static final boolean USE_STOCK_API = true;
     public static final int NUM_STOCKS = 5;
 
     // Game Constants
@@ -22,10 +22,10 @@ public class Constants {
     public static final int START_Y = 8;
 
     // GamePlay related constants
-    public static final int MAX_ROUNDS = 20;
-    public static final float RENT_MULTIPLIER = 0.25f; // 25% of property price
-    public static final int PROPERTY_BASE_PRICE = 60;
-    public static final int PROPERTY_PRICE_INCREMENT = 20;
+    public static final int MAX_ROUNDS = 10;
+    public static final float RENT_MULTIPLIER = 0.25f;
+    public static final int PROPERTY_BASE_PRICE = 80;
+    public static final int PROPERTY_PRICE_INCREMENT = 25;
 
     // Board JPanel Related main.Constants.main.Constants
     public static final int BOARD_SIZE = 780;
@@ -87,22 +87,22 @@ public class Constants {
     public static final int STATS_LAYER = 3;
 
     // Character Constants
-    public static final int CLERK_INIT_MONEY = 1200;
-    public static final int STUDENT_INIT_MONEY = 1000;
+    public static final int CLERK_INIT_MONEY = 800;
+    public static final int STUDENT_INIT_MONEY = 800;
     public static final int DEFAULT_INIT_MONEY = 1200;
-    public static final int INHERITOR_INIT_MONEY = 1800;
-    public static final int LANDLORD_INIT_MONEY = 800;
+    public static final int INHERITOR_INIT_MONEY = 1200;
+    public static final int LANDLORD_INIT_MONEY = 1000;
     public static final int POORMAN_INIT_MONEY = 200;
 
-    public static final int CLERK_ADD_MONEY = 50;
+    public static final int CLERK_ADD_MONEY = 20;
     public static final int POORMAN_TURN_EFFECTS_COST = 20;
-    public static final int COLLEGE_STUDENT_TUITION = 100;
-    public static final float COLLEGE_STUDENT_STOCK_PRICE = 0.90f;
-    public static final float COLLEGE_STUDENT_STOCK_SELL_PRICE = 1.3f;
+    public static final int COLLEGE_STUDENT_TUITION = 20;
+    public static final float COLLEGE_STUDENT_STOCK_PRICE = 0.85f;
+    public static final float COLLEGE_STUDENT_STOCK_SELL_PRICE = 1.1f;
     public static final float INHERITOR_STOCK_BUY_PRICE = 1.1f;
-    public static final float INHERITOR_STOCK_SELL_PRICE = 0.70f;
-    public static final float LANDLORD_STOCK_BUY_PRICE = 1.8f;
-    public static final float LANDLORD_STOCK_SELL_PRICE = 0.80f;
+    public static final float INHERITOR_STOCK_SELL_PRICE = 0.9f;
+    public static final float LANDLORD_STOCK_BUY_PRICE = 1.15f;
+    public static final float LANDLORD_STOCK_SELL_PRICE = 0.85f;
     public static final float LANDLORD_RENT_MULTIPLIER = 1.8f;
 
     // Portrait Path
