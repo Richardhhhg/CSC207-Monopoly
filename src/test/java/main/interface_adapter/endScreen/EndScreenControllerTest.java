@@ -3,24 +3,28 @@ package main.interface_adapter.endScreen;
 import main.entity.players.Player;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
-import main.use_case.endScreen.EndGame;
+import main.use_case.endScreen.EndScreenInputBoundary;
+import main.use_case.endScreen.EndScreenInputData;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class EndScreenControllerTest {
 
     private EndScreenController controller;
+    private TestEndScreenInteractor testInteractor;
     private List<Player> testPlayers;
 
     @Before
     public void setUp() {
-        controller = new EndScreenController();
+        testInteractor = new TestEndScreenInteractor();
+        controller = new EndScreenController(testInteractor);
 
         // Create test players
         Player player1 = new Clerk("Alice", Color.RED);
@@ -32,17 +36,19 @@ public class EndScreenControllerTest {
     }
 
     @Test
-    public void testExecuteReturnsValidResult() {
+    public void testExecuteCallsInteractorWithCorrectData() {
         String gameEndReason = "Maximum rounds reached";
         int totalRounds = 20;
 
-        EndGame.EndGameResult result = controller.execute(testPlayers, gameEndReason, totalRounds);
+        controller.execute(testPlayers, gameEndReason, totalRounds);
 
-        assertNotNull(result);
-        assertEquals(gameEndReason, result.getGameEndReason());
-        assertEquals(totalRounds, result.getTotalRounds());
-        assertNotNull(result.getPlayerResults());
-        assertEquals(2, result.getPlayerResults().size());
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertNotNull(inputData);
+        assertEquals(testPlayers, inputData.getPlayers());
+        assertEquals(gameEndReason, inputData.getGameEndReason());
+        assertEquals(totalRounds, inputData.getTotalRounds());
     }
 
     @Test
@@ -51,15 +57,19 @@ public class EndScreenControllerTest {
         bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
         List<Player> playersWithBankrupt = Arrays.asList(testPlayers.get(0), testPlayers.get(1), bankruptPlayer);
 
-        EndGame.EndGameResult result = controller.execute(playersWithBankrupt, "Player bankruptcy", 15);
+        controller.execute(playersWithBankrupt, "Player bankruptcy", 15);
 
-        assertNotNull(result);
-        assertEquals(3, result.getPlayerResults().size());
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
 
-        // Find the bankrupt player in results
+        assertEquals(3, inputData.getPlayers().size());
+        assertEquals("Player bankruptcy", inputData.getGameEndReason());
+        assertEquals(15, inputData.getTotalRounds());
+
+        // Verify bankrupt player is included
         boolean foundBankruptPlayer = false;
-        for (EndGame.PlayerResult pr : result.getPlayerResults()) {
-            if (pr.getPlayer().isBankrupt()) {
+        for (Player player : inputData.getPlayers()) {
+            if (player.isBankrupt()) {
                 foundBankruptPlayer = true;
                 break;
             }
@@ -69,13 +79,16 @@ public class EndScreenControllerTest {
 
     @Test
     public void testExecuteWithEmptyPlayerList() {
-        List<Player> emptyPlayers = Arrays.asList();
+        List<Player> emptyPlayers = new ArrayList<>();
 
-        EndGame.EndGameResult result = controller.execute(emptyPlayers, "No players", 0);
+        controller.execute(emptyPlayers, "No players", 0);
 
-        assertNotNull(result);
-        assertTrue(result.getPlayerResults().isEmpty());
-        assertNull(result.getWinner());
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertTrue(inputData.getPlayers().isEmpty());
+        assertEquals("No players", inputData.getGameEndReason());
+        assertEquals(0, inputData.getTotalRounds());
     }
 
     @Test
@@ -84,11 +97,116 @@ public class EndScreenControllerTest {
         singlePlayer.addMoney(2000);
         List<Player> singlePlayerList = Arrays.asList(singlePlayer);
 
-        EndGame.EndGameResult result = controller.execute(singlePlayerList, "Single player game", 10);
+        controller.execute(singlePlayerList, "Single player game", 10);
 
-        assertNotNull(result);
-        assertEquals(1, result.getPlayerResults().size());
-        assertEquals(singlePlayer, result.getWinner());
-        assertEquals(1, result.getPlayerResults().get(0).getRank());
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertEquals(1, inputData.getPlayers().size());
+        assertEquals("Single player game", inputData.getGameEndReason());
+        assertEquals(10, inputData.getTotalRounds());
+        assertEquals(singlePlayer, inputData.getPlayers().get(0));
+    }
+
+    @Test
+    public void testExecuteWithZeroRounds() {
+        controller.execute(testPlayers, "Immediate end", 0);
+
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertEquals(0, inputData.getTotalRounds());
+        assertEquals("Immediate end", inputData.getGameEndReason());
+    }
+
+    @Test
+    public void testExecuteWithNegativeRounds() {
+        // Edge case: negative rounds (shouldn't happen in real game but test for robustness)
+        controller.execute(testPlayers, "Error case", -5);
+
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertEquals(-5, inputData.getTotalRounds());
+        assertEquals("Error case", inputData.getGameEndReason());
+    }
+
+    @Test
+    public void testExecuteWithNullGameEndReason() {
+        // Edge case: null reason
+        controller.execute(testPlayers, null, 10);
+
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertNull(inputData.getGameEndReason());
+        assertEquals(10, inputData.getTotalRounds());
+    }
+
+    @Test
+    public void testExecuteWithEmptyGameEndReason() {
+        controller.execute(testPlayers, "", 5);
+
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertEquals("", inputData.getGameEndReason());
+        assertEquals(5, inputData.getTotalRounds());
+    }
+
+    @Test
+    public void testExecuteWithLargeNumberOfRounds() {
+        controller.execute(testPlayers, "Long game", 1000);
+
+        assertTrue(testInteractor.wasExecuteCalled());
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+
+        assertEquals(1000, inputData.getTotalRounds());
+        assertEquals("Long game", inputData.getGameEndReason());
+    }
+
+    @Test
+    public void testMultipleExecuteCalls() {
+        // Test that multiple calls work correctly
+        controller.execute(testPlayers, "First call", 5);
+        assertTrue(testInteractor.wasExecuteCalled());
+
+        // Reset and test second call
+        testInteractor.reset();
+        assertFalse(testInteractor.wasExecuteCalled());
+
+        controller.execute(testPlayers, "Second call", 10);
+        assertTrue(testInteractor.wasExecuteCalled());
+
+        EndScreenInputData inputData = testInteractor.getLastInputData();
+        assertEquals("Second call", inputData.getGameEndReason());
+        assertEquals(10, inputData.getTotalRounds());
+    }
+
+    /**
+     * Test interactor implementation that captures input data for verification.
+     */
+    private static class TestEndScreenInteractor implements EndScreenInputBoundary {
+        private boolean executeCalled = false;
+        private EndScreenInputData lastInputData;
+
+        @Override
+        public void execute(EndScreenInputData inputData) {
+            this.executeCalled = true;
+            this.lastInputData = inputData;
+        }
+
+        public boolean wasExecuteCalled() {
+            return executeCalled;
+        }
+
+        public EndScreenInputData getLastInputData() {
+            return lastInputData;
+        }
+
+        public void reset() {
+            executeCalled = false;
+            lastInputData = null;
+        }
     }
 }

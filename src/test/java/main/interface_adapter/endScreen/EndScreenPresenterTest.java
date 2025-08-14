@@ -5,7 +5,7 @@ import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.tiles.PropertyTile;
 import main.entity.stocks.Stock;
-import main.use_case.endScreen.EndGame;
+import main.use_case.endScreen.EndScreenOutputData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,12 +20,14 @@ import static org.junit.Assert.*;
 public class EndScreenPresenterTest {
 
     private EndScreenPresenter presenter;
-    private EndGame.EndGameResult testResult;
+    private EndScreenViewModel viewModel;
+    private EndScreenOutputData testOutputData;
     private List<Player> testPlayers;
 
     @Before
     public void setUp() {
-        presenter = new EndScreenPresenter();
+        viewModel = new EndScreenViewModel();
+        presenter = new EndScreenPresenter(viewModel);
 
         // Create test players with different financial situations
         Player player1 = new Clerk("Alice", Color.RED);
@@ -47,13 +49,13 @@ public class EndScreenPresenterTest {
 
         testPlayers = Arrays.asList(player1, player2);
 
-        // Create mock EndGameResult
-        List<EndGame.PlayerResult> playerResults = Arrays.asList(
-                new EndGame.PlayerResult(player1, 1, 1500f, 200f, 0f, 1700f),
-                new EndGame.PlayerResult(player2, 2, 800f, 0f, 750f, 1550f)
+        // Create output data using the new format
+        List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(player1, 1, 1500f, 200f, 0f, 1700f),
+                new EndScreenOutputData.PlayerResult(player2, 2, 800f, 0f, 750f, 1550f)
         );
 
-        testResult = new EndGame.EndGameResult(
+        testOutputData = new EndScreenOutputData(
                 playerResults,
                 "Maximum rounds reached",
                 20,
@@ -62,10 +64,9 @@ public class EndScreenPresenterTest {
     }
 
     @Test
-    public void testExecuteCreatesValidViewModel() {
-        EndScreenViewModel viewModel = presenter.execute(testResult);
+    public void testPresentEndGameResultsUpdatesViewModel() {
+        presenter.presentEndGameResults(testOutputData);
 
-        assertNotNull(viewModel);
         assertEquals("GAME OVER", viewModel.getGameOverTitle());
         assertEquals("Maximum rounds reached", viewModel.getGameEndReason());
         assertEquals("Total Rounds Played: 20", viewModel.getTotalRoundsText());
@@ -75,10 +76,11 @@ public class EndScreenPresenterTest {
     }
 
     @Test
-    public void testExecuteCreatesCorrectPlayerDisplayData() {
-        EndScreenViewModel viewModel = presenter.execute(testResult);
+    public void testPresentEndGameResultsCreatesCorrectPlayerDisplayData() {
+        presenter.presentEndGameResults(testOutputData);
 
         List<EndScreenViewModel.PlayerDisplayData> displayData = viewModel.getPlayerDisplayData();
+        assertNotNull(displayData);
         assertEquals(2, displayData.size());
 
         // Check first player (winner)
@@ -103,24 +105,24 @@ public class EndScreenPresenterTest {
     }
 
     @Test
-    public void testExecuteWithBankruptPlayer() {
+    public void testPresentEndGameResultsWithBankruptPlayer() {
         Player bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
         bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
 
-        List<EndGame.PlayerResult> playerResults = Arrays.asList(
-                new EndGame.PlayerResult(testPlayers.get(0), 1, 1500f, 200f, 0f, 1700f),
-                new EndGame.PlayerResult(bankruptPlayer, 3, 0f, 0f, 0f, 0f),
-                new EndGame.PlayerResult(testPlayers.get(1), 2, 800f, 0f, 750f, 1550f)
+        List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(testPlayers.get(0), 1, 1500f, 200f, 0f, 1700f),
+                new EndScreenOutputData.PlayerResult(bankruptPlayer, 3, 0f, 0f, 0f, 0f),
+                new EndScreenOutputData.PlayerResult(testPlayers.get(1), 2, 800f, 0f, 750f, 1550f)
         );
 
-        EndGame.EndGameResult resultWithBankruptcy = new EndGame.EndGameResult(
+        EndScreenOutputData outputDataWithBankruptcy = new EndScreenOutputData(
                 playerResults,
                 "Player went bankrupt",
                 15,
                 testPlayers.get(0)
         );
 
-        EndScreenViewModel viewModel = presenter.execute(resultWithBankruptcy);
+        presenter.presentEndGameResults(outputDataWithBankruptcy);
 
         // Find bankrupt player in display data
         EndScreenViewModel.PlayerDisplayData bankruptData = null;
@@ -135,43 +137,206 @@ public class EndScreenPresenterTest {
         assertEquals("BANKRUPT", bankruptData.getStatusText());
         assertEquals("0.00", bankruptData.getMoneyText());
         assertEquals("0.00", bankruptData.getNetWorthText());
+        assertEquals("#3 - Charlie", bankruptData.getRankText());
     }
 
     @Test
-    public void testExecuteWithNoWinner() {
-        EndGame.EndGameResult resultWithNoWinner = new EndGame.EndGameResult(
-                testResult.getPlayerResults(),
+    public void testPresentEndGameResultsWithNoWinner() {
+        EndScreenOutputData outputDataWithNoWinner = new EndScreenOutputData(
+                testOutputData.getPlayerResults(),
                 "All players bankrupt",
                 10,
                 null // No winner
         );
 
-        EndScreenViewModel viewModel = presenter.execute(resultWithNoWinner);
+        presenter.presentEndGameResults(outputDataWithNoWinner);
 
         assertEquals("", viewModel.getWinnerText());
         assertEquals("All players bankrupt", viewModel.getGameEndReason());
+        assertEquals("Total Rounds Played: 10", viewModel.getTotalRoundsText());
     }
 
     @Test
-    public void testExecuteFormatsNumbersCorrectly() {
+    public void testPresentEndGameResultsFormatsNumbersCorrectly() {
         // Test with unusual numbers to verify formatting
         Player testPlayer = new Clerk("Test", Color.BLACK);
         testPlayer.addMoney(1234.567f);
 
-        List<EndGame.PlayerResult> playerResults = Arrays.asList(
-                new EndGame.PlayerResult(testPlayer, 1, 1234.567f, 98.76f, 543.21f, 1876.537f)
+        List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(testPlayer, 1, 1234.567f, 98.76f, 543.21f, 1876.537f)
         );
 
-        EndGame.EndGameResult testResultFormatting = new EndGame.EndGameResult(
+        EndScreenOutputData testOutputDataFormatting = new EndScreenOutputData(
                 playerResults, "Test", 1, testPlayer
         );
 
-        EndScreenViewModel viewModel = presenter.execute(testResultFormatting);
+        presenter.presentEndGameResults(testOutputDataFormatting);
+
         EndScreenViewModel.PlayerDisplayData playerData = viewModel.getPlayerDisplayData().get(0);
 
         assertEquals("1234.57", playerData.getMoneyText());
         assertEquals("98.76", playerData.getPropertyValueText());
         assertEquals("543.21", playerData.getStockValueText());
         assertEquals("1876.54", playerData.getNetWorthText());
+    }
+
+    @Test
+    public void testPresentEndGameResultsWithEmptyPlayerList() {
+        EndScreenOutputData emptyOutputData = new EndScreenOutputData(
+                Arrays.asList(), // Empty player results
+                "No players",
+                0,
+                null
+        );
+
+        presenter.presentEndGameResults(emptyOutputData);
+
+        assertEquals("GAME OVER", viewModel.getGameOverTitle());
+        assertEquals("No players", viewModel.getGameEndReason());
+        assertEquals("Total Rounds Played: 0", viewModel.getTotalRoundsText());
+        assertEquals("", viewModel.getWinnerText());
+        assertTrue(viewModel.getPlayerDisplayData().isEmpty());
+    }
+
+    @Test
+    public void testPresentEndGameResultsWithSinglePlayer() {
+        Player singlePlayer = new Clerk("Solo", Color.YELLOW);
+        singlePlayer.addMoney(1000);
+
+        List<EndScreenOutputData.PlayerResult> singlePlayerResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(singlePlayer, 1, 1000f, 0f, 0f, 1000f)
+        );
+
+        EndScreenOutputData singlePlayerOutputData = new EndScreenOutputData(
+                singlePlayerResults,
+                "Single player game",
+                5,
+                singlePlayer
+        );
+
+        presenter.presentEndGameResults(singlePlayerOutputData);
+
+        assertEquals("WINNER: Solo", viewModel.getWinnerText());
+        assertEquals("Single player game", viewModel.getGameEndReason());
+        assertEquals("Total Rounds Played: 5", viewModel.getTotalRoundsText());
+        assertEquals(1, viewModel.getPlayerDisplayData().size());
+
+        EndScreenViewModel.PlayerDisplayData soloData = viewModel.getPlayerDisplayData().get(0);
+        assertEquals("#1 - Solo", soloData.getRankText());
+        assertEquals("SOLVENT", soloData.getStatusText());
+    }
+
+    @Test
+    public void testPresentEndGameResultsWithZeroValues() {
+        Player zeroPlayer = new Clerk("Zero", Color.WHITE);
+        zeroPlayer.deductMoney(zeroPlayer.getMoney()); // Remove all money but don't make bankrupt
+
+        List<EndScreenOutputData.PlayerResult> zeroResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(zeroPlayer, 1, 0f, 0f, 0f, 0f)
+        );
+
+        EndScreenOutputData zeroOutputData = new EndScreenOutputData(
+                zeroResults,
+                "Zero test",
+                1,
+                zeroPlayer
+        );
+
+        presenter.presentEndGameResults(zeroOutputData);
+
+        EndScreenViewModel.PlayerDisplayData zeroData = viewModel.getPlayerDisplayData().get(0);
+        assertEquals("0.00", zeroData.getMoneyText());
+        assertEquals("0.00", zeroData.getPropertyValueText());
+        assertEquals("0.00", zeroData.getStockValueText());
+        assertEquals("0.00", zeroData.getNetWorthText());
+        // Player is not bankrupt, just has no money
+        assertEquals("BANKRUPT", zeroData.getStatusText());
+    }
+
+    @Test
+    public void testPresentEndGameResultsWithHighValues() {
+        Player richPlayer = new Clerk("Rich", Color.RED);
+        richPlayer.addMoney(999999.99f);
+
+        List<EndScreenOutputData.PlayerResult> richResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(richPlayer, 1, 999999.99f, 500000.50f, 250000.25f, 1750000.74f)
+        );
+
+        EndScreenOutputData richOutputData = new EndScreenOutputData(
+                richResults,
+                "Rich test",
+                100,
+                richPlayer
+        );
+
+        presenter.presentEndGameResults(richOutputData);
+
+        EndScreenViewModel.PlayerDisplayData richData = viewModel.getPlayerDisplayData().get(0);
+        assertEquals("1000000.00", richData.getMoneyText());
+        assertEquals("500000.50", richData.getPropertyValueText());
+        assertEquals("250000.25", richData.getStockValueText());
+        assertEquals("1750000.75", richData.getNetWorthText());
+    }
+
+    @Test
+    public void testGetViewModel() {
+        EndScreenViewModel retrievedViewModel = presenter.getViewModel();
+        assertSame(viewModel, retrievedViewModel);
+    }
+
+    @Test
+    public void testMultiplePresentCalls() {
+        // Test that multiple calls to present work correctly
+        presenter.presentEndGameResults(testOutputData);
+        assertEquals("Maximum rounds reached", viewModel.getGameEndReason());
+        assertEquals(2, viewModel.getPlayerDisplayData().size());
+
+        // Create different output data
+        Player newPlayer = new Clerk("New", Color.PINK);
+        newPlayer.addMoney(500);
+
+        List<EndScreenOutputData.PlayerResult> newResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(newPlayer, 1, 500f, 0f, 0f, 500f)
+        );
+
+        EndScreenOutputData newOutputData = new EndScreenOutputData(
+                newResults,
+                "New game end",
+                7,
+                newPlayer
+        );
+
+        // Present new data
+        presenter.presentEndGameResults(newOutputData);
+
+        // Verify view model was updated with new data
+        assertEquals("New game end", viewModel.getGameEndReason());
+        assertEquals("Total Rounds Played: 7", viewModel.getTotalRoundsText());
+        assertEquals("WINNER: New", viewModel.getWinnerText());
+        assertEquals(1, viewModel.getPlayerDisplayData().size());
+        assertEquals("New", viewModel.getPlayerDisplayData().get(0).getPlayer().getName());
+    }
+
+    @Test
+    public void testPresentEndGameResultsWithSpecialCharactersInNames() {
+        Player specialPlayer = new Clerk("Sp3c!@l Ch4r$", Color.CYAN);
+        specialPlayer.addMoney(1000);
+
+        List<EndScreenOutputData.PlayerResult> specialResults = Arrays.asList(
+                new EndScreenOutputData.PlayerResult(specialPlayer, 1, 1000f, 0f, 0f, 1000f)
+        );
+
+        EndScreenOutputData specialOutputData = new EndScreenOutputData(
+                specialResults,
+                "Special character test!@#$%",
+                42,
+                specialPlayer
+        );
+
+        presenter.presentEndGameResults(specialOutputData);
+
+        assertEquals("WINNER: Sp3c!@l Ch4r$", viewModel.getWinnerText());
+        assertEquals("Special character test!@#$%", viewModel.getGameEndReason());
+        assertEquals("#1 - Sp3c!@l Ch4r$", viewModel.getPlayerDisplayData().get(0).getRankText());
     }
 }

@@ -4,40 +4,52 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import main.constants.Constants;
-import main.use_case.endScreen.EndGame;
+import main.use_case.endScreen.EndScreenOutputBoundary;
+import main.use_case.endScreen.EndScreenOutputData;
 
 /**
- * Presenter class responsible for converting EndGame results into a
+ * Presenter class responsible for converting EndScreen output data into a
  * displayable EndScreenViewModel.
+ * Implements the output boundary interface to receive results from the interactor.
  */
-public class EndScreenPresenter {
-
+public class EndScreenPresenter implements EndScreenOutputBoundary {
     private static final String FORMAT_TWO_DECIMALS = Constants.TWO_DECIMALS;
+    private final EndScreenViewModel viewModel;
 
     /**
-     * Converts the EndGame result into a view model for the end screen.
+     * Constructs the presenter with the given view model.
      *
-     * @param result the final result of the game
-     * @return an EndScreenViewModel containing the display data
+     * @param viewModel The view model for the end screen.
      */
-    public EndScreenViewModel execute(EndGame.EndGameResult result) {
-        final List<EndScreenViewModel.PlayerDisplayData> displayData = result.getPlayerResults()
+    public EndScreenPresenter(EndScreenViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    /**
+     * Processes the end game results and updates the view model.
+     *
+     * @param outputData The processed end game results from the interactor.
+     */
+    @Override
+    public void presentEndGameResults(EndScreenOutputData outputData) {
+        final List<EndScreenViewModel.PlayerDisplayData> displayData = outputData.getPlayerResults()
                 .stream()
                 .map(this::toDisplayData)
                 .collect(Collectors.toList());
 
         final String winnerText;
-        if (result.getWinner() != null) {
-            winnerText = "WINNER: " + result.getWinner().getName();
+        if (outputData.getWinner() != null) {
+            winnerText = "WINNER: " + outputData.getWinner().getName();
         }
         else {
             winnerText = "";
         }
 
-        return new EndScreenViewModel(
+        // Update the view model with the processed data
+        updateViewModel(
                 "GAME OVER",
-                result.getGameEndReason(),
-                "Total Rounds Played: " + result.getTotalRounds(),
+                outputData.getGameEndReason(),
+                "Total Rounds Played: " + outputData.getTotalRounds(),
                 winnerText,
                 displayData,
                 "New Game",
@@ -46,12 +58,31 @@ public class EndScreenPresenter {
     }
 
     /**
+     * Updates the view model with the display data.
+     * This method updates the mutable view model state.
+     *
+     * @param gameOverTitle      the title text to display when the game ends
+     * @param gameEndReason      the reason why the game ended
+     * @param totalRoundsText    the text showing the total number of rounds played
+     * @param winnerText         the text showing the winner's name, or empty if none
+     * @param playerDisplayData  the list of player display data for the end screen
+     * @param newGameButtonText  the text for the "New Game" button
+     * @param exitButtonText     the text for the "Exit" button
+     */
+    private void updateViewModel(String gameOverTitle, String gameEndReason, String totalRoundsText,
+                                 String winnerText, List<EndScreenViewModel.PlayerDisplayData> playerDisplayData,
+                                 String newGameButtonText, String exitButtonText) {
+        viewModel.updateAllData(gameOverTitle, gameEndReason, totalRoundsText,
+                winnerText, playerDisplayData, newGameButtonText, exitButtonText);
+    }
+
+    /**
      * Builds a PlayerDisplayData row for the end-screen table.
      *
-     * @param playerResult the per-player end-game result
+     * @param playerResult the per-player end-game result from the use case
      * @return a view-friendly representation for display
      */
-    private EndScreenViewModel.PlayerDisplayData toDisplayData(EndGame.PlayerResult playerResult) {
+    private EndScreenViewModel.PlayerDisplayData toDisplayData(EndScreenOutputData.PlayerResult playerResult) {
         final String finalCash = String.format(FORMAT_TWO_DECIMALS, playerResult.getFinalCash());
         final String totalPropertyValue = String.format(FORMAT_TWO_DECIMALS, playerResult.getTotalPropertyValue());
         final String totalStockValue = String.format(FORMAT_TWO_DECIMALS, playerResult.getTotalStockValue());
@@ -69,11 +100,19 @@ public class EndScreenPresenter {
                 playerResult.getPlayer(),
                 playerResult.getRank(),
                 finalCash,
-                // propertiesCount,
                 totalPropertyValue,
                 totalStockValue,
                 netWorth,
                 status
         );
+    }
+
+    /**
+     * Returns the associated view model.
+     *
+     * @return The view model instance.
+     */
+    public EndScreenViewModel getViewModel() {
+        return viewModel;
     }
 }

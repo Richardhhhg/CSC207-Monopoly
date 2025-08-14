@@ -23,25 +23,27 @@ import javax.swing.SwingConstants;
 
 import main.constants.Constants;
 import main.entity.players.Player;
+import main.interface_adapter.endScreen.EndScreenAdapter;
+import main.interface_adapter.endScreen.EndScreenAdapterBundle;
 import main.interface_adapter.endScreen.EndScreenController;
-import main.interface_adapter.endScreen.EndScreenPresenter;
 import main.interface_adapter.endScreen.EndScreenViewModel;
-import main.use_case.endScreen.EndGame;
 
 public class EndScreen extends JFrame {
     private final EndScreenController controller;
-    private EndScreenViewModel viewModel;
+    private final EndScreenViewModel viewModel;
 
     public EndScreen(List<Player> players, String gameEndReason, int totalRounds) {
-        this.controller = new EndScreenController();
+        // Use dependency injection to get properly wired controller and view model
+        final EndScreenAdapterBundle bundle = EndScreenAdapter.inject();
+        this.controller = bundle.getController();
+        this.viewModel = bundle.getViewModel();
+
         initializeEndScreen(players, gameEndReason, totalRounds);
     }
 
     private void initializeEndScreen(List<Player> players, String gameEndReason, int totalRounds) {
-        final EndGame.EndGameResult result =
-                controller.execute(players, gameEndReason, totalRounds);
-        final EndScreenPresenter presenter = new EndScreenPresenter();
-        viewModel = presenter.execute(result);
+        // Execute the use case through the controller
+        controller.execute(players, gameEndReason, totalRounds);
 
         setTitle("Game Over - Final Results");
         setSize(Constants.END_SCREEN_WIDTH, Constants.END_SCREEN_HEIGHT);
@@ -118,9 +120,11 @@ public class EndScreen extends JFrame {
                 Constants.PAD_LARGE, Constants.PAD_LARGE,
                 Constants.PAD_LARGE, Constants.PAD_LARGE));
 
-        for (EndScreenViewModel.PlayerDisplayData p : viewModel.getPlayerDisplayData()) {
-            resultsPanel.add(createPlayerStatsPanel(p));
-            resultsPanel.add(Box.createVerticalStrut(Constants.GAP_LARGE));
+        if (viewModel.getPlayerDisplayData() != null) {
+            for (EndScreenViewModel.PlayerDisplayData p : viewModel.getPlayerDisplayData()) {
+                resultsPanel.add(createPlayerStatsPanel(p));
+                resultsPanel.add(Box.createVerticalStrut(Constants.GAP_LARGE));
+            }
         }
         return resultsPanel;
     }

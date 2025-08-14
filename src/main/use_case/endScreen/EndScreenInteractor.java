@@ -5,22 +5,40 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import main.entity.stocks.Stock;
 import main.entity.players.Player;
+import main.entity.stocks.Stock;
 import main.entity.tiles.PropertyTile;
 
-public class EndGame {
+/**
+ * Interactor for the End Screen use case.
+ * Handles the business logic for processing end game results, calculating player statistics,
+ * determining rankings, and identifying the winner.
+ */
+public class EndScreenInteractor implements EndScreenInputBoundary {
+    private final EndScreenOutputBoundary presenter;
 
     /**
-     * Builds the end-game result: ranks players, computes totals, and selects a winner.
+     * Constructs the interactor with the given presenter.
      *
-     * @param players       all players at game end
-     * @param gameEndReason human-readable reason the game ended
-     * @param totalRounds   total rounds played
-     * @return an {@link EndGameResult} containing per-player results and winner info
+     * @param presenter Output boundary for presenting results.
      */
-    public EndGameResult execute(List<Player> players, String gameEndReason, int totalRounds) {
-        final List<PlayerResult> playerResults = new ArrayList<>();
+    public EndScreenInteractor(EndScreenOutputBoundary presenter) {
+        this.presenter = presenter;
+    }
+
+    /**
+     * Executes the end game use case.
+     * Processes player data, calculates rankings and statistics, and presents the results.
+     *
+     * @param inputData The data required to process the end game scenario.
+     */
+    @Override
+    public void execute(EndScreenInputData inputData) {
+        final List<Player> players = inputData.getPlayers();
+        final String gameEndReason = inputData.getGameEndReason();
+        final int totalRounds = inputData.getTotalRounds();
+
+        final List<EndScreenOutputData.PlayerResult> playerResults = new ArrayList<>();
 
         // Sort players by total net worth (cash + properties + current stock values) for ranking
         final List<Player> sortedPlayers = new ArrayList<>(players);
@@ -33,7 +51,7 @@ public class EndGame {
             final float stockValue = calculateTotalStockValue(player);
             final float netWorth = finalCash + totalPropertyValue + stockValue;
 
-            playerResults.add(new PlayerResult(
+            playerResults.add(new EndScreenOutputData.PlayerResult(
                     player,
                     i + 1,
                     finalCash,
@@ -45,12 +63,14 @@ public class EndGame {
 
         final Player winner = determineWinner(players);
 
-        return new EndGameResult(
+        final EndScreenOutputData outputData = new EndScreenOutputData(
                 playerResults,
                 gameEndReason,
                 totalRounds,
                 winner
         );
+
+        presenter.presentEndGameResults(outputData);
     }
 
     /**
@@ -96,6 +116,12 @@ public class EndGame {
         return total;
     }
 
+    /**
+     * Determines the winner of the game based on solvency and net worth.
+     *
+     * @param players the list of all players
+     * @return the winning player, or null if no clear winner exists
+     */
     private Player determineWinner(List<Player> players) {
         // Filter out bankrupt players
         final List<Player> solventPlayers = players.stream()
@@ -113,79 +139,5 @@ public class EndGame {
                     .orElse(null);
         }
         return winner;
-    }
-
-    public static class EndGameResult {
-        private final List<PlayerResult> playerResults;
-        private final String gameEndReason;
-        private final int totalRounds;
-        private final Player winner;
-
-        public EndGameResult(List<PlayerResult> playerResults, String gameEndReason,
-                             int totalRounds, Player winner) {
-            this.playerResults = playerResults;
-            this.gameEndReason = gameEndReason;
-            this.totalRounds = totalRounds;
-            this.winner = winner;
-        }
-
-        public List<PlayerResult> getPlayerResults() {
-            return playerResults;
-        }
-
-        public String getGameEndReason() {
-            return gameEndReason;
-        }
-
-        public int getTotalRounds() {
-            return totalRounds;
-        }
-
-        public Player getWinner() {
-            return winner;
-        }
-    }
-
-    public static class PlayerResult {
-        private final Player player;
-        private final int rank;
-        private final float finalCash;
-        private final float totalPropertyValue;
-        private final float totalStockValue;
-        private final float netWorth;
-
-        public PlayerResult(Player player, int rank, float finalCash,
-                            float totalPropertyValue, float totalStockValue, float netWorth) {
-            this.player = player;
-            this.rank = rank;
-            this.finalCash = finalCash;
-            this.totalPropertyValue = totalPropertyValue;
-            this.totalStockValue = totalStockValue;
-            this.netWorth = netWorth;
-        }
-
-        public Player getPlayer() {
-            return player;
-        }
-
-        public int getRank() {
-            return rank;
-        }
-
-        public float getFinalCash() {
-            return finalCash;
-        }
-
-        public float getTotalPropertyValue() {
-            return totalPropertyValue;
-        }
-
-        public float getTotalStockValue() {
-            return totalStockValue;
-        }
-
-        public float getNetWorth() {
-            return netWorth;
-        }
     }
 }
