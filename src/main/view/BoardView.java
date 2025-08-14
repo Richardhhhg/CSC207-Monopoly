@@ -25,7 +25,7 @@ import main.interface_adapter.property.RentPaymentController;
 import main.interface_adapter.tile.GoTileViewModel;
 import main.interface_adapter.tile.PropertyTileViewModel;
 import main.interface_adapter.tile.StockMarketTileViewModel;
-import main.use_case.tiles.OnLandingController;
+import main.interface_adapter.tile.OnLandingController;
 import main.use_case.tiles.OnLandingUseCase;
 import main.use_case.tiles.property.PropertyPurchaseUseCase;
 import main.use_case.tiles.property.RentPaymentUseCase;
