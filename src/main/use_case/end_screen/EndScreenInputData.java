@@ -1,27 +1,27 @@
-package main.use_case.endScreen;
+package main.use_case.end_screen;
 
 import java.util.List;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 /**
  * Input data object for the End Screen use case.
  * This class is immutable and used to transfer data from the controller to the use case interactor.
  */
 public class EndScreenInputData {
-    private final List<Player> players;
+    private final List<AbstractPlayer> abstractPlayers;
     private final String gameEndReason;
     private final int totalRounds;
 
     /**
      * Constructs a new EndScreenInputData object.
      *
-     * @param players       the list of players participating in the game
+     * @param abstractPlayers       the list of players participating in the game
      * @param gameEndReason the reason the game ended
      * @param totalRounds   the total number of rounds played
      */
-    public EndScreenInputData(List<Player> players, String gameEndReason, int totalRounds) {
-        this.players = players;
+    public EndScreenInputData(List<AbstractPlayer> abstractPlayers, String gameEndReason, int totalRounds) {
+        this.abstractPlayers = abstractPlayers;
         this.gameEndReason = gameEndReason;
         this.totalRounds = totalRounds;
     }
@@ -31,8 +31,8 @@ public class EndScreenInputData {
      *
      * @return the list of players participating in the game
      */
-    public List<Player> getPlayers() {
-        return players;
+    public List<AbstractPlayer> getPlayers() {
+        return abstractPlayers;
     }
 
     /**

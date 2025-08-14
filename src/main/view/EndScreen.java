@@ -22,28 +22,28 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import main.constants.Constants;
-import main.entity.players.Player;
-import main.interface_adapter.endScreen.EndScreenAdapter;
-import main.interface_adapter.endScreen.EndScreenAdapterBundle;
-import main.interface_adapter.endScreen.EndScreenController;
-import main.interface_adapter.endScreen.EndScreenViewModel;
+import main.entity.players.AbstractPlayer;
+import main.interface_adapter.end_screen.EndScreenAdapter;
+import main.interface_adapter.end_screen.EndScreenAdapterBundle;
+import main.interface_adapter.end_screen.EndScreenController;
+import main.interface_adapter.end_screen.EndScreenViewModel;
 
 public class EndScreen extends JFrame {
     private final EndScreenController controller;
     private final EndScreenViewModel viewModel;
 
-    public EndScreen(List<Player> players, String gameEndReason, int totalRounds) {
+    public EndScreen(List<AbstractPlayer> abstractPlayers, String gameEndReason, int totalRounds) {
         // Use dependency injection to get properly wired controller and view model
         final EndScreenAdapterBundle bundle = EndScreenAdapter.inject();
         this.controller = bundle.getController();
         this.viewModel = bundle.getViewModel();
 
-        initializeEndScreen(players, gameEndReason, totalRounds);
+        initializeEndScreen(abstractPlayers, gameEndReason, totalRounds);
     }
 
-    private void initializeEndScreen(List<Player> players, String gameEndReason, int totalRounds) {
+    private void initializeEndScreen(List<AbstractPlayer> abstractPlayers, String gameEndReason, int totalRounds) {
         // Execute the use case through the controller
-        controller.execute(players, gameEndReason, totalRounds);
+        controller.execute(abstractPlayers, gameEndReason, totalRounds);
 
         setTitle("Game Over - Final Results");
         setSize(Constants.END_SCREEN_WIDTH, Constants.END_SCREEN_HEIGHT);

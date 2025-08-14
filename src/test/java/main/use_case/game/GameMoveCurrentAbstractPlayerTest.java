@@ -1,18 +1,18 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameMoveCurrentPlayerTest {
+class GameMoveCurrentAbstractPlayerTest {
 
-    static class TestPlayer extends Player {
+    static class TestAbstractPlayer extends AbstractPlayer {
         private int position;
         private float money;
 
-        public TestPlayer(int position, float money) {
+        public TestAbstractPlayer(int position, float money) {
             this.position = position;
             this.money = money;
         }
@@ -35,10 +35,10 @@ class GameMoveCurrentPlayerTest {
 
     static class TestGame extends Game {
         private boolean gameEnded = false;
-        private TestPlayer player;
+        private TestAbstractPlayer player;
         private int tileCount;
 
-        public TestGame(TestPlayer player, int tileCount) {
+        public TestGame(TestAbstractPlayer player, int tileCount) {
             this.player = player;
             this.tileCount = tileCount;
         }
@@ -49,7 +49,7 @@ class GameMoveCurrentPlayerTest {
         }
 
         @Override
-        public Player getCurrentPlayer() {
+        public AbstractPlayer getCurrentPlayer() {
             return player;
         }
 
@@ -61,7 +61,7 @@ class GameMoveCurrentPlayerTest {
 
     @Test
     void testFinishLineBonusAwarded() {
-        TestPlayer player = new TestPlayer(9, 100.0f);
+        TestAbstractPlayer player = new TestAbstractPlayer(9, 100.0f);
         TestGame game = new TestGame(player, 10);
 
         GameMoveCurrentPlayer useCase = new GameMoveCurrentPlayer(game);
@@ -72,7 +72,7 @@ class GameMoveCurrentPlayerTest {
 
     @Test
     void testNoBonusIfNotCrossedFinishLine() {
-        TestPlayer player = new TestPlayer(5, 100.0f);
+        TestAbstractPlayer player = new TestAbstractPlayer(5, 100.0f);
         TestGame game = new TestGame(player, 10);
 
         GameMoveCurrentPlayer useCase = new GameMoveCurrentPlayer(game);

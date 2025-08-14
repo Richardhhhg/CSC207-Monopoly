@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Player {
+public abstract class AbstractPlayer {
     protected String name;
     protected float money;
     protected int position;
@@ -23,7 +23,7 @@ public abstract class Player {
     private Color color;
     private boolean isNullPlayer = false;
 
-    public Player(String name, float initialMoney, Color color) {
+    public AbstractPlayer(String name, float initialMoney, Color color) {
         this.name = name;
         this.money = initialMoney;
         this.position = 0;
@@ -34,7 +34,7 @@ public abstract class Player {
         this.stocks = new HashMap<>();
     }
 
-    public Player() {
+    public AbstractPlayer() {
         this.isNullPlayer = true;
         this.portrait = null;
         this.stocks = new HashMap<>();

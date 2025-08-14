@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.entity.players.AbstractPlayer;
 import main.entity.players.CharacterFactory;
-import main.entity.players.NullPlayer;
-import main.entity.players.Player;
+import main.entity.players.NullAbstractPlayer;
 
 /**
  * Interactor for the character selection use case.
@@ -19,8 +19,8 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     private final CharacterSelectionScreenOutputBoundary presenter;
     private final CharacterSelectionScreenDataAccessInterface dao;
 
-    private final List<Player> selectedPlayers = new ArrayList<>(
-            Arrays.asList(new NullPlayer(), new NullPlayer(), new NullPlayer(), new NullPlayer()));
+    private final List<AbstractPlayer> selectedAbstractPlayers = new ArrayList<>(
+            Arrays.asList(new NullAbstractPlayer(), new NullAbstractPlayer(), new NullAbstractPlayer(), new NullAbstractPlayer()));
 
     /**
      * Constructs the interactor with the given presenter and DAO.
@@ -40,7 +40,7 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     @Override
     public void confirmSelection() {
         final List<CharacterSelectionPlayerViewModel> outputList = new ArrayList<>();
-        for (Player p : selectedPlayers) {
+        for (AbstractPlayer p : selectedAbstractPlayers) {
             if (!p.isNullPlayer()) {
                 outputList.add(new CharacterSelectionPlayerViewModel(p.getName(), p.getClass().getSimpleName(),
                         p.getColor(), p.getPortrait()));
@@ -57,8 +57,8 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
     @Override
     public boolean canStartGame() {
         int count = 0;
-        for (Player p : selectedPlayers) {
-            if (!p.isNullPlayer() && !(p instanceof NullPlayer)) {
+        for (AbstractPlayer p : selectedAbstractPlayers) {
+            if (!p.isNullPlayer() && !(p instanceof NullAbstractPlayer)) {
                 count++;
             }
         }
@@ -79,9 +79,9 @@ public class CharacterSelectionScreenInteractor implements CharacterSelectionInp
         final Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE};
         final Color color = colors[index];
 
-        final Player player = CharacterFactory.createPlayer(name, type, color);
-        selectedPlayers.set(index, player);
-        final CharacterSelectionPlayerViewModel output = new CharacterSelectionPlayerViewModel(name, type, color, player.getPortrait());
+        final AbstractPlayer abstractPlayer = CharacterFactory.createPlayer(name, type, color);
+        selectedAbstractPlayers.set(index, abstractPlayer);
+        final CharacterSelectionPlayerViewModel output = new CharacterSelectionPlayerViewModel(name, type, color, abstractPlayer.getPortrait());
         presenter.preparePlayer(output, index);
     }
 }

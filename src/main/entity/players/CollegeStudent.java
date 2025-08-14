@@ -6,7 +6,7 @@ import java.awt.*;
 
 import static main.constants.Constants.*;
 
-public class CollegeStudent extends Player implements applyAfterEffects, StockModifier{
+public class CollegeStudent extends AbstractPlayer implements applyAfterEffects, StockModifier{
     public CollegeStudent(String name, Color color) {
         super(name, STUDENT_INIT_MONEY,color);
         this.loadPortrait(CS_POR);

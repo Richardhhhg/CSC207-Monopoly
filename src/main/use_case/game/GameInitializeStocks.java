@@ -5,10 +5,10 @@ import main.constants.Constants;
 import main.data_access.stock_market.DefaultStockInfoRepository;
 import main.data_access.stock_market.StockInfoDataOutputObject;
 import main.entity.Game;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.data_access.stock_market.ApiStockInfoRepository;
 import main.interface_adapter.stock_market.StockFactory;
-import main.entity.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class GameInitializeStocks {
 
     public void execute() {
         List<Stock> stocks = new ArrayList<>();
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> abstractPlayers = game.getPlayers();
         StockFactory stockFactory = new StockFactory();
 
         if (USE_API) {
@@ -46,8 +46,8 @@ public class GameInitializeStocks {
                 stocks.add(stock);
             }
         }
-        for (Player player: players) {
-            player.initializeStocks(stocks);
+        for (AbstractPlayer abstractPlayer : abstractPlayers) {
+            abstractPlayer.initializeStocks(stocks);
         }
 
         game.setStocks(stocks);

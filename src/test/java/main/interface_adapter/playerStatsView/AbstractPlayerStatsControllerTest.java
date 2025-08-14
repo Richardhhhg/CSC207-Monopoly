@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PlayerStatsControllerTest {
+public class AbstractPlayerStatsControllerTest {
 
     private PlayerStatsController controller;
     private StubInputBoundary stub;

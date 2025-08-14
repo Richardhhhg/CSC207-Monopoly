@@ -1,7 +1,7 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.applyAfterEffects;
 import main.use_case.player.ApplyTurnEffects;
 import main.use_case.player.DeclareBankruptcy;
@@ -23,19 +23,19 @@ public class GameNextTurn {
     }
 
     public void execute() {
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> abstractPlayers = game.getPlayers();
         if (game.getGameEnded()) return;
 
         int currentPlayerIndex = game.getCurrentPlayerIndex();
-        Player currentPlayer = players.get(currentPlayerIndex);
+        AbstractPlayer currentAbstractPlayer = abstractPlayers.get(currentPlayerIndex);
 
         // Apply turn effects for the current player
-        if (currentPlayer instanceof applyAfterEffects) {
-            this.applyTurnEffects.execute(currentPlayer);
+        if (currentAbstractPlayer instanceof applyAfterEffects) {
+            this.applyTurnEffects.execute(currentAbstractPlayer);
         }
 
-        if (currentPlayer.isBankrupt()) {
-            this.declareBankruptcy.execute(currentPlayer);
+        if (currentAbstractPlayer.isBankrupt()) {
+            this.declareBankruptcy.execute(currentAbstractPlayer);
         }
 
         // Increment turn counter

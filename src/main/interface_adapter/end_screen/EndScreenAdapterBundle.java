@@ -1,4 +1,4 @@
-package main.interface_adapter.endScreen;
+package main.interface_adapter.end_screen;
 
 /**
  * A bundle class that holds the controller and view model needed for end screen injection.

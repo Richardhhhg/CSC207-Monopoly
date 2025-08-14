@@ -1,6 +1,6 @@
 package main.use_case.stocks;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 
 public class SellStockInteractor implements SellStockInputBoundary {
@@ -18,18 +18,18 @@ public class SellStockInteractor implements SellStockInputBoundary {
      */
     public void execute(SellStockInputData inputData) throws IllegalArgumentException {
         final int quantity = inputData.getQuantity();
-        final Player player = inputData.getPlayer();
+        final AbstractPlayer abstractPlayer = inputData.getPlayer();
         final Stock stock = inputData.getStock();
 
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
         }
-        if (quantity > player.getStockQuantity(stock)) {
+        if (quantity > abstractPlayer.getStockQuantity(stock)) {
             throw new IllegalArgumentException("Not enough stock to sell");
         }
 
-        player.sellStock(stock, quantity);
-        final AbstractStockOutputData outputData = new SellStockOutputData(player, stock, true);
+        abstractPlayer.sellStock(stock, quantity);
+        final AbstractStockOutputData outputData = new SellStockOutputData(abstractPlayer, stock, true);
         stockPresenter.execute(outputData);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerStatsPresenterTest {
+class AbstractPlayerStatsPresenterTest {
 
     @Test
     void testPresentPlayerStatsSetsViewModelState() {

@@ -1,6 +1,6 @@
 # 💸 CSC207-Monopoly
 ## Summary
-This repository contains the code for the final project of CSC207 for Group 20. Our goal was to improve on the popular game monopoly by adding new features in an java implementation. We chose to include a features of being able to select from different character types, each with special traits and a stock market. This makes our implementation unique and fun compared to the original monopoly while also preserving key aspects such as the interaction with properties and other players.
+This repository contains the code for the final project of CSC207 for Group 20. Our goal was to improve on the popular game monopoly by adding new features in an java implementation. We chose to include a features of being able to select from different character types, each with special traits and a stock market. This makes our implementation unique and fun compared to the original monopoly while also preserving key aspects such as the interaction with properties and other abstractPlayers.
 
 ## 📋 Table of Contents
 - [Features](#🚀Features)
@@ -12,23 +12,23 @@ This repository contains the code for the final project of CSC207 for Group 20. 
 
 
 ## 🚀 Features
-- The game will allow users to enter a game of monopoly selecting from up to 4 players.
+- The game will allow users to enter a game of monopoly selecting from up to 4 abstractPlayers.
 - Players will be able to choose from a list of different characters, each with different traits that give an advantage in the game.
 - Our Currently Supported Basic Components of Monopoly:
   - Players can roll dice and move around the board.
   - Players can buy properties and pay rent.
   - Players can go bankrupt.
-  - After making one full rotation around the board, the players will receive a set amount of money
-- The Game will end when either 1 player is left not bankrupt or after 20 turns
-  - At the end of 20 turns, the player with the most money wins.
-- The game will have a GUI that displays the board, players, and properties.
-- The game will have a stock market feature that allows players to buy and sell stocks.
+  - After making one full rotation around the board, the abstractPlayers will receive a set amount of money
+- The Game will end when either 1 abstractPlayer is left not bankrupt or after 20 turns
+  - At the end of 20 turns, the abstractPlayer with the most money wins.
+- The game will have a GUI that displays the board, abstractPlayers, and properties.
+- The game will have a stock market feature that allows abstractPlayers to buy and sell stocks.
   - There will be 5 predertermined real world stocks available at baseline
   - Players should be able to sell stocks at any time during their turn
   - Players will only be able to buy stocks when they land on a stock market tile
   - The price of stocks fluctuate every round based on real world stock data
   - The prices of stocks when the game starts will be based on real world stock data
-- At the end of the game, an endscreen with show with the stats of players including their money (including stocks), their properties and their net value.
+- At the end of the game, an endscreen with show with the stats of abstractPlayers including their money (including stocks), their properties and their net value.
 
 ## 🛳️ How to Run
 ### Running without Use Real world Stock Data

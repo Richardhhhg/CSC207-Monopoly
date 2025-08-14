@@ -12,7 +12,7 @@ import static main.constants.Constants.INH_POR;
  * This character pays more for stocks but may later get passive bonuses.
  * Starts with $1000.
  */
-public class Inheritor extends Player implements StockModifier{
+public class Inheritor extends AbstractPlayer implements StockModifier{
     public Inheritor(String name, Color color) {
         super(name, INHERITOR_INIT_MONEY, color);
         this.loadPortrait(INH_POR);

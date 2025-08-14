@@ -1,7 +1,7 @@
 package main.use_case.playerStatsView;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.use_case.playerStats.PlayerStatsInteractor;
 import main.use_case.playerStats.PlayerStatsOutput;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class PlayerStatsInteractorTest {
+public class AbstractPlayerStatsInteractorTest {
 
     private Game game;
     private NamedPropertyTile p1Tile;
@@ -35,13 +35,13 @@ public class PlayerStatsInteractorTest {
 
     @Test
     public void execute_twoPlayers_collectsAllFieldsAndProperties() {
-        TestPlayer alice = new TestPlayer("Alice", 1234.5f, false, Color.RED);
-        TestPlayer bob   = new TestPlayer("Bob", 50.0f,  true,  Color.BLUE);
+        TestAbstractPlayer alice = new TestAbstractPlayer("Alice", 1234.5f, false, Color.RED);
+        TestAbstractPlayer bob   = new TestAbstractPlayer("Bob", 50.0f,  true,  Color.BLUE);
 
         alice.getProperties().add(p1Tile);
         alice.getProperties().add(p2Tile);
 
-        game.setPlayers(Arrays.<Player>asList(alice, bob));
+        game.setPlayers(Arrays.<AbstractPlayer>asList(alice, bob));
 
         interactor.execute(game);
 
@@ -66,8 +66,8 @@ public class PlayerStatsInteractorTest {
 
     @Test
     public void execute_NullProperties() {
-        TestPlayer carol = new TestPlayer("Carol", 200f, false, Color.GREEN, true); // properties = null
-        game.setPlayers(Arrays.<Player>asList(carol));
+        TestAbstractPlayer carol = new TestAbstractPlayer("Carol", 200f, false, Color.GREEN, true); // properties = null
+        game.setPlayers(Arrays.<AbstractPlayer>asList(carol));
 
         interactor.execute(game);
 
@@ -93,12 +93,12 @@ public class PlayerStatsInteractorTest {
     }
 
     /** Minimal concrete Player for testing. */
-    private static class TestPlayer extends Player {
-        TestPlayer(String name, float money, boolean bankrupt, Color color) {
+    private static class TestAbstractPlayer extends AbstractPlayer {
+        TestAbstractPlayer(String name, float money, boolean bankrupt, Color color) {
             super(name, money, color);
             this.bankrupt = bankrupt;
         }
-        TestPlayer(String name, float money, boolean bankrupt, Color color, boolean makePropertiesNull) {
+        TestAbstractPlayer(String name, float money, boolean bankrupt, Color color, boolean makePropertiesNull) {
             this(name, money, bankrupt, color);
             if (makePropertiesNull) {
                 this.properties = null;

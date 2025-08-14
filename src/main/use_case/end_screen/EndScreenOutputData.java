@@ -1,8 +1,8 @@
-package main.use_case.endScreen;
+package main.use_case.end_screen;
 
 import java.util.List;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 /**
  * Output data object for the End Screen use case.
@@ -13,7 +13,7 @@ public class EndScreenOutputData {
     private final List<PlayerResult> playerResults;
     private final String gameEndReason;
     private final int totalRounds;
-    private final Player winner;
+    private final AbstractPlayer winner;
 
     /**
      * Constructs a new EndScreenOutputData object.
@@ -24,7 +24,7 @@ public class EndScreenOutputData {
      * @param winner        the winning player, or null if no winner
      */
     public EndScreenOutputData(List<PlayerResult> playerResults, String gameEndReason,
-                               int totalRounds, Player winner) {
+                               int totalRounds, AbstractPlayer winner) {
         this.playerResults = playerResults;
         this.gameEndReason = gameEndReason;
         this.totalRounds = totalRounds;
@@ -63,7 +63,7 @@ public class EndScreenOutputData {
      *
      * @return the Player who won the game, or null if no winner
      */
-    public Player getWinner() {
+    public AbstractPlayer getWinner() {
         return winner;
     }
 
@@ -71,7 +71,7 @@ public class EndScreenOutputData {
      * Data class representing the results for a single player.
      */
     public static class PlayerResult {
-        private final Player player;
+        private final AbstractPlayer abstractPlayer;
         private final int rank;
         private final float finalCash;
         private final float totalPropertyValue;
@@ -81,16 +81,16 @@ public class EndScreenOutputData {
         /**
          * Constructs a PlayerResult object.
          *
-         * @param player             the player
+         * @param abstractPlayer             the player
          * @param rank               the player's final rank
          * @param finalCash          the player's final cash amount
          * @param totalPropertyValue the total value of the player's properties
          * @param totalStockValue    the total value of the player's stocks
          * @param netWorth           the player's total net worth
          */
-        public PlayerResult(Player player, int rank, float finalCash,
+        public PlayerResult(AbstractPlayer abstractPlayer, int rank, float finalCash,
                             float totalPropertyValue, float totalStockValue, float netWorth) {
-            this.player = player;
+            this.abstractPlayer = abstractPlayer;
             this.rank = rank;
             this.finalCash = finalCash;
             this.totalPropertyValue = totalPropertyValue;
@@ -98,8 +98,8 @@ public class EndScreenOutputData {
             this.netWorth = netWorth;
         }
 
-        public Player getPlayer() {
-            return player;
+        public AbstractPlayer getPlayer() {
+            return abstractPlayer;
         }
 
         public int getRank() {

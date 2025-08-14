@@ -4,7 +4,7 @@ import static main.constants.Constants.*;
 
 import java.awt.*;
 
-public class Clerk extends Player implements applyAfterEffects {
+public class Clerk extends AbstractPlayer implements applyAfterEffects {
     public Clerk(String name, Color color) {
         super(name, CLERK_INIT_MONEY, color);
         this.loadPortrait(CLERK_POR);

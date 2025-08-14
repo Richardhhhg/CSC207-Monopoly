@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerStatsStateTest {
+class AbstractPlayerStatsStateTest {
     @Test
     void testGetPlayersReturnsUnmodifiableList() {
         DisplayPlayer player = new DisplayPlayer("Dave", 500f, false, null, null, Arrays.asList(new DisplayProperty("Bar")));

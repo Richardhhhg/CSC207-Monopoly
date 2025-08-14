@@ -1,6 +1,6 @@
 package main.use_case.player;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DeclareBankruptcyTest {
 
-    static class TestPlayer extends Player {
+    static class TestAbstractPlayer extends AbstractPlayer {
         private final List<PropertyTile> properties = new ArrayList<>();
 
         @Override
@@ -31,14 +31,14 @@ class DeclareBankruptcyTest {
 
     static class TestPropertyTile extends PropertyTile {
         public boolean setOwnedCalled = false;
-        public Player lastOwner = null;
+        public AbstractPlayer lastOwner = null;
 
         public TestPropertyTile(String name, int price, float rent) {
             super(name, price, rent);
         }
 
         @Override
-        public void setOwned(boolean owned, Player owner) {
+        public void setOwned(boolean owned, AbstractPlayer owner) {
             setOwnedCalled = true;
             lastOwner = owner;
             super.setOwned(owned, owner);
@@ -47,7 +47,7 @@ class DeclareBankruptcyTest {
 
     @Test
     void testBankruptcyClearsPropertiesAndOwnership() {
-        TestPlayer player = new TestPlayer();
+        TestAbstractPlayer player = new TestAbstractPlayer();
         TestPropertyTile tile1 = new TestPropertyTile("Tile1", 100, 10.0f);
         TestPropertyTile tile2 = new TestPropertyTile("Tile2", 150, 12.5f);
         player.addProperty(tile1);

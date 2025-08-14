@@ -1,12 +1,12 @@
 package main.interface_adapter.stock_market;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 
 public class StockPlayerState {
     private final StockState stockstate;
     private int quantity;
-    private Player player;
+    private AbstractPlayer abstractPlayer;
     private Stock stock;
 
     public StockPlayerState(StockState stockstate) {
@@ -25,12 +25,12 @@ public class StockPlayerState {
         this.quantity = quantity;
     }
 
-    public Player getPlayer() {
-        return player;
+    public AbstractPlayer getPlayer() {
+        return abstractPlayer;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayer(AbstractPlayer abstractPlayer) {
+        this.abstractPlayer = abstractPlayer;
     }
 
     public Stock getStock() {

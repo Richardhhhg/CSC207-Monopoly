@@ -1,4 +1,4 @@
-package main.use_case.endScreen;
+package main.use_case.end_screen;
 
 /**
  * Output boundary for the End Screen use case.

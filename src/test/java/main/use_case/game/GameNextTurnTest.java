@@ -1,7 +1,7 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.applyAfterEffects;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameNextTurnTest {
 
-    static class TestPlayer extends Player implements applyAfterEffects {
+    static class TestAbstractPlayer extends AbstractPlayer implements applyAfterEffects {
         private boolean turnEffectsApplied = false;
         private boolean bankrupt = false;
         private String name;
 
-        public TestPlayer(String name, boolean bankrupt) {
+        public TestAbstractPlayer(String name, boolean bankrupt) {
             this.name = name;
             this.bankrupt = bankrupt;
         }
@@ -42,16 +42,16 @@ class GameNextTurnTest {
     static class TestGame extends Game {
         private boolean gameEnded = false;
         private int currentPlayerIndex = 0;
-        private List<Player> players = new ArrayList<>();
+        private List<AbstractPlayer> abstractPlayers = new ArrayList<>();
         private int turnCount = 0;
         private int nextPlayerIndex = 0;
 
-        public TestGame(List<Player> players) {
-            this.players = players;
+        public TestGame(List<AbstractPlayer> abstractPlayers) {
+            this.abstractPlayers = abstractPlayers;
         }
 
         @Override
-        public List<Player> getPlayers() { return players; }
+        public List<AbstractPlayer> getPlayers() { return abstractPlayers; }
 
         @Override
         public boolean getGameEnded() { return gameEnded; }
@@ -69,7 +69,7 @@ class GameNextTurnTest {
         public boolean isRoundComplete(int nextIndex) { return false; }
 
         @Override
-        public int findNextActivePlayerFrom(int index) { return (index + 1) % players.size(); }
+        public int findNextActivePlayerFrom(int index) { return (index + 1) % abstractPlayers.size(); }
 
         @Override
         public void endGame(String reason) { gameEnded = true; }
@@ -80,13 +80,13 @@ class GameNextTurnTest {
 
     @Test
     void testTurnEffectsAppliedAndBankruptcyChecked() {
-        TestPlayer player1 = new TestPlayer("Player1", false);
-        TestPlayer player2 = new TestPlayer("Player2", true);
-        List<Player> players = new ArrayList<>();
-        players.add(player1);
-        players.add(player2);
+        TestAbstractPlayer player1 = new TestAbstractPlayer("Player1", false);
+        TestAbstractPlayer player2 = new TestAbstractPlayer("Player2", true);
+        List<AbstractPlayer> abstractPlayers = new ArrayList<>();
+        abstractPlayers.add(player1);
+        abstractPlayers.add(player2);
 
-        TestGame game = new TestGame(players);
+        TestGame game = new TestGame(abstractPlayers);
         GameNextTurn useCase = new GameNextTurn(game);
         useCase.execute();
 
@@ -95,13 +95,13 @@ class GameNextTurnTest {
 
     @Test
     void testAllPlayersBankruptEndsGame() {
-        TestPlayer player1 = new TestPlayer("Player1", true);
-        TestPlayer player2 = new TestPlayer("Player2", true);
-        List<Player> players = new ArrayList<>();
-        players.add(player1);
-        players.add(player2);
+        TestAbstractPlayer player1 = new TestAbstractPlayer("Player1", true);
+        TestAbstractPlayer player2 = new TestAbstractPlayer("Player2", true);
+        List<AbstractPlayer> abstractPlayers = new ArrayList<>();
+        abstractPlayers.add(player1);
+        abstractPlayers.add(player2);
 
-        TestGame game = new TestGame(players) {
+        TestGame game = new TestGame(abstractPlayers) {
             @Override
             public int findNextActivePlayerFrom(int index) { return -1; }
         };

@@ -1,6 +1,6 @@
 package main.use_case.tiles.property;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 
 public class PropertyPurchaseUseCase {
@@ -13,33 +13,33 @@ public class PropertyPurchaseUseCase {
     /**
      * Executes the property purchase use case.
      *
-     * @param player   the player attempting to purchase
+     * @param abstractPlayer   the player attempting to purchase
      * @param property the property being purchased
      */
-    public void execute(Player player, PropertyTile property) {
+    public void execute(AbstractPlayer abstractPlayer, PropertyTile property) {
         if (!property.isOwned()) {
             final PropertyPurchaseData purchaseData = new PropertyPurchaseData(
-                player.getName(),
-                player.getMoney(),
+                abstractPlayer.getName(),
+                abstractPlayer.getMoney(),
                 property.getName(),
                 property.getPrice(),
-                player.getMoney() >= property.getPrice()
+                abstractPlayer.getMoney() >= property.getPrice()
             );
 
             outputBoundary.presentPurchaseDialog(purchaseData, success -> {
-                handlePurchaseResult(success, player, property);
+                handlePurchaseResult(success, abstractPlayer, property);
             });
         }
     }
 
-    private void handlePurchaseResult(boolean success, Player player, PropertyTile property) {
+    private void handlePurchaseResult(boolean success, AbstractPlayer abstractPlayer, PropertyTile property) {
         if (success) {
-            final boolean purchaseSuccessful = property.attemptPurchase(player);
+            final boolean purchaseSuccessful = property.attemptPurchase(abstractPlayer);
             if (purchaseSuccessful) {
                 final PropertyOwnershipData ownershipData = new PropertyOwnershipData(
                     property.getName(),
-                    player.getName(),
-                    player.getMoney()
+                    abstractPlayer.getName(),
+                    abstractPlayer.getMoney()
                 );
                 outputBoundary.presentPropertyPurchased(ownershipData);
             }

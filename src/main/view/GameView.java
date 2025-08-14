@@ -3,7 +3,7 @@ package main.view;
 import main.constants.Constants;
 import main.app.GameHolder;
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.interface_adapter.playerStats.PlayerStatsController;
 import main.interface_adapter.playerStats.PlayerStatsPresenter;
 import main.interface_adapter.playerStats.PlayerStatsViewModel;
@@ -130,13 +130,13 @@ public class GameView extends JFrame{
             }
         }
 
-        Player currentPlayer = game.getCurrentPlayer();
-        if (currentPlayer != null && currentPlayer.getPortrait() != null) {
+        AbstractPlayer currentAbstractPlayer = game.getCurrentPlayer();
+        if (currentAbstractPlayer != null && currentAbstractPlayer.getPortrait() != null) {
             int centerX = Constants.START_X + Constants.BOARD_SIZE / 2;
             int centerY = Constants.START_Y + Constants.BOARD_SIZE / 2;
 
             int portraitSize = tileSize;
-            PlayerPortraitView portraitView = new PlayerPortraitView(currentPlayer.getPortrait(), "Current Player:", portraitSize);
+            PlayerPortraitView portraitView = new PlayerPortraitView(currentAbstractPlayer.getPortrait(), "Current Player:", portraitSize);
 
             int x = centerX - tileSize - 10 + 80;
             int y = centerY - tileSize / 2 - 150;
@@ -168,16 +168,16 @@ public class GameView extends JFrame{
             }
         }
 
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> abstractPlayers = game.getPlayers();
 
-        for (Player player : players) {
-            if (player.isBankrupt()) {
+        for (AbstractPlayer abstractPlayer : abstractPlayers) {
+            if (abstractPlayer.isBankrupt()) {
                 continue;
             }
-            PlayerView playerView = new PlayerView(player.getColor());
-            Point pos = game.getTilePosition(player.getPosition(), Constants.START_X, Constants.START_Y, tileSize);
-            int offsetX = (players.indexOf(player) % 2) * 20;
-            int offsetY = (players.indexOf(player) / 2) * 20;
+            PlayerView playerView = new PlayerView(abstractPlayer.getColor());
+            Point pos = game.getTilePosition(abstractPlayer.getPosition(), Constants.START_X, Constants.START_Y, tileSize);
+            int offsetX = (abstractPlayers.indexOf(abstractPlayer) % 2) * 20;
+            int offsetY = (abstractPlayers.indexOf(abstractPlayer) / 2) * 20;
             playerView.setBounds(pos.x + offsetX, pos.y + offsetY, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE);
             layeredPane.add(playerView, Integer.valueOf(1));
         }
@@ -200,7 +200,7 @@ public class GameView extends JFrame{
     }
 
     private void onDiceRollComplete() {
-        Player currentPlayer = game.getCurrentPlayer();
+        AbstractPlayer currentAbstractPlayer = game.getCurrentPlayer();
         int diceSum = diceAnimator.getLastDiceSum();
 
         gameMoveCurrentPlayer.execute(diceSum);
@@ -208,7 +208,7 @@ public class GameView extends JFrame{
         refreshStats();
 
         playerMovementAnimator.animatePlayerMovement(
-                currentPlayer,
+                currentAbstractPlayer,
                 diceSum,
                 game.getTileCount(),
                 this::drawPlayers,

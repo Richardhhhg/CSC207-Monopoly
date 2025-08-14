@@ -1,11 +1,11 @@
-package main.interface_adapter.endScreen;
+package main.interface_adapter.end_screen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.tiles.PropertyTile;
 import main.entity.stocks.Stock;
-import main.use_case.endScreen.EndScreenOutputData;
+import main.use_case.end_screen.EndScreenOutputData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class EndScreenPresenterTest {
     private EndScreenPresenter presenter;
     private EndScreenViewModel viewModel;
     private EndScreenOutputData testOutputData;
-    private List<Player> testPlayers;
+    private List<AbstractPlayer> testAbstractPlayers;
 
     @Before
     public void setUp() {
@@ -30,36 +30,36 @@ public class EndScreenPresenterTest {
         presenter = new EndScreenPresenter(viewModel);
 
         // Create test players with different financial situations
-        Player player1 = new Clerk("Alice", Color.RED);
-        Player player2 = new CollegeStudent("Bob", Color.BLUE);
+        AbstractPlayer abstractPlayer1 = new Clerk("Alice", Color.RED);
+        AbstractPlayer abstractPlayer2 = new CollegeStudent("Bob", Color.BLUE);
 
-        player1.addMoney(1500);
-        player2.addMoney(800);
+        abstractPlayer1.addMoney(1500);
+        abstractPlayer2.addMoney(800);
 
         // Add a property to player1
         PropertyTile property = new PropertyTile("Park Place", 200, 50);
-        property.setOwned(true, player1);
-        player1.getProperties().add(property);
+        property.setOwned(true, abstractPlayer1);
+        abstractPlayer1.getProperties().add(property);
 
         // Add stocks to player2
         Stock stock = new Stock("AAPL", 150.0, 0.1, 0.2);
         Map<Stock, Integer> stockMap = new HashMap<>();
         stockMap.put(stock, 5);
-        player2.getStocks().putAll(stockMap);
+        abstractPlayer2.getStocks().putAll(stockMap);
 
-        testPlayers = Arrays.asList(player1, player2);
+        testAbstractPlayers = Arrays.asList(abstractPlayer1, abstractPlayer2);
 
         // Create output data using the new format
         List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(player1, 1, 1500f, 200f, 0f, 1700f),
-                new EndScreenOutputData.PlayerResult(player2, 2, 800f, 0f, 750f, 1550f)
+                new EndScreenOutputData.PlayerResult(abstractPlayer1, 1, 1500f, 200f, 0f, 1700f),
+                new EndScreenOutputData.PlayerResult(abstractPlayer2, 2, 800f, 0f, 750f, 1550f)
         );
 
         testOutputData = new EndScreenOutputData(
                 playerResults,
                 "Maximum rounds reached",
                 20,
-                player1
+                abstractPlayer1
         );
     }
 
@@ -106,20 +106,20 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testPresentEndGameResultsWithBankruptPlayer() {
-        Player bankruptPlayer = new CollegeStudent("Charlie", Color.GREEN);
-        bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
+        AbstractPlayer bankruptAbstractPlayer = new CollegeStudent("Charlie", Color.GREEN);
+        bankruptAbstractPlayer.deductMoney(bankruptAbstractPlayer.getMoney() + 100); // Make bankrupt
 
         List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(testPlayers.get(0), 1, 1500f, 200f, 0f, 1700f),
-                new EndScreenOutputData.PlayerResult(bankruptPlayer, 3, 0f, 0f, 0f, 0f),
-                new EndScreenOutputData.PlayerResult(testPlayers.get(1), 2, 800f, 0f, 750f, 1550f)
+                new EndScreenOutputData.PlayerResult(testAbstractPlayers.get(0), 1, 1500f, 200f, 0f, 1700f),
+                new EndScreenOutputData.PlayerResult(bankruptAbstractPlayer, 3, 0f, 0f, 0f, 0f),
+                new EndScreenOutputData.PlayerResult(testAbstractPlayers.get(1), 2, 800f, 0f, 750f, 1550f)
         );
 
         EndScreenOutputData outputDataWithBankruptcy = new EndScreenOutputData(
                 playerResults,
                 "Player went bankrupt",
                 15,
-                testPlayers.get(0)
+                testAbstractPlayers.get(0)
         );
 
         presenter.presentEndGameResults(outputDataWithBankruptcy);
@@ -159,15 +159,15 @@ public class EndScreenPresenterTest {
     @Test
     public void testPresentEndGameResultsFormatsNumbersCorrectly() {
         // Test with unusual numbers to verify formatting
-        Player testPlayer = new Clerk("Test", Color.BLACK);
-        testPlayer.addMoney(1234.567f);
+        AbstractPlayer testAbstractPlayer = new Clerk("Test", Color.BLACK);
+        testAbstractPlayer.addMoney(1234.567f);
 
         List<EndScreenOutputData.PlayerResult> playerResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(testPlayer, 1, 1234.567f, 98.76f, 543.21f, 1876.537f)
+                new EndScreenOutputData.PlayerResult(testAbstractPlayer, 1, 1234.567f, 98.76f, 543.21f, 1876.537f)
         );
 
         EndScreenOutputData testOutputDataFormatting = new EndScreenOutputData(
-                playerResults, "Test", 1, testPlayer
+                playerResults, "Test", 1, testAbstractPlayer
         );
 
         presenter.presentEndGameResults(testOutputDataFormatting);
@@ -200,18 +200,18 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testPresentEndGameResultsWithSinglePlayer() {
-        Player singlePlayer = new Clerk("Solo", Color.YELLOW);
-        singlePlayer.addMoney(1000);
+        AbstractPlayer singleAbstractPlayer = new Clerk("Solo", Color.YELLOW);
+        singleAbstractPlayer.addMoney(1000);
 
         List<EndScreenOutputData.PlayerResult> singlePlayerResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(singlePlayer, 1, 1000f, 0f, 0f, 1000f)
+                new EndScreenOutputData.PlayerResult(singleAbstractPlayer, 1, 1000f, 0f, 0f, 1000f)
         );
 
         EndScreenOutputData singlePlayerOutputData = new EndScreenOutputData(
                 singlePlayerResults,
                 "Single player game",
                 5,
-                singlePlayer
+                singleAbstractPlayer
         );
 
         presenter.presentEndGameResults(singlePlayerOutputData);
@@ -228,18 +228,18 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testPresentEndGameResultsWithZeroValues() {
-        Player zeroPlayer = new Clerk("Zero", Color.WHITE);
-        zeroPlayer.deductMoney(zeroPlayer.getMoney()); // Remove all money but don't make bankrupt
+        AbstractPlayer zeroAbstractPlayer = new Clerk("Zero", Color.WHITE);
+        zeroAbstractPlayer.deductMoney(zeroAbstractPlayer.getMoney()); // Remove all money but don't make bankrupt
 
         List<EndScreenOutputData.PlayerResult> zeroResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(zeroPlayer, 1, 0f, 0f, 0f, 0f)
+                new EndScreenOutputData.PlayerResult(zeroAbstractPlayer, 1, 0f, 0f, 0f, 0f)
         );
 
         EndScreenOutputData zeroOutputData = new EndScreenOutputData(
                 zeroResults,
                 "Zero test",
                 1,
-                zeroPlayer
+                zeroAbstractPlayer
         );
 
         presenter.presentEndGameResults(zeroOutputData);
@@ -255,18 +255,18 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testPresentEndGameResultsWithHighValues() {
-        Player richPlayer = new Clerk("Rich", Color.RED);
-        richPlayer.addMoney(999999.99f);
+        AbstractPlayer richAbstractPlayer = new Clerk("Rich", Color.RED);
+        richAbstractPlayer.addMoney(999999.99f);
 
         List<EndScreenOutputData.PlayerResult> richResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(richPlayer, 1, 999999.99f, 500000.50f, 250000.25f, 1750000.74f)
+                new EndScreenOutputData.PlayerResult(richAbstractPlayer, 1, 999999.99f, 500000.50f, 250000.25f, 1750000.74f)
         );
 
         EndScreenOutputData richOutputData = new EndScreenOutputData(
                 richResults,
                 "Rich test",
                 100,
-                richPlayer
+                richAbstractPlayer
         );
 
         presenter.presentEndGameResults(richOutputData);
@@ -292,18 +292,18 @@ public class EndScreenPresenterTest {
         assertEquals(2, viewModel.getPlayerDisplayData().size());
 
         // Create different output data
-        Player newPlayer = new Clerk("New", Color.PINK);
-        newPlayer.addMoney(500);
+        AbstractPlayer newAbstractPlayer = new Clerk("New", Color.PINK);
+        newAbstractPlayer.addMoney(500);
 
         List<EndScreenOutputData.PlayerResult> newResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(newPlayer, 1, 500f, 0f, 0f, 500f)
+                new EndScreenOutputData.PlayerResult(newAbstractPlayer, 1, 500f, 0f, 0f, 500f)
         );
 
         EndScreenOutputData newOutputData = new EndScreenOutputData(
                 newResults,
                 "New game end",
                 7,
-                newPlayer
+                newAbstractPlayer
         );
 
         // Present new data
@@ -319,18 +319,18 @@ public class EndScreenPresenterTest {
 
     @Test
     public void testPresentEndGameResultsWithSpecialCharactersInNames() {
-        Player specialPlayer = new Clerk("Sp3c!@l Ch4r$", Color.CYAN);
-        specialPlayer.addMoney(1000);
+        AbstractPlayer specialAbstractPlayer = new Clerk("Sp3c!@l Ch4r$", Color.CYAN);
+        specialAbstractPlayer.addMoney(1000);
 
         List<EndScreenOutputData.PlayerResult> specialResults = Arrays.asList(
-                new EndScreenOutputData.PlayerResult(specialPlayer, 1, 1000f, 0f, 0f, 1000f)
+                new EndScreenOutputData.PlayerResult(specialAbstractPlayer, 1, 1000f, 0f, 0f, 1000f)
         );
 
         EndScreenOutputData specialOutputData = new EndScreenOutputData(
                 specialResults,
                 "Special character test!@#$%",
                 42,
-                specialPlayer
+                specialAbstractPlayer
         );
 
         presenter.presentEndGameResults(specialOutputData);

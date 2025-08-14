@@ -1,8 +1,8 @@
 package main.stocks;
 
 import main.entity.Game;
-import main.entity.players.DefaultPlayer;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
+import main.entity.players.DefaultAbstractPlayer;
 import main.entity.stocks.Stock;
 import main.use_case.game.GameInitializeStocks;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,16 +20,16 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class StockInitializationTest {
     private Game game;
-    private List<Player> players;
+    private List<AbstractPlayer> abstractPlayers;
     private GameInitializeStocks gameInitializeStocks;
 
     @BeforeEach
     void setUp() {
         game = new Game();
-        players = new ArrayList<>();
-        players.add(new DefaultPlayer("Alice", Color.RED));
-        players.add(new DefaultPlayer("Bob", Color.BLUE));
-        game.setPlayers(players);
+        abstractPlayers = new ArrayList<>();
+        abstractPlayers.add(new DefaultAbstractPlayer("Alice", Color.RED));
+        abstractPlayers.add(new DefaultAbstractPlayer("Bob", Color.BLUE));
+        game.setPlayers(abstractPlayers);
         gameInitializeStocks = new GameInitializeStocks(game);
     }
 
@@ -49,9 +49,9 @@ public class StockInitializationTest {
     @Test
     void testPlayersHaveStocksInitialized() {
         gameInitializeStocks.execute();
-        for (Player player : game.getPlayers()) {
-            assertNotNull(player.getStocks(), "Player's stocks should be initialized");
-            assertEquals(5, player.getStocks().size(), "Player should have 5 stocks initialized");
+        for (AbstractPlayer abstractPlayer : game.getPlayers()) {
+            assertNotNull(abstractPlayer.getStocks(), "Player's stocks should be initialized");
+            assertEquals(5, abstractPlayer.getStocks().size(), "Player should have 5 stocks initialized");
         }
     }
 

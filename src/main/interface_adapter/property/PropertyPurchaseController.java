@@ -5,7 +5,7 @@ import java.awt.Frame;
 
 import javax.swing.SwingUtilities;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.use_case.tiles.property.PropertyPurchaseUseCase;
 import main.view.BuyPropertyPopup;
@@ -29,21 +29,21 @@ public class PropertyPurchaseController {
     /**
      * Executes the property purchase use case.
      *
-     * @param player   the player attempting to purchase
+     * @param abstractPlayer   the player attempting to purchase
      * @param property the property being purchased
      */
-    public void execute(Player player, PropertyTile property) {
-        propertyPurchaseUseCase.execute(player, property);
+    public void execute(AbstractPlayer abstractPlayer, PropertyTile property) {
+        propertyPurchaseUseCase.execute(abstractPlayer, property);
     }
 
     /**
      * Handles when a player lands on an unowned property.
      *
-     * @param player   the player who landed on the property
+     * @param abstractPlayer   the player who landed on the property
      * @param property the unowned property
      */
-    public void handleUnownedProperty(Player player, PropertyTile property) {
-        execute(player, property);
+    public void handleUnownedProperty(AbstractPlayer abstractPlayer, PropertyTile property) {
+        execute(abstractPlayer, property);
     }
 
     /**
@@ -51,17 +51,17 @@ public class PropertyPurchaseController {
      *
      * @param viewModel       the view model containing display data
      * @param callback        callback for purchase results
-     * @param player          the player attempting to purchase
+     * @param abstractPlayer          the player attempting to purchase
      * @param property        the property being purchased
      * @param parentComponent the parent component for dialog positioning
      */
     public void showPurchaseDialog(PropertyViewModel.PurchaseDialogViewModel viewModel,
                                    PropertyPurchaseUseCase.PurchaseResultCallback callback,
-                                   Player player, PropertyTile property, Component parentComponent) {
+                                   AbstractPlayer abstractPlayer, PropertyTile property, Component parentComponent) {
         final Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(parentComponent);
 
-        if (player != null && property != null) {
-            BuyPropertyPopup.showPurchaseDialog(parentFrame, player, property,
+        if (abstractPlayer != null && property != null) {
+            BuyPropertyPopup.showPurchaseDialog(parentFrame, abstractPlayer, property,
                     (success, message) -> callback.onResult(success));
         }
     }

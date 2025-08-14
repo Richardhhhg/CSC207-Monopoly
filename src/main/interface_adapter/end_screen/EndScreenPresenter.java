@@ -1,11 +1,11 @@
-package main.interface_adapter.endScreen;
+package main.interface_adapter.end_screen;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import main.constants.Constants;
-import main.use_case.endScreen.EndScreenOutputBoundary;
-import main.use_case.endScreen.EndScreenOutputData;
+import main.use_case.end_screen.EndScreenOutputBoundary;
+import main.use_case.end_screen.EndScreenOutputData;
 
 /**
  * Presenter class responsible for converting EndScreen output data into a

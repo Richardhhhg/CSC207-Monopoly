@@ -1,6 +1,6 @@
 package main.view;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.PropertyTile;
 import main.entity.*;
 import main.constants.Constants;
@@ -119,13 +119,13 @@ public class BoardView extends JPanel {
     }
 
     public void handleLandingOnTile() {
-        Player currentPlayer = game.getCurrentPlayer();
-        int position = currentPlayer.getPosition();
+        AbstractPlayer currentAbstractPlayer = game.getCurrentPlayer();
+        int position = currentAbstractPlayer.getPosition();
         AbstractTile tile = game.getPropertyAt(position);
 
         if (tile != null) {
             // Use OnLandingController to handle all tile landing logic
-            onLandingController.handleLanding(currentPlayer, tile);
+            onLandingController.handleLanding(currentAbstractPlayer, tile);
 
             // Check if presenter has any view models to display
             checkForPresenterUpdates();
@@ -139,10 +139,10 @@ public class BoardView extends JPanel {
             final PropertyPurchaseUseCase.PurchaseResultCallback callback = propertyPresenter.getPurchaseCallback();
 
             // Find the actual player and property objects
-            final Player player = findPlayerByName(purchaseDialog.getPlayerName());
+            final AbstractPlayer abstractPlayer = findPlayerByName(purchaseDialog.getPlayerName());
             final PropertyTile property = findPropertyByName(purchaseDialog.getPropertyName());
 
-            propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, player, property, this);
+            propertyPurchaseController.showPurchaseDialog(purchaseDialog, callback, abstractPlayer, property, this);
             propertyPresenter.clearPurchaseDialog();
         }
 
@@ -196,7 +196,7 @@ public class BoardView extends JPanel {
     }
 
     // Helper methods for finding entities (needed for legacy popup interface)
-    private Player findPlayerByName(String name) {
+    private AbstractPlayer findPlayerByName(String name) {
         return game.getPlayers().stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()

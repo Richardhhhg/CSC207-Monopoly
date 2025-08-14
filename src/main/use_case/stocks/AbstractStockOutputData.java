@@ -1,21 +1,21 @@
 package main.use_case.stocks;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 
 public abstract class AbstractStockOutputData {
-    private final Player player;
+    private final AbstractPlayer abstractPlayer;
     private final Stock stock;
     private final boolean allowBuy;
 
-    public AbstractStockOutputData(Player player, Stock stock, boolean allowBuy) {
-        this.player = player;
+    public AbstractStockOutputData(AbstractPlayer abstractPlayer, Stock stock, boolean allowBuy) {
+        this.abstractPlayer = abstractPlayer;
         this.stock = stock;
         this.allowBuy = allowBuy;
     }
 
-    public Player getPlayer() {
-        return player;
+    public AbstractPlayer getPlayer() {
+        return abstractPlayer;
     }
 
     public Stock getStock() {
@@ -39,6 +39,6 @@ public abstract class AbstractStockOutputData {
     }
 
     public int getQuantity() {
-        return player.getStocks().getOrDefault(stock, 0);
+        return abstractPlayer.getStocks().getOrDefault(stock, 0);
     }
 }

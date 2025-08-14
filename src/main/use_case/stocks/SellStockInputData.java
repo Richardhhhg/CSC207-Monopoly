@@ -1,21 +1,21 @@
 package main.use_case.stocks;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 
 public class SellStockInputData {
-    private final Player player;
+    private final AbstractPlayer abstractPlayer;
     private final Stock stock;
     private final int quantity;
 
-    public SellStockInputData(Player player, Stock stock, int quantity) {
-        this.player = player;
+    public SellStockInputData(AbstractPlayer abstractPlayer, Stock stock, int quantity) {
+        this.abstractPlayer = abstractPlayer;
         this.stock = stock;
         this.quantity = quantity;
     }
 
-    public Player getPlayer() {
-        return player;
+    public AbstractPlayer getPlayer() {
+        return abstractPlayer;
     }
 
     public Stock getStock() {

@@ -1,11 +1,11 @@
-package main.use_case.endScreen;
+package main.use_case.end_screen;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.entity.tiles.PropertyTile;
 
@@ -34,25 +34,25 @@ public class EndScreenInteractor implements EndScreenInputBoundary {
      */
     @Override
     public void execute(EndScreenInputData inputData) {
-        final List<Player> players = inputData.getPlayers();
+        final List<AbstractPlayer> abstractPlayers = inputData.getPlayers();
         final String gameEndReason = inputData.getGameEndReason();
         final int totalRounds = inputData.getTotalRounds();
 
         final List<EndScreenOutputData.PlayerResult> playerResults = new ArrayList<>();
 
         // Sort players by total net worth (cash + properties + current stock values) for ranking
-        final List<Player> sortedPlayers = new ArrayList<>(players);
-        sortedPlayers.sort(Comparator.comparingDouble(this::calculateNetWorth).reversed());
+        final List<AbstractPlayer> sortedAbstractPlayers = new ArrayList<>(abstractPlayers);
+        sortedAbstractPlayers.sort(Comparator.comparingDouble(this::calculateNetWorth).reversed());
 
-        for (int i = 0; i < sortedPlayers.size(); i++) {
-            final Player player = sortedPlayers.get(i);
-            final float finalCash = player.getMoney();
-            final float totalPropertyValue = calculateTotalPropertyValue(player);
-            final float stockValue = calculateTotalStockValue(player);
+        for (int i = 0; i < sortedAbstractPlayers.size(); i++) {
+            final AbstractPlayer abstractPlayer = sortedAbstractPlayers.get(i);
+            final float finalCash = abstractPlayer.getMoney();
+            final float totalPropertyValue = calculateTotalPropertyValue(abstractPlayer);
+            final float stockValue = calculateTotalStockValue(abstractPlayer);
             final float netWorth = finalCash + totalPropertyValue + stockValue;
 
             playerResults.add(new EndScreenOutputData.PlayerResult(
-                    player,
+                    abstractPlayer,
                     i + 1,
                     finalCash,
                     totalPropertyValue,
@@ -61,7 +61,7 @@ public class EndScreenInteractor implements EndScreenInputBoundary {
             ));
         }
 
-        final Player winner = determineWinner(players);
+        final AbstractPlayer winner = determineWinner(abstractPlayers);
 
         final EndScreenOutputData outputData = new EndScreenOutputData(
                 playerResults,
@@ -76,22 +76,22 @@ public class EndScreenInteractor implements EndScreenInputBoundary {
     /**
      * Calculate total net worth including cash, properties, and current stock values.
      *
-     * @param player the player whose net worth is calculated
+     * @param abstractPlayer the player whose net worth is calculated
      * @return the player's net worth as a double
      */
-    private double calculateNetWorth(Player player) {
-        return player.getMoney() + calculateTotalPropertyValue(player) + calculateTotalStockValue(player);
+    private double calculateNetWorth(AbstractPlayer abstractPlayer) {
+        return abstractPlayer.getMoney() + calculateTotalPropertyValue(abstractPlayer) + calculateTotalStockValue(abstractPlayer);
     }
 
     /**
      * Calculate total value of all properties owned by a player.
      *
-     * @param player the player whose properties are summed
+     * @param abstractPlayer the player whose properties are summed
      * @return the total property value
      */
-    private float calculateTotalPropertyValue(Player player) {
+    private float calculateTotalPropertyValue(AbstractPlayer abstractPlayer) {
         float total = 0;
-        for (PropertyTile property : player.getProperties()) {
+        for (PropertyTile property : abstractPlayer.getProperties()) {
             total += property.getPrice();
         }
         return total;
@@ -100,12 +100,12 @@ public class EndScreenInteractor implements EndScreenInputBoundary {
     /**
      * Calculate total value of stocks owned by a player.
      *
-     * @param player the player whose stock holdings are valued
+     * @param abstractPlayer the player whose stock holdings are valued
      * @return the total stock value
      */
-    private float calculateTotalStockValue(Player player) {
+    private float calculateTotalStockValue(AbstractPlayer abstractPlayer) {
         float total = 0;
-        final Map<Stock, Integer> stocks = player.getStocks();
+        final Map<Stock, Integer> stocks = abstractPlayer.getStocks();
 
         for (Map.Entry<Stock, Integer> entry : stocks.entrySet()) {
             final Stock stock = entry.getKey();
@@ -119,22 +119,22 @@ public class EndScreenInteractor implements EndScreenInputBoundary {
     /**
      * Determines the winner of the game based on solvency and net worth.
      *
-     * @param players the list of all players
+     * @param abstractPlayers the list of all players
      * @return the winning player, or null if no clear winner exists
      */
-    private Player determineWinner(List<Player> players) {
+    private AbstractPlayer determineWinner(List<AbstractPlayer> abstractPlayers) {
         // Filter out bankrupt players
-        final List<Player> solventPlayers = players.stream()
+        final List<AbstractPlayer> solventAbstractPlayers = abstractPlayers.stream()
                 .filter(player -> !player.isBankrupt())
                 .toList();
 
-        Player winner = null;
-        if (solventPlayers.size() == 1) {
-            winner = solventPlayers.get(0);
+        AbstractPlayer winner = null;
+        if (solventAbstractPlayers.size() == 1) {
+            winner = solventAbstractPlayers.get(0);
         }
-        else if (solventPlayers.size() > 1) {
+        else if (solventAbstractPlayers.size() > 1) {
             // Player with highest net worth (cash + properties + stock values)
-            winner = solventPlayers.stream()
+            winner = solventAbstractPlayers.stream()
                     .max(Comparator.comparingDouble(this::calculateNetWorth))
                     .orElse(null);
         }

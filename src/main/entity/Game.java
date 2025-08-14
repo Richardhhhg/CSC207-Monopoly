@@ -6,16 +6,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.entity.players.CharacterFactory;
-import main.entity.players.Player;
 import main.entity.tiles.AbstractTile;
 import main.interface_adapter.characterSelectionScreen.CharacterSelectionPlayerViewModel;
 
 
 public class Game {
     private List<AbstractTile> tiles;
-    private List<Player> players;
+    private List<AbstractPlayer> abstractPlayers;
     private List<Stock> stocks;
     private int currentPlayerIndex = 0;
     private int tileCount;
@@ -43,7 +43,7 @@ public class Game {
      * Get the number of active (non-bankrupt) players
      */
     public int getActivePlayers() {
-        return (int) players.stream().filter(p -> !p.isBankrupt()).count();
+        return (int) abstractPlayers.stream().filter(p -> !p.isBankrupt()).count();
     }
 
     /**
@@ -57,9 +57,9 @@ public class Game {
         return totalTurns;
     }
 
-    public Player getCurrentPlayer() {
+    public AbstractPlayer getCurrentPlayer() {
         if (currentPlayerIndex == -1 || gameEnded) return null;
-        return players.get(currentPlayerIndex);
+        return abstractPlayers.get(currentPlayerIndex);
     }
 
     /**
@@ -105,8 +105,8 @@ public class Game {
         return tiles;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<AbstractPlayer> getPlayers() {
+        return abstractPlayers;
     }
 
     public int getTileCount() {
@@ -174,9 +174,9 @@ public class Game {
      * Find the next active player starting from a given index
      */
     public int findNextActivePlayerFrom(int startIndex) {
-        for (int i = 1; i <= players.size(); i++) {
-            int candidateIndex = (startIndex + i) % players.size();
-            if (!players.get(candidateIndex).isBankrupt()) {
+        for (int i = 1; i <= abstractPlayers.size(); i++) {
+            int candidateIndex = (startIndex + i) % abstractPlayers.size();
+            if (!abstractPlayers.get(candidateIndex).isBankrupt()) {
                 return candidateIndex;
             }
         }
@@ -184,7 +184,7 @@ public class Game {
     }
 
     public void setCurrentPlayerIndex(int index) {
-        if (index >= 0 && index < players.size()) {
+        if (index >= 0 && index < abstractPlayers.size()) {
             this.currentPlayerIndex = index;
         } else {
             throw new IndexOutOfBoundsException("Invalid player index: " + index);
@@ -205,9 +205,9 @@ public class Game {
         }
     }
 
-    public void setPlayers(List<Player> players) {
-        if (players != null && !players.isEmpty()) {
-            this.players = players;
+    public void setPlayers(List<AbstractPlayer> abstractPlayers) {
+        if (abstractPlayers != null && !abstractPlayers.isEmpty()) {
+            this.abstractPlayers = abstractPlayers;
         } else {
             throw new IllegalArgumentException("Players list cannot be null or empty");
         }
@@ -222,15 +222,15 @@ public class Game {
     }
 
     public void setPlayersFromOutputData(List<CharacterSelectionPlayerViewModel> players) {
-        List<Player> result = new ArrayList<>();
+        List<AbstractPlayer> result = new ArrayList<>();
         for (CharacterSelectionPlayerViewModel data : players) {
             if (data != null && !"None".equals(data.getType())) {
-                Player player = CharacterFactory.createPlayer(
+                AbstractPlayer abstractPlayer = CharacterFactory.createPlayer(
                         data.getName(),
                         data.getType(),
                         data.getColor()
                 );
-                result.add(player);
+                result.add(abstractPlayer);
             }
         }
         this.setPlayers(result);

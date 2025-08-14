@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import main.constants.Constants;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.interface_adapter.stock_market.StockPlayerViewModel;
 import main.interface_adapter.stock_market.StockState;
@@ -24,12 +24,12 @@ public class StockMarketView extends JFrame {
     /**
      * Constructor for StockMarketView that initializes the view with a map of stocks and their owned quantities.
      *
-     * @param player player to which the stock market view is unique to
+     * @param abstractPlayer player to which the stock market view is unique to
      * @param allowBuy boolean indicating if the player is allowed to buy stocks. Only true for landing on tiles.
      */
-    public StockMarketView(Player player, boolean allowBuy) {
+    public StockMarketView(AbstractPlayer abstractPlayer, boolean allowBuy) {
         super("Stock Market");
-        final Map<Stock, Integer> stockQuantities = player.getStocks();
+        final Map<Stock, Integer> stockQuantities = abstractPlayer.getStocks();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(Constants.STOCK_MARKET_WIDTH, Constants.STOCK_MARKET_HEIGHT);
         setLocationRelativeTo(null);
@@ -59,7 +59,7 @@ public class StockMarketView extends JFrame {
         mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
 
         for (Map.Entry<Stock, Integer> entry : stockQuantities.entrySet()) {
-            final StockView stockview = makeStockView(entry, player, allowBuy);
+            final StockView stockview = makeStockView(entry, abstractPlayer, allowBuy);
             mainPanel.add(stockview);
             mainPanel.add(Box.createVerticalStrut(Constants.STOCK_MKT_PADDING));
         }
@@ -67,7 +67,7 @@ public class StockMarketView extends JFrame {
         setContentPane(mainPanel);
     }
 
-    private StockView makeStockView(Map.Entry<Stock, Integer> entry, Player player, boolean allowBuy) {
+    private StockView makeStockView(Map.Entry<Stock, Integer> entry, AbstractPlayer abstractPlayer, boolean allowBuy) {
         final Stock stock = entry.getKey();
         final int quantity = entry.getValue();
         final StockState stockState = new StockState();
@@ -77,7 +77,7 @@ public class StockMarketView extends JFrame {
         stockState.setAllowBuy(allowBuy);
 
         final StockPlayerViewModel stockPlayerViewModel = new StockPlayerViewModel(stockState);
-        stockPlayerViewModel.getState().setPlayer(player);
+        stockPlayerViewModel.getState().setPlayer(abstractPlayer);
         stockPlayerViewModel.getState().setStock(stock);
         stockPlayerViewModel.getState().setQuantity(quantity);
 

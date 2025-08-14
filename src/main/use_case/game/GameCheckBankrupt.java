@@ -1,7 +1,7 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ public class GameCheckBankrupt {
      * A player is considered bankrupt if they have no money and no properties.
      */
     public void execute() {
-        List<Player> players = game.getPlayers();
+        List<AbstractPlayer> abstractPlayers = game.getPlayers();
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         boolean foundNext= false;
 
-        for (int i = 1; i <= players.size(); i++) {
-            int nextIndex = (currentPlayerIndex + i) % players.size();
-            if (!players.get(nextIndex).isBankrupt()) {
+        for (int i = 1; i <= abstractPlayers.size(); i++) {
+            int nextIndex = (currentPlayerIndex + i) % abstractPlayers.size();
+            if (!abstractPlayers.get(nextIndex).isBankrupt()) {
                 currentPlayerIndex = nextIndex; // idk if this is needed but i'll keep it since it was in original - Richard
                 foundNext = true;
                 break;
@@ -39,7 +39,7 @@ public class GameCheckBankrupt {
         }
 
         // Check if only one player remains solvent
-        long solventPlayers = players.stream().filter(p -> !p.isBankrupt()).count();
+        long solventPlayers = abstractPlayers.stream().filter(p -> !p.isBankrupt()).count();
         if (solventPlayers == 1) {
             game.endGame("Only one player remains solvent");
         }

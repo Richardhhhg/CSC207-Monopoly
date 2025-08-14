@@ -1,6 +1,6 @@
 package main.interface_adapter.stock_market;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.stocks.Stock;
 import main.use_case.stocks.SellStockInputBoundary;
 import main.use_case.stocks.SellStockInputData;
@@ -15,12 +15,12 @@ public class StockSellController {
     /**
      * Executes the sell stock use case.
      *
-     * @param player the player who wants to sell the stock
+     * @param abstractPlayer the player who wants to sell the stock
      * @param stock the stock to be sold
      * @param quantity the number of shares to sell
      */
-    public void execute(Player player, Stock stock, int quantity) {
-        final SellStockInputData inputData = new SellStockInputData(player, stock, quantity);
+    public void execute(AbstractPlayer abstractPlayer, Stock stock, int quantity) {
+        final SellStockInputData inputData = new SellStockInputData(abstractPlayer, stock, quantity);
         sellStockInteractor.execute(inputData);
     }
 }

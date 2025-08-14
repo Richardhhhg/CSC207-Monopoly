@@ -1,7 +1,7 @@
 package main.use_case.game;
 
 import main.entity.Game;
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 
 import static main.constants.Constants.FINISH_LINE_BONUS;
 
@@ -14,7 +14,7 @@ public class GameMoveCurrentPlayer  {
 
     public void execute(int steps) {
         if (game.getGameEnded()) return;
-        Player p = game.getCurrentPlayer();
+        AbstractPlayer p = game.getCurrentPlayer();
         if (p == null) return;
 
         int tileCount = game.getTileCount();

@@ -1,7 +1,7 @@
-package main.interface_adapter.endScreen;
+package main.interface_adapter.end_screen;
 
-import main.use_case.endScreen.EndScreenInputBoundary;
-import main.use_case.endScreen.EndScreenInteractor;
+import main.use_case.end_screen.EndScreenInputBoundary;
+import main.use_case.end_screen.EndScreenInteractor;
 
 /**
  * Adapter class responsible for creating and injecting the dependencies (controller and view model)

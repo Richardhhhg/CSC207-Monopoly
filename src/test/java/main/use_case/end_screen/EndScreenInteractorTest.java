@@ -1,6 +1,6 @@
-package main.use_case.endScreen;
+package main.use_case.end_screen;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.players.Clerk;
 import main.entity.players.CollegeStudent;
 import main.entity.players.Landlord;
@@ -20,7 +20,7 @@ public class EndScreenInteractorTest {
 
     private TestEndScreenPresenter testPresenter;
     private EndScreenInteractor interactor;
-    private List<Player> testPlayers;
+    private List<AbstractPlayer> testAbstractPlayers;
 
     @Before
     public void setUp() {
@@ -28,21 +28,21 @@ public class EndScreenInteractorTest {
         interactor = new EndScreenInteractor(testPresenter);
 
         // Create test players with different financial situations
-        Player player1 = new Clerk("Alice", Color.RED);
-        Player player2 = new CollegeStudent("Bob", Color.BLUE);
-        Player player3 = new Landlord("Charlie", Color.GREEN);
+        AbstractPlayer abstractPlayer1 = new Clerk("Alice", Color.RED);
+        AbstractPlayer abstractPlayer2 = new CollegeStudent("Bob", Color.BLUE);
+        AbstractPlayer abstractPlayer3 = new Landlord("Charlie", Color.GREEN);
 
-        player1.addMoney(1500);
-        player2.addMoney(800);
-        player3.addMoney(2000);
+        abstractPlayer1.addMoney(1500);
+        abstractPlayer2.addMoney(800);
+        abstractPlayer3.addMoney(2000);
 
-        testPlayers = Arrays.asList(player1, player2, player3);
+        testAbstractPlayers = Arrays.asList(abstractPlayer1, abstractPlayer2, abstractPlayer3);
     }
 
     @Test
     public void testExecuteWithBasicPlayers() {
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "Maximum rounds reached", 20
+                testAbstractPlayers, "Maximum rounds reached", 20
         );
 
         interactor.execute(inputData);
@@ -68,17 +68,17 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithPlayersOwningProperties() {
-        Player playerWithProperty = testPlayers.get(0); // Alice
+        AbstractPlayer abstractPlayerWithProperty = testAbstractPlayers.get(0); // Alice
         PropertyTile property1 = new PropertyTile("Park Place", 200, 50);
         PropertyTile property2 = new PropertyTile("Boardwalk", 400, 100);
 
-        property1.setOwned(true, playerWithProperty);
-        property2.setOwned(true, playerWithProperty);
-        playerWithProperty.getProperties().add(property1);
-        playerWithProperty.getProperties().add(property2);
+        property1.setOwned(true, abstractPlayerWithProperty);
+        property2.setOwned(true, abstractPlayerWithProperty);
+        abstractPlayerWithProperty.getProperties().add(property1);
+        abstractPlayerWithProperty.getProperties().add(property2);
 
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "Game ended", 15
+                testAbstractPlayers, "Game ended", 15
         );
 
         interactor.execute(inputData);
@@ -105,17 +105,17 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithPlayersOwningStocks() {
-        Player playerWithStocks = testPlayers.get(1); // Bob
+        AbstractPlayer abstractPlayerWithStocks = testAbstractPlayers.get(1); // Bob
         Stock stock1 = new Stock("AAPL", 150.0, 0.1, 0.2);
         Stock stock2 = new Stock("GOOGL", 100.0, 0.05, 0.15);
 
         // Initialize stocks and add some quantities
-        playerWithStocks.initializeStocks(Arrays.asList(stock1, stock2));
-        playerWithStocks.getStocks().put(stock1, 5); // 5 * 150 = 750
-        playerWithStocks.getStocks().put(stock2, 3); // 3 * 100 = 300
+        abstractPlayerWithStocks.initializeStocks(Arrays.asList(stock1, stock2));
+        abstractPlayerWithStocks.getStocks().put(stock1, 5); // 5 * 150 = 750
+        abstractPlayerWithStocks.getStocks().put(stock2, 3); // 3 * 100 = 300
 
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "Test stocks", 10
+                testAbstractPlayers, "Test stocks", 10
         );
 
         interactor.execute(inputData);
@@ -141,11 +141,11 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithBankruptPlayers() {
-        Player bankruptPlayer = testPlayers.get(2); // Charlie
-        bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 100); // Make bankrupt
+        AbstractPlayer bankruptAbstractPlayer = testAbstractPlayers.get(2); // Charlie
+        bankruptAbstractPlayer.deductMoney(bankruptAbstractPlayer.getMoney() + 100); // Make bankrupt
 
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "Player bankruptcy", 8
+                testAbstractPlayers, "Player bankruptcy", 8
         );
 
         interactor.execute(inputData);
@@ -175,12 +175,12 @@ public class EndScreenInteractorTest {
     @Test
     public void testExecuteWithAllPlayersBankrupt() {
         // Make all players bankrupt
-        for (Player player : testPlayers) {
-            player.deductMoney(player.getMoney() + 100);
+        for (AbstractPlayer abstractPlayer : testAbstractPlayers) {
+            abstractPlayer.deductMoney(abstractPlayer.getMoney() + 100);
         }
 
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "All players bankrupt", 5
+                testAbstractPlayers, "All players bankrupt", 5
         );
 
         interactor.execute(inputData);
@@ -201,19 +201,19 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithSinglePlayer() {
-        Player singlePlayer = new Clerk("Solo", Color.YELLOW);
-        singlePlayer.addMoney(1000);
-        List<Player> singlePlayerList = Arrays.asList(singlePlayer);
+        AbstractPlayer singleAbstractPlayer = new Clerk("Solo", Color.YELLOW);
+        singleAbstractPlayer.addMoney(1000);
+        List<AbstractPlayer> singleAbstractPlayerList = Arrays.asList(singleAbstractPlayer);
 
         EndScreenInputData inputData = new EndScreenInputData(
-                singlePlayerList, "Single player test", 3
+                singleAbstractPlayerList, "Single player test", 3
         );
 
         interactor.execute(inputData);
 
         EndScreenOutputData outputData = testPresenter.getLastOutputData();
 
-        assertEquals(singlePlayer, outputData.getWinner());
+        assertEquals(singleAbstractPlayer, outputData.getWinner());
         assertEquals(1, outputData.getPlayerResults().size());
         assertEquals(1, outputData.getPlayerResults().get(0).getRank());
         assertEquals("Solo", outputData.getPlayerResults().get(0).getPlayer().getName());
@@ -221,10 +221,10 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithEmptyPlayerList() {
-        List<Player> emptyPlayers = new ArrayList<>();
+        List<AbstractPlayer> emptyAbstractPlayers = new ArrayList<>();
 
         EndScreenInputData inputData = new EndScreenInputData(
-                emptyPlayers, "No players", 0
+                emptyAbstractPlayers, "No players", 0
         );
 
         interactor.execute(inputData);
@@ -240,22 +240,22 @@ public class EndScreenInteractorTest {
     @Test
     public void testExecuteWithTiedNetWorth() {
         // Create two players with exactly the same net worth
-        Player player1 = new Clerk("Player1", Color.RED);
-        Player player2 = new Clerk("Player2", Color.BLUE);
+        AbstractPlayer abstractPlayer1 = new Clerk("Player1", Color.RED);
+        AbstractPlayer abstractPlayer2 = new Clerk("Player2", Color.BLUE);
 
-        player1.addMoney(1000);
-        player2.addMoney(800);
+        abstractPlayer1.addMoney(1000);
+        abstractPlayer2.addMoney(800);
 
         // Give player2 a property to match player1's net worth
         PropertyTile property = new PropertyTile("Test Property", 200, 25);
-        property.setOwned(true, player2);
-        player2.getProperties().add(property);
+        property.setOwned(true, abstractPlayer2);
+        abstractPlayer2.getProperties().add(property);
         // player2 now has 800 cash + 200 property = 1000 total (same as player1)
 
-        List<Player> tiedPlayers = Arrays.asList(player1, player2);
+        List<AbstractPlayer> tiedAbstractPlayers = Arrays.asList(abstractPlayer1, abstractPlayer2);
 
         EndScreenInputData inputData = new EndScreenInputData(
-                tiedPlayers, "Tied game", 10
+                tiedAbstractPlayers, "Tied game", 10
         );
 
         interactor.execute(inputData);
@@ -274,28 +274,28 @@ public class EndScreenInteractorTest {
     @Test
     public void testExecuteWithComplexScenario() {
         // Create a complex scenario with properties, stocks, and bankruptcy
-        Player richPlayer = new Landlord("Rich", Color.RED);
-        Player poorPlayer = new CollegeStudent("Poor", Color.BLACK);
-        Player bankruptPlayer = new Clerk("Bankrupt", Color.GRAY);
+        AbstractPlayer richAbstractPlayer = new Landlord("Rich", Color.RED);
+        AbstractPlayer poorAbstractPlayer = new CollegeStudent("Poor", Color.BLACK);
+        AbstractPlayer bankruptAbstractPlayer = new Clerk("Bankrupt", Color.GRAY);
 
-        richPlayer.addMoney(5000);
-        poorPlayer.addMoney(100);
-        bankruptPlayer.deductMoney(bankruptPlayer.getMoney() + 1); // Make bankrupt
+        richAbstractPlayer.addMoney(5000);
+        poorAbstractPlayer.addMoney(100);
+        bankruptAbstractPlayer.deductMoney(bankruptAbstractPlayer.getMoney() + 1); // Make bankrupt
 
         // Add properties to rich player
         PropertyTile expensiveProperty = new PropertyTile("Expensive Ave", 1000, 200);
-        expensiveProperty.setOwned(true, richPlayer);
-        richPlayer.getProperties().add(expensiveProperty);
+        expensiveProperty.setOwned(true, richAbstractPlayer);
+        richAbstractPlayer.getProperties().add(expensiveProperty);
 
         // Add stocks to poor player
         Stock cheapStock = new Stock("CHEAP", 10.0, 0.01, 0.02);
-        poorPlayer.initializeStocks(Arrays.asList(cheapStock));
-        poorPlayer.getStocks().put(cheapStock, 50); // 50 * 10 = 500
+        poorAbstractPlayer.initializeStocks(Arrays.asList(cheapStock));
+        poorAbstractPlayer.getStocks().put(cheapStock, 50); // 50 * 10 = 500
 
-        List<Player> complexPlayers = Arrays.asList(richPlayer, poorPlayer, bankruptPlayer);
+        List<AbstractPlayer> complexAbstractPlayers = Arrays.asList(richAbstractPlayer, poorAbstractPlayer, bankruptAbstractPlayer);
 
         EndScreenInputData inputData = new EndScreenInputData(
-                complexPlayers, "Complex scenario", 25
+                complexAbstractPlayers, "Complex scenario", 25
         );
 
         interactor.execute(inputData);
@@ -322,12 +322,12 @@ public class EndScreenInteractorTest {
 
     @Test
     public void testExecuteWithOnlyBankruptPlayersExceptOne() {
-        Player survivor = testPlayers.get(0); // Alice
-        testPlayers.get(1).deductMoney(testPlayers.get(1).getMoney() + 1); // Make Bob bankrupt
-        testPlayers.get(2).deductMoney(testPlayers.get(2).getMoney() + 1); // Make Charlie bankrupt
+        AbstractPlayer survivor = testAbstractPlayers.get(0); // Alice
+        testAbstractPlayers.get(1).deductMoney(testAbstractPlayers.get(1).getMoney() + 1); // Make Bob bankrupt
+        testAbstractPlayers.get(2).deductMoney(testAbstractPlayers.get(2).getMoney() + 1); // Make Charlie bankrupt
 
         EndScreenInputData inputData = new EndScreenInputData(
-                testPlayers, "Only one survivor", 12
+                testAbstractPlayers, "Only one survivor", 12
         );
 
         interactor.execute(inputData);

@@ -1,6 +1,6 @@
 package main.use_case.tiles;
 
-import main.entity.players.Player;
+import main.entity.players.AbstractPlayer;
 import main.entity.tiles.AbstractTile;
 import main.entity.tiles.PropertyTile;
 import main.entity.tiles.StockMarketTile;
@@ -30,36 +30,36 @@ public class OnLandingUseCase {
     /**
      * Executes the appropriate action when a player lands on a tile.
      *
-     * @param player the player who landed on the tile
+     * @param abstractPlayer the player who landed on the tile
      * @param tile   the tile the player landed on
      */
-    public void execute(Player player, AbstractTile tile) {
+    public void execute(AbstractPlayer abstractPlayer, AbstractTile tile) {
         if (tile instanceof PropertyTile) {
             final PropertyTile property = (PropertyTile) tile;
-            handlePropertyLanding(player, property);
+            handlePropertyLanding(abstractPlayer, property);
         }
         else if (tile instanceof StockMarketTile) {
-            handleStockMarketTileLanding(player);
+            handleStockMarketTileLanding(abstractPlayer);
         }
     }
 
-    private void handlePropertyLanding(Player player, PropertyTile property) {
+    private void handlePropertyLanding(AbstractPlayer abstractPlayer, PropertyTile property) {
         if (!property.isOwned()) {
             // Property is unowned - trigger purchase flow
-            propertyPurchaseUseCase.execute(player, property);
+            propertyPurchaseUseCase.execute(abstractPlayer, property);
         }
-        else if (player != property.getOwner()) {
+        else if (abstractPlayer != property.getOwner()) {
             // Property is owned by someone else - calculate rent and delegate to RentPaymentUseCase
             final float rent = property.calculateRent();
 
             // Delegate the entire rent payment process (including money transfer) to RentPaymentUseCase
-            rentPaymentUseCase.execute(player, property.getOwner(), property, rent);
+            rentPaymentUseCase.execute(abstractPlayer, property.getOwner(), property, rent);
         }
         // If player owns the property, nothing happens
     }
 
-    private void handleStockMarketTileLanding(Player player) {
-        final StockMarketView stockMarketView = new StockMarketView(player, true);
+    private void handleStockMarketTileLanding(AbstractPlayer abstractPlayer) {
+        final StockMarketView stockMarketView = new StockMarketView(abstractPlayer, true);
         stockMarketView.setVisible(true);
     }
 }

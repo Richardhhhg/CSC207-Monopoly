@@ -11,7 +11,7 @@ import static main.constants.Constants.LL_POR;
  * A Player subclass representing a Landlord.
  * Landlords gain extra rent and can sell properties for more money.
  */
-public class Landlord extends Player implements RentModifier, StockModifier {
+public class Landlord extends AbstractPlayer implements RentModifier, StockModifier {
     public Landlord(String name, Color color) {
         super(name, LANDLORD_INIT_MONEY, color);
         this.loadPortrait(LL_POR);

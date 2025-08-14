@@ -1,7 +1,8 @@
-package main.interface_adapter.endScreen;
+package main.interface_adapter.end_screen;
 
 import java.util.List;
-import main.entity.players.Player;
+
+import main.entity.players.AbstractPlayer;
 
 /**
  * Mutable ViewModel for the EndScreen.
@@ -114,7 +115,7 @@ public class EndScreenViewModel {
      * Data class representing display information for a single player.
      */
     public static class PlayerDisplayData {
-        private final Player player;
+        private final AbstractPlayer abstractPlayer;
         private final int rank;
         private final String moneyText;
         private final String propertyValueText;
@@ -122,10 +123,10 @@ public class EndScreenViewModel {
         private final String netWorthText;
         private final String statusText;
 
-        public PlayerDisplayData(Player player, int rank, String moneyText,
+        public PlayerDisplayData(AbstractPlayer abstractPlayer, int rank, String moneyText,
                                  String propertyValueText, String stockValueText, String netWorthText,
                                  String statusText) {
-            this.player = player;
+            this.abstractPlayer = abstractPlayer;
             this.rank = rank;
             this.moneyText = moneyText;
             this.propertyValueText = propertyValueText;
@@ -134,8 +135,8 @@ public class EndScreenViewModel {
             this.statusText = statusText;
         }
 
-        public Player getPlayer() {
-            return player;
+        public AbstractPlayer getPlayer() {
+            return abstractPlayer;
         }
 
         public String getMoneyText() {
@@ -159,7 +160,7 @@ public class EndScreenViewModel {
         }
 
         public String getRankText() {
-            return "#" + rank + " - " + player.getName();
+            return "#" + rank + " - " + abstractPlayer.getName();
         }
     }
 }
