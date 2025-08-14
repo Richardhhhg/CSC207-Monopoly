@@ -5,11 +5,9 @@ import java.awt.Color;
 import main.constants.Constants;
 import main.entity.stocks.Stock;
 
-public class PoorMan extends AbstractPlayer implements ApplyAfterEffects {
-    private static final int POORMAN_INIT_MONEY = 200;
-
+public class PoorMan extends AbstractPlayer implements ApplyAfterEffects {z
     public PoorMan(String name, Color color) {
-        super(name, POORMAN_INIT_MONEY, color);
+        super(name, Constants.POORMAN_INIT_MONEY, color);
         this.loadPortrait(Constants.PP_POR);
     }
 
