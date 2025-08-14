@@ -6,8 +6,10 @@ import main.constants.Constants;
 import main.entity.stocks.Stock;
 
 public class CollegeStudent extends AbstractPlayer implements ApplyAfterEffects, StockModifier {
+    private static final int STUDENT_INIT_MONEY = 800;
+
     public CollegeStudent(String name, Color color) {
-        super(name, Constants.STUDENT_INIT_MONEY, color);
+        super(name, STUDENT_INIT_MONEY, color);
         this.loadPortrait(Constants.CS_POR);
     }
 

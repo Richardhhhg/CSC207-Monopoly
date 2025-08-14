@@ -10,8 +10,10 @@ import main.entity.stocks.Stock;
  * Landlords gain extra rent and can sell properties for more money.
  */
 public class Landlord extends AbstractPlayer implements RentModifier, StockModifier {
+    private static final int LANDLORD_INIT_MONEY = 800;
+
     public Landlord(String name, Color color) {
-        super(name, Constants.LANDLORD_INIT_MONEY, color);
+        super(name, LANDLORD_INIT_MONEY, color);
         this.loadPortrait(Constants.LL_POR);
     }
 

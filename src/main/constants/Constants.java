@@ -87,13 +87,6 @@ public class Constants {
     public static final int STATS_LAYER = 3;
 
     // Character Constants
-    public static final int CLERK_INIT_MONEY = 1200;
-    public static final int STUDENT_INIT_MONEY = 1000;
-    public static final int DEFAULT_INIT_MONEY = 1200;
-    public static final int INHERITOR_INIT_MONEY = 1800;
-    public static final int LANDLORD_INIT_MONEY = 800;
-    public static final int POORMAN_INIT_MONEY = 200;
-
     public static final int CLERK_ADD_MONEY = 50;
     public static final int POORMAN_TURN_EFFECTS_COST = 20;
     public static final int COLLEGE_STUDENT_TUITION = 100;

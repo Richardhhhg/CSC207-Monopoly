@@ -5,8 +5,10 @@ import java.awt.Color;
 import main.constants.Constants;
 
 public class Clerk extends AbstractPlayer implements ApplyAfterEffects {
+    private static final int CLERK_INIT_MONEY = 900;
+
     public Clerk(String name, Color color) {
-        super(name, Constants.CLERK_INIT_MONEY, color);
+        super(name, CLERK_INIT_MONEY, color);
         this.loadPortrait(Constants.CLERK_POR);
     }
 
