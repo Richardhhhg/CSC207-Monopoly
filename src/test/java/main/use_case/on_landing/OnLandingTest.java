@@ -113,9 +113,9 @@ class OnLandingTest {
 
         // Assert
         assertNotNull(purchasePresenter.lastPurchaseData);
-        assertEquals("Player1", purchasePresenter.lastPurchaseData.getPlayerName());
-        assertEquals("TestProperty", purchasePresenter.lastPurchaseData.getPropertyName());
-        assertEquals(500.0f, purchasePresenter.lastPurchaseData.getPropertyPrice());
+        assertEquals("Player1", purchasePresenter.lastPurchaseData.playerName());
+        assertEquals("TestProperty", purchasePresenter.lastPurchaseData.propertyName());
+        assertEquals(500.0f, purchasePresenter.lastPurchaseData.propertyPrice());
         assertNull(rentPresenter.lastRentData);
     }
 
@@ -130,10 +130,10 @@ class OnLandingTest {
 
         // Assert
         assertNotNull(rentPresenter.lastRentData);
-        assertEquals("Player1", rentPresenter.lastRentData.getPayerName());
-        assertEquals("Owner", rentPresenter.lastRentData.getOwnerName());
-        assertEquals("TestProperty", rentPresenter.lastRentData.getPropertyName());
-        assertEquals(50.0f, rentPresenter.lastRentData.getRentAmount());
+        assertEquals("Player1", rentPresenter.lastRentData.payerName());
+        assertEquals("Owner", rentPresenter.lastRentData.ownerName());
+        assertEquals("TestProperty", rentPresenter.lastRentData.propertyName());
+        assertEquals(50.0f, rentPresenter.lastRentData.rentAmount());
         assertNull(purchasePresenter.lastPurchaseData);
     }
 

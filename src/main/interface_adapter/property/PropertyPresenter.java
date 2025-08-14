@@ -30,11 +30,11 @@ public class PropertyPresenter implements PropertyPurchaseOutputBoundary, RentPa
     public void presentPurchaseDialog(PropertyPurchaseData data, PurchaseResultCallback callback) {
         // Convert use case data to view model and store it
         this.currentPurchaseDialog = new PurchaseDialogViewModel(
-                data.getPlayerName(),
-                data.getPlayerMoney(),
-                data.getPropertyName(),
-                data.getPropertyPrice(),
-                data.isCanAfford()
+                data.playerName(),
+                data.playerMoney(),
+                data.propertyName(),
+                data.propertyPrice(),
+                data.canAfford()
         );
         this.currentCallback = callback;
     }
@@ -43,9 +43,9 @@ public class PropertyPresenter implements PropertyPurchaseOutputBoundary, RentPa
     public void presentPropertyPurchased(PropertyOwnershipData data) {
         // Convert use case data to view model and store it
         this.currentPropertyPurchased = new PropertyPurchasedViewModel(
-                data.getPropertyName(),
-                data.getOwnerName(),
-                data.getNewOwnerMoney()
+                data.propertyName(),
+                data.ownerName(),
+                data.newOwnerMoney()
         );
     }
 
@@ -53,12 +53,12 @@ public class PropertyPresenter implements PropertyPurchaseOutputBoundary, RentPa
     public void presentRentPayment(RentPaymentData data) {
         // Convert use case data to view model and store it
         this.currentRentPayment = new RentPaymentViewModel(
-                data.getPayerName(),
-                data.getOwnerName(),
-                data.getPropertyName(),
-                data.getRentAmount(),
-                data.getPayerNewMoney(),
-                data.getOwnerNewMoney()
+                data.payerName(),
+                data.ownerName(),
+                data.propertyName(),
+                data.rentAmount(),
+                data.payerNewMoney(),
+                data.ownerNewMoney()
         );
     }
 
