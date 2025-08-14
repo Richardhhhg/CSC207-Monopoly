@@ -79,7 +79,8 @@ public class GameInitializeTiles {
         // Add property tiles using data source
         for (int i = 0; i < propertyTiles && i < propertyData.size(); i++) {
             final PropertyDataSource.PropertyInfo info = propertyData.get(i);
-            tiles.add(new PropertyTile(info.getName(), info.getBasePrice(), Constants.PLACEHOLDER_RENT));
+            final float rent = info.getBasePrice() * Constants.RENT_MULTIPLIER;
+            tiles.add(new PropertyTile(info.getName(), info.getBasePrice(), rent));
         }
 
         // Add stock market tiles distributed throughout

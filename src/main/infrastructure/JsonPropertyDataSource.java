@@ -29,7 +29,7 @@ public class JsonPropertyDataSource implements PropertyDataSource {
     }
 
     private String readJsonFile() throws IOException {
-        final InputStream inputStream = getClass().getResourceAsStream(RESOURCE_PATH);
+        final InputStream inputStream = getResourceStream();
         if (inputStream == null) {
             throw new IOException("JSON resource not found: " + RESOURCE_PATH);
         }
@@ -42,6 +42,15 @@ public class JsonPropertyDataSource implements PropertyDataSource {
             }
             return jsonBuilder.toString();
         }
+    }
+
+    /**
+     * Protected method to allow testing of resource loading behavior.
+     *
+     * @return the input stream for the resource
+     */
+    protected InputStream getResourceStream() {
+        return getClass().getResourceAsStream(JsonPropertyDataSource.RESOURCE_PATH);
     }
 
     private List<PropertyInfo> parsePropertiesFromJson(String jsonContent) {
