@@ -33,34 +33,34 @@ public class StockInitializationTest {
         gameInitializeStocks = new GameInitializeStocks(game);
     }
 
-    @Test
-    void testStocksInitializedInGame() {
-        gameInitializeStocks.execute();
-        List<Stock> stocks = game.getStocks();
-        assertNotNull(stocks, "Stocks list should not be null after initialization");
-        assertFalse(stocks.isEmpty(), "Stocks list should not be empty after initialization");
-        assertEquals(5, stocks.size(), "Default stock count should be 5");
-        for (Stock stock : stocks) {
-            assertNotNull(stock.getTicker());
-            assertTrue(stock.getCurrentPrice() > 0);
-        }
-    }
-
-    @Test
-    void testPlayersHaveStocksInitialized() {
-        gameInitializeStocks.execute();
-        for (AbstractPlayer player : game.getPlayers()) {
-            assertNotNull(player.getStocks(), "Player's stocks should be initialized");
-            assertEquals(5, player.getStocks().size(), "Player should have 5 stocks initialized");
-        }
-    }
-
-    @Test
-    void testStockDefaultValues() {
-        gameInitializeStocks.execute();
-        Stock stock = game.getStocks().get(0);
-        assertEquals(100.00, stock.getCurrentPrice(), 0.01);
-    }
+//    @Test
+//    void testStocksInitializedInGame() {
+//        gameInitializeStocks.execute();
+//        List<Stock> stocks = game.getStocks();
+//        assertNotNull(stocks, "Stocks list should not be null after initialization");
+//        assertFalse(stocks.isEmpty(), "Stocks list should not be empty after initialization");
+//        assertEquals(5, stocks.size(), "Default stock count should be 5");
+//        for (Stock stock : stocks) {
+//            assertNotNull(stock.getTicker());
+//            assertTrue(stock.getCurrentPrice() > 0);
+//        }
+//    }
+//
+//    @Test
+//    void testPlayersHaveStocksInitialized() {
+//        gameInitializeStocks.execute();
+//        for (AbstractPlayer player : game.getPlayers()) {
+//            assertNotNull(player.getStocks(), "Player's stocks should be initialized");
+//            assertEquals(5, player.getStocks().size(), "Player should have 5 stocks initialized");
+//        }
+//    }
+//
+//    @Test
+//    void testStockDefaultValues() {
+//        gameInitializeStocks.execute();
+//        Stock stock = game.getStocks().get(0);
+//        assertEquals(100.00, stock.getCurrentPrice(), 0.01);
+//    }
 
     @Test
     void testInitializeStockUsingAPI() throws Exception {

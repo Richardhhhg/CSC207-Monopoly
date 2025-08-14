@@ -1,7 +1,8 @@
-package main.use_case.tiles;
+package main.interface_adapter.tile;
 
 import main.entity.players.AbstractPlayer;
 import main.entity.tiles.AbstractTile;
+import main.use_case.tiles.OnLandingUseCase;
 
 public class OnLandingController {
     private final OnLandingUseCase onLandingUseCase;
