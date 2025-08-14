@@ -10,7 +10,7 @@ import main.entity.stocks.Stock;
  * This character pays more for stocks but may later get passive bonuses.
  * Starts with $1000.
  */
-public class Inheritor extends AbstractPlayer implements StockModifier {z
+public class Inheritor extends AbstractPlayer implements StockModifier {
     public Inheritor(String name, Color color) {
         super(name, Constants.INHERITOR_INIT_MONEY, color);
         this.loadPortrait(Constants.INH_POR);
