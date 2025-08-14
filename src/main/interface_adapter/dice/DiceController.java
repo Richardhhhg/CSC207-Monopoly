@@ -1,20 +1,18 @@
 package main.interface_adapter.dice;
 
-import main.use_case.dice.RollDice;
+import main.use_case.dice.DiceInputBoundary;
 
 public class DiceController {
-    private final RollDice rollDiceUseCase;
+    private final DiceInputBoundary diceInputBoundary;
 
-    public DiceController() {
-        this.rollDiceUseCase = new RollDice();
+    public DiceController(DiceInputBoundary diceInputBoundary) {
+        this.diceInputBoundary = diceInputBoundary;
     }
 
     /**
-     * Executes the dice roll and returns the outcome.
-     *
-     * @return a {RollDice.DiceResult} representing the rolled values
+     * Executes the dice roll use case.
      */
-    public RollDice.DiceResult execute() {
-        return rollDiceUseCase.execute();
+    public void execute() {
+        diceInputBoundary.execute();
     }
 }

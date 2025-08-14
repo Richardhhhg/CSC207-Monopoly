@@ -1,48 +1,43 @@
 package main.interface_adapter.dice;
 
-import main.use_case.dice.RollDice;
+import main.use_case.dice.DiceOutputData;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DicePresenterTest {
-    private DicePresenter dicePresenter;
-
-    @BeforeEach
-    void setUp() {
-        dicePresenter = new DicePresenter();
-    }
 
     @Test
-    void testExecuteTransformsDiceResult() {
-        RollDice.DiceResult diceResult = new RollDice.DiceResult(4, 2, 6);
-        DiceViewModel viewModel = dicePresenter.execute(diceResult);
+    void presentDiceResult_buildsViewModelAndForwardsToCallback() {
+        // Arrange: capture callback arguments and call count
+        AtomicReference<DiceViewModel> lastVm = new AtomicReference<>();
+        AtomicInteger callCount = new AtomicInteger(0);
 
-        assertNotNull(viewModel, "ViewModel should not be null");
-        assertEquals(4, viewModel.getDice1(), "Dice1 should match");
-        assertEquals(2, viewModel.getDice2(), "Dice2 should match");
-        assertEquals(6, viewModel.getSum(), "Sum should match");
-    }
+        DicePresenter presenter = new DicePresenter(vm -> {
+            lastVm.set(vm);
+            callCount.incrementAndGet();
+        });
 
-    @Test
-    void testExecuteWithMinValues() {
-        RollDice.DiceResult diceResult = new RollDice.DiceResult(1, 1, 2);
-        DiceViewModel viewModel = dicePresenter.execute(diceResult);
+        // Act: feed a known output
+        DiceOutputData out1 = new DiceOutputData(2, 5, 7); // adjust ctor if your class differs
+        presenter.presentDiceResult(out1);
 
-        assertEquals(1, viewModel.getDice1());
-        assertEquals(1, viewModel.getDice2());
-        assertEquals(2, viewModel.getSum());
-        assertEquals("Sum: 2", viewModel.getSumText());
-    }
+        // Assert: callback invoked once with expected values
+        assertEquals(1, callCount.get(), "Callback should be invoked exactly once");
+        assertNotNull(lastVm.get(), "A DiceViewModel should be passed to the callback");
+        assertEquals(2, lastVm.get().getDice1());
+        assertEquals(5, lastVm.get().getDice2());
+        assertEquals(7, lastVm.get().getSum());
 
-    @Test
-    void testExecuteWithMaxValues() {
-        RollDice.DiceResult diceResult = new RollDice.DiceResult(6, 6, 12);
-        DiceViewModel viewModel = dicePresenter.execute(diceResult);
-
-        assertEquals(6, viewModel.getDice1());
-        assertEquals(6, viewModel.getDice2());
-        assertEquals(12, viewModel.getSum());
-        assertEquals("Sum: 12", viewModel.getSumText());
+        // — Optional extra check: subsequent calls still work and pass fresh data —
+        DiceOutputData out2 = new DiceOutputData(6, 1, 7);
+        presenter.presentDiceResult(out2);
+        assertEquals(2, callCount.get(), "Callback should be invoked twice after second call");
+        assertEquals(6, lastVm.get().getDice1());
+        assertEquals(1, lastVm.get().getDice2());
+        assertEquals(7, lastVm.get().getSum());
     }
 }
